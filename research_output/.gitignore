@@ -1,0 +1,5 @@
+# large generated outputs are not committed; small samples live in sample/
+stage2a/full/
+stage2a/sens*/
+stage2a/tmp*/
+stage2a/legacy*/

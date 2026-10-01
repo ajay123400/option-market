@@ -12,5 +12,7 @@ from .quality import PriceBasis, QualityPolicy, QuoteAssessment, QuoteFlag, asse
 from .schema import MarketAssumptions, OptionContract
 from .sessions import NSE_FNO_CLOSE_SCHEDULE, CloseTimeRule, ExpiryCloseSchedule
 from .sensitivities import Greeks, greeks
+from .surface import (AtmResult, OptionQuote, RiskReversalButterfly, SmilePoint, SmileResult, SurfaceConfig,
+                      build_smile)
 
 __all__ = [n for n in dir() if not n.startswith("_")]

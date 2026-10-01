@@ -1,0 +1,6 @@
+# Dependencies of the historical research layer (optionsengine/research). The core optionsengine package is stdlib-only.
+pandas>=2.0
+pyarrow>=14
+numpy>=1.24
+# validation scripts only (research_output/stage2a/validation/independent_check.py):
+scipy>=1.10
