@@ -40,7 +40,7 @@ class OptionContract:
     underlying_symbol: str              # e.g. "NIFTY"
     underlying_price: float             # spot (or the reference level you intend to price off)
     timestamp: datetime                 # when this snapshot was observed (aware)
-    expiry: datetime                    # expiry date-time (aware); NSE index options expire 15:30 IST
+    expiry: datetime                    # expiry date-time (aware); close time is 15:30 IST before 2026-08-03, 15:40 IST from then (see sessions.py)
     strike: float
     option_type: OptionType
     data_source: str                    # provider/feed name, e.g. "fyers:options-chain-v3"
@@ -55,7 +55,7 @@ class OptionContract:
     quote_timestamp: Optional[datetime] = None       # exchange time of the bid/ask update
     last_trade_timestamp: Optional[datetime] = None  # exchange time of the last trade
     contract_symbol: Optional[str] = None            # e.g. "NSE:NIFTY2690824500CE"
-    expiry_time_assumed: bool = False   # True if `expiry` time-of-day was filled by the caller (e.g. 15:30 IST) rather than sent by the provider
+    expiry_time_assumed: bool = False   # True if `expiry` time-of-day was filled by the caller (e.g. from sessions.NSE_FNO_CLOSE_SCHEDULE) rather than sent by the provider
     source_flags: tuple = ()            # provider-supplied quality flags, verbatim
 
     def __post_init__(self):

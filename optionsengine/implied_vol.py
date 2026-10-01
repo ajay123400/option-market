@@ -37,9 +37,36 @@ error of tol maps to a large vol error. `IVDiagnostics.vol_uncertainty`
 `max_vol_uncertainty`; in that case the IV is returned (it is the
 mathematically correct root) but flagged, and callers should not use it for
 smile fitting.
+
+Price resolution (tick size) -- a SEPARATE uncertainty from convergence:
+exchange prices are quantised (NSE options tick = 0.05), so an observed price
+p only says the true price lies in about [p - res/2, p + res/2], whatever the
+solver tolerance. `price_resolution` (default 0.05) turns that into an IV
+interval by re-solving at p -/+ res/2:
+    diagnostics.iv_interval            (iv_low, iv_high); 0.0 / inf when the
+                                       perturbed price reaches a no-arbitrage
+                                       bound (sigma -> 0 or unbounded above)
+    diagnostics.resolution_uncertainty max(iv - iv_low, iv_high - iv)
+    diagnostics.resolution_limited     True when that exceeds
+                                       `max_resolution_uncertainty` (default
+                                       0.01 = 1 vol point)
+Behaviour that matters: the IV is still CONVERGED and still returned -- the
+contract is NOT rejected; `resolution_limited` is only a flag for callers
+(use `IVResult.reliable` to require converged AND well-conditioned AND
+resolution-resolved). Why near expiry: vega scales like sqrt(T) (and falls
+off further for away-from-the-money strikes), so the same half-tick of price
+maps to a vol band ~ (res/2)/vega that grows without bound as T -> 0. Worked
+example (S = 24,500, 15 minutes to expiry, true vol 14 %, r = 6.5 %): the ATM
+call quotes 7.35 and its IV is resolved to about +/-0.05 vol points, but the
+call 200 points ITM quotes 200.05 (0.05 of time value) and the same half-tick
+band spans IV from 0 % to 52 %; the 245-point OTM call rounds to 0.00 and has
+no IV at all (PRICE_NOT_POSITIVE). Pass `price_resolution=None` (or 0) to disable. If you feed a
+bid/ask MID, the mid sits on a 0.025 grid but the real uncertainty is the
+spread -- do not use 0.025 as a substitute for quote-quality screening.
 """
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass
 from enum import Enum
@@ -72,12 +99,19 @@ class SolverConfig:
     max_iter: int = 100
     bound_rel_tol: float = 1e-12  # relative slack when comparing to no-arb bounds
     max_vol_uncertainty: float = 1e-6  # tol/vega above this (0.0001 vol points) => ILL_CONDITIONED
+    price_resolution: Optional[float] = 0.05  # tick size of the observed price; None/0 disables resolution diagnostics
+    max_resolution_uncertainty: float = 0.01  # IV band half-width (decimal vol) above this => resolution_limited
 
     def __post_init__(self):
         if not (0 < self.vol_min < self.vol_max):
             raise InvalidInputError("need 0 < vol_min < vol_max")
         if self.price_tol <= 0 or self.price_rel_tol <= 0 or self.max_iter < 1:
             raise InvalidInputError("price_tol and price_rel_tol must be > 0 and max_iter >= 1")
+        pr = self.price_resolution
+        if pr is not None and (isinstance(pr, bool) or not isinstance(pr, (int, float)) or not math.isfinite(pr) or pr < 0):
+            raise InvalidInputError("price_resolution must be None or a finite number >= 0")
+        if not (self.max_resolution_uncertainty > 0):
+            raise InvalidInputError("max_resolution_uncertainty must be > 0")
 
 
 @dataclass(frozen=True)
@@ -91,6 +125,11 @@ class IVDiagnostics:
     bracket: Optional[tuple]          # final (lo, hi) sigma bracket
     ill_conditioned: bool
     message: str
+    # --- price-resolution (tick) uncertainty: independent of convergence ---
+    price_resolution: Optional[float] = None
+    iv_interval: Optional[tuple] = None          # (iv_low, iv_high) for price -/+ resolution/2
+    resolution_uncertainty: Optional[float] = None
+    resolution_limited: bool = False
 
 
 @dataclass(frozen=True)
@@ -104,6 +143,17 @@ class IVResult:
     def converged(self) -> bool:
         return self.status is IVStatus.CONVERGED
 
+    @property
+    def resolution_limited(self) -> bool:
+        return self.diagnostics.resolution_limited
+
+    @property
+    def reliable(self) -> bool:
+        """Converged AND not ill-conditioned AND not limited by price
+        resolution. Stricter than `converged`; use it for surface fitting."""
+        d = self.diagnostics
+        return self.converged and not d.ill_conditioned and not d.resolution_limited
+
 
 def _fail(status: IVStatus, msg: str, *, lb=None, ub=None, iterations=0, bracket=None,
           price_error=None, vega=None) -> IVResult:
@@ -115,7 +165,44 @@ def implied_volatility(price: float, S: float, K: float, T: float, r: float, q: 
                        option_type, config: SolverConfig = SolverConfig()) -> IVResult:
     """Solve BSM implied volatility. Never raises for bad *market* prices --
     it returns a non-CONVERGED IVResult with a reason; it never returns an
-    `iv` unless the convergence criterion was met."""
+    `iv` unless the convergence criterion was met. When it converges it also
+    reports the price-resolution (tick) uncertainty -- see module docstring;
+    that flag never changes the status."""
+    res = _solve(price, S, K, T, r, q, option_type, config)
+    h = config.price_resolution
+    if not res.converged or not h:
+        return res
+    lo = _perturbed_iv(price - 0.5 * h, S, K, T, r, q, option_type, config, side="low")
+    hi = _perturbed_iv(price + 0.5 * h, S, K, T, r, q, option_type, config, side="high")
+    d = res.diagnostics
+    if lo is None or hi is None:      # perturbed solve failed to converge: cannot bound -> be conservative
+        unc, limited = math.inf, True
+    else:
+        unc = max(res.iv - lo, hi - res.iv)
+        limited = unc > config.max_resolution_uncertainty
+    msg = d.message + ("; RESOLUTION-LIMITED (half-tick price band moves IV by more than "
+                       f"{config.max_resolution_uncertainty:g})" if limited else "")
+    return IVResult(res.status, res.iv, dataclasses.replace(
+        d, message=msg, price_resolution=h, iv_interval=(lo, hi), resolution_uncertainty=unc,
+        resolution_limited=limited), res.kind)
+
+
+def _perturbed_iv(price, S, K, T, r, q, option_type, config, side):
+    """IV at a half-tick-perturbed price. A price at/below the lower bound
+    maps to sigma -> 0 (returns 0.0) and one at/above the upper bound or
+    beyond vol_max to +inf; a non-converged solve returns None."""
+    res = _solve(price, S, K, T, r, q, option_type, config)
+    if res.converged:
+        return res.iv
+    if res.status is IVStatus.NOT_CONVERGED or res.status is IVStatus.INVALID_INPUT:
+        return None
+    if side == "low":
+        return 0.0   # price_not_positive / below_lower_bound / at_bound / outside_vol_range(below)
+    return math.inf  # above_upper_bound / at_bound / outside_vol_range(above)
+
+
+def _solve(price: float, S: float, K: float, T: float, r: float, q: float,
+           option_type, config: SolverConfig) -> IVResult:
     try:
         ot = OptionType.coerce(option_type)
         validate_inputs(S, K, T, r, q, require_sigma=False)

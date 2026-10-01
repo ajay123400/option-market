@@ -150,8 +150,11 @@ def test_time_to_expiry_act365():
 
 
 def test_expiry_at_close_helper_is_aware_ist():
+    # 2026-10-08 is on/after the 2026-08-03 close change -> 15:40 (the old 15:30 default was the bug fixed
+    # in the expiry-close fix; schedule behaviour is covered in test_sessions.py)
     e = expiry_at_close(date(2026, 10, 8))
-    assert e == EXPIRY and e.utcoffset() == timedelta(hours=5, minutes=30)
+    assert e == EXPIRY + timedelta(minutes=10) and e.utcoffset() == timedelta(hours=5, minutes=30)
+    assert expiry_at_close(date(2026, 7, 30)) == datetime(2026, 7, 30, 15, 30, tzinfo=IST)
 
 
 # ---- analytics pipeline -------------------------------------------------------

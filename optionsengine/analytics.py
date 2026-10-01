@@ -21,7 +21,7 @@ trading-time (business-day) conventions would give different vols/theta.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date, datetime, time, timezone
 from typing import Optional
 
 from .bsm import bsm_price
@@ -29,8 +29,8 @@ from .implied_vol import IVResult, IVStatus, SolverConfig, implied_volatility
 from .quality import PriceBasis, QualityPolicy, QuoteAssessment, assess_quote
 from .schema import MarketAssumptions, OptionContract
 from .sensitivities import Greeks, greeks
+from .sessions import IST, NSE_FNO_CLOSE_SCHEDULE, ExpiryCloseSchedule
 
-IST = timezone(timedelta(hours=5, minutes=30))
 SECONDS_PER_YEAR = 365.0 * 86400.0
 
 
@@ -41,12 +41,20 @@ def time_to_expiry_years(timestamp: datetime, expiry: datetime) -> float:
     return max(seconds, 0.0) / SECONDS_PER_YEAR
 
 
-def expiry_at_close(expiry_date: date, close: time = time(15, 30), tz: timezone = IST) -> datetime:
-    """Convenience for providers that send only an expiry DATE. The 15:30 IST
-    default is the NSE index-option expiry-day close; it is an ASSUMPTION --
-    pass the result with `expiry_time_assumed=True` on the contract so the
-    quality layer flags it."""
-    return datetime.combine(expiry_date, close, tzinfo=tz)
+def expiry_at_close(expiry_date: date, close: Optional[time] = None, tz: timezone = IST,
+                    schedule: ExpiryCloseSchedule = NSE_FNO_CLOSE_SCHEDULE) -> datetime:
+    """Expiry date-time for providers that send only an expiry DATE.
+
+    The close time comes from `schedule` (default `NSE_FNO_CLOSE_SCHEDULE`:
+    15:30 IST before 2026-08-03, 15:40 IST from that expiry date on -- see
+    `sessions.py` for sources and limits). Pass `close` to override the
+    schedule explicitly. If the provider gives the real expiry date-time,
+    use that instead of this helper. Either way the resulting time-of-day is
+    an ASSUMPTION about the exchange, so construct the contract with
+    `expiry_time_assumed=True` so the quality layer flags it."""
+    if close is not None:
+        return datetime.combine(expiry_date, close, tzinfo=tz)
+    return schedule.close_datetime(expiry_date, tz)
 
 
 class AnalyticsStatus:
@@ -76,6 +84,13 @@ class OptionAnalytics:
     @property
     def iv(self) -> Optional[float]:
         return self.iv_result.iv if self.iv_result and self.iv_result.converged else None
+
+    @property
+    def iv_reliable(self) -> bool:
+        """Converged, well-conditioned and not limited by price resolution
+        (see implied_vol.IVResult.reliable). `iv` is still returned when this
+        is False -- the flag is advisory, not a rejection."""
+        return bool(self.iv_result and self.iv_result.reliable)
 
 
 def analyze_contract(contract: OptionContract, assumptions: MarketAssumptions,
