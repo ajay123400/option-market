@@ -1,0 +1,31 @@
+complete regular sessions used: 1237
+
+=== signature plot: mean daily intraday variance by sampling interval (sum of squared k-minute close-to-close returns) ===
+ minutes  returns/session  mean_daily_var  ann_vol_pct  ratio_to_1min
+       1              375        0.000043    10.377606       1.000000
+       2              187        0.000043    10.441960       1.012441
+       3              125        0.000043    10.451011       1.014197
+       5               75        0.000044    10.493469       1.022454
+      10               37        0.000043    10.442637       1.012572
+      15               25        0.000045    10.618713       1.047007
+      25               15        0.000042    10.344755       0.993679
+      75                5        0.000044    10.497272       1.023195
+     375                1        0.000048    10.953388       1.114045
+(ratio_to_1min ~ 1 means no material microstructure bias in the 1-minute sampling; >1 / <1 shows noise / mean reversion)
+
+=== consistency of the high-frequency daily variance with the daily close-to-close second moment ===
+        n  mean_cc2  mean_intra  mean_on2  mean_hyb   hyb/cc2  overnight_share_of_hyb
+year                                                                                 
+2021   70  0.000087    0.000055  0.000025  0.000080  0.927912                0.312967
+2022  246  0.000121    0.000057  0.000054  0.000111  0.918000                0.489031
+2023  244  0.000038    0.000027  0.000012  0.000038  1.019991                0.303415
+2024  245  0.000073    0.000050  0.000021  0.000072  0.980181                0.299172
+2025  247  0.000053    0.000034  0.000026  0.000060  1.136269                0.434970
+2026  184  0.000085    0.000043  0.000059  0.000102  1.198736                0.579444
+ALL: mean(cc^2) 7.399737e-05  mean(hybrid) 7.548834e-05  ratio hybrid/cc^2 = 1.0201   overnight share of hybrid = 0.434   intraday-only / cc^2 = 0.578
+=> intraday-only RV is NOT comparable with close-to-close RV: it omits the overnight component (share above).
+
+=== annualization: sessions per calendar year (regular sessions) ===
+{'2021': 73, '2022': 247, '2023': 245, '2024': 245, '2025': 247, '2026': 184}  (2021 partial from Sep 16, 2026 partial to Sep 30)
+full-year mean 246.0 sessions -> sqrt(252/246.0) - 1 = +1.2122% relative vol difference vs a sessions-per-year convention
+effect of the convention on any RV (vol scales with sqrt(A)): A=246 (observed): x0.9880   A=248: x0.9920   A=250: x0.9960   A=252 (default): x1   A=365 (calendar-day basis, NOT used): x1.2035
