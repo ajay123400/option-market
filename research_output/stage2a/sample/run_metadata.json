@@ -1,0 +1,31 @@
+{
+ "command": "/home/user/option-market/optionsengine/research/build_surface.py --root data/hist1m --workers 4 --out research_output/stage2a/full",
+ "git_commit": "ec691f56e4e254d07f17f0731800db747bd9ba86",
+ "started": "2026-10-01T11:24:46.064032",
+ "seconds": 173.4,
+ "root": "data/hist1m",
+ "n_expiry_files": 263,
+ "input_bytes": 1834981814,
+ "times": [
+  "10:00",
+  "13:00",
+  "15:00"
+ ],
+ "risk_free_rate": 0.065,
+ "risk_free_rate_note": "ASSUMPTION (repo constant 6.5%), not data",
+ "max_dte_days": 45,
+ "split_date": "2025-01-01",
+ "forward_max_dispersion_bps": 5.0,
+ "forward_default_bps": 5.0,
+ "max_age_minutes": 5.0,
+ "surface_config": {
+  "max_age_minutes": 5.0,
+  "rr_bf_min_days": 1.0,
+  "target_delta": 0.25,
+  "max_atm_bracket_pts": 100.0,
+  "max_delta_bracket_pts": 200.0
+ },
+ "pandas": "3.0.6",
+ "n_smile_rows": 21723,
+ "n_point_rows": 761948
+}

@@ -1,0 +1,6 @@
+outcome,dev,holdout,all
+low_confidence,1405,556,1961
+no_option_bars_at_snapshot,366,12,378
+no_spot_bar_at_snapshot,248,18,266
+ok,8760,5141,13901
+unavailable,3939,1278,5217
