@@ -1,4 +1,3 @@
-@"
 .env
 .env.*
 .fyers_session.json
@@ -13,4 +12,4 @@ node_modules/
 *.db
 *.lock
 .claude/
-"@ | Set-Content .gitignore
+*.log
