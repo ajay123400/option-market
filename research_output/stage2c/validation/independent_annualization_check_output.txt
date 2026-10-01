@@ -1,0 +1,45 @@
+case                                                                        obs_id                           h       T_years          V   span_d  sess_eq   RVsess    RVcal  kappa     IV^2T  max|dev|
+normal expiry (EXP, 7-14d, Monday 10:00)                                    2026-08-31T10:00_2026-09-08      EXP    0.022563  1.987e-04   8.2285   6.8773    8.534    9.389  0.826  2.40e-04  8.2e-13
+normal expiry (EXP, 7-14d, Monday 10:00)                                    2025-08-11T10:00_2025-08-21      EXP    0.028023  3.285e-04  10.2285   7.8773   10.251   10.827  0.896  3.54e-04  1.4e-12
+normal expiry (EXP, 3-7d, 13:00)                                            2023-07-07T13:00_2023-07-13      EXP    0.016722  1.484e-04   6.1035   4.3973    9.222    9.421  0.958  1.53e-04  2.8e-12
+normal expiry (EXP, 3-7d, 13:00)                                            2026-03-12T13:00_2026-03-17      EXP    0.013982  4.277e-04   5.1035   3.3973   17.811   17.490  1.037  6.85e-04  9.2e-13
+Friday / weekend (EXP, snapshot Friday 15:00)                               2023-10-27T15:00_2023-11-02      EXP    0.016494  1.796e-04   6.0201   4.0773   10.536   10.436  1.019  2.02e-04  2.6e-12
+Friday / weekend (EXP, snapshot Friday 15:00)                               2022-12-09T15:00_2022-12-15      EXP    0.016494  1.200e-04   6.0201   4.0773    8.613    8.531  1.019  1.82e-04  6.8e-13
+Friday / weekend (F1 hybrid, snapshot Friday 13:00 -> 3 calendar days)      2022-08-19T13:00_2022-08-25      F1     0.016722  4.764e-05   3.0000   1.0000   10.957    7.613  2.071  1.74e-04  5.3e-15
+Friday / weekend (F1 hybrid, snapshot Friday 13:00 -> 3 calendar days)      2026-03-13T13:00_2026-03-24      F1     0.030420  1.398e-04   3.0000   1.0000   18.770   13.042  2.071  5.13e-04  6.1e-13
+holiday gap (F1 hybrid, weekday snapshot, > 1 calendar day)                 2025-11-04T10:00_2025-11-11      F1     0.019804  3.162e-05   2.0000   1.0000    8.926    7.596  1.381  6.69e-05  3.6e-15
+holiday gap (F1 hybrid, weekday snapshot, > 1 calendar day)                 2025-12-24T15:00_2026-01-06      F1     0.035672  6.201e-06   2.0000   1.0000    3.953    3.364  1.381  3.02e-05  2.2e-15
+holiday gap (F5 hybrid, 8+ calendar days)                                   2024-11-18T15:00_2024-11-21      F5     0.008274  5.484e-04   8.0000   5.0000   16.625   15.818  1.105  4.34e-04  1.2e-12
+holiday gap (F5 hybrid, 8+ calendar days)                                   2023-04-10T15:00_2023-04-13      F5     0.008274  2.305e-04   8.0000   5.0000   10.779   10.256  1.105  2.57e-04  2.6e-13
+expiry-day snapshot 10:00 (F1 hybrid)                                       2022-01-20T10:00_2022-01-20      F1     0.000626  1.868e-04   1.0000   1.0000   21.699   26.114  0.690  1.32e-04  2.6e-12
+expiry-day snapshot 10:00 (F1 hybrid)                                       2022-05-05T10:00_2022-05-05      F1     0.000626  3.562e-04   1.0000   1.0000   29.960   36.057  0.690  3.03e-04  1.6e-13
+expiry-day snapshot 13:00 (F5 hybrid)                                       2022-02-03T13:00_2022-02-03      F5     0.000283  4.966e-04   7.0000   5.0000   15.820   16.091  0.967  1.48e-03  9.1e-13
+expiry-day snapshot 13:00 (F5 hybrid)                                       2022-05-26T13:00_2022-05-26      F5     0.000283  4.631e-04   7.0000   5.0000   15.277   15.539  0.967  2.71e-03  3.7e-13
+expiry-day snapshot 15:00 (F1 close_to_close)                               2022-01-20T15:00_2022-01-20      F1     0.000055  5.593e-05   1.0000   1.0000   11.872   14.288  0.690  1.17e-04  3.6e-15
+expiry-day snapshot 15:00 (F1 close_to_close)                               2022-05-05T15:00_2022-05-05      F1     0.000055  1.947e-04   1.0000   1.0000   22.153   26.661  0.690  1.84e-04  3.4e-12
+10:00 snapshot (EXP)                                                        2023-01-17T10:00_2023-01-19      EXP    0.006105  6.941e-05   2.2285   2.8773    7.797   10.663  0.535  1.43e-04  1.8e-15
+10:00 snapshot (EXP)                                                        2022-01-04T10:00_2022-01-06      EXP    0.006105  1.643e-04   2.2285   2.8773   11.994   16.402  0.535  1.68e-04  6.0e-13
+13:00 snapshot (EXP)                                                        2023-01-11T13:00_2023-01-12      EXP    0.003023  4.932e-05   1.1035   1.3973    9.431   12.772  0.545  1.03e-04  5.3e-15
+13:00 snapshot (EXP)                                                        2021-12-29T13:00_2021-12-30      EXP    0.003023  3.013e-05   1.1035   1.3973    7.371    9.983  0.545  8.23e-05  3.6e-15
+15:00 snapshot (EXP)                                                        2023-01-11T15:00_2023-01-12      EXP    0.002795  4.117e-05   1.0201   1.0773    9.813   12.137  0.654  7.84e-05  1.8e-15
+15:00 snapshot (EXP)                                                        2021-12-29T15:00_2021-12-30      EXP    0.002795  2.619e-05   1.0201   1.0773    7.827    9.680  0.654  7.12e-05  3.6e-15
+post-2026-08-03 expiry (T runs to 15:40, spot to 15:30)                     2026-08-26T13:00_2026-09-08      EXP    0.035919  2.683e-04  13.1035   9.3973    8.483    8.646  0.963  2.84e-04  1.3e-12
+post-2026-08-03 expiry (T runs to 15:40, spot to 15:30)                     2026-08-31T13:00_2026-09-08      EXP    0.022220  1.921e-04   8.1035   6.3973    8.699    9.302  0.875  2.41e-04  2.1e-12
+
+random sample: 1200 rows recomputed independently from raw bars; max abs deviation by quantity
+  T_years          9.541e-17
+  V                9.975e-17
+  span             1.776e-15
+  rv_session       1.421e-14
+  rv_calendar      7.443e-12
+  kappa            2.220e-16
+  implied_tv       9.975e-17
+  tv_diff          1.975e-16
+  spread_session   1.443e-14
+  spread_calendar  7.445e-12
+  effect           7.443e-12
+  ratio            4.657e-10
+all 6490 EXP/hybrid rows: max |T - T_independent| = 9.71e-17 years; max |span - span_independent| = 1.78e-15 days
+identity RV_sess = RV_cal*sqrt(kappa): max abs error 7.71e-12; effect = spread_sess - spread_cal: 1.42e-14; (IV/RV_cal)^2 = W_imp/V (pre-change expiries): 3.55e-15; spread_cal recomputed: 1.07e-14
+
+RESULT: ALL AGREE (tolerance 1e-9)

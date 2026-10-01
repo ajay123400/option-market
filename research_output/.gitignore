@@ -4,3 +4,5 @@ stage2a/sens*/
 stage2a/tmp*/
 stage2a/legacy*/
 stage2b/rolling_rv.csv
+stage2c/iv_rv_observations.csv
+stage2c/annualization_audit/aligned_observations.csv

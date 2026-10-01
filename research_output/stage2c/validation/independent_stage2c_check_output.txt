@@ -1,0 +1,27 @@
+sample size 880; independent calculations disagree about availability in 0 rows
+h    m
+EXP  hybrid            80
+     intraday          80
+F1   close_to_close    60
+     hybrid            60
+     intraday          60
+F10  close_to_close    60
+     hybrid            60
+     intraday          60
+F20  close_to_close    60
+     hybrid            60
+     intraday          60
+F5   close_to_close    60
+     hybrid            60
+     intraday          60
+RV   max |file-A| 1.421e-14  max |file-B| 9.006e-13  max |A-B| 9.006e-13  (annualised vol points)
+total variance max |file-A| 1.000e-16  max |file-B| 1.125e-16
+IV-RV arithmetic: max |file diff - recomputed| 1.421e-14; ratio 2.220e-15; abs_err 1.421e-14; sq_err 1.137e-12
+
+=== timestamp boundary logic (expiry-aligned sample) ===
+observation_ts == snapshot bar start + 60 s and target_start_ts == observation_ts: 40/40
+if the snapshot bar's own return were wrongly included, target variance would change by median 0.016% (max 0.94%) -> the boundary is testable, and the file does not include it
+partial-session returns: 10:00 -> 329, 13:00 -> 149, 15:00 -> 29 (checked from session_equivalents)
+
+=== rows the file marks UNAVAILABLE: does the independent code agree that no complete target exists? ===
+sampled unavailable rows: 400 (reasons: {'expiry_day_partial_session_only': 167, 'incomplete_or_missing_session_in_window': 149, 'beyond_data_end': 66, 'snapshot_session_not_regular': 16, 'snapshot_session_bars_missing_after_snapshot': 2}); independent code constructed a target for 0

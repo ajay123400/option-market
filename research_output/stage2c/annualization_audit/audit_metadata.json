@@ -1,0 +1,13 @@
+{
+ "source": "research_output/stage2c/iv_rv_observations.csv",
+ "n_aligned_rows": 99216,
+ "n_exp_hybrid": 6490,
+ "T_convention": "ACT/365 seconds/(365*86400) from observation (bar start+60s) to expiry 15:30 IST (15:40 from 2026-08-03)",
+ "session_annualization_days": 252.0,
+ "calendar_annualization_days": 365.0,
+ "max_abs_t_minus_span_minutes_pre_change": 5.115907697472721e-12,
+ "n_exp_rows_post_change": 237,
+ "bootstrap_reps": 1000,
+ "seconds": 28.218939,
+ "pandas": "3.0.6"
+}
