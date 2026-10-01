@@ -1,0 +1,23 @@
+R=300 replications, B=300 bootstrap draws, 260 clusters x 25 rows; truth = 0
+  phi  method                            coverage  mean width  MC se(cov)
+ 0.00  row_iid (ignores clustering)         0.443       0.093       0.029
+ 0.00  cluster_iid                          0.943       0.298       0.013
+ 0.00  cluster_moving_block_b2              0.930       0.298       0.015
+ 0.00  cluster_moving_block_b5              0.923       0.294       0.015
+ 0.00  cluster_moving_block_b8              0.917       0.293       0.016
+ 0.00  cluster_stationary_mean5             0.930       0.293       0.015
+       (128 s elapsed)
+ 0.25  row_iid (ignores clustering)         0.397       0.093       0.028
+ 0.25  cluster_iid                          0.860       0.301       0.020
+ 0.25  cluster_moving_block_b2              0.897       0.332       0.018
+ 0.25  cluster_moving_block_b5              0.923       0.358       0.015
+ 0.25  cluster_moving_block_b8              0.923       0.362       0.015
+ 0.25  cluster_stationary_mean5             0.910       0.356       0.017
+       (253 s elapsed)
+ 0.60  row_iid (ignores clustering)         0.277       0.093       0.026
+ 0.60  cluster_iid                          0.683       0.297       0.027
+ 0.60  cluster_moving_block_b2              0.770       0.366       0.024
+ 0.60  cluster_moving_block_b5              0.847       0.455       0.021
+ 0.60  cluster_moving_block_b8              0.893       0.489       0.018
+ 0.60  cluster_stationary_mean5             0.863       0.467       0.020
+       (379 s elapsed)

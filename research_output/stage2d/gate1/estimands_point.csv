@@ -1,0 +1,10 @@
+estimand,estimate,n_rows,n_expiries,n_dates,null_value
+S1_session_all_obs_median,2.6510147677979665,6490,260,1224,0.0
+S2_session_median_of_expiry_medians,2.5232862494189847,6490,260,1224,0.0
+S1_calendar_all_obs_median,1.8049028316989457,6490,260,1224,0.0
+S2_calendar_median_of_expiry_medians,1.8599927046751916,6490,260,1224,0.0
+R1_geometric_mean_all_obs,1.2910872241164104,6490,260,1224,1.0
+R1e_geometric_mean_expiry_weighted,1.289940920536275,6490,260,1224,1.0
+R2_median_ratio_all_obs,1.370507256862478,6490,260,1224,1.0
+R2e_median_of_expiry_median_ratios,1.3828414725866178,6490,260,1224,1.0
+R3_ratio_of_summed_total_variance,1.1159573338732487,6490,260,1224,1.0

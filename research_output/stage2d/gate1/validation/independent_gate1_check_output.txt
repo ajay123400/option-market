@@ -1,0 +1,65 @@
+EXP/hybrid rows: 6490
+
+[1] estimands
+  ok  S1_session_all_obs_median                                      mine=2.651014768 output=2.651014768
+  ok  S2_session_median_of_expiry_medians                            mine=2.523286249 output=2.523286249
+  ok  S1_calendar_all_obs_median                                     mine=1.804902832 output=1.804902832
+  ok  S2_calendar_median_of_expiry_medians                           mine=1.859992705 output=1.859992705
+  ok  R1_geometric_mean_all_obs                                      mine=1.291087224 output=1.291087224
+  ok  R1e_geometric_mean_expiry_weighted                             mine=1.289940921 output=1.289940921
+  ok  R2_median_ratio_all_obs                                        mine=1.370507257 output=1.370507257
+  ok  R2e_median_of_expiry_median_ratios                             mine=1.382841473 output=1.382841473
+  ok  R3_ratio_of_summed_total_variance                              mine=1.115957334 output=1.115957334
+
+[2] dependence diagnostics
+  ok  median_spread_session: ICC by expiry                           mine=0.5049167302 output=0.5049167302
+  ok  median_spread_session: design effect by expiry                 mine=13.09858165 output=13.09858165
+  ok  median_spread_session: ACF lag 1                               mine=0.232354821 output=0.232354821
+  ok  median_spread_session: Ljung-Box Q(10)                         mine=25.99825437 output=25.99825437
+  ok  median_spread_session: Ljung-Box p(10) vs scipy chi2           mine=0.003742534389 output=0.003742534389
+  ok  median_spread_session: Newey-West SE (rule lags)               mine=0.2858225895 output=0.2858225895
+  ok  median_spread_session: Newey-West variance inflation           mine=1.5549535 output=1.5549535
+  ok  median_spread_session: Newey-West SE (8 lags)                  mine=0.3122972247 output=0.3122972247
+  ok  median_spread_calendar: ICC by expiry                          mine=0.5754677812 output=0.5754677812
+  ok  median_spread_calendar: design effect by expiry                mine=14.78909337 output=14.78909337
+  ok  median_spread_calendar: ACF lag 1                              mine=0.1283335351 output=0.1283335351
+  ok  median_spread_calendar: Ljung-Box Q(10)                        mine=14.53931798 output=14.53931798
+  ok  median_spread_calendar: Ljung-Box p(10) vs scipy chi2          mine=0.1497818038 output=0.1497818038
+  ok  median_spread_calendar: Newey-West SE (rule lags)              mine=0.2503277206 output=0.2503277206
+  ok  median_spread_calendar: Newey-West variance inflation          mine=1.260013281 output=1.260013281
+  ok  median_spread_calendar: Newey-West SE (8 lags)                 mine=0.2580043481 output=0.2580043481
+  ok  mean_log_ratio: ICC by expiry                                  mine=0.6159367954 output=0.6159367954
+  ok  mean_log_ratio: design effect by expiry                        mine=15.75879321 output=15.75879321
+  ok  mean_log_ratio: ACF lag 1                                      mine=0.2292892358 output=0.2292892358
+  ok  mean_log_ratio: Ljung-Box Q(10)                                mine=33.10739743 output=33.10739743
+  ok  mean_log_ratio: Ljung-Box p(10) vs scipy chi2                  mine=0.0002612935071 output=0.0002612935071
+  ok  mean_log_ratio: Newey-West SE (rule lags)                      mine=0.02958528235 output=0.02958528235
+  ok  mean_log_ratio: Newey-West variance inflation                  mine=1.479156015 output=1.479156015
+  ok  mean_log_ratio: Newey-West SE (8 lags)                         mine=0.03072878843 output=0.03072878843
+
+[3] ratio inference
+  ok  sign test p (scipy binomtest, two-sided)                       mine=4.315239407e-22 output=4.315239407e-22
+  ok  share of expiries with median ratio > 1                        mine=0.7923076923 output=0.7923076923
+  ok  HAC t (rule lags)                                              mine=8.605509195 output=8.605509195
+
+[4] leave-one-expiry-out (all 260) and jackknife
+  ok  max |LOO difference| over 260 expiries x 9 estimands           mine=7.462919172e-13 output=0
+  ok  jackknife SE R1_geometric_mean_all_obs                         mine=0.0315896159 output=0.0315896159
+  ok  jackknife SE R3_ratio_of_summed_total_variance                 mine=0.06110588536 output=0.06110588536
+  ok  jackknife SE S1_calendar_all_obs_median                        mine=0.1046624408 output=0.1046624408
+  ok  block jackknife SE (b=5) S2_calendar                           mine=0.09252676442 output=0.09252676442
+
+[5] window overlap and non-overlapping subsample
+  ok  mean overlap share with the next expiry's window               mine=0.4637207298 output=0.4637207298
+  ok  subsample selection identical (259 expiries)
+  ok  subsample S1_session_all_obs_median                            mine=4.511734288 output=4.511734288
+  ok  subsample S2_session_median_of_expiry_medians                  mine=4.511734288 output=4.511734288
+  ok  subsample S1_calendar_all_obs_median                           mine=2.015318212 output=2.015318212
+  ok  subsample S2_calendar_median_of_expiry_medians                 mine=2.015318212 output=2.015318212
+  ok  subsample R1_geometric_mean_all_obs                            mine=1.307720025 output=1.307720025
+  ok  subsample R1e_geometric_mean_expiry_weighted                   mine=1.307720025 output=1.307720025
+  ok  subsample R2_median_ratio_all_obs                              mine=1.35869875 output=1.35869875
+  ok  subsample R2e_median_of_expiry_median_ratios                   mine=1.35869875 output=1.35869875
+  ok  subsample R3_ratio_of_summed_total_variance                    mine=1.105467576 output=1.105467576
+
+RESULT: ALL AGREE (tolerance 1e-9)
