@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Range Strategy</title>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #fff; --border: #e7e8ee; --border-soft: #f1f2f6;
+    --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --up-soft: #e6f7f0; --down: #e0434a; --down-soft: #fdedee;
+    --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --amber: #b7791f; --amber-soft: #fdf1dc;
+    --radius: 14px; --radius-sm: 9px;
+    --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  button { font-family: inherit; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 12px; font-size: 12.5px; background: #fff; cursor: pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+  .page { padding: 22px 28px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+  .full { grid-column: 1 / -1; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; box-shadow: var(--shadow); min-width: 0; }
+  .card h2 { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .status-pill { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+  .status-pill.open { background: var(--up-soft); color: #1f7a4d; } .status-pill.closed { background: var(--accent-soft); color: var(--accent-dark); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+  .stat { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 11px 13px; }
+  .stat .label { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .stat .value { font-size: 16px; font-weight: 700; font-family: "SF Mono", Consolas, monospace; margin-top: 4px; }
+  .stat .sub { font-size: 11px; color: var(--muted-2); margin-top: 2px; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .rangebar { position: relative; height: 54px; margin: 18px 6px 6px; }
+  .rangebar .track { position: absolute; top: 24px; left: 0; right: 0; height: 6px; background: var(--border); border-radius: 3px; }
+  .rangebar .zone { position: absolute; top: 20px; height: 14px; background: var(--up-soft); border: 1.5px solid var(--up); border-radius: 4px; }
+  .rangebar .mark { position: absolute; top: 0; transform: translateX(-50%); font-size: 11px; font-weight: 700; white-space: nowrap; }
+  .rangebar .tick { position: absolute; top: 16px; width: 2px; height: 22px; transform: translateX(-50%); }
+  .leg-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--border-soft); font-size: 13px; }
+  .leg-row:last-child { border-bottom: none; }
+  .side-tag { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: #fff; background: var(--down); }
+  .meta { color: var(--muted-2); font-size: 11px; margin-top: 2px; }
+  .pnl { font-weight: 700; font-family: "SF Mono", Consolas, monospace; text-align: right; }
+  .progress { height: 8px; background: var(--border); border-radius: 4px; position: relative; margin-top: 8px; }
+  .progress .fill { position: absolute; top: 0; bottom: 0; border-radius: 4px; }
+  .progress .zero { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--text); }
+  .timeline { display: flex; flex-direction: column; gap: 10px; }
+  .ev { border-left: 3px solid var(--border); padding: 4px 0 4px 12px; font-size: 12.5px; }
+  .ev.ENTRY { border-color: var(--accent); } .ev.EXIT { border-color: var(--up); } .ev.RANGE.roll { border-color: var(--amber); }
+  .ev .t { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .ev pre { margin: 3px 0 0; font-family: inherit; white-space: pre-wrap; }
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  th { text-align: left; font-size: 10.5px; text-transform: uppercase; color: var(--muted); padding: 7px 6px; border-bottom: 2px solid var(--border); }
+  td { padding: 8px 6px; border-bottom: 1px solid var(--border-soft); }
+  .scroll { overflow-x: auto; }
+  .rules { font-size: 12.5px; line-height: 1.6; color: #3a3e48; margin: 0; padding-left: 18px; }
+  .note { font-size: 11.5px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+  .empty { color: var(--muted-2); text-align: center; padding: 24px 0; font-size: 13px; }
+  @media (max-width: 900px) {
+    .topbar { padding: 10px 12px; } .page { grid-template-columns: 1fr; padding: 12px; gap: 14px; } .card { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Range Strategy</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink active" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+  <span id="updated" style="margin-left:auto;font-size:12px;color:var(--muted-2)"></span>
+  <button id="btnRefresh" title="Recompute from exchange candles now">Refresh now</button>
+</div>
+
+<div class="page">
+  <div class="card">
+    <h2><span id="cycleTitle">Current cycle</span><span class="status-pill" id="statusPill">—</span></h2>
+    <div id="rangeBox"><div class="empty">Loading…</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Position (paper)</h2>
+    <div id="posBox"><div class="empty">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Events this cycle</h2>
+    <div class="timeline" id="timeline"><div class="empty">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Rules (your method)</h2>
+    <ol class="rules">
+      <li>Cycle start day (after expiry, usually Wednesday): after the first 5-min candle, the highest-volume 100-pt CALL and PUT strikes are the leaders.</li>
+      <li>Upper = CE leader + PE leader's first-candle high · Lower = PE leader − CE leader's first-candle high.</li>
+      <li>Sell the round strike nearest Upper (CE) and nearest Lower (PE), 1 lot each, no hedge.</li>
+      <li>Leaders tracked on each day's own volume; when a leader changes, the range is recomputed with that day's first-candle highs.</li>
+      <li>Call rolls down when the range's call strike falls; put rolls up when the range's put strike rises. A leg moves away only if it is in the money. No rolls on expiry day.</li>
+      <li>Exit all: loss reaches 50% of entry premium · net profit reaches 70% of entry premium · 15:00 on the day before expiry (expiry day if that is a holiday).</li>
+    </ol>
+    <div class="note" id="configNote"></div>
+  </div>
+
+  <div class="card full">
+    <h2>Backtest — every completed cycle with recorded data <span style="font-weight:500;text-transform:none;letter-spacing:0">(same code as live, 5-min exchange candles, ₹0.5 slippage per order, charges included)</span></h2>
+    <div class="scroll" id="btBox"><div class="empty">Loading…</div></div>
+  </div>
+</div>
+
+<script>
+function money(n) { if (n === null || n === undefined) return "—"; return (n < 0 ? "-" : "") + "₹" + Math.abs(n).toLocaleString("en-IN", {maximumFractionDigits: 0}); }
+function pcls(n) { return n > 0 ? "up" : (n < 0 ? "down" : ""); }
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function fmtT(t) { return t ? t.replace("T", " ") : "—"; }
+
+function evText(ev) {
+  if (ev.type === "ENTRY") {
+    const r = ev.range;
+    return `Leaders CE ${r.ce_leader} (1st-candle high ${r.ce_first_high}) / PE ${r.pe_leader} (high ${r.pe_first_high})
+Range ${r.lower.toFixed(0)} – ${r.upper.toFixed(0)} (${(r.upper - r.lower).toFixed(0)} pts)
+${ev.legs.map(l => `SELL ${l.strike} ${l.side} @ ${l.price}`).join(" + ")}
+Premium ${money(ev.premium)} · stop ${ev.stop != null ? money(ev.stop) : "none"} · target ${money(ev.target)}`;
+  }
+  if (ev.type === "RANGE") {
+    const r = ev.range;
+    let s = `Leaders CE ${r.ce_leader} / PE ${r.pe_leader} → range ${r.lower.toFixed(0)} – ${r.upper.toFixed(0)}`;
+    if (!ev.rolls.length) return s + "\nStrikes unchanged";
+    return s + "\n" + ev.rolls.map(x => `ROLL ${x.side}: buy back ${x.from} @ ${x.buy_back} (${money(x.booked)}), sell ${x.to} @ ${x.sell} — ${x.why}`).join("\n") + `\nTotal P&L ${money(ev.total)}`;
+  }
+  if (ev.type === "EXIT") {
+    return `EXIT (${ev.reason}): ${ev.legs.map(l => `${l.strike}${l.side} @ ${l.exit}`).join(", ")}
+Gross ${money(ev.realized)} · charges ${money(ev.charges)} · NET ${money(ev.net)}`;
+  }
+  return ev.type;
+}
+
+function renderState(st) {
+  if (!st) {
+    document.getElementById("rangeBox").innerHTML = `<div class="empty">No cycle yet — the strategy starts on the first trading day after an expiry, after the 09:15 candle.</div>`;
+    return;
+  }
+  document.getElementById("cycleTitle").textContent = `Cycle ${st.cycle_start} → expiry ${st.expiry}`;
+  const pill = document.getElementById("statusPill");
+  pill.textContent = st.status === "closed" ? `CLOSED · ${st.exit_reason}` : st.status.toUpperCase();
+  pill.className = "status-pill " + st.status;
+  document.getElementById("updated").textContent = `last candle ${fmtT(st.last_candle)} · updated ${st.updated_at ? st.updated_at.slice(11, 19) : "—"}`;
+
+  const r = st.range;
+  let html = "";
+  if (r) {
+    const legs = st.legs || {};
+    const pts = [r.lower, r.upper, legs.CE?.strike, legs.PE?.strike].filter(v => v != null);
+    const lo = Math.min(...pts) - 150, hi = Math.max(...pts) + 150;
+    const x = v => ((v - lo) / (hi - lo) * 100).toFixed(2) + "%";
+    html += `<div class="stats">
+      <div class="stat"><div class="label">CE leader</div><div class="value">${r.ce_leader}</div><div class="sub">1st-candle high ${r.ce_first_high}</div></div>
+      <div class="stat"><div class="label">PE leader</div><div class="value">${r.pe_leader}</div><div class="sub">1st-candle high ${r.pe_first_high}</div></div>
+      <div class="stat"><div class="label">Range</div><div class="value">${r.lower.toFixed(0)} – ${r.upper.toFixed(0)}</div><div class="sub">${(r.upper - r.lower).toFixed(0)} pts · since ${fmtT(r.time)}</div></div>
+      <div class="stat"><div class="label">Exit day</div><div class="value">${st.exit_day}</div><div class="sub">15:00 time exit</div></div>
+    </div>
+    <div class="rangebar">
+      <div class="track"></div>
+      <div class="zone" style="left:${x(r.lower)};width:calc(${x(r.upper)} - ${x(r.lower)})"></div>
+      <div class="mark" style="left:${x(r.lower)};color:var(--up)">${r.lower.toFixed(0)}</div>
+      <div class="mark" style="left:${x(r.upper)};color:var(--up)">${r.upper.toFixed(0)}</div>
+      ${legs.PE ? `<div class="tick" style="left:${x(legs.PE.strike)};background:var(--down)"></div><div class="mark" style="left:${x(legs.PE.strike)};top:40px;color:var(--down)">${legs.PE.strike} PE</div>` : ""}
+      ${legs.CE ? `<div class="tick" style="left:${x(legs.CE.strike)};background:var(--down)"></div><div class="mark" style="left:${x(legs.CE.strike)};top:40px;color:var(--down)">${legs.CE.strike} CE</div>` : ""}
+    </div>`;
+  }
+  document.getElementById("rangeBox").innerHTML = html || `<div class="empty">Waiting for the first candle of the cycle…</div>`;
+
+  // position + P&L vs stop/target
+  const lp = st.last_pnl;  // [ts, gross, net]
+  const legs = Object.values(st.legs || {});
+  let pos = legs.map(l => `<div class="leg-row"><span class="side-tag">S</span>
+      <div><b>${l.strike} ${l.side}</b><div class="meta">sold @ ${l.entry} · ${fmtT(l.entry_time)} → LTP ${l.ltp ?? "—"}</div></div>
+      <div class="pnl ${pcls(l.pnl)}">${money(l.pnl)}</div></div>`).join("");
+  if (!legs.length) pos = `<div class="empty">${st.status === "closed" ? "Position closed for this cycle." : "No position yet."}</div>`;
+  if (st.premium0) {
+    const net = st.status === "closed" ? st.realized - st.charges : (lp ? lp[2] : null);
+    const gross = st.status === "closed" ? st.realized : (lp ? lp[1] : null);
+    // no stop (research rules): the bar runs from -target to +target
+    const lo = st.stop != null ? st.stop : -st.target;
+    const span = st.target - lo, pct = v => Math.max(0, Math.min(100, (v - lo) / span * 100));
+    pos += `<div class="stats" style="margin-top:12px">
+      <div class="stat"><div class="label">Net P&amp;L</div><div class="value ${pcls(net)}">${money(net)}</div><div class="sub">gross ${money(gross)} · booked ${money(st.realized)}</div></div>
+      <div class="stat"><div class="label">Premium collected</div><div class="value">${money(st.premium0)}</div></div>
+      <div class="stat"><div class="label">Stop / Target</div><div class="value"><span class="down">${st.stop != null ? money(st.stop) : "none"}</span> / <span class="up">${money(st.target)}</span></div></div>
+    </div>
+    ${net != null ? `<div class="progress" title="Net P&L between the stop (left) and the target (right)">
+      <div class="fill" style="left:${pct(0)}%;width:${Math.abs(pct(net) - pct(0))}%;${net < 0 ? `left:${pct(net)}%;` : ""}background:${net >= 0 ? "var(--up)" : "var(--down)"}"></div>
+      <div class="zero" style="left:${pct(0)}%"></div></div>
+      <div class="note">Bar: ${st.stop != null ? "stop " + money(st.stop) : "no stop (−target shown)"} ◀ 0 ▶ target ${money(st.target)}</div>` : ""}`;
+  }
+  document.getElementById("posBox").innerHTML = pos;
+
+  const evs = (st.events || []).slice().reverse();
+  document.getElementById("timeline").innerHTML = evs.length ? evs.map(ev => `<div class="ev ${ev.type} ${ev.rolls && ev.rolls.length ? "roll" : ""}">
+      <div class="t">${fmtT(ev.time)} · ${ev.type === "RANGE" ? (ev.rolls.length ? "ROLL" : "LEADER CHANGE") : ev.type}</div><pre>${esc(evText(ev))}</pre></div>`).join("")
+    : `<div class="empty">No events yet</div>`;
+  const c = st.config || {};
+  document.getElementById("configNote").textContent = `Settings (range_strategy.py CONFIG): ${c.lots} lot × ${c.lot_size}, stop ${c.sl_frac ? c.sl_frac * 100 + "%" : "none"}, target ${c.target_frac * 100}% ${c.target_on_net ? "(net)" : "(gross)"}, time exit ${c.exit_time}, entry only on a range ≥ ${c.min_width || "—"} pts, slippage ₹${c.slippage}/unit, leader min lead ${c.leader_min_lead_pct}%.`;
+}
+
+async function loadState() {
+  try {
+    const j = await (await fetch("/api/range/state")).json();
+    if (j.ok) renderState(j.state);
+  } catch (e) { document.getElementById("updated").textContent = "connection error"; }
+}
+
+async function loadBacktest() {
+  const box = document.getElementById("btBox");
+  try {
+    const j = await (await fetch("/api/range/backtest")).json();
+    if (!j.ok) { box.innerHTML = `<div class="empty">${esc(j.error)}</div>`; return; }
+    if (!j.rows.length) { box.innerHTML = `<div class="empty">No completed cycles with data yet</div>`; return; }
+    const tot = j.rows.reduce((s, r) => s + r.net, 0), wins = j.rows.filter(r => r.net > 0).length;
+    box.innerHTML = `<table><thead><tr><th>Cycle</th><th>Range</th><th>Entry</th><th>Rolls</th><th>Exit</th><th>Gross</th><th>Charges</th><th>Net</th></tr></thead><tbody>
+      ${j.rows.map(r => `<tr><td>${r.cycle_start} → ${r.expiry}</td>
+        <td>${r.entry.range.lower.toFixed(0)} – ${r.entry.range.upper.toFixed(0)} (${(r.entry.range.upper - r.entry.range.lower).toFixed(0)})</td>
+        <td>${r.entry.legs.map(l => l.strike + l.side + " @" + l.price).join(" + ")}</td><td>${r.rolls}</td>
+        <td>${fmtT(r.exit.time)} · ${r.reason}</td><td class="${pcls(r.gross)}">${money(r.gross)}</td><td>${money(r.charges)}</td>
+        <td class="${pcls(r.net)}"><b>${money(r.net)}</b></td></tr>`).join("")}
+      <tr><td colspan="7"><b>Total (${wins}/${j.rows.length} winning cycles)</b></td><td class="${pcls(tot)}"><b>${money(tot)}</b></td></tr>
+    </tbody></table>
+    <div class="note">Only cycles whose contracts were recorded are available (Fyers stops serving expired contracts), so this sample grows by one cycle each week.</div>`;
+  } catch (e) { box.innerHTML = `<div class="empty">Network error</div>`; }
+}
+
+document.getElementById("btnRefresh").addEventListener("click", async (e) => {
+  e.target.disabled = true; e.target.textContent = "Refreshing… (~15s)";
+  try { const j = await (await fetch("/api/range/refresh", {method: "POST", headers: {"Content-Type": "application/json"}})).json(); if (j.ok) renderState(j.state); else alert(j.error); }
+  finally { e.target.disabled = false; e.target.textContent = "Refresh now"; }
+});
+
+loadState(); loadBacktest();
+setInterval(loadState, 30000);
+</script>
+</body>
+</html>

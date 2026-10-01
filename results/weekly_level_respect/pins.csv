@@ -1,0 +1,775 @@
+expiry,kind,n,pin
+2021-09-30,Our week's levels,22,9.700000000000728
+2021-09-30,"Random (same distance, other week)",22,10.950000000000728
+2021-09-30,Shifted ±75 from ours,20,63.25
+2021-10-07,Our week's levels,16,42.29999999999927
+2021-10-07,"Random (same distance, other week)",16,80.09999999999854
+2021-10-07,Shifted ±75 from ours,16,1.7999999999992724
+2021-10-14,Our week's levels,18,3.099999999998545
+2021-10-14,"Random (same distance, other week)",18,3.7999999999992724
+2021-10-14,Shifted ±75 from ours,17,28.099999999998545
+2021-10-21,Our week's levels,8,6.0
+2021-10-21,"Random (same distance, other week)",8,11.25
+2021-10-21,Shifted ±75 from ours,7,53.80000000000291
+2021-10-28,Our week's levels,15,1.8999999999978172
+2021-10-28,"Random (same distance, other week)",15,39.94999999999709
+2021-10-28,Shifted ±75 from ours,14,36.099999999998545
+2021-11-03,Our week's levels,13,28.75
+2021-11-03,"Random (same distance, other week)",13,3.25
+2021-11-03,Shifted ±75 from ours,13,14.400000000001455
+2021-11-11,Our week's levels,5,4.549999999999272
+2021-11-11,"Random (same distance, other week)",5,42.0
+2021-11-11,Shifted ±75 from ours,4,2.7000000000007276
+2021-11-18,Our week's levels,16,37.54999999999927
+2021-11-18,"Random (same distance, other week)",16,35.70000000000073
+2021-11-18,Shifted ±75 from ours,14,16.799999999999272
+2021-11-25,Our week's levels,9,50.70000000000073
+2021-11-25,"Random (same distance, other week)",9,6.0
+2021-11-25,Shifted ±75 from ours,8,17.200000000000728
+2021-12-02,Our week's levels,15,13.5
+2021-12-02,"Random (same distance, other week)",15,43.85000000000218
+2021-12-02,Shifted ±75 from ours,15,29.0
+2021-12-09,Our week's levels,19,11.100000000002183
+2021-12-09,"Random (same distance, other week)",19,24.349999999998545
+2021-12-09,Shifted ±75 from ours,17,61.70000000000073
+2021-12-16,Our week's levels,15,25.399999999997817
+2021-12-16,"Random (same distance, other week)",15,10.350000000002183
+2021-12-16,Shifted ±75 from ours,15,0.3999999999978172
+2021-12-23,Our week's levels,24,17.450000000000728
+2021-12-23,"Random (same distance, other week)",24,19.600000000002183
+2021-12-23,Shifted ±75 from ours,23,2.5
+2021-12-30,Our week's levels,17,8.900000000001455
+2021-12-30,"Random (same distance, other week)",17,1.5499999999992724
+2021-12-30,Shifted ±75 from ours,16,5.900000000001455
+2022-01-06,Our week's levels,18,31.0
+2022-01-06,"Random (same distance, other week)",18,6.0
+2022-01-06,Shifted ±75 from ours,18,106.0
+2022-01-13,Our week's levels,12,13.599999999998545
+2022-01-13,"Random (same distance, other week)",12,11.0
+2022-01-13,Shifted ±75 from ours,12,15.799999999999272
+2022-01-20,Our week's levels,14,55.099999999998545
+2022-01-20,"Random (same distance, other week)",14,23.899999999997817
+2022-01-20,Shifted ±75 from ours,13,92.09999999999854
+2022-01-27,Our week's levels,21,117.75
+2022-01-27,"Random (same distance, other week)",21,17.5
+2022-01-27,Shifted ±75 from ours,21,192.75
+2022-02-03,Our week's levels,20,21.549999999999272
+2022-02-03,"Random (same distance, other week)",20,20.099999999998545
+2022-02-03,Shifted ±75 from ours,18,0.2000000000007276
+2022-02-10,Our week's levels,18,4.099999999998545
+2022-02-10,"Random (same distance, other week)",18,5.400000000001455
+2022-02-10,Shifted ±75 from ours,18,23.349999999998545
+2022-02-17,Our week's levels,19,30.200000000000728
+2022-02-17,"Random (same distance, other week)",19,23.000000000003638
+2022-02-17,Shifted ±75 from ours,19,34.75
+2022-02-24,Our week's levels,19,414.2000000000007
+2022-02-24,"Random (same distance, other week)",19,280.9500000000007
+2022-02-24,Shifted ±75 from ours,18,339.2000000000007
+2022-03-03,Our week's levels,14,26.5
+2022-03-03,"Random (same distance, other week)",14,10.75
+2022-03-03,Shifted ±75 from ours,14,1.5
+2022-03-10,Our week's levels,20,72.70000000000073
+2022-03-10,"Random (same distance, other week)",20,106.35000000000218
+2022-03-10,Shifted ±75 from ours,19,2.2999999999992724
+2022-03-17,Our week's levels,14,37.900000000001455
+2022-03-17,"Random (same distance, other week)",14,10.75
+2022-03-17,Shifted ±75 from ours,12,0.7999999999992724
+2022-03-24,Our week's levels,21,3.2999999999992724
+2022-03-24,"Random (same distance, other week)",21,4.69999999999709
+2022-03-24,Shifted ±75 from ours,20,78.29999999999927
+2022-03-31,Our week's levels,18,43.79999999999927
+2022-03-31,"Random (same distance, other week)",18,47.64999999999782
+2022-03-31,Shifted ±75 from ours,13,10.049999999999272
+2022-04-07,Our week's levels,18,57.14999999999782
+2022-04-07,"Random (same distance, other week)",18,31.900000000001455
+2022-04-07,Shifted ±75 from ours,15,17.850000000002183
+2022-04-13,Our week's levels,13,24.599999999998545
+2022-04-13,"Random (same distance, other week)",13,3.099999999998545
+2022-04-13,Shifted ±75 from ours,13,16.599999999998545
+2022-04-21,Our week's levels,12,4.900000000001455
+2022-04-21,"Random (same distance, other week)",12,7.30000000000291
+2022-04-21,Shifted ±75 from ours,11,70.09999999999854
+2022-04-28,Our week's levels,13,48.04999999999927
+2022-04-28,"Random (same distance, other week)",13,33.79999999999927
+2022-04-28,Shifted ±75 from ours,12,13.700000000000728
+2022-05-05,Our week's levels,11,4.150000000001455
+2022-05-05,"Random (same distance, other week)",11,30.75
+2022-05-05,Shifted ±75 from ours,10,20.849999999998545
+2022-05-12,Our week's levels,27,8.350000000000364
+2022-05-12,"Random (same distance, other week)",27,131.04999999999927
+2022-05-12,Shifted ±75 from ours,25,8.0
+2022-05-19,Our week's levels,11,37.25
+2022-05-19,"Random (same distance, other week)",11,121.34999999999854
+2022-05-19,Shifted ±75 from ours,11,12.25
+2022-05-26,Our week's levels,19,63.45000000000073
+2022-05-26,"Random (same distance, other week)",19,15.200000000000728
+2022-05-26,Shifted ±75 from ours,18,18.350000000000364
+2022-06-02,Our week's levels,17,50.5
+2022-06-02,"Random (same distance, other week)",17,4.650000000001455
+2022-06-02,Shifted ±75 from ours,16,24.5
+2022-06-09,Our week's levels,20,4.450000000000728
+2022-06-09,"Random (same distance, other week)",20,9.69999999999709
+2022-06-09,Shifted ±75 from ours,18,44.45000000000073
+2022-06-16,Our week's levels,19,101.79999999999927
+2022-06-16,"Random (same distance, other week)",19,24.100000000000364
+2022-06-16,Shifted ±75 from ours,18,26.799999999999272
+2022-06-23,Our week's levels,23,14.100000000000364
+2022-06-23,"Random (same distance, other week)",23,14.000000000001819
+2022-06-23,Shifted ±75 from ours,21,6.450000000000728
+2022-06-30,Our week's levels,18,35.79999999999927
+2022-06-30,"Random (same distance, other week)",18,36.599999999998545
+2022-06-30,Shifted ±75 from ours,18,8.350000000000364
+2022-07-07,Our week's levels,16,6.899999999999636
+2022-07-07,"Random (same distance, other week)",16,77.64999999999964
+2022-07-07,Shifted ±75 from ours,16,24.100000000000364
+2022-07-14,Our week's levels,14,0.049999999999272404
+2022-07-14,"Random (same distance, other week)",14,26.149999999997817
+2022-07-14,Shifted ±75 from ours,13,3.0
+2022-07-21,Our week's levels,11,29.899999999997817
+2022-07-21,"Random (same distance, other week)",11,28.0
+2022-07-21,Shifted ±75 from ours,8,145.10000000000218
+2022-07-28,Our week's levels,12,84.14999999999782
+2022-07-28,"Random (same distance, other week)",12,38.599999999998545
+2022-07-28,Shifted ±75 from ours,11,142.09999999999854
+2022-08-04,Our week's levels,14,10.900000000001455
+2022-08-04,"Random (same distance, other week)",14,9.850000000002183
+2022-08-04,Shifted ±75 from ours,14,30.099999999998545
+2022-08-11,Our week's levels,8,7.599999999998545
+2022-08-11,"Random (same distance, other week)",8,41.85000000000218
+2022-08-11,Shifted ±75 from ours,7,33.20000000000073
+2022-08-18,Our week's levels,12,6.150000000001455
+2022-08-18,"Random (same distance, other week)",12,9.349999999998545
+2022-08-18,Shifted ±75 from ours,9,24.599999999998545
+2022-08-25,Our week's levels,14,48.20000000000073
+2022-08-25,"Random (same distance, other week)",14,7.099999999998545
+2022-08-25,Shifted ±75 from ours,11,6.200000000000728
+2022-09-01,Our week's levels,16,63.60000000000218
+2022-09-01,"Random (same distance, other week)",16,23.350000000002183
+2022-09-01,Shifted ±75 from ours,16,5.150000000001455
+2022-09-08,Our week's levels,17,4.349999999998545
+2022-09-08,"Random (same distance, other week)",17,16.100000000002183
+2022-09-08,Shifted ±75 from ours,17,12.850000000002183
+2022-09-15,Our week's levels,18,7.700000000000728
+2022-09-15,"Random (same distance, other week)",18,53.20000000000073
+2022-09-15,Shifted ±75 from ours,16,41.20000000000073
+2022-09-22,Our week's levels,23,33.5
+2022-09-22,"Random (same distance, other week)",23,15.600000000002183
+2022-09-22,Shifted ±75 from ours,20,8.5
+2022-09-29,Our week's levels,20,7.299999999999272
+2022-09-29,"Random (same distance, other week)",20,25.849999999998545
+2022-09-29,Shifted ±75 from ours,19,42.14999999999782
+2022-10-06,Our week's levels,11,16.299999999999272
+2022-10-06,"Random (same distance, other week)",11,29.75
+2022-10-06,Shifted ±75 from ours,10,2.5
+2022-10-13,Our week's levels,14,57.39999999999782
+2022-10-13,"Random (same distance, other week)",14,24.899999999997817
+2022-10-13,Shifted ±75 from ours,14,11.549999999999272
+2022-10-20,Our week's levels,20,9.5
+2022-10-20,"Random (same distance, other week)",20,3.350000000002183
+2022-10-20,Shifted ±75 from ours,18,3.25
+2022-10-27,Our week's levels,6,6.5
+2022-10-27,"Random (same distance, other week)",6,7.649999999997817
+2022-10-27,Shifted ±75 from ours,6,31.5
+2022-11-03,Our week's levels,16,0.4000000000014552
+2022-11-03,"Random (same distance, other week)",16,4.350000000005821
+2022-11-03,Shifted ±75 from ours,14,7.099999999998545
+2022-11-10,Our week's levels,10,33.25
+2022-11-10,"Random (same distance, other week)",10,3.2999999999992724
+2022-11-10,Shifted ±75 from ours,9,8.25
+2022-11-17,Our week's levels,9,13.900000000001455
+2022-11-17,"Random (same distance, other week)",9,51.69999999999709
+2022-11-17,Shifted ±75 from ours,9,88.90000000000146
+2022-11-24,Our week's levels,13,12.049999999999272
+2022-11-24,"Random (same distance, other week)",13,10.400000000001455
+2022-11-24,Shifted ±75 from ours,11,38.20000000000073
+2022-12-01,Our week's levels,7,96.5
+2022-12-01,"Random (same distance, other week)",7,0.1500000000014552
+2022-12-01,Shifted ±75 from ours,5,21.5
+2022-12-08,Our week's levels,15,39.45000000000073
+2022-12-08,"Random (same distance, other week)",15,34.14999999999782
+2022-12-08,Shifted ±75 from ours,15,27.75
+2022-12-15,Our week's levels,15,10.200000000000728
+2022-12-15,"Random (same distance, other week)",15,2.75
+2022-12-15,Shifted ±75 from ours,12,14.799999999999272
+2022-12-22,Our week's levels,10,48.10000000000218
+2022-12-22,"Random (same distance, other week)",10,32.79999999999927
+2022-12-22,Shifted ±75 from ours,9,13.549999999999272
+2022-12-29,Our week's levels,15,14.5
+2022-12-29,"Random (same distance, other week)",15,34.39999999999782
+2022-12-29,Shifted ±75 from ours,13,26.899999999997817
+2023-01-05,Our week's levels,12,1.5
+2023-01-05,"Random (same distance, other week)",12,67.84999999999854
+2023-01-05,Shifted ±75 from ours,8,26.5
+2023-01-12,Our week's levels,15,20.900000000001455
+2023-01-12,"Random (same distance, other week)",15,22.799999999999272
+2023-01-12,Shifted ±75 from ours,13,35.45000000000073
+2023-01-19,Our week's levels,18,10.850000000002183
+2023-01-19,"Random (same distance, other week)",18,32.45000000000073
+2023-01-19,Shifted ±75 from ours,15,6.349999999998545
+2023-01-25,Our week's levels,11,10.099999999998545
+2023-01-25,"Random (same distance, other week)",11,8.94999999999709
+2023-01-25,Shifted ±75 from ours,9,56.05000000000291
+2023-02-02,Our week's levels,31,39.04999999999927
+2023-02-02,"Random (same distance, other week)",31,6.19999999999709
+2023-02-02,Shifted ±75 from ours,29,1.8500000000021828
+2023-02-09,Our week's levels,18,13.299999999999272
+2023-02-09,"Random (same distance, other week)",18,1.8499999999985448
+2023-02-09,Shifted ±75 from ours,16,36.60000000000218
+2023-02-16,Our week's levels,11,23.299999999999272
+2023-02-16,"Random (same distance, other week)",11,1.7999999999956344
+2023-02-16,Shifted ±75 from ours,11,42.79999999999927
+2023-02-23,Our week's levels,12,47.04999999999927
+2023-02-23,"Random (same distance, other week)",12,90.19999999999709
+2023-02-23,Shifted ±75 from ours,11,119.0
+2023-03-02,Our week's levels,14,1.25
+2023-03-02,"Random (same distance, other week)",14,36.54999999999927
+2023-03-02,Shifted ±75 from ours,12,22.299999999999272
+2023-03-09,Our week's levels,11,28.200000000000728
+2023-03-09,"Random (same distance, other week)",11,21.099999999998545
+2023-03-09,Shifted ±75 from ours,10,0.7000000000007276
+2023-03-16,Our week's levels,13,20.650000000001455
+2023-03-16,"Random (same distance, other week)",13,32.75
+2023-03-16,Shifted ±75 from ours,13,45.650000000001455
+2023-03-23,Our week's levels,13,17.899999999997817
+2023-03-23,"Random (same distance, other week)",13,27.0
+2023-03-23,Shifted ±75 from ours,10,78.40000000000146
+2023-04-06,Our week's levels,13,27.450000000000728
+2023-04-06,"Random (same distance, other week)",13,42.80000000000291
+2023-04-06,Shifted ±75 from ours,12,65.59999999999854
+2023-04-13,Our week's levels,6,47.29999999999927
+2023-04-13,"Random (same distance, other week)",6,52.5
+2023-04-13,Shifted ±75 from ours,4,27.700000000000728
+2023-04-20,Our week's levels,11,16.900000000001455
+2023-04-20,"Random (same distance, other week)",11,1.7000000000007276
+2023-04-20,Shifted ±75 from ours,7,34.55000000000291
+2023-04-27,Our week's levels,9,79.60000000000218
+2023-04-27,"Random (same distance, other week)",9,254.6999999999971
+2023-04-27,Shifted ±75 from ours,8,4.600000000002183
+2023-05-04,Our week's levels,7,10.049999999999272
+2023-05-04,"Random (same distance, other week)",7,112.94999999999709
+2023-05-04,Shifted ±75 from ours,5,5.400000000001455
+2023-05-11,Our week's levels,10,0.25
+2023-05-11,"Random (same distance, other week)",10,20.100000000002183
+2023-05-11,Shifted ±75 from ours,9,59.599999999998545
+2023-05-18,Our week's levels,10,1.4500000000007276
+2023-05-18,"Random (same distance, other week)",10,2.3000000000029104
+2023-05-18,Shifted ±75 from ours,10,13.700000000000728
+2023-05-25,Our week's levels,16,24.099999999998545
+2023-05-25,"Random (same distance, other week)",16,7.25
+2023-05-25,Shifted ±75 from ours,13,18.799999999999272
+2023-06-01,Our week's levels,9,7.80000000000291
+2023-06-01,"Random (same distance, other week)",9,11.30000000000291
+2023-06-01,Shifted ±75 from ours,7,58.44999999999709
+2023-06-08,Our week's levels,5,19.299999999999272
+2023-06-08,"Random (same distance, other week)",5,52.10000000000218
+2023-06-08,Shifted ±75 from ours,4,46.95000000000073
+2023-06-15,Our week's levels,11,0.8500000000021828
+2023-06-15,"Random (same distance, other week)",11,2.899999999997817
+2023-06-15,Shifted ±75 from ours,6,6.450000000000728
+2023-06-22,Our week's levels,14,5.849999999998545
+2023-06-22,"Random (same distance, other week)",14,13.700000000000728
+2023-06-22,Shifted ±75 from ours,12,64.29999999999927
+2023-07-06,Our week's levels,13,7.799999999999272
+2023-07-06,"Random (same distance, other week)",13,23.0
+2023-07-06,Shifted ±75 from ours,11,28.799999999999272
+2023-07-13,Our week's levels,9,78.84999999999854
+2023-07-13,"Random (same distance, other week)",9,38.64999999999782
+2023-07-13,Shifted ±75 from ours,8,56.70000000000073
+2023-07-20,Our week's levels,8,42.55000000000291
+2023-07-20,"Random (same distance, other week)",8,2.2000000000043656
+2023-07-20,Shifted ±75 from ours,7,32.44999999999709
+2023-07-27,Our week's levels,10,17.850000000002183
+2023-07-27,"Random (same distance, other week)",10,17.5
+2023-07-27,Shifted ±75 from ours,10,6.0
+2023-08-03,Our week's levels,15,0.4000000000014552
+2023-08-03,"Random (same distance, other week)",15,15.05000000000291
+2023-08-03,Shifted ±75 from ours,14,0.8499999999985448
+2023-08-10,Our week's levels,10,37.20000000000073
+2023-08-10,"Random (same distance, other week)",10,8.650000000001455
+2023-08-10,Shifted ±75 from ours,8,24.200000000000728
+2023-08-17,Our week's levels,10,0.2000000000007276
+2023-08-17,"Random (same distance, other week)",10,32.49999999999636
+2023-08-17,Shifted ±75 from ours,10,71.20000000000073
+2023-08-24,Our week's levels,7,36.25
+2023-08-24,"Random (same distance, other week)",7,68.35000000000582
+2023-08-24,Shifted ±75 from ours,6,44.599999999998545
+2023-08-31,Our week's levels,6,28.549999999999272
+2023-08-31,"Random (same distance, other week)",6,30.049999999999272
+2023-08-31,Shifted ±75 from ours,5,7.299999999999272
+2023-09-07,Our week's levels,10,47.5
+2023-09-07,"Random (same distance, other week)",10,14.200000000000728
+2023-09-07,Shifted ±75 from ours,7,3.5499999999992724
+2023-09-14,Our week's levels,8,2.100000000002183
+2023-09-14,"Random (same distance, other week)",8,21.299999999999272
+2023-09-14,Shifted ±75 from ours,8,72.89999999999782
+2023-09-21,Our week's levels,11,45.45000000000073
+2023-09-21,"Random (same distance, other week)",11,32.89999999999782
+2023-09-21,Shifted ±75 from ours,10,120.45000000000073
+2023-09-28,Our week's levels,9,1.5
+2023-09-28,"Random (same distance, other week)",9,20.5
+2023-09-28,Shifted ±75 from ours,6,34.5
+2023-10-05,Our week's levels,15,13.400000000001455
+2023-10-05,"Random (same distance, other week)",15,33.95000000000073
+2023-10-05,Shifted ±75 from ours,13,76.59999999999854
+2023-10-12,Our week's levels,13,17.099999999998545
+2023-10-12,"Random (same distance, other week)",13,40.54999999999927
+2023-10-12,Shifted ±75 from ours,10,25.5
+2023-10-19,Our week's levels,11,8.099999999998545
+2023-10-19,"Random (same distance, other week)",11,29.900000000001455
+2023-10-19,Shifted ±75 from ours,11,21.299999999999272
+2023-10-26,Our week's levels,10,51.5
+2023-10-26,"Random (same distance, other week)",10,44.79999999999927
+2023-10-26,Shifted ±75 from ours,9,23.5
+2023-11-02,Our week's levels,13,12.400000000001455
+2023-11-02,"Random (same distance, other week)",13,17.650000000001455
+2023-11-02,Shifted ±75 from ours,12,32.85000000000218
+2023-11-09,Our week's levels,11,6.700000000000728
+2023-11-09,"Random (same distance, other week)",11,2.0
+2023-11-09,Shifted ±75 from ours,8,68.29999999999927
+2023-11-16,Our week's levels,10,3.5499999999992724
+2023-11-16,"Random (same distance, other week)",10,71.79999999999927
+2023-11-16,Shifted ±75 from ours,8,100.45000000000073
+2023-11-23,Our week's levels,11,39.0
+2023-11-23,"Random (same distance, other week)",11,3.75
+2023-11-23,Shifted ±75 from ours,10,4.0
+2023-11-30,Our week's levels,9,42.70000000000073
+2023-11-30,"Random (same distance, other week)",9,2.7000000000007276
+2023-11-30,Shifted ±75 from ours,7,69.90000000000146
+2023-12-07,Our week's levels,15,27.75
+2023-12-07,"Random (same distance, other week)",15,91.40000000000146
+2023-12-07,Shifted ±75 from ours,13,7.599999999998545
+2023-12-14,Our week's levels,9,65.35000000000218
+2023-12-14,"Random (same distance, other week)",9,2.5
+2023-12-14,Shifted ±75 from ours,8,36.20000000000073
+2023-12-21,Our week's levels,9,3.0
+2023-12-21,"Random (same distance, other week)",9,2.5
+2023-12-21,Shifted ±75 from ours,8,28.0
+2023-12-28,Our week's levels,11,93.70000000000073
+2023-12-28,"Random (same distance, other week)",11,42.400000000001455
+2023-12-28,Shifted ±75 from ours,9,72.45000000000073
+2024-01-04,Our week's levels,13,12.049999999999272
+2024-01-04,"Random (same distance, other week)",13,35.60000000000218
+2024-01-04,Shifted ±75 from ours,11,5.599999999998545
+2024-01-11,Our week's levels,10,8.599999999998545
+2024-01-11,"Random (same distance, other week)",10,2.4500000000007276
+2024-01-11,Shifted ±75 from ours,9,17.099999999998545
+2024-01-18,Our week's levels,20,37.75
+2024-01-18,"Random (same distance, other week)",20,4.69999999999709
+2024-01-18,Shifted ±75 from ours,18,12.75
+2024-01-25,Our week's levels,13,32.20000000000073
+2024-01-25,"Random (same distance, other week)",13,21.099999999998545
+2024-01-25,Shifted ±75 from ours,12,107.20000000000073
+2024-02-01,Our week's levels,17,67.35000000000218
+2024-02-01,"Random (same distance, other week)",17,30.950000000000728
+2024-02-01,Shifted ±75 from ours,15,214.70000000000073
+2024-02-08,Our week's levels,17,0.2999999999992724
+2024-02-08,"Random (same distance, other week)",17,40.29999999999927
+2024-02-08,Shifted ±75 from ours,14,16.049999999999272
+2024-02-15,Our week's levels,19,12.0
+2024-02-15,"Random (same distance, other week)",19,32.349999999998545
+2024-02-15,Shifted ±75 from ours,19,24.099999999998545
+2024-02-22,Our week's levels,8,1.0999999999985448
+2024-02-22,"Random (same distance, other week)",8,14.149999999997817
+2024-02-22,Shifted ±75 from ours,8,6.099999999998545
+2024-02-29,Our week's levels,14,4.950000000000728
+2024-02-29,"Random (same distance, other week)",14,10.100000000002183
+2024-02-29,Shifted ±75 from ours,13,20.049999999999272
+2024-03-07,Our week's levels,15,21.450000000000728
+2024-03-07,"Random (same distance, other week)",15,2.100000000002183
+2024-03-07,Shifted ±75 from ours,15,3.5499999999992724
+2024-03-14,Our week's levels,10,44.29999999999927
+2024-03-14,"Random (same distance, other week)",10,44.650000000001455
+2024-03-14,Shifted ±75 from ours,9,69.29999999999927
+2024-03-21,Our week's levels,17,20.100000000002183
+2024-03-21,"Random (same distance, other week)",17,9.100000000002183
+2024-03-21,Shifted ±75 from ours,16,22.25
+2024-03-28,Our week's levels,12,47.14999999999782
+2024-03-28,"Random (same distance, other week)",12,26.100000000002183
+2024-03-28,Shifted ±75 from ours,11,48.099999999998545
+2024-04-04,Our week's levels,8,30.200000000000728
+2024-04-04,"Random (same distance, other week)",8,31.05000000000291
+2024-04-04,Shifted ±75 from ours,7,46.099999999998545
+2024-04-10,Our week's levels,9,5.049999999999272
+2024-04-10,"Random (same distance, other week)",9,52.64999999999782
+2024-04-10,Shifted ±75 from ours,7,23.850000000002183
+2024-04-18,Our week's levels,14,38.349999999998545
+2024-04-18,"Random (same distance, other week)",14,36.5
+2024-04-18,Shifted ±75 from ours,13,32.849999999998545
+2024-04-25,Our week's levels,11,20.75
+2024-04-25,"Random (same distance, other week)",11,28.850000000002183
+2024-04-25,Shifted ±75 from ours,10,51.04999999999927
+2024-05-02,Our week's levels,8,43.900000000001455
+2024-05-02,"Random (same distance, other week)",8,25.600000000002183
+2024-05-02,Shifted ±75 from ours,7,31.099999999998545
+2024-05-09,Our week's levels,17,126.94999999999709
+2024-05-09,"Random (same distance, other week)",17,2.2999999999992724
+2024-05-09,Shifted ±75 from ours,15,51.94999999999709
+2024-05-16,Our week's levels,13,14.5
+2024-05-16,"Random (same distance, other week)",13,113.84999999999854
+2024-05-16,Shifted ±75 from ours,11,7.650000000001455
+2024-05-23,Our week's levels,13,267.0499999999993
+2024-05-23,"Random (same distance, other week)",13,40.25
+2024-05-23,Shifted ±75 from ours,12,214.15000000000146
+2024-05-30,Our week's levels,7,93.05000000000291
+2024-05-30,"Random (same distance, other week)",7,43.45000000000073
+2024-05-30,Shifted ±75 from ours,6,80.85000000000218
+2024-06-06,Our week's levels,23,47.04999999999927
+2024-06-06,"Random (same distance, other week)",23,58.69999999999709
+2024-06-06,Shifted ±75 from ours,23,82.95000000000073
+2024-06-13,Our week's levels,19,65.65000000000146
+2024-06-13,"Random (same distance, other week)",19,30.75
+2024-06-13,Shifted ±75 from ours,18,1.0999999999985448
+2024-06-20,Our week's levels,9,14.649999999997817
+2024-06-20,"Random (same distance, other week)",9,28.75
+2024-06-20,Shifted ±75 from ours,8,4.200000000000728
+2024-06-27,Our week's levels,15,61.55000000000291
+2024-06-27,"Random (same distance, other week)",15,143.25
+2024-06-27,Shifted ±75 from ours,14,13.44999999999709
+2024-07-04,Our week's levels,14,11.950000000000728
+2024-07-04,"Random (same distance, other week)",14,22.349999999998545
+2024-07-04,Shifted ±75 from ours,12,5.649999999997817
+2024-07-11,Our week's levels,12,22.349999999998545
+2024-07-11,"Random (same distance, other week)",12,7.25
+2024-07-11,Shifted ±75 from ours,11,9.799999999999272
+2024-07-18,Our week's levels,8,39.19999999999709
+2024-07-18,"Random (same distance, other week)",8,80.15000000000146
+2024-07-18,Shifted ±75 from ours,7,114.19999999999709
+2024-07-25,Our week's levels,24,20.0
+2024-07-25,"Random (same distance, other week)",24,5.94999999999709
+2024-07-25,Shifted ±75 from ours,22,4.650000000001455
+2024-08-01,Our week's levels,18,4.5
+2024-08-01,"Random (same distance, other week)",18,4.19999999999709
+2024-08-01,Shifted ±75 from ours,16,13.0
+2024-08-08,Our week's levels,17,23.600000000002183
+2024-08-08,"Random (same distance, other week)",17,7.399999999997817
+2024-08-08,Shifted ±75 from ours,15,1.3999999999978172
+2024-08-14,Our week's levels,15,2.2999999999992724
+2024-08-14,"Random (same distance, other week)",15,22.94999999999709
+2024-08-14,Shifted ±75 from ours,15,39.650000000001455
+2024-08-22,Our week's levels,13,2.650000000001455
+2024-08-22,"Random (same distance, other week)",13,13.799999999999272
+2024-08-22,Shifted ±75 from ours,12,22.650000000001455
+2024-08-29,Our week's levels,10,7.799999999999272
+2024-08-29,"Random (same distance, other week)",10,30.299999999999272
+2024-08-29,Shifted ±75 from ours,10,32.79999999999927
+2024-09-05,Our week's levels,11,17.5
+2024-09-05,"Random (same distance, other week)",11,2.5499999999992724
+2024-09-05,Shifted ±75 from ours,9,4.200000000000728
+2024-09-12,Our week's levels,20,19.849999999998545
+2024-09-12,"Random (same distance, other week)",20,59.75
+2024-09-12,Shifted ±75 from ours,18,46.20000000000073
+2024-09-19,Our week's levels,6,53.0
+2024-09-19,"Random (same distance, other week)",6,129.54999999999927
+2024-09-19,Shifted ±75 from ours,6,13.75
+2024-09-26,Our week's levels,12,23.5
+2024-09-26,"Random (same distance, other week)",12,43.29999999999927
+2024-09-26,Shifted ±75 from ours,12,17.349999999998545
+2024-10-03,Our week's levels,15,357.0
+2024-10-03,"Random (same distance, other week)",15,90.10000000000218
+2024-10-03,Shifted ±75 from ours,13,282.0
+2024-10-10,Our week's levels,19,16.299999999999272
+2024-10-10,"Random (same distance, other week)",19,13.649999999997817
+2024-10-10,Shifted ±75 from ours,16,91.29999999999927
+2024-10-17,Our week's levels,15,67.79999999999927
+2024-10-17,"Random (same distance, other week)",15,12.05000000000291
+2024-10-17,Shifted ±75 from ours,14,7.849999999998545
+2024-10-24,Our week's levels,20,43.44999999999709
+2024-10-24,"Random (same distance, other week)",20,49.349999999998545
+2024-10-24,Shifted ±75 from ours,19,48.85000000000218
+2024-10-31,Our week's levels,21,53.20000000000073
+2024-10-31,"Random (same distance, other week)",21,7.399999999997817
+2024-10-31,Shifted ±75 from ours,19,23.599999999998545
+2024-11-07,Our week's levels,12,5.30000000000291
+2024-11-07,"Random (same distance, other week)",12,17.649999999997817
+2024-11-07,Shifted ±75 from ours,12,35.650000000001455
+2024-11-14,Our week's levels,20,7.549999999999272
+2024-11-14,"Random (same distance, other week)",20,90.89999999999782
+2024-11-14,Shifted ±75 from ours,18,236.25
+2024-11-21,Our week's levels,11,5.25
+2024-11-21,"Random (same distance, other week)",11,71.70000000000073
+2024-11-21,Shifted ±75 from ours,10,70.70000000000073
+2024-11-28,Our week's levels,19,33.54999999999927
+2024-11-28,"Random (same distance, other week)",19,33.10000000000218
+2024-11-28,Shifted ±75 from ours,19,64.75
+2024-12-05,Our week's levels,23,33.599999999998545
+2024-12-05,"Random (same distance, other week)",23,16.299999999999272
+2024-12-05,Shifted ±75 from ours,22,3.350000000002183
+2024-12-12,Our week's levels,11,12.450000000000728
+2024-12-12,"Random (same distance, other week)",11,19.200000000000728
+2024-12-12,Shifted ±75 from ours,11,12.400000000001455
+2024-12-19,Our week's levels,19,97.39999999999782
+2024-12-19,"Random (same distance, other week)",19,12.049999999999272
+2024-12-19,Shifted ±75 from ours,18,22.399999999997817
+2024-12-26,Our week's levels,8,122.29999999999927
+2024-12-26,"Random (same distance, other week)",8,1.1499999999978172
+2024-12-26,Shifted ±75 from ours,8,47.29999999999927
+2025-01-02,Our week's levels,13,6.450000000000728
+2025-01-02,"Random (same distance, other week)",13,13.150000000001455
+2025-01-02,Shifted ±75 from ours,11,16.149999999997817
+2025-01-09,Our week's levels,22,4.450000000000728
+2025-01-09,"Random (same distance, other week)",22,1.6999999999970896
+2025-01-09,Shifted ±75 from ours,21,48.79999999999927
+2025-01-16,Our week's levels,18,10.5
+2025-01-16,"Random (same distance, other week)",18,13.099999999998545
+2025-01-16,Shifted ±75 from ours,16,20.799999999999272
+2025-01-23,Our week's levels,16,15.799999999999272
+2025-01-23,"Random (same distance, other week)",16,28.099999999998545
+2025-01-23,Shifted ±75 from ours,15,90.79999999999927
+2025-01-30,Our week's levels,15,63.79999999999927
+2025-01-30,"Random (same distance, other week)",15,17.249999999996362
+2025-01-30,Shifted ±75 from ours,15,7.950000000000728
+2025-02-06,Our week's levels,23,0.75
+2025-02-06,"Random (same distance, other week)",23,19.299999999999272
+2025-02-06,Shifted ±75 from ours,21,91.95000000000073
+2025-02-13,Our week's levels,22,21.25
+2025-02-13,"Random (same distance, other week)",22,15.200000000000728
+2025-02-13,Shifted ±75 from ours,21,96.25
+2025-02-20,Our week's levels,21,78.04999999999927
+2025-02-20,"Random (same distance, other week)",21,22.799999999999272
+2025-02-20,Shifted ±75 from ours,19,61.45000000000073
+2025-02-27,Our week's levels,13,14.25
+2025-02-27,"Random (same distance, other week)",13,2.5
+2025-02-27,Shifted ±75 from ours,13,25.849999999998545
+2025-03-06,Our week's levels,29,32.79999999999927
+2025-03-06,"Random (same distance, other week)",29,16.899999999997817
+2025-03-06,Shifted ±75 from ours,26,13.450000000000728
+2025-03-13,Our week's levels,23,3.2999999999992724
+2025-03-13,"Random (same distance, other week)",23,6.350000000002183
+2025-03-13,Shifted ±75 from ours,21,13.700000000000728
+2025-03-20,Our week's levels,16,9.650000000001455
+2025-03-20,"Random (same distance, other week)",16,108.85000000000218
+2025-03-20,Shifted ±75 from ours,14,65.34999999999854
+2025-03-27,Our week's levels,17,29.950000000000728
+2025-03-27,"Random (same distance, other week)",17,4.75
+2025-03-27,Shifted ±75 from ours,16,37.64999999999782
+2025-04-03,Our week's levels,13,39.45000000000073
+2025-04-03,"Random (same distance, other week)",13,17.75
+2025-04-03,Shifted ±75 from ours,12,114.45000000000073
+2025-04-09,Our week's levels,14,35.39999999999782
+2025-04-09,"Random (same distance, other week)",14,1.1000000000021828
+2025-04-09,Shifted ±75 from ours,13,244.20000000000073
+2025-04-17,Our week's levels,10,266.0499999999993
+2025-04-17,"Random (same distance, other week)",10,193.15000000000146
+2025-04-17,Shifted ±75 from ours,9,191.04999999999927
+2025-04-24,Our week's levels,16,15.650000000001455
+2025-04-24,"Random (same distance, other week)",16,6.100000000002183
+2025-04-24,Shifted ±75 from ours,15,74.04999999999927
+2025-04-30,Our week's levels,19,26.25
+2025-04-30,"Random (same distance, other week)",19,5.850000000002183
+2025-04-30,Shifted ±75 from ours,17,51.25
+2025-05-08,Our week's levels,17,48.099999999998545
+2025-05-08,"Random (same distance, other week)",17,3.099999999998545
+2025-05-08,Shifted ±75 from ours,16,1.0999999999985448
+2025-05-15,Our week's levels,21,108.79999999999927
+2025-05-15,"Random (same distance, other week)",21,83.34999999999854
+2025-05-15,Shifted ±75 from ours,19,183.79999999999927
+2025-05-22,Our week's levels,12,21.0
+2025-05-22,"Random (same distance, other week)",12,22.549999999999272
+2025-05-22,Shifted ±75 from ours,10,1.7000000000007276
+2025-05-29,Our week's levels,18,0.6500000000014552
+2025-05-29,"Random (same distance, other week)",18,13.099999999998545
+2025-05-29,Shifted ±75 from ours,18,25.650000000001455
+2025-06-05,Our week's levels,19,1.0999999999985448
+2025-06-05,"Random (same distance, other week)",19,12.150000000001455
+2025-06-05,Shifted ±75 from ours,17,73.90000000000146
+2025-06-12,Our week's levels,16,59.0
+2025-06-12,"Random (same distance, other week)",16,2.75
+2025-06-12,Shifted ±75 from ours,16,7.049999999999272
+2025-06-19,Our week's levels,24,10.299999999999272
+2025-06-19,"Random (same distance, other week)",24,18.350000000002183
+2025-06-19,Shifted ±75 from ours,20,7.299999999999272
+2025-06-26,Our week's levels,12,200.40000000000146
+2025-06-26,"Random (same distance, other week)",12,2.7000000000007276
+2025-06-26,Shifted ±75 from ours,11,140.5500000000029
+2025-07-03,Our week's levels,11,14.149999999997817
+2025-07-03,"Random (same distance, other week)",11,48.75
+2025-07-03,Shifted ±75 from ours,10,4.200000000000728
+2025-07-10,Our week's levels,9,42.10000000000218
+2025-07-10,"Random (same distance, other week)",9,2.249999999996362
+2025-07-10,Shifted ±75 from ours,7,5.649999999997817
+2025-07-17,Our week's levels,17,11.5
+2025-07-17,"Random (same distance, other week)",17,13.599999999998545
+2025-07-17,Shifted ±75 from ours,13,9.5
+2025-07-24,Our week's levels,18,8.399999999997817
+2025-07-24,"Random (same distance, other week)",18,1.3000000000029104
+2025-07-24,Shifted ±75 from ours,17,66.60000000000218
+2025-07-31,Our week's levels,10,13.799999999999272
+2025-07-31,"Random (same distance, other week)",10,4.600000000002183
+2025-07-31,Shifted ±75 from ours,10,88.79999999999927
+2025-08-07,Our week's levels,11,47.849999999998545
+2025-08-07,"Random (same distance, other week)",11,3.25
+2025-08-07,Shifted ±75 from ours,8,27.150000000001455
+2025-08-14,Our week's levels,11,19.450000000000728
+2025-08-14,"Random (same distance, other week)",11,23.200000000000728
+2025-08-14,Shifted ±75 from ours,10,5.549999999999272
+2025-08-21,Our week's levels,8,22.049999999999272
+2025-08-21,"Random (same distance, other week)",8,3.399999999997817
+2025-08-21,Shifted ±75 from ours,7,14.450000000000728
+2025-08-28,Our week's levels,12,96.90000000000146
+2025-08-28,"Random (same distance, other week)",12,105.25
+2025-08-28,Shifted ±75 from ours,10,259.7000000000007
+2025-09-02,Our week's levels,7,35.0
+2025-09-02,"Random (same distance, other week)",7,4.55000000000291
+2025-09-02,Shifted ±75 from ours,7,40.0
+2025-09-09,Our week's levels,13,0.5999999999985448
+2025-09-09,"Random (same distance, other week)",13,9.600000000002183
+2025-09-09,Shifted ±75 from ours,8,25.900000000001455
+2025-09-16,Our week's levels,6,59.45000000000073
+2025-09-16,"Random (same distance, other week)",6,80.15000000000146
+2025-09-16,Shifted ±75 from ours,3,184.45000000000073
+2025-09-23,Our week's levels,11,0.049999999999272404
+2025-09-23,"Random (same distance, other week)",11,25.600000000002183
+2025-09-23,Shifted ±75 from ours,10,5.799999999999272
+2025-09-30,Our week's levels,11,3.599999999998545
+2025-09-30,"Random (same distance, other week)",11,7.80000000000291
+2025-09-30,Shifted ±75 from ours,9,78.59999999999854
+2025-10-07,Our week's levels,9,10.200000000000728
+2025-10-07,"Random (same distance, other week)",9,24.150000000001455
+2025-10-07,Shifted ±75 from ours,9,79.79999999999927
+2025-10-14,Our week's levels,14,12.150000000001455
+2025-10-14,"Random (same distance, other week)",14,53.25
+2025-10-14,Shifted ±75 from ours,13,28.25
+2025-10-20,Our week's levels,15,32.45000000000073
+2025-10-20,"Random (same distance, other week)",15,68.94999999999709
+2025-10-20,Shifted ±75 from ours,14,7.450000000000728
+2025-11-04,Our week's levels,15,23.75
+2025-11-04,"Random (same distance, other week)",15,20.600000000002183
+2025-11-04,Shifted ±75 from ours,14,0.2999999999992724
+2025-11-11,Our week's levels,12,16.450000000000728
+2025-11-11,"Random (same distance, other week)",12,71.95000000000073
+2025-11-11,Shifted ±75 from ours,12,25.549999999999272
+2025-11-18,Our week's levels,14,23.299999999999272
+2025-11-18,"Random (same distance, other week)",14,20.700000000000728
+2025-11-18,Shifted ±75 from ours,13,1.7000000000007276
+2025-11-25,Our week's levels,10,77.70000000000073
+2025-11-25,"Random (same distance, other week)",10,8.150000000001455
+2025-11-25,Shifted ±75 from ours,10,22.299999999999272
+2025-12-02,Our week's levels,16,3.0
+2025-12-02,"Random (same distance, other week)",16,19.799999999999272
+2025-12-02,Shifted ±75 from ours,14,22.0
+2025-12-09,Our week's levels,13,14.799999999999272
+2025-12-09,"Random (same distance, other week)",13,57.150000000001455
+2025-12-09,Shifted ±75 from ours,12,9.799999999999272
+2025-12-16,Our week's levels,13,26.149999999997817
+2025-12-16,"Random (same distance, other week)",13,10.150000000001455
+2025-12-16,Shifted ±75 from ours,11,37.0
+2025-12-23,Our week's levels,14,33.04999999999927
+2025-12-23,"Random (same distance, other week)",14,42.849999999998545
+2025-12-23,Shifted ±75 from ours,13,79.0
+2025-12-30,Our week's levels,7,1.0999999999985448
+2025-12-30,"Random (same distance, other week)",7,17.299999999999272
+2025-12-30,Shifted ±75 from ours,5,76.09999999999854
+2026-01-06,Our week's levels,12,8.0
+2026-01-06,"Random (same distance, other week)",12,30.650000000001455
+2026-01-06,Shifted ±75 from ours,8,67.0
+2026-01-13,Our week's levels,15,40.20000000000073
+2026-01-13,"Random (same distance, other week)",15,21.100000000002183
+2026-01-13,Shifted ±75 from ours,13,65.20000000000073
+2026-01-20,Our week's levels,8,130.65000000000146
+2026-01-20,"Random (same distance, other week)",8,101.00000000000364
+2026-01-20,Shifted ±75 from ours,8,205.65000000000146
+2026-01-27,Our week's levels,16,50.650000000001455
+2026-01-27,"Random (same distance, other week)",16,1.9000000000014552
+2026-01-27,Shifted ±75 from ours,15,35.19999999999709
+2026-02-03,Our week's levels,16,116.79999999999927
+2026-02-03,"Random (same distance, other week)",16,133.3000000000029
+2026-02-03,Shifted ±75 from ours,16,119.84999999999854
+2026-02-10,Our week's levels,18,12.150000000001455
+2026-02-10,"Random (same distance, other week)",18,4.19999999999709
+2026-02-10,Shifted ±75 from ours,15,7.200000000000728
+2026-02-17,Our week's levels,17,6.0
+2026-02-17,"Random (same distance, other week)",17,16.25
+2026-02-17,Shifted ±75 from ours,14,2.400000000001455
+2026-02-24,Our week's levels,20,29.049999999999272
+2026-02-24,"Random (same distance, other week)",20,1.2999999999992724
+2026-02-24,Shifted ±75 from ours,17,24.849999999998545
+2026-03-02,Our week's levels,14,231.0
+2026-03-02,"Random (same distance, other week)",14,104.09999999999854
+2026-03-02,Shifted ±75 from ours,14,209.25
+2026-03-10,Our week's levels,22,0.8999999999978172
+2026-03-10,"Random (same distance, other week)",22,29.900000000001455
+2026-03-10,Shifted ±75 from ours,21,40.849999999998545
+2026-03-17,Our week's levels,27,24.400000000001455
+2026-03-17,"Random (same distance, other week)",27,0.8500000000021828
+2026-03-17,Shifted ±75 from ours,25,0.5999999999985448
+2026-03-24,Our week's levels,19,5.69999999999709
+2026-03-24,"Random (same distance, other week)",19,9.299999999999272
+2026-03-24,Shifted ±75 from ours,17,30.69999999999709
+2026-03-30,Our week's levels,19,264.8999999999978
+2026-03-30,"Random (same distance, other week)",19,26.75
+2026-03-30,Shifted ±75 from ours,18,251.89999999999782
+2026-04-07,Our week's levels,26,90.35000000000218
+2026-04-07,"Random (same distance, other week)",26,2.850000000002183
+2026-04-07,Shifted ±75 from ours,26,16.799999999999272
+2026-04-13,Our week's levels,13,41.54999999999927
+2026-04-13,"Random (same distance, other week)",13,34.99999999999636
+2026-04-13,Shifted ±75 from ours,13,113.60000000000218
+2026-04-21,Our week's levels,16,8.100000000002183
+2026-04-21,"Random (same distance, other week)",16,20.30000000000291
+2026-04-21,Shifted ±75 from ours,15,35.900000000001455
+2026-04-28,Our week's levels,23,20.799999999999272
+2026-04-28,"Random (same distance, other week)",23,45.400000000001455
+2026-04-28,Shifted ±75 from ours,22,3.599999999998545
+2026-05-05,Our week's levels,19,35.849999999998545
+2026-05-05,"Random (same distance, other week)",19,59.0
+2026-05-05,Shifted ±75 from ours,18,10.849999999998545
+2026-05-12,Our week's levels,11,334.4500000000007
+2026-05-12,"Random (same distance, other week)",11,188.5
+2026-05-12,Shifted ±75 from ours,9,494.4500000000007
+2026-05-19,Our week's levels,19,6.399999999997817
+2026-05-19,"Random (same distance, other week)",19,22.19999999999709
+2026-05-19,Shifted ±75 from ours,19,10.5
+2026-05-26,Our week's levels,21,28.349999999998545
+2026-05-26,"Random (same distance, other week)",21,15.700000000000728
+2026-05-26,Shifted ±75 from ours,21,25.25
+2026-06-02,Our week's levels,7,134.90000000000146
+2026-06-02,"Random (same distance, other week)",7,13.299999999995634
+2026-06-02,Shifted ±75 from ours,7,59.900000000001455
+2026-06-09,Our week's levels,21,34.650000000001455
+2026-06-09,"Random (same distance, other week)",21,10.850000000002183
+2026-06-09,Shifted ±75 from ours,19,9.650000000001455
+2026-06-16,Our week's levels,18,20.0
+2026-06-16,"Random (same distance, other week)",18,15.75
+2026-06-16,Shifted ±75 from ours,15,26.950000000000728
+2026-06-23,Our week's levels,12,30.599999999998545
+2026-06-23,"Random (same distance, other week)",12,50.5
+2026-06-23,Shifted ±75 from ours,8,18.799999999999272
+2026-06-30,Our week's levels,15,11.75
+2026-06-30,"Random (same distance, other week)",15,16.149999999997817
+2026-06-30,Shifted ±75 from ours,14,7.799999999999272
+2026-07-07,Our week's levels,18,4.549999999999272
+2026-07-07,"Random (same distance, other week)",18,13.30000000000291
+2026-07-07,Shifted ±75 from ours,17,27.5
+2026-07-14,Our week's levels,14,46.0
+2026-07-14,"Random (same distance, other week)",14,1.4000000000014552
+2026-07-14,Shifted ±75 from ours,13,0.1499999999978172
+2026-07-21,Our week's levels,14,65.90000000000146
+2026-07-21,"Random (same distance, other week)",14,15.5
+2026-07-21,Shifted ±75 from ours,13,9.099999999998545
+2026-07-28,Our week's levels,17,52.89999999999782
+2026-07-28,"Random (same distance, other week)",17,26.5
+2026-07-28,Shifted ±75 from ours,14,22.100000000002183
+2026-08-04,Our week's levels,12,67.75
+2026-08-04,"Random (same distance, other week)",12,53.5
+2026-08-04,Shifted ±75 from ours,12,41.20000000000073
+2026-08-11,Our week's levels,11,2.849999999998545
+2026-08-11,"Random (same distance, other week)",11,10.600000000002183
+2026-08-11,Shifted ±75 from ours,10,77.84999999999854
+2026-08-18,Our week's levels,12,2.099999999998545
+2026-08-18,"Random (same distance, other week)",12,46.150000000001455
+2026-08-18,Shifted ±75 from ours,11,43.95000000000073
+2026-08-25,Our week's levels,13,7.649999999997817
+2026-08-25,"Random (same distance, other week)",13,34.20000000000073
+2026-08-25,Shifted ±75 from ours,11,16.75
+2026-09-01,Our week's levels,12,29.200000000000728
+2026-09-01,"Random (same distance, other week)",12,6.350000000002183
+2026-09-01,Shifted ±75 from ours,9,45.79999999999927
+2026-09-08,Our week's levels,9,3.099999999998545
+2026-09-08,"Random (same distance, other week)",9,113.10000000000218
+2026-09-08,Shifted ±75 from ours,8,29.349999999998545
+2026-09-15,Our week's levels,13,37.599999999998545
+2026-09-15,"Random (same distance, other week)",13,0.3499999999985448
+2026-09-15,Shifted ±75 from ours,13,12.599999999998545
+2026-09-22,Our week's levels,12,0.5499999999992724
+2026-09-22,"Random (same distance, other week)",12,6.450000000000728
+2026-09-22,Shifted ±75 from ours,10,45.0

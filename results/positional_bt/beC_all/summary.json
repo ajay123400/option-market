@@ -1,0 +1,78 @@
+{
+ "weeks": 259,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": -119797,
+ "gross_rs": 228974,
+ "charges": 348772,
+ "points": 3481.4,
+ "win_pct": 49.8,
+ "avg_win": 4687,
+ "avg_loss": -5573,
+ "max_drawdown_rs": -208889,
+ "exits": {
+  "EXPIRY": 257,
+  "TARGET": 2
+ },
+ "avg_rolls": 23.0,
+ "avg_premium": 270.3,
+ "by_year": {
+  "2021": {
+   "weeks": 14,
+   "net_rs": -14058,
+   "pts": 125.6,
+   "win_pct": 42.9
+  },
+  "2022": {
+   "weeks": 52,
+   "net_rs": -3550,
+   "pts": 1448.5,
+   "win_pct": 50.0
+  },
+  "2023": {
+   "weeks": 51,
+   "net_rs": -55589,
+   "pts": -165.9,
+   "win_pct": 49.0
+  },
+  "2024": {
+   "weeks": 52,
+   "net_rs": -70614,
+   "pts": -14.7,
+   "win_pct": 40.4
+  },
+  "2025": {
+   "weeks": 52,
+   "net_rs": 64554,
+   "pts": 1795.6,
+   "win_pct": 59.6
+  },
+  "2026": {
+   "weeks": 38,
+   "net_rs": -40541,
+   "pts": 292.4,
+   "win_pct": 52.6
+  }
+ },
+ "best": {
+  "expiry": "2026-04-21",
+  "net_rs": 17002.13
+ },
+ "worst": {
+  "expiry": "2026-02-03",
+  "net_rs": -53352.85
+ },
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "check_min": 5,
+  "sl_frac": null,
+  "target_frac": 0.9,
+  "slippage": 0.5,
+  "lots": 1,
+  "cross_pts": 100,
+  "roll_on_expiry_day": true,
+  "approach": "C",
+  "label": "C \u00b7 balanced strangle \u00b7 every week \u00b7 target 90%"
+ }
+}

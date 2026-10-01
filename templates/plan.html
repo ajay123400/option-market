@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaj ka Plan</title>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #ffffff; --border: #e7e8ee; --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --up-soft: #e6f7f0; --down: #e0434a; --down-soft: #fdedee; --amber: #b7791f; --amber-soft: #fdf1dc;
+    --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --radius: 14px; --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 18px 20px 40px; display: flex; flex-direction: column; gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+  .card h2 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .decision { border-radius: var(--radius); padding: 18px 20px; border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow); }
+  .decision.sell { background: var(--up-soft); border-color: #bfe8d6; }
+  .decision.none { background: #f6f7fa; }
+  .decision.wait { background: var(--accent-soft); border-color: #d6daf7; }
+  .decision .big { font-size: 22px; font-weight: 800; }
+  .decision.sell .big { color: var(--up); }
+  .decision .sub { color: var(--muted); margin-top: 4px; font-size: 13.5px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 9px; margin-left: 6px; vertical-align: middle; }
+  .tag.strong { background: var(--up); color: #fff; } .tag.skew { background: var(--amber-soft); color: var(--amber); } .tag.primary { background: var(--accent); color: #fff; }
+  .setup { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-top: 12px; }
+  .setup.primary { border: 2px solid var(--accent); }
+  .setup h3 { margin: 0 0 4px; font-size: 16px; }
+  .setup .why { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+  .trades { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
+  .trade { background: var(--bg); border-radius: 10px; padding: 12px 14px; font-size: 13px; line-height: 1.6; }
+  .trade .t { font-weight: 800; font-size: 14px; }
+  .trade .legs { font-family: "SF Mono", Consolas, monospace; font-size: 12.5px; }
+  .trade .test { color: var(--muted); font-size: 12px; }
+  .exit { margin-top: 10px; font-size: 13px; background: var(--amber-soft); color: #7a4f0c; border-radius: 8px; padding: 8px 10px; }
+  a.btn { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 8px; padding: 5px 12px; text-decoration: none; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 7px 8px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; } th { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+  .up { color: var(--up); } .down { color: var(--down); } .muted { color: var(--muted); }
+  .ck { display: grid; grid-template-columns: 24px 1fr auto; gap: 6px 10px; font-size: 13.5px; align-items: start; }
+  .ck .ic { font-weight: 800; } .ck .ok { color: var(--up); } .ck .no { color: var(--muted); } .ck .hint { color: var(--amber); }
+  .ck .r { color: var(--muted); font-size: 12px; text-align: right; }
+  .act { font-weight: 800; } .act.EXIT { color: var(--down); } .act.HOLD { color: var(--muted); }
+  ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; } li { margin: 3px 0; }
+  .scroll { overflow-x: auto; }
+  @media (max-width: 800px) { .topbar, .page { padding-left: 12px; padding-right: 12px; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Aaj ka Plan</h1>
+  <a class="navlink active" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+<div class="page">
+  <div id="decision" class="decision"><div class="big">Loading…</div></div>
+  <div class="card" id="setupsCard" hidden><h2>Today's trade</h2><div id="setups"></div></div>
+  <div class="card"><h2>Open plan trades — what to do today</h2><div class="scroll"><table id="open"></table></div></div>
+  <div class="card"><h2>The rules behind today's decision</h2><div class="ck" id="ck"></div><div class="muted" id="ckNote" style="font-size:12px;margin-top:8px"></div></div>
+  <div class="card"><h2>Plan scorecard (live, 1 lot each) vs the backtest</h2><div id="score" class="muted" style="font-size:13px;margin-bottom:8px"></div><div class="scroll"><table id="closed"></table></div></div>
+  <div class="card"><h2>How the plan decides</h2><ul>
+    <li><b>IV rule:</b> ATM IV of the weekly expiry with 1–4 trading days left, compared at 09:30 / 12:00 / 14:30 with the 60th percentile of the past 500 days at that time. At or above = <b>green</b>; above the 70th percentile = <b>strong</b>.</li>
+    <li><b>Setup A</b> (green): sell that expiry — straddle at ATM or strangle at 0.15 delta — and <b>hold to expiry</b>.</li>
+    <li><b>Setup B</b> (green at 09:30 and the current expiry has 1 day left): sell <b>next week's</b> expiry instead, and <b>exit when the IV rule reads normal</b> at a later check; otherwise hold to expiry.</li>
+    <li><b>Normal IV / expiry day:</b> no new trade.</li>
+    <li><b>Put skew steep:</b> the put side did better — lean the strangle toward puts.</li>
+    <li><b>Size:</b> 1 lot = one straddle. Its worst tested week lost ~₹1.1 lakh — keep the notional within ~2× capital.</li>
+    <li><b>Not used for decisions</b> (tested, no edge): Range Diary ideas, the Strategy Ideas table ranking, OI walls, PCR, FII/Client positions, profit targets, 2× stops, delta rolls. They stay in the app for reference only.</li>
+  </ul><div class="muted" style="font-size:12px;margin-top:8px">Information only — nothing here places an order. The plan's trades are followed virtually from their first appearance (from 09:30, every 5 minutes while the app runs).</div></div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const rs = v => v == null ? "—" : (v < 0 ? "−" : "") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+const cl = v => v == null ? "" : v > 0 ? "up" : v < 0 ? "down" : "";
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+function render(P) {
+  const D = P.decision || {}, R = P.rule || {}, T = P.test;
+  const dec = $("decision");
+  dec.className = "decision " + (D.kind || "");
+  let sub = D.why ? esc(D.why) : "";
+  if (D.note) sub += (sub ? "<br>" : "") + esc(D.note);
+  if (D.kind === "wait" && D.last_day && D.last_day.slots) {
+    const L = D.last_day, any = Object.values(L.slots).some(x => x.sell);
+    sub += `Last trading day ${L.day}: ${any ? "<b class='up'>green</b>" : "normal"} — ` + Object.entries(L.slots).map(([k, x]) => `${k} IV ${x.iv.toFixed(1)}% vs ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"}`).join(" · ");
+  }
+  dec.innerHTML = `<div class="big">${esc(D.text || "")}${D.strong ? '<span class="tag strong">STRONG</span>' : ""}${D.skew_steep ? '<span class="tag skew">put skew steep → lean to puts</span>' : ""}</div>
+    <div class="sub">${sub}</div><div class="sub">${esc(P.time)} · market ${esc(P.market)}${P.rule_expiry ? ` · rule expiry ${P.rule_expiry.date} (${P.rule_expiry.dte} trading day${P.rule_expiry.dte === 1 ? "" : "s"} left)` : ""}</div>`;
+  // setups
+  const S = P.setups || [];
+  $("setupsCard").hidden = !S.length;
+  $("setups").innerHTML = S.map(s => {
+    const tr = Object.entries(s.trades || {}).map(([k, t]) => {
+      const te = s.test[k] || {};
+      const legs = t.legs.map(l => `SELL ${l.strike} ${l.type} @ ${l.price}`).join("<br>");
+      const link = `/strategy?idea=${encodeURIComponent(t.legkey)}&expiry=${encodeURIComponent(s.expiry.ts)}`;
+      return `<div class="trade"><div class="t">${esc(t.label)}</div><div class="legs">${legs}</div>
+        <div>Premium <b>${rs(t.net_premium)}</b> (1 lot) · breakeven ${t.breakevens.join(" / ") || "—"} · <b class="down">unlimited risk</b></div>
+        <div class="test">Backtest: ${rs(te.avg)} a trade${s.id === "A" && P.decision.strong && te.strong_avg ? ` (strong days ${rs(te.strong_avg)})` : ""} · win ${te.win}% · 5% worst ${rs(te.p5)} · worst drawdown ${rs(te.dd)}</div>
+        <a class="btn" href="${link}">Open in Strategy Builder →</a></div>`;
+    }).join("") || `<div class="muted">Prices unavailable right now.</div>`;
+    return `<div class="setup ${s.primary ? "primary" : ""}"><h3>Setup ${s.id}: ${esc(s.title)}${s.primary ? '<span class="tag primary">preferred</span>' : ""}</h3>
+      <div class="why">Why: ${esc(s.why)}</div><div class="trades">${tr}</div><div class="exit"><b>Exit:</b> ${esc(s.exit)}</div></div>`;
+  }).join("");
+  // open trades
+  const O = P.open || [];
+  $("open").innerHTML = `<tr><th>Trade</th><th>Setup</th><th>Opened</th><th>Expiry</th><th>Legs</th><th>Credit</th><th>P&amp;L now</th><th>Action today</th></tr>` +
+    (O.length ? O.map(t => `<tr><td>${esc(t.name)}</td><td>${t.setup}</td><td>${t.day} ${t.time}</td><td>${t.expiry}</td>
+      <td style="text-align:left">${t.legs.map(l => `${l.strike}${l.type}@${l.price}`).join(", ")}</td><td>${rs(t.credit)}</td>
+      <td class="${cl(t.pnl)}"><b>${rs(t.pnl)}</b><div class="muted" style="font-size:11px">${t.marked || ""}</div></td>
+      <td class="act ${String(t.action || "").split(" ")[0]}">${esc(t.action || "")}</td></tr>`).join("")
+      : `<tr><td colspan="8" class="muted" style="text-align:left">No open plan trades.</td></tr>`);
+  // checklist
+  const ck = [];
+  if (R.atm_iv != null) {
+    ck.push([R.iv_ok ? "ok" : "no", R.iv_ok ? "✓" : "✗", `<b>IV level</b> (${P.rule_expiry ? P.rule_expiry.date : ""}): ATM IV ${R.atm_iv.toFixed(1)}% vs threshold ${R.iv_thr_now == null ? "—" : R.iv_thr_now.toFixed(1) + "%"} (${R.bucket} bucket)${R.p70_now ? ` · strong above ${R.p70_now.toFixed(1)}%` : ""}`, `sell days ${rs(T.A.straddle.avg)} vs normal ${rs(T.A.normal_day_straddle)} (straddle)`]);
+    ck.push([R.window === "ok" ? "ok" : "no", R.window === "ok" ? "✓" : "✗", `<b>Expiry window</b>: ${R.dte} trading day${R.dte === 1 ? "" : "s"} left (tested 1–4)`, ""]);
+    ck.push([R.skew_steep ? "hint" : "no", R.skew_steep ? "↓" : "·", `<b>Put skew</b>: ${R.skew25 == null ? "—" : R.skew25.toFixed(2)} vs ${(R.thresholds || {}).skew ?? "—"} — ${R.skew_steep ? "steep, lean to puts" : "not steep"}`, ""]);
+    const cur = P.current;
+    if (cur) ck.push([cur.dte === 1 ? "ok" : "no", cur.dte === 1 ? "✓" : "·", `<b>Setup B window</b>: current expiry ${cur.date} has ${cur.dte} trading day${cur.dte === 1 ? "" : "s"} left (B needs exactly 1, and green at 09:30)`, `next-week trade ${rs(T.B.straddle.avg)} a trade`]);
+  } else if (P.decision && P.decision.last_day && P.decision.last_day.slots) {
+    ck.push(["no", "·", "Live readings start at 09:30 while the market is open.", ""]);
+  }
+  $("ck").innerHTML = ck.map(([c, i, t, r]) => `<span class="ic ${c}">${i}</span><span>${t}</span><span class="r">${r}</span>`).join("");
+  $("ckNote").textContent = "Thresholds re-computed every day from the past 500 trading days (results/iv_rule/history.parquet).";
+  // scorecard
+  const sc = P.score || {};
+  $("score").innerHTML = ["A", "B"].map(k => sc[k] ? `Setup ${k}: ${sc[k].n} closed · win ${sc[k].win}% · avg <b class="${cl(sc[k].avg)}">${rs(sc[k].avg)}</b> · total <b class="${cl(sc[k].total)}">${rs(sc[k].total)}</b> (backtest straddle avg ${rs(T[k].straddle.avg)}, strangle ${rs(T[k].strangle.avg)})` : `Setup ${k}: no closed trades yet`).join("<br>");
+  const C = P.closed || [];
+  $("closed").innerHTML = `<tr><th>Trade</th><th>Setup</th><th>Opened</th><th>Closed</th><th>Why</th><th>Credit</th><th>Result</th></tr>` +
+    (C.length ? C.map(t => `<tr><td>${esc(t.name)}</td><td>${t.setup}</td><td>${t.day} ${t.time}</td><td>${esc(t.closed || "")}</td><td style="text-align:left">${esc(t.close_reason || "")}</td><td>${rs(t.credit)}</td><td class="${cl(t.pnl)}"><b>${rs(t.pnl)}</b></td></tr>`).join("")
+      : `<tr><td colspan="7" class="muted" style="text-align:left">Nothing closed yet.</td></tr>`);
+}
+async function load() {
+  try {
+    const j = await (await fetch("/api/plan")).json();
+    if (!j.ok) { $("decision").innerHTML = `<div class="big">Plan unavailable</div><div class="sub">${esc(j.error)}</div>`; return; }
+    render(j);
+  } catch (e) { /* keep the last view */ }
+}
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>

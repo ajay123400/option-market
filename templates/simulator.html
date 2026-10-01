@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategy Simulator</title>
+<style>
+  :root {
+    --bg: #f2f3f7;
+    --card: #ffffff;
+    --border: #e7e8ee;
+    --border-soft: #f1f2f6;
+    --text: #14161c;
+    --muted: #767b87;
+    --muted-2: #a2a7b3;
+    --up: #0e9f6e;
+    --up-soft: #e6f7f0;
+    --down: #e0434a;
+    --down-soft: #fdedee;
+    --accent: #4f5fe0;
+    --accent-dark: #3d4cc7;
+    --accent-soft: #eceefc;
+    --radius: 14px;
+    --radius-sm: 9px;
+    --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05);
+    --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; position: relative; z-index: 5; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; letter-spacing: -0.01em; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border: 1px solid transparent; border-radius: 999px; padding: 6px 14px; transition: all .15s ease; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+
+  select, input, button { font-family: inherit; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 11px; font-size: 13px; background: #fff; color: var(--text); }
+  select:focus, input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; box-shadow: var(--shadow-sm); }
+  button.primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+  button.primary:disabled { background: #ccc; border-color: #ccc; cursor: not-allowed; box-shadow: none; }
+  button.ghost { background: #fff; }
+  button.ghost:disabled { color: #bbb; cursor: not-allowed; }
+  button.danger { background: #fff; color: var(--down); border-color: #f6ced0; }
+  button.danger:hover { background: var(--down-soft); }
+  button.small { padding: 5px 11px; font-size: 11.5px; border-radius: 7px; }
+
+  .page { padding: 22px 28px; display: flex; flex-direction: column; gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow); }
+  .panel-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .panel-title h2 { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0; }
+
+  .progress-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .progress-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; }
+  .sim-date-banner { font-size: 12.5px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 5px 14px; margin-bottom: 12px; display: inline-block; }
+  .candle-time { font-weight: 800; font-size: 15px; min-width: 90px; }
+  .sim-spot { font-weight: 700; font-size: 14px; color: var(--accent); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .candle-count { font-size: 12px; color: var(--muted-2); min-width: 70px; text-align: right; }
+
+  .chain-scroll { overflow-x: auto; }
+  table.chain { border-collapse: collapse; width: 100%; font-size: 12.5px; min-width: 700px; }
+  table.chain thead th { padding: 8px 5px; font-weight: 700; color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.03em; text-align: center; border-bottom: 2px solid var(--border); }
+  table.chain tbody td { padding: 7px 5px; text-align: center; border-bottom: 1px solid var(--border-soft); }
+  .strike-cell { font-weight: 800; background: #fbfbf7; }
+  .ltp-cell { cursor: pointer; border-radius: 6px; font-weight: 700; }
+  .ltp-cell:hover { background: var(--accent-soft) !important; color: var(--accent-dark); outline: 1px dashed var(--accent); }
+  .legend { font-size: 11px; color: var(--muted-2); margin-top: 8px; }
+  .placeholder { color: var(--muted-2); text-align: center; padding: 40px 0; }
+  .itm { background: #fbf8ec; }
+  .chg-pct { display: block; font-size: 10px; margin-top: 1px; opacity: 0.85; }
+  .vol-leader { background: rgba(234, 184, 79, 0.45) !important; font-weight: 700; color: #b7791f; }
+  .missing-note, .gap-note { font-size: 11.5px; color: var(--amber, #b7791f); background: #fdf1dc; border-radius: 7px; padding: 6px 10px; margin-top: 8px; display: none; }
+  .missing-note.show, .gap-note.show { display: block; }
+
+  .below { display: grid; grid-template-columns: 420px 1fr; gap: 20px; align-items: start; }
+  .left-col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .leg-row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 11px 6px; border-bottom: 1px solid var(--border-soft); font-size: 13px; border-radius: 8px; }
+  .leg-row:last-child { border-bottom: none; }
+  .side-tag { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: #fff; box-shadow: var(--shadow-sm); flex-shrink: 0; }
+  .side-tag.SELL { background: var(--down); } .side-tag.BUY { background: var(--up); }
+  .leg-info b { font-size: 13.5px; }
+  .leg-info .meta { color: var(--muted-2); font-size: 11px; margin-top: 2px; }
+  .leg-pnl { text-align: right; font-weight: 700; font-family: "SF Mono", Consolas, monospace; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .leg-close { color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 7px; cursor: pointer; font-size: 11.5px; font-weight: 600; padding: 5px 11px; }
+  .leg-close:hover { color: var(--down); border-color: #f6ced0; background: var(--down-soft); }
+  .empty-note { color: var(--muted-2); font-size: 12.5px; padding: 18px 0; text-align: center; }
+
+  .right-col { display: flex; flex-direction: column; gap: 20px; }
+  .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); padding: 12px 14px; }
+  .stat .label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .stat .value { font-size: 16px; font-weight: 700; font-family: "SF Mono", Consolas, monospace; margin-top: 4px; }
+
+  .chart-wrap { position: relative; }
+  #chart { width: 100%; aspect-ratio: 1600 / 420; height: auto; cursor: crosshair; display: block; }
+  .chart-tooltip { position: absolute; display: none; background: var(--text); color: #fff; padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-family: "SF Mono", Consolas, monospace; pointer-events: none; transform: translate(-50%,-120%); white-space: nowrap; z-index: 10; box-shadow: var(--shadow); }
+  .chart-tooltip .tt-price { color: #a8adf5; font-size: 11px; }
+  .chart-note { color: var(--muted-2); font-size: 11.5px; margin-top: 12px; line-height: 1.5; }
+
+  table.greeks { border-collapse: collapse; width: 100%; font-size: 12px; }
+  table.greeks th { text-align: right; padding: 7px 8px; color: var(--muted); font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: 0.03em; border-bottom: 1px solid var(--border); }
+  table.greeks th:first-child { text-align: left; }
+  table.greeks td { text-align: right; padding: 8px; border-bottom: 1px solid var(--border-soft); font-family: "SF Mono", Consolas, monospace; }
+  table.greeks td:first-child { text-align: left; font-family: inherit; font-weight: 600; }
+  table.greeks tfoot td { font-weight: 700; border-top: 2px solid var(--border); border-bottom: none; background: var(--bg); }
+
+  /* Add-position modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(20,22,30,0.45); display: none; align-items: center; justify-content: center; z-index: 50; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: var(--radius); padding: 22px 24px; width: 320px; box-shadow: var(--shadow); }
+  .modal h3 { margin: 4px 0 16px; font-size: 15px; text-align: center; }
+  .side-toggle { display: flex; gap: 8px; margin-bottom: 14px; }
+  .side-toggle button { flex: 1; font-weight: 700; }
+  .side-toggle button.active.SELL { background: var(--down); color: #fff; border-color: var(--down); }
+  .side-toggle button.active.BUY { background: var(--up); color: #fff; border-color: var(--up); }
+  .modal label { display: block; font-size: 10.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; margin: 10px 0 6px; }
+  .modal input, .modal select { width: 100%; }
+  .qty-row { display: flex; align-items: center; gap: 10px; }
+  .qty-row button { width: 34px; height: 34px; padding: 0; font-weight: 700; }
+  .qty-row input { text-align: center; flex: 1; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions button { flex: 1; }
+
+  .chain-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+  .chain-header h2 { font-size: 14px; font-weight: 700; color: var(--text); margin: 0; text-transform: none; letter-spacing: 0; }
+  .chain-header .chevron { font-size: 13px; color: var(--muted); transition: transform .15s; }
+  .chain-header .chevron.collapsed { transform: rotate(-90deg); }
+  .leg-actions { display: flex; gap: 6px; margin-top: 6px; }
+  .leg-actions button { padding: 4px 9px; font-size: 11px; }
+  .stat.risk-unlimited { border: 1.5px solid #e0434a; background: #fdecec; }
+  .risk-note { font-size: 10.5px; font-weight: 700; color: #c0262d; margin-top: 4px; letter-spacing: 0.02em; }
+  @media (max-width: 900px) {
+    .below { grid-template-columns: 1fr; }
+    .chain-wrap, .card { overflow-x: auto; }
+  }
+  .setupbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .setupbar label { font-size: 12px; font-weight: 600; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .stepgrp { display: inline-flex; align-items: stretch; }
+  .stepgrp #btnNext { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+  .stepgrp select { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: -1px; font-weight: 700; }
+  .modes { display: inline-flex; background: var(--bg); border-radius: 999px; padding: 3px; }
+  .modes button { border: none; background: transparent; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 12.5px; color: var(--muted); }
+  .modes button.active { background: var(--text); color: #fff; }
+  /* the controls stay on screen while you scroll to the chart / positions */
+  .dock { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 28px;
+          background: rgba(255,255,255,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); box-shadow: 0 6px 16px rgba(20,22,30,.06); }
+  .dock .progress-bar { flex: 1 1 140px; min-width: 100px; }
+  .dock-time { display: flex; flex-direction: column; line-height: 1.1; }
+  .dock-day { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .dock-pnl { display: flex; gap: 10px; font-size: 12px; font-weight: 700; font-family: "SF Mono", Consolas, monospace; }
+  .dock-pnl span { background: var(--bg); border-radius: 7px; padding: 4px 9px; }
+  .dock-pnl .lbl { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--muted); font-weight: 600; margin-right: 4px; }
+  .dock-keys { font-size: 10.5px; color: var(--muted-2); }
+  .dayflash { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 9px 18px; border-radius: 22px; font-size: 13px; font-weight: 700; z-index: 60; box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+  @media (max-width: 900px) { .dock, .setupbar { padding: 8px 12px; } .dock-keys { display: none; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Strategy Simulator</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink active" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="setupbar">
+  <label>Expiry <select id="expirySelect"></select></label>
+  <label>Date <select id="dateSelect"></select></label>
+  <button id="btnStart" class="ghost" title="Reload this date from 09:15 (clears positions)">↺ Restart</button>
+  <span class="missing-note" id="missingNote"></span>
+</div>
+
+<div class="dock" id="dock">
+  <div class="stepgrp">
+    <button id="btnNext" class="primary" disabled title="Move forward (→ or N)">Next ▶</button>
+    <select id="stepSelect" title="How far each Next moves">
+      <option value="1">1 min</option><option value="3">3 min</option><option value="5" selected>5 min</option>
+      <option value="15">15 min</option><option value="30">30 min</option><option value="60">1 hour</option>
+    </select>
+  </div>
+  <button id="btnAuto" class="ghost" disabled title="Auto-play (Space)">Auto ▶▶</button>
+  <button id="btnEod" class="ghost" disabled title="Jump to this day's close (E)">EOD ⏭</button>
+  <button id="btnNextDay" class="ghost" disabled title="Jump to the next day's 09:15 -- positions carried overnight (D)">Next day ⏭⏭</button>
+  <div class="dock-time"><div class="candle-time" id="candleTime">--:--</div><div class="dock-day" id="dockDay"></div></div>
+  <div class="sim-spot" id="simSpot" title="NIFTY 50 spot at this candle's close (1-min history) · fwd = put-call-parity forward from the option quotes, used for Greeks">NIFTY: --</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="candle-count" id="candleCount">0 / 0</div>
+  <div class="dock-pnl" id="dockPnl"></div>
+  <span class="dock-keys">→ next · Space auto · E eod · D next day</span>
+</div>
+
+<div class="page">
+  <div class="card">
+    <div class="chain-header" id="chainHeader">
+      <h2>Option Chain</h2>
+      <button class="small ghost" id="btnAllStrikes" style="margin-left:auto;margin-right:10px" title="Show every strike instead of ±10 around ATM">All strikes</button>
+      <span class="chevron" id="chainChevron">▾</span>
+    </div>
+    <div id="chainCollapsible">
+      <div class="sim-date-banner" id="simDateBanner">No simulation running</div>
+      <div class="gap-note" id="gapNote"></div>
+      <div class="chain-scroll">
+        <table class="chain" id="chainTable">
+          <thead>
+            <tr>
+              <th>CE Vol</th><th>CE OI</th><th>CE OI Chg</th><th>CE LTP</th>
+              <th>Strike</th>
+              <th>PE LTP</th><th>PE OI Chg</th><th>PE OI</th><th>PE Vol</th>
+            </tr>
+          </thead>
+          <tbody id="chainBody">
+            <tr><td colspan="9" class="placeholder">Pick a date and click Start</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend">Click any LTP to add your own position. Highlighted OI/OI-Chg cells are the top-3 strikes per side (same convention as the live Option Chain page); shaded strikes are in-the-money (vs NIFTY spot). Data: downloaded 1-min history, ATM ±10 strikes of the expiry week.</div>
+    </div>
+  </div>
+
+  <div class="below">
+    <div class="left-col">
+    <div class="card">
+      <div class="panel-title">
+        <h2 id="positionsTitle">Strategy Positions</h2>
+        <button class="danger small" id="btnResetLegs">Reset</button>
+      </div>
+      <div id="legList"><div class="empty-note">No legs yet — click a CE/PE LTP in the chain above to add one</div></div>
+    </div>
+
+    <div class="card">
+      <div class="panel-title"><h2>Closed Positions</h2></div>
+      <div id="closedLegList"><div class="empty-note">No closed positions yet — use "Edit" on an open leg to close it at a price</div></div>
+    </div>
+    </div>
+
+    <div class="right-col">
+      <div class="stats-row" id="statsRow"></div>
+
+      <div class="card">
+        <div class="chart-wrap">
+          <svg id="chart" viewBox="0 0 1600 420"></svg>
+          <div id="chartTooltip" class="chart-tooltip"></div>
+        </div>
+        <p class="chart-note">Solid line: payoff at expiry. Dashed line: mark-to-market at the <b>current candle</b> (Black-Scholes, historical IV) — hidden if IV can't be solved. Anchored on put-call-parity forward, not raw spot.</p>
+      </div>
+
+      <div class="card">
+        <div class="panel-title"><h2>Greeks (at current candle)</h2></div>
+        <div id="greeksWrap"><div class="empty-note">Add a position to see Greeks</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">NIFTY 23800 CE</h3>
+    <div class="side-toggle">
+      <button type="button" id="btnSideSell" class="SELL">SELL</button>
+      <button type="button" id="btnSideBuy" class="BUY">BUY</button>
+    </div>
+    <label>Entry Price</label>
+    <input id="modalPrice" type="number" step="0.05">
+    <label>Lot Qty</label>
+    <div class="qty-row">
+      <button type="button" id="qtyMinus">−</button>
+      <input id="modalQty" type="number" value="1" min="1">
+      <button type="button" id="qtyPlus">+</button>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost" id="modalCancel">Close</button>
+      <button class="primary" id="modalAdd">Add Position</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="editModalOverlay">
+  <div class="modal">
+    <h3>Edit Position</h3>
+    <label>Strike</label>
+    <select id="editStrike"></select>
+    <label>Type</label>
+    <select id="editType"><option value="CE">CE</option><option value="PE">PE</option></select>
+    <label>Side</label>
+    <div class="side-toggle">
+      <button type="button" id="editSideSell" class="SELL">SELL</button>
+      <button type="button" id="editSideBuy" class="BUY">BUY</button>
+    </div>
+    <label>Entry Price</label>
+    <input id="editPrice" type="number" step="0.05">
+    <label>Lot Qty</label>
+    <div class="qty-row">
+      <button type="button" id="editQtyMinus">−</button>
+      <input id="editQty" type="number" value="1" min="1">
+      <button type="button" id="editQtyPlus">+</button>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost" id="editCancel">Cancel</button>
+      <button class="danger" id="editDelete">Delete</button>
+      <button class="primary" id="editModify">Modify</button>
+    </div>
+    <label>Close Position At</label>
+    <div class="qty-row">
+      <input id="editClosePrice" type="number" step="0.05" placeholder="Exit price (defaults to current LTP)">
+      <button type="button" id="editClose" style="background:var(--up);color:#fff;border-color:var(--up);font-weight:700;">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let totalCandles = 0;
+let currentIndex = 0;
+let autoPlay = false;
+let autoTimer = null;
+let modalStrike = null, modalType = null, modalSide = "SELL";
+let editLegId = null, editSide = "SELL";
+let chainCollapsed = false;
+
+function fmt(n, d) {
+  if (n === null || n === undefined) return "-";
+  return Number(n).toLocaleString("en-IN", {maximumFractionDigits: d ?? 2});
+}
+function money(n) {
+  if (n === null || n === undefined) return "—";
+  const sign = n < 0 ? "-" : "";
+  return sign + "₹" + Math.abs(n).toLocaleString("en-IN", {maximumFractionDigits: 2});
+}
+function pcls(n) { return n > 0 ? "up" : (n < 0 ? "down" : ""); }
+
+async function loadExpiries() {
+  const res = await fetch("/api/sim/expiries");
+  const j = await res.json();
+  const esel = document.getElementById("expirySelect");
+  esel.innerHTML = "";
+  // 5 years of weekly expiries -- grouped by year so the list stays scannable
+  const groups = {};
+  j.expiries.forEach(e => {
+    if (!groups[e.year]) { groups[e.year] = document.createElement("optgroup"); groups[e.year].label = e.year; esel.appendChild(groups[e.year]); }
+    const o = document.createElement("option");
+    o.value = e.expiry; o.textContent = e.label;
+    groups[e.year].appendChild(o);
+  });
+  if (!j.expiries.length) esel.innerHTML = '<option value="">No downloaded data -- run history_downloader.py</option>';
+  esel.addEventListener("change", async () => {
+    if (!confirmReset()) { esel.value = esel.dataset.prev || esel.value; return; }
+    await loadDates(esel.value); startSim();
+  });
+  document.getElementById("dateSelect").addEventListener("change", e => {
+    if (!confirmReset()) { e.target.value = e.target.dataset.prev || e.target.value; return; }
+    startSim();
+  });
+}
+
+async function loadDates(expiry) {
+  const url = expiry ? `/api/sim/dates?expiry=${expiry}` : "/api/sim/dates";
+  const res = await fetch(url);
+  const j = await res.json();
+  const dsel = document.getElementById("dateSelect");
+  dsel.innerHTML = "";
+  const exp = expiry || (j.dates || []).slice(-1)[0];
+  const ws = j.week_start || exp;
+  const gWeek = document.createElement("optgroup"); gWeek.label = "Expiry week";
+  const gEarly = document.createElement("optgroup"); gEarly.label = "Earlier dates (extra strikes fetched once, ~10-30 s)";
+  j.dates.forEach(d => {
+    const o = document.createElement("option");
+    o.value = d;
+    o.textContent = new Date(d + "T00:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short", year: "numeric"})
+                    + (d === exp ? " · expiry" : "");
+    (d >= ws ? gWeek : gEarly).appendChild(o);
+  });
+  if (gEarly.children.length) dsel.appendChild(gEarly);
+  dsel.appendChild(gWeek);
+  dsel.value = (j.dates || []).find(d => d >= ws) || (j.dates || [])[0]; // default: first day of the expiry week
+
+  const missingNote = document.getElementById("missingNote");
+  const missing = j.missing_dates || [];
+  if (missing.length) {
+    missingNote.textContent = `⚠ Data missing for: ${missing.join(", ")}`;
+    missingNote.classList.add("show");
+  } else {
+    missingNote.classList.remove("show");
+  }
+}
+
+// Picking an expiry/date loads it straight away -- ask first if that would
+// throw away open positions.
+function confirmReset() {
+  const open = (window._simOpenLegs || 0) + (window._simClosedLegs || 0);
+  return !open || confirm("Load a new date? Current simulated positions will be cleared.");
+}
+document.getElementById("btnStart").addEventListener("click", () => { if (confirmReset()) startSim(); });
+
+async function startSim() {
+  const esel = document.getElementById("expirySelect"), dsel = document.getElementById("dateSelect");
+  const expiry = esel.value, date = dsel.value;
+  if (!expiry || !date) return;
+  esel.dataset.prev = expiry; dsel.dataset.prev = date;
+  if (autoPlay) document.getElementById("btnAuto").click();
+  const banner = document.getElementById("simDateBanner");
+  const early = !!dsel.selectedOptions[0]?.parentElement?.label?.startsWith("Earlier");
+  banner.textContent = early ? "Loading… checking strikes for this date (first time may fetch extra strikes from Fyers, ~10-30 s)" : "Loading…";
+  ["btnNext", "btnAuto", "btnEod", "btnNextDay"].forEach(id => document.getElementById(id).disabled = true);
+  const res = await fetch("/api/sim/start", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({date, expiry}),
+  });
+  const j = await res.json();
+  if (!j.ok) { alert("Error: " + j.error); return; }
+  totalCandles = j.total_candles;
+  currentIndex = 0;
+  const expiryLabel = document.getElementById("expirySelect").selectedOptions[0].textContent;
+  const dateLabel = document.getElementById("dateSelect").selectedOptions[0].textContent;
+  simLot = j.lot_size || 65;
+  const left = j.days.length - 1;
+  document.getElementById("simDateBanner").textContent =
+    `Expiry ${expiryLabel} · starting ${dateLabel} 09:15 · lot ${simLot} · ` +
+    (left > 0 ? `${left} more day${left > 1 ? "s" : ""} to expiry -- keep going with Next / EOD / Next day, positions carry overnight`
+              : "expiry day -- open legs settle at the NIFTY close")
+    + (j.added_strikes ? ` · fetched ${j.added_strikes} extra contracts for this date` : "")
+    + (j.topup_error ? ` · ⚠ couldn't fetch extra strikes (${j.topup_error}) -- some strikes may be missing` : "");
+  const gapNote = document.getElementById("gapNote");
+  const gaps = j.gaps || [];
+  if (gaps.length) {
+    const fmtT = iso => new Date(iso).toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit"});
+    gapNote.textContent = `⚠ Data gap(s): ` +
+      gaps.map(g => `${fmtT(g.from)}–${fmtT(g.to)}`).join(", ");
+    gapNote.classList.add("show");
+  } else {
+    gapNote.classList.remove("show");
+  }
+  ["btnNext", "btnAuto", "btnEod", "btnNextDay"].forEach(id => document.getElementById(id).disabled = false);
+  updateProgress(0, totalCandles, "--:--");
+  window._lastChain = [];
+  renderLegBundle(j);
+  await stepOnce("/api/sim/next", 1);  // show the 09:15 chain right away
+}
+
+const stepMinutes = () => +document.getElementById("stepSelect").value || 1;
+document.getElementById("btnNext").addEventListener("click", () => stepOnce("/api/sim/next", stepMinutes()));
+document.getElementById("btnEod").addEventListener("click", () => stepOnce("/api/sim/eod"));
+
+document.getElementById("btnAuto").addEventListener("click", () => {
+  autoPlay = !autoPlay;
+  document.getElementById("btnAuto").textContent = autoPlay ? "Stop ⏸" : "Auto-play ▶▶";
+  if (autoPlay) {
+    autoTimer = setInterval(async () => {
+      const done = await stepOnce("/api/sim/next", stepMinutes());
+      if (done) { clearInterval(autoTimer); autoPlay = false; document.getElementById("btnAuto").textContent = "Auto-play ▶▶"; }
+    }, 700);
+  } else {
+    clearInterval(autoTimer);
+  }
+});
+
+let stepInFlight = false, simLot = 65;
+async function stepOnce(endpoint, minutes) {
+  // _sim_session is one shared object on the server with no locking --
+  // two overlapping /api/sim/next calls (fast double-click, or a manual
+  // click landing between auto-play ticks) would each call step() and
+  // silently advance the replay by 2 candles for what looked like one
+  // action. This guard makes concurrent calls no-ops instead.
+  if (stepInFlight) return false;
+  stepInFlight = true;
+  try {
+    return await _stepOnceInner(endpoint || "/api/sim/next", minutes || 1);
+  } finally {
+    stepInFlight = false;
+  }
+}
+
+document.getElementById("btnNextDay").addEventListener("click", () => stepOnce("/api/sim/next_day"));
+function flashDay(text) {
+  const el = document.createElement("div"); el.className = "dayflash"; el.textContent = text;
+  document.body.appendChild(el); setTimeout(() => el.remove(), 2200);
+}
+document.addEventListener("keydown", e => {
+  if (["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)) return;
+  if (document.querySelector(".modal-overlay.open")) return;
+  if ((e.key === "ArrowRight" || e.key === "n" || e.key === "N") && !document.getElementById("btnNext").disabled) { e.preventDefault(); stepOnce("/api/sim/next", stepMinutes()); }
+  if ((e.key === "e" || e.key === "E") && !document.getElementById("btnEod").disabled) { e.preventDefault(); stepOnce("/api/sim/eod"); }
+  if (e.key === " " && !document.getElementById("btnAuto").disabled) { e.preventDefault(); document.getElementById("btnAuto").click(); }
+  if ((e.key === "d" || e.key === "D") && !document.getElementById("btnNextDay").disabled) { e.preventDefault(); stepOnce("/api/sim/next_day"); }
+});
+
+async function _stepOnceInner(endpoint, minutes) {
+  const res = await fetch(endpoint, {method: "POST", headers: {"Content-Type": "application/json"},
+                                     body: JSON.stringify({minutes})});
+  const j = await res.json();
+  if (!j.ok) { alert("Error: " + j.error); return true; }
+  if (j.done) {
+    document.getElementById("btnNext").disabled = true;
+    document.getElementById("btnAuto").disabled = true;
+    document.getElementById("btnNextDay").disabled = true;
+    document.getElementById("btnEod").disabled = true;
+    return true;
+  }
+  if (j.day) {
+    const dl = new Date(j.day + "T00:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short"});
+    document.getElementById("dockDay").textContent = `Day ${j.day_no} / ${j.days_total} · ${dl}`;
+    if (j.new_day && j.day_no > 1) flashDay(`📅 ${dl} — new day, positions carried overnight`);
+  }
+  currentIndex = j.index + 1;
+  const t = j.time ? new Date(j.time).toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit"}) : "EOD";
+  updateProgress(currentIndex, j.total, t);
+  window._lastSpot = j.spot;
+  renderChain(j.chain, j.anchor);
+  renderLegBundle(j);
+  if (j.finished) {
+    document.getElementById("btnNext").disabled = true;
+    document.getElementById("btnAuto").disabled = true;
+    document.getElementById("btnNextDay").disabled = true;
+    document.getElementById("btnEod").disabled = true;
+    if ((j.closed_legs || []).some(c => (c.exit_reason || "").startsWith("EXPIRY"))) flashDay("🏁 Expiry — open legs settled at intrinsic value");
+  }
+  return !!j.finished;
+}
+
+function updateProgress(idx, total, timeLabel) {
+  const shown = Math.min(idx, total);
+  document.getElementById("candleTime").textContent = timeLabel;
+  document.getElementById("candleCount").textContent = `${shown} / ${total}`;
+  const pct = total > 0 ? (shown / total * 100) : 0;
+  document.getElementById("progressFill").style.width = pct + "%";
+}
+
+// Same sparse top-3 highlighting + OI-change color-direction convention as
+// the live Option Chain page (option_chain.html) -- kept in sync by hand
+// since one's server-templated live data and the other's this replay.
+function topNStrikes(chain, getter, n) {
+  return new Set(
+    chain.map(r => ({ strike: r.strike, val: Math.abs(getter(r)) }))
+      .filter(x => x.val > 0).sort((a, b) => b.val - a.val).slice(0, n).map(x => x.strike)
+  );
+}
+function topNSigned(chain, getter, n) {
+  const vals = chain.map(r => ({ strike: r.strike, val: getter(r) })).filter(x => x.val);
+  const positives = vals.filter(x => x.val > 0).sort((a, b) => b.val - a.val).slice(0, n);
+  const negatives = vals.filter(x => x.val < 0).sort((a, b) => a.val - b.val).slice(0, n);
+  return new Set([...positives, ...negatives].map(x => x.strike));
+}
+function signClass(n) { return n > 0 ? "up" : (n < 0 ? "down" : ""); }
+function invSignClass(n) { return n > 0 ? "down" : (n < 0 ? "up" : ""); }
+const CE_RGB = "216,64,64", PE_RGB = "10,143,91", UP_RGB = "10,143,91", DOWN_RGB = "216,64,64", HILITE_ALPHA = 0.30;
+
+let showAllStrikes = false;
+document.getElementById("btnAllStrikes").addEventListener("click", (e) => {
+  e.stopPropagation();  // don't collapse the chain card
+  showAllStrikes = !showAllStrikes;
+  e.target.textContent = showAllStrikes ? "±10 strikes" : "All strikes";
+  if (window._lastChainRaw) renderChain(window._lastChainRaw, window._lastAnchor);
+});
+function renderChain(chain, anchor) {
+  if (!chain || !chain.length) return;
+  window._lastChainRaw = chain; window._lastAnchor = anchor;
+  // default: 10 strikes either side of ATM -- the full ~80-strike chain pushed
+  // the positions / payoff chart far down the page
+  const spot = window._lastSpot;
+  if (spot != null) anchor = spot;  // real NIFTY spot for ATM / ITM shading
+  if (!showAllStrikes && anchor != null && chain.length > 21) {
+    const atmI = chain.reduce((bi, r, i) => Math.abs(r.strike - anchor) < Math.abs(chain[bi].strike - anchor) ? i : bi, 0);
+    chain = chain.slice(Math.max(0, atmI - 10), atmI + 11);
+  }
+  window._lastChain = window._lastChainRaw;  // the edit modal needs every strike, not just the ones shown
+  const fwd = window._lastAnchor;
+  document.getElementById("simSpot").innerHTML = spot != null
+    ? `NIFTY <b>${fmt(spot, 2)}</b>${fwd != null ? ` <span style="color:var(--muted);font-weight:500">· fwd ${fmt(fwd, 1)}</span>` : ""}`
+    : (fwd != null ? `NIFTY (fwd): ${fmt(fwd, 2)}` : "NIFTY: --");
+
+  const ceTopOi = topNStrikes(chain, r => r.ce?.oi || 0, 3);
+  const peTopOi = topNStrikes(chain, r => r.pe?.oi || 0, 3);
+  const ceTopChg = topNSigned(chain, r => r.ce?.oich || 0, 3);
+  const peTopChg = topNSigned(chain, r => r.pe?.oich || 0, 3);
+
+  // Highest-volume strike per side -- the exact signal the auto-strategy
+  // engine watches for a new "leader" -- same convention as the live
+  // Option Chain page, highlighted distinctly from the OI heat coloring.
+  let ceLeaderStrike = null, maxCeVol = 0;
+  let peLeaderStrike = null, maxPeVol = 0;
+  chain.forEach(r => {
+    const cv = r.ce?.volume || 0, pv = r.pe?.volume || 0;
+    if (cv > maxCeVol) { maxCeVol = cv; ceLeaderStrike = r.strike; }
+    if (pv > maxPeVol) { maxPeVol = pv; peLeaderStrike = r.strike; }
+  });
+
+  const rows = chain.map(row => {
+    const ce = row.ce || {}, pe = row.pe || {};
+    const ceOiStyle = ceTopOi.has(row.strike) ? `background: rgba(${CE_RGB}, ${HILITE_ALPHA});` : "";
+    const peOiStyle = peTopOi.has(row.strike) ? `background: rgba(${PE_RGB}, ${HILITE_ALPHA});` : "";
+    const ceChgStyle = ceTopChg.has(row.strike) ? `background: rgba(${(ce.oich || 0) >= 0 ? DOWN_RGB : UP_RGB}, ${HILITE_ALPHA});` : "";
+    const peChgStyle = peTopChg.has(row.strike) ? `background: rgba(${(pe.oich || 0) >= 0 ? UP_RGB : DOWN_RGB}, ${HILITE_ALPHA});` : "";
+    const ceItm = anchor && row.strike < anchor ? "itm" : "";
+    const peItm = anchor && row.strike > anchor ? "itm" : "";
+    const ceVolClass = row.strike === ceLeaderStrike ? "vol-leader" : ceItm;
+    const peVolClass = row.strike === peLeaderStrike ? "vol-leader" : peItm;
+    return `<tr>
+      <td class="${ceVolClass}">${fmt(ce.volume, 0)}</td>
+      <td class="${ceItm}" style="${ceOiStyle}">${fmt(ce.oi, 0)}</td>
+      <td class="${ceItm} ${ceTopChg.has(row.strike) ? invSignClass(ce.oich) : ''}" style="${ceChgStyle}">
+        <span>${fmt(ce.oich, 0)}</span><span class="chg-pct">${ce.oichp != null ? fmt(ce.oichp) + '%' : ''}</span>
+      </td>
+      <td class="ltp-cell ${ceItm}" onclick="openModal(${row.strike},'CE',${ce.close ?? 'null'})">${fmt(ce.close)}</td>
+      <td class="strike-cell">${fmt(row.strike, 0)}</td>
+      <td class="ltp-cell ${peItm}" onclick="openModal(${row.strike},'PE',${pe.close ?? 'null'})">${fmt(pe.close)}</td>
+      <td class="${peItm} ${peTopChg.has(row.strike) ? signClass(pe.oich) : ''}" style="${peChgStyle}">
+        <span>${fmt(pe.oich, 0)}</span><span class="chg-pct">${pe.oichp != null ? fmt(pe.oichp) + '%' : ''}</span>
+      </td>
+      <td class="${peItm}" style="${peOiStyle}">${fmt(pe.oi, 0)}</td>
+      <td class="${peVolClass}">${fmt(pe.volume, 0)}</td>
+    </tr>`;
+  }).join("");
+  document.getElementById("chainBody").innerHTML = rows;
+}
+
+// ---- Manual positions: add/remove + payoff chart + Greeks, all driven by
+// the currently simulated candle (see leg_bundle() in simulator.py). ----
+
+function openModal(strike, type, closePrice) {
+  modalStrike = strike; modalType = type; modalSide = "SELL";
+  document.getElementById("modalTitle").textContent = `NIFTY ${strike} ${type}`;
+  document.getElementById("modalPrice").value = closePrice ?? "";
+  document.getElementById("modalQty").value = 1;
+  setModalSide("SELL");
+  document.getElementById("modalOverlay").classList.add("open");
+}
+function setModalSide(side) {
+  modalSide = side;
+  document.getElementById("btnSideSell").classList.toggle("active", side === "SELL");
+  document.getElementById("btnSideBuy").classList.toggle("active", side === "BUY");
+}
+document.getElementById("btnSideSell").addEventListener("click", () => setModalSide("SELL"));
+document.getElementById("btnSideBuy").addEventListener("click", () => setModalSide("BUY"));
+document.getElementById("modalCancel").addEventListener("click", () => document.getElementById("modalOverlay").classList.remove("open"));
+document.getElementById("qtyMinus").addEventListener("click", () => {
+  const el = document.getElementById("modalQty");
+  el.value = Math.max(1, (parseInt(el.value) || 1) - 1);
+});
+document.getElementById("qtyPlus").addEventListener("click", () => {
+  const el = document.getElementById("modalQty");
+  el.value = (parseInt(el.value) || 1) + 1;
+});
+document.getElementById("modalAdd").addEventListener("click", async () => {
+  const price = parseFloat(document.getElementById("modalPrice").value);
+  const qty = parseInt(document.getElementById("modalQty").value) || 1;
+  if (isNaN(price)) { alert("Enter a valid entry price."); return; }
+  const res = await fetch("/api/sim/add_leg", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({strike: modalStrike, type: modalType, side: modalSide, qty, entry_price: price}),
+  });
+  const j = await res.json();
+  if (!j.ok) { alert("Error: " + j.error); return; }
+  document.getElementById("modalOverlay").classList.remove("open");
+  renderLegBundle(j);
+});
+
+async function removeLeg(id) {
+  const res = await fetch("/api/sim/remove_leg", {
+    method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id}),
+  });
+  const j = await res.json();
+  if (j.ok) renderLegBundle(j);
+  else alert(j.error);
+}
+document.getElementById("btnResetLegs").addEventListener("click", async () => {
+  const res = await fetch("/api/sim/reset_legs", {method: "POST"});
+  const j = await res.json();
+  if (j.ok) renderLegBundle(j);
+});
+
+function renderLegBundle(j) {
+  if (!("legs" in j)) return;
+  window._simOpenLegs = j.legs.length; window._simClosedLegs = (j.closed_legs || []).length;
+  const pc = v => v > 0 ? "up" : v < 0 ? "down" : "";
+  document.getElementById("dockPnl").innerHTML = (j.legs.length || (j.closed_legs || []).length)
+    ? `<span><span class="lbl">Total</span><b class="${pc(j.total_pnl)}">${money(j.total_pnl)}</b></span>
+       <span><span class="lbl">Open</span><b class="${pc(j.live_pnl)}">${money(j.live_pnl)}</b></span>
+       <span><span class="lbl">Booked</span><b class="${pc(j.realized_pnl)}">${money(j.realized_pnl)}</b></span>` : "";
+  renderLegs(j.legs);
+  renderClosedLegs(j.closed_legs || []);
+  renderStats(j.stats, j.total_pnl, j.live_pnl, j.realized_pnl);
+  renderChart(j.curve || [], j.forward, j.now_curve);
+  renderGreeks(j.legs, j.greeks);
+}
+
+function renderLegs(legs) {
+  window._lastLegs = legs;
+  const el = document.getElementById("legList");
+  if (!legs.length) { el.innerHTML = `<div class="empty-note">No legs yet — click a CE/PE LTP in the chain above to add one</div>`; return; }
+  el.innerHTML = legs.map(p => `
+    <div class="leg-row">
+      <span class="side-tag ${p.side}">${p.side[0]}</span>
+      <div class="leg-info">
+        <b>${fmt(p.strike,0)} ${p.type}</b> · ${p.qty} lot${p.qty>1?'s':''}
+        <div class="meta">@ ${money(p.entry_price)} → LTP ${p.ltp!=null?money(p.ltp):"—"}</div>
+      </div>
+      <div>
+        <div class="leg-pnl ${pcls(p.live_pnl)}">${money(p.live_pnl)}</div>
+        <div class="leg-actions">
+          <button class="leg-close" onclick="openEditModal('${p.id}')">Edit</button>
+          <button class="leg-close" onclick="removeLeg('${p.id}')">Remove</button>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function renderStats(stats, totalPnl, livePnl, realizedPnl) {
+  document.getElementById("statsRow").innerHTML = `
+    <div class="stat"><div class="label">Total P&amp;L</div><div class="value ${pcls(totalPnl)}">${money(totalPnl)}</div></div>
+    <div class="stat"><div class="label">Live P&amp;L</div><div class="value ${pcls(livePnl)}">${livePnl!=null?money(livePnl):"—"}</div></div>
+    <div class="stat"><div class="label">Realized P&amp;L</div><div class="value ${pcls(realizedPnl)}">${realizedPnl!=null?money(realizedPnl):"—"}</div></div>
+    <div class="stat"><div class="label">Net Credit</div><div class="value ${pcls(stats.net_credit)}">${money(stats.net_credit)}</div></div>
+    <div class="stat"><div class="label">Max Profit</div><div class="value up">${stats.max_profit_unlimited?"Unlimited":(stats.max_profit!=null?money(stats.max_profit):"—")}</div></div>
+    <div class="stat${stats.max_loss_unlimited?" risk-unlimited":""}"><div class="label">Max Loss</div><div class="value down">${stats.max_loss_unlimited?"Unlimited":(stats.max_loss!=null?money(stats.max_loss):"—")}</div>${stats.max_loss_unlimited?`<div class="risk-note">UNDEFINED RISK — naked short call exposure</div>`:""}</div>
+  `;
+}
+
+function renderClosedLegs(closedLegs) {
+  const el = document.getElementById("closedLegList");
+  if (!el) return;
+  if (!closedLegs.length) { el.innerHTML = `<div class="empty-note">No closed positions yet — use "Edit" on an open leg to close it at a price</div>`; return; }
+  el.innerHTML = closedLegs.slice().reverse().map(p => `
+    <div class="leg-row">
+      <span class="side-tag ${p.side}">${p.side[0]}</span>
+      <div class="leg-info">
+        <b>${fmt(p.strike,0)} ${p.type}</b> · ${p.qty} lot${p.qty>1?'s':''}
+        <div class="meta">@ ${money(p.entry_price)} → exit ${money(p.exit_price)} ${p.exit_time ? "· "+new Date(p.exit_time).toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit"}) : ""}</div>
+      </div>
+      <div>
+        <div class="leg-pnl ${pcls(p.pnl)}">${money(p.pnl)}</div>
+      </div>
+    </div>`).join("");
+}
+
+function renderGreeks(legs, greeksRows) {
+  const wrap = document.getElementById("greeksWrap");
+  if (!legs.length) { wrap.innerHTML = `<div class="empty-note">Add a position to see Greeks</div>`; return; }
+  const byId = {}; (greeksRows || []).forEach(g => byId[g.id] = g);
+  let posDelta = 0, posTheta = 0, posGamma = 0, posVega = 0, anyMissing = false;
+  const rows = legs.map(p => {
+    const g = byId[p.id];
+    const units = (p.side === "SELL" ? -1 : 1) * p.qty * (p.lot_size || simLot);  // position = lots x lot size
+    if (g && g.iv != null) {
+      posDelta += units * g.delta;
+      posTheta += units * g.theta;
+      posGamma += units * g.gamma;
+      posVega += units * g.vega;
+    } else { anyMissing = true; }
+    return `<tr>
+      <td>${p.side[0]} ${fmt(p.strike,0)}${p.type}</td>
+      <td>${g && g.iv!=null ? fmt(g.iv,2)+"%" : "—"}</td>
+      <td>${g && g.delta!=null ? fmt(g.delta,4) : "—"}</td>
+      <td>${g && g.theta!=null ? fmt(g.theta,4) : "—"}</td>
+      <td>${g && g.gamma!=null ? fmt(g.gamma,6) : "—"}</td>
+      <td>${g && g.vega!=null ? fmt(g.vega,4) : "—"}</td>
+    </tr>`;
+  }).join("");
+  wrap.innerHTML = `
+    <table class="greeks">
+      <thead><tr><th>Leg (per unit)</th><th>IV</th><th>Delta</th><th>Theta</th><th>Gamma</th><th>Vega</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr>
+        <td>Net position (₹)${anyMissing ? " (partial)" : ""}</td><td>—</td>
+        <td>${money(posDelta)}/pt</td><td>${money(posTheta)}/day</td><td>${fmt(posGamma,2)}</td><td>${money(posVega)}/vol</td>
+      </tr></tfoot>
+    </table>`;
+}
+
+function niceStep(range, targetTicks) {
+  const raw = range / targetTicks;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const norm = raw / mag;
+  return (norm >= 5 ? 5 : norm >= 2 ? 2 : 1) * mag;
+}
+
+function findBreakevens(curve) {
+  const pts = [];
+  for (let i=1;i<curve.length;i++) {
+    const a=curve[i-1], b=curve[i];
+    if ((a.pnl<0)!==(b.pnl<0) && (b.pnl-a.pnl)!==0) {
+      const frac = -a.pnl/(b.pnl-a.pnl);
+      pts.push(a.price + frac*(b.price-a.price));
+    }
+  }
+  return pts;
+}
+
+function renderChart(curve, forward, nowCurve) {
+  const svg = document.getElementById("chart");
+  if (!curve.length) { svg.innerHTML = `<text x="800" y="210" text-anchor="middle" fill="#ccc" font-size="16">Add a position to see the payoff chart</text>`; return; }
+  const W=1600,H=420,padL=85,padR=30,padT=30,padB=46;
+  const prices = curve.map(c=>c.price), pnls = curve.map(c=>c.pnl);
+  const minP=Math.min(...prices), maxP=Math.max(...prices);
+  const nowPnls = nowCurve ? nowCurve.map(c=>c.pnl) : [];
+  let minPnl=Math.min(0,...pnls,...nowPnls), maxPnl=Math.max(0,...pnls,...nowPnls);
+  const pnlPad = Math.max(1, (maxPnl - minPnl) * 0.10);
+  minPnl -= pnlPad; maxPnl += pnlPad;
+
+  const x = p => padL + (p-minP)/(maxP-minP) * (W-padL-padR);
+  const y = v => padT + (1-(v-minPnl)/(maxPnl-minPnl)) * (H-padT-padB);
+  const zeroY = y(0);
+
+  const linePath = curve.map((c,i)=>`${i===0?"M":"L"}${x(c.price).toFixed(1)},${y(c.pnl).toFixed(1)}`).join(" ");
+  const areaAbove = `M${x(prices[0])},${zeroY} ` + curve.map(c=>`L${x(c.price).toFixed(1)},${y(Math.max(0,c.pnl)).toFixed(1)}`).join(" ") + ` L${x(prices[prices.length-1])},${zeroY} Z`;
+  const areaBelow = `M${x(prices[0])},${zeroY} ` + curve.map(c=>`L${x(c.price).toFixed(1)},${y(Math.min(0,c.pnl)).toFixed(1)}`).join(" ") + ` L${x(prices[prices.length-1])},${zeroY} Z`;
+  const nowLinePath = nowCurve ? nowCurve.map((c,i)=>`${i===0?"M":"L"}${x(c.price).toFixed(1)},${y(c.pnl).toFixed(1)}`).join(" ") : "";
+
+  const xStep = niceStep(maxP-minP, 13);
+  const xTicks = [];
+  for (let p=Math.ceil(minP/xStep)*xStep; p<=maxP; p+=xStep) xTicks.push(Math.round(p));
+  const yStep = niceStep(maxPnl-minPnl, 5);
+  const yTicks = [];
+  for (let v=Math.ceil(minPnl/yStep)*yStep; v<=maxPnl; v+=yStep) yTicks.push(Math.round(v));
+
+  const breakevens = findBreakevens(curve);
+  const COL = { up: "#0e9f6e", down: "#e0434a", accent: "#4f5fe0", text: "#14161c", grid: "#eef0f4", gridStrong: "#e2e4ea", axis: "#8b909c", border: "#e7e8ee" };
+
+  svg.innerHTML = `
+    <defs>
+      <linearGradient id="gradUp" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${COL.up}" stop-opacity="0.30"/>
+        <stop offset="100%" stop-color="${COL.up}" stop-opacity="0.02"/>
+      </linearGradient>
+      <linearGradient id="gradDown" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${COL.down}" stop-opacity="0.28"/>
+        <stop offset="100%" stop-color="${COL.down}" stop-opacity="0.02"/>
+      </linearGradient>
+      <filter id="lineShadow" x="-20%" y="-40%" width="140%" height="180%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2.4" flood-color="${COL.text}" flood-opacity="0.16"/>
+      </filter>
+    </defs>
+    <rect x="${padL}" y="${padT}" width="${W-padL-padR}" height="${H-padT-padB}" rx="10" fill="none" stroke="${COL.border}"/>
+    ${yTicks.map(v=>`<line x1="${padL}" y1="${y(v).toFixed(1)}" x2="${W-padR}" y2="${y(v).toFixed(1)}" stroke="${COL.grid}"/>
+      <text x="${padL-14}" y="${(y(v)+4.5).toFixed(1)}" text-anchor="end" font-size="12.5" fill="${COL.axis}">${money(v)}</text>`).join("")}
+    ${xTicks.map(p=>`<line x1="${x(p).toFixed(1)}" y1="${padT}" x2="${x(p).toFixed(1)}" y2="${H-padB}" stroke="${COL.grid}"/>
+      <text x="${x(p).toFixed(1)}" y="${H-padB+24}" text-anchor="middle" font-size="12.5" fill="${COL.axis}">${p}</text>`).join("")}
+    <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${W-padR}" y2="${zeroY.toFixed(1)}" stroke="${COL.gridStrong}" stroke-width="1.4"/>
+    <path d="${areaAbove}" fill="url(#gradUp)"/>
+    <path d="${areaBelow}" fill="url(#gradDown)"/>
+    <path d="${linePath}" fill="none" stroke="${COL.text}" stroke-width="2.75" stroke-linejoin="round" stroke-linecap="round" filter="url(#lineShadow)"/>
+    ${nowCurve ? `<path d="${nowLinePath}" fill="none" stroke="${COL.accent}" stroke-width="2.25" stroke-dasharray="7,5" stroke-linejoin="round" stroke-linecap="round"/>` : ""}
+    ${breakevens.map(b=>`<circle cx="${x(b).toFixed(1)}" cy="${zeroY.toFixed(1)}" r="5" fill="#fff" stroke="${COL.accent}" stroke-width="2.25"/>
+      <rect x="${(x(b)-24).toFixed(1)}" y="${zeroY+11}" width="48" height="18" rx="9" fill="${COL.text}" opacity="0.9"/>
+      <text x="${x(b).toFixed(1)}" y="${zeroY+24}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#fff">${b.toFixed(0)}</text>`).join("")}
+    ${nowCurve ? `
+      <line x1="${W-260}" y1="${padT+6}" x2="${W-235}" y2="${padT+6}" stroke="${COL.text}" stroke-width="2.75"/>
+      <text x="${W-230}" y="${padT+10}" font-size="12" fill="${COL.axis}">At expiry</text>
+      <line x1="${W-140}" y1="${padT+6}" x2="${W-115}" y2="${padT+6}" stroke="${COL.accent}" stroke-width="2.25" stroke-dasharray="7,5"/>
+      <text x="${W-110}" y="${padT+10}" font-size="12" fill="${COL.axis}">At this candle</text>` : ""}
+    ${forward ? `<line x1="${x(forward).toFixed(1)}" y1="${padT}" x2="${x(forward).toFixed(1)}" y2="${H-padB}" stroke="${COL.accent}" stroke-width="1.6" stroke-dasharray="5,4"/>
+      <circle cx="${x(forward).toFixed(1)}" cy="${padT}" r="3.5" fill="${COL.accent}"/>
+      <rect x="${(x(forward)-56).toFixed(1)}" y="${padT-28}" width="112" height="20" rx="10" fill="${COL.accent}"/>
+      <text x="${x(forward).toFixed(1)}" y="${padT-14}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">fwd ${fmt(forward,0)}</text>` : ""}
+    <line id="hoverLine" x1="0" y1="${padT}" x2="0" y2="${H-padB}" stroke="${COL.axis}" stroke-width="1" stroke-dasharray="3,3" style="display:none;"/>
+    <circle id="hoverDot" r="5.5" fill="${COL.text}" stroke="#fff" stroke-width="2" style="display:none;"/>
+    <rect id="hoverCapture" x="${padL}" y="${padT}" width="${W-padL-padR}" height="${H-padT-padB}" fill="transparent"/>
+  `;
+
+  window._chartScale = { curve, nowCurve, x, y, padL, padR, minP, maxP, W, H };
+  setupChartHover();
+}
+
+let chartHoverBound = false;
+function setupChartHover() {
+  const svg = document.getElementById("chart");
+  const tooltip = document.getElementById("chartTooltip");
+  if (chartHoverBound) return;
+  chartHoverBound = true;
+
+  svg.addEventListener("mousemove", (evt) => {
+    const s = window._chartScale;
+    if (!s) return;
+    const rect = svg.getBoundingClientRect();
+    const svgX = (evt.clientX - rect.left) / rect.width * s.W;
+    const price = s.minP + (svgX - s.padL) / (s.W - s.padL - s.padR) * (s.maxP - s.minP);
+    let nearest = s.curve[0], best = Infinity;
+    for (const c of s.curve) {
+      const d = Math.abs(c.price - price);
+      if (d < best) { best = d; nearest = c; }
+    }
+    const px = s.x(nearest.price), py = s.y(nearest.pnl);
+    document.getElementById("hoverLine").setAttribute("x1", px);
+    document.getElementById("hoverLine").setAttribute("x2", px);
+    document.getElementById("hoverLine").style.display = "block";
+    const dot = document.getElementById("hoverDot");
+    dot.setAttribute("cx", px); dot.setAttribute("cy", py);
+    dot.setAttribute("fill", nearest.pnl >= 0 ? "#0a8f5b" : "#d84040");
+    dot.style.display = "block";
+
+    const wrap = svg.parentElement;
+    const wrapRect = wrap.getBoundingClientRect();
+    const px_screen = rect.left - wrapRect.left + (px / s.W) * rect.width;
+    const py_screen = rect.top - wrapRect.top + (py / s.H) * rect.height;
+    tooltip.style.left = px_screen + "px";
+    tooltip.style.top = py_screen + "px";
+    tooltip.style.display = "block";
+    const nowAtPrice = s.nowCurve ? s.nowCurve.find(c => c.price === nearest.price) : null;
+    tooltip.innerHTML = `<div class="tt-price">Underlying ${nearest.price}</div>
+      <div>Expiry: ${money(nearest.pnl)}</div>
+      ${nowAtPrice ? `<div>This candle: ${money(nowAtPrice.pnl)}</div>` : ""}`;
+  });
+  svg.addEventListener("mouseleave", () => {
+    document.getElementById("hoverLine").style.display = "none";
+    document.getElementById("hoverDot").style.display = "none";
+    tooltip.style.display = "none";
+  });
+}
+
+document.getElementById("chainHeader").addEventListener("click", () => {
+  chainCollapsed = !chainCollapsed;
+  document.getElementById("chainCollapsible").style.display = chainCollapsed ? "none" : "";
+  document.getElementById("chainChevron").classList.toggle("collapsed", chainCollapsed);
+});
+
+function setEditSide(side) {
+  editSide = side;
+  document.getElementById("editSideSell").classList.toggle("active", side === "SELL");
+  document.getElementById("editSideBuy").classList.toggle("active", side === "BUY");
+}
+document.getElementById("editSideSell").addEventListener("click", () => setEditSide("SELL"));
+document.getElementById("editSideBuy").addEventListener("click", () => setEditSide("BUY"));
+document.getElementById("editCancel").addEventListener("click", () => document.getElementById("editModalOverlay").classList.remove("open"));
+document.getElementById("editQtyMinus").addEventListener("click", () => {
+  const el = document.getElementById("editQty");
+  el.value = Math.max(1, (parseInt(el.value) || 1) - 1);
+});
+document.getElementById("editQtyPlus").addEventListener("click", () => {
+  const el = document.getElementById("editQty");
+  el.value = (parseInt(el.value) || 1) + 1;
+});
+
+function openEditModal(id) {
+  const leg = (window._lastLegs || []).find(l => l.id === id);
+  if (!leg) return;
+  editLegId = id;
+  const strikes = Array.from(new Set((window._lastChain || []).map(r => r.strike))).sort((a,b) => a-b);
+  const sel = document.getElementById("editStrike");
+  sel.innerHTML = strikes.map(s => `<option value="${s}" ${s === leg.strike ? "selected" : ""}>${fmt(s,0)}</option>`).join("")
+    || `<option value="${leg.strike}">${fmt(leg.strike,0)}</option>`;
+  document.getElementById("editType").value = leg.type;
+  setEditSide(leg.side);
+  document.getElementById("editQty").value = leg.qty;
+  document.getElementById("editPrice").value = leg.entry_price;
+  document.getElementById("editClosePrice").value = leg.ltp != null ? leg.ltp : "";
+  document.getElementById("editModalOverlay").classList.add("open");
+}
+
+function editAutoPrice() {
+  const strike = parseFloat(document.getElementById("editStrike").value);
+  const type = document.getElementById("editType").value;
+  const row = (window._lastChain || []).find(r => r.strike === strike);
+  const rec = row ? (type === "CE" ? row.ce : row.pe) : null;
+  if (rec && rec.close != null) document.getElementById("editPrice").value = rec.close;
+}
+document.getElementById("editStrike").addEventListener("change", editAutoPrice);
+document.getElementById("editType").addEventListener("change", editAutoPrice);
+
+document.getElementById("editDelete").addEventListener("click", async () => {
+  document.getElementById("editModalOverlay").classList.remove("open");
+  await removeLeg(editLegId);
+});
+
+document.getElementById("editClose").addEventListener("click", async () => {
+  const val = document.getElementById("editClosePrice").value;
+  const exitPrice = val === "" ? null : parseFloat(val);
+  if (val !== "" && isNaN(exitPrice)) { alert("Enter a valid exit price."); return; }
+  const res = await fetch("/api/sim/close_leg", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({id: editLegId, exit_price: exitPrice}),
+  });
+  const j = await res.json();
+  if (!j.ok) { alert("Error: " + j.error); return; }
+  document.getElementById("editModalOverlay").classList.remove("open");
+  renderLegBundle(j);
+});
+
+document.getElementById("editModify").addEventListener("click", async () => {
+  const strike = parseFloat(document.getElementById("editStrike").value);
+  const type = document.getElementById("editType").value;
+  const qty = parseInt(document.getElementById("editQty").value) || 1;
+  const price = parseFloat(document.getElementById("editPrice").value);
+  if (isNaN(price)) { alert("Enter a valid entry price."); return; }
+  const res = await fetch("/api/sim/edit_leg", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({id: editLegId, strike, type, side: editSide, qty, entry_price: price}),
+  });
+  const j = await res.json();
+  if (!j.ok) { alert("Error: " + j.error); return; }
+  document.getElementById("editModalOverlay").classList.remove("open");
+  renderLegBundle(j);
+});
+
+loadExpiries().then(() => loadDates(document.getElementById("expirySelect").value)).then(startSim);
+</script>
+</body>
+</html>

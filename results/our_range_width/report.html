@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Range Width</title><style>
+:root{--bg:#f3f4f8;--card:#fff;--border:#e6e8ef;--text:#14161c;--muted:#6f7482;--accent:#4f5fe0;--soft:#eceefc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111318;--card:#1a1d24;--border:#2a2e38;--text:#e8e9ee;--muted:#9097a6;--soft:#252a3a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:24px 16px 60px}h1{font-size:22px;margin:0 0 4px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px}.kpi .k{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.kpi .v{font-size:21px;font-weight:800;font-variant-numeric:tabular-nums}.kpi .s{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-size:11px;text-transform:uppercase}.scroll{overflow-x:auto}.note{color:var(--muted);font-size:12.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.bar{display:inline-block;height:10px;background:var(--accent);border-radius:3px;vertical-align:middle;opacity:.75}
+ul{margin:0;padding-left:18px}li{margin:4px 0}
+</style></head><body><div class="wrap">
+<h1>What size range does our method give?</h1><p class="note" id="sub"></p>
+<div class="kpis" id="kpis"></div>
+<div class="card"><h2>In short</h2><ul id="short"></ul></div>
+<div class="grid2">
+ <div class="card"><h2>Width distribution — every day's 09:20 range</h2><div class="scroll"><table id="tDist"></table></div></div>
+ <div class="card"><h2>Width distribution — Day-1 (entry) range only</h2><div class="scroll"><table id="tDist1"></table></div></div>
+</div>
+<div class="card"><h2>Percentiles (points)</h2><div class="scroll"><table id="tPct"></table></div>
+<p class="note">10% = 1 range in 10 is narrower than this; 90% = 1 in 10 is wider.</p></div>
+<div class="grid2">
+ <div class="card"><h2>By year</h2><div class="scroll"><table id="tYear"></table></div></div>
+ <div class="card"><h2>What the width is made of</h2><div class="scroll"><table id="tLd"></table></div>
+ <p class="note">Width = (CE leader − PE leader) + CE leader's first-5-min high + PE leader's first-5-min high.</p>
+ <div class="scroll" style="margin-top:10px"><table id="tGap"></table></div></div>
+</div>
+<div class="grid2">
+ <div class="card"><h2>Narrowest 09:20 ranges</h2><div class="scroll"><table id="tNar"></table></div></div>
+ <div class="card"><h2>Widest 09:20 ranges</h2><div class="scroll"><table id="tWide"></table></div></div>
+</div>
+</div><script>
+const D = {"all": {"p10": 172, "p25": 227, "p50": 300, "p75": 411, "p90": 611, "min": 75, "max": 2120, "mean": 361, "n": 1226}, "dist": [{"bin": "< 150", "n": 55, "pct": 4.5, "cum": 4.5}, {"bin": "150\u2013200", "n": 157, "pct": 12.8, "cum": 17.3}, {"bin": "200\u2013250", "n": 195, "pct": 15.9, "cum": 33.2}, {"bin": "250\u2013300", "n": 206, "pct": 16.8, "cum": 50.0}, {"bin": "300\u2013350", "n": 165, "pct": 13.5, "cum": 63.5}, {"bin": "350\u2013400", "n": 125, "pct": 10.2, "cum": 73.7}, {"bin": "400\u2013450", "n": 75, "pct": 6.1, "cum": 79.8}, {"bin": "450\u2013500", "n": 56, "pct": 4.6, "cum": 84.3}, {"bin": "500\u2013600", "n": 66, "pct": 5.4, "cum": 89.7}, {"bin": "600\u2013800", "n": 66, "pct": 5.4, "cum": 95.1}, {"bin": "800+", "n": 60, "pct": 4.9, "cum": 100.0}], "day1": {"p10": 265, "p25": 309, "p50": 366, "p75": 453, "p90": 590, "min": 191, "max": 1747, "mean": 416, "n": 259}, "dist_day1": [{"bin": "< 150", "n": 0, "pct": 0.0, "cum": 0.0}, {"bin": "150\u2013200", "n": 1, "pct": 0.4, "cum": 0.4}, {"bin": "200\u2013250", "n": 15, "pct": 5.8, "cum": 6.2}, {"bin": "250\u2013300", "n": 37, "pct": 14.3, "cum": 20.5}, {"bin": "300\u2013350", "n": 55, "pct": 21.2, "cum": 41.7}, {"bin": "350\u2013400", "n": 52, "pct": 20.1, "cum": 61.8}, {"bin": "400\u2013450", "n": 33, "pct": 12.7, "cum": 74.5}, {"bin": "450\u2013500", "n": 16, "pct": 6.2, "cum": 80.7}, {"bin": "500\u2013600", "n": 24, "pct": 9.3, "cum": 90.0}, {"bin": "600\u2013800", "n": 16, "pct": 6.2, "cum": 96.1}, {"bin": "800+", "n": 10, "pct": 3.9, "cum": 100.0}], "pct": {"p10": 0.81, "p25": 1.05, "p50": 1.42, "p75": 2.01, "p90": 3.0, "min": 0.39, "max": 10.33, "mean": 1.73, "n": 1226}, "dte": [{"k": "Expiry day", "p10": 143, "p25": 169, "p50": 213, "p75": 343, "p90": 587, "min": 75, "max": 1504, "mean": 298, "n": 260}, {"k": "1 day before", "p10": 168, "p25": 204, "p50": 251, "p75": 339, "p90": 572, "min": 117, "max": 2120, "mean": 330, "n": 260}, {"k": "2 days before", "p10": 202, "p25": 243, "p50": 293, "p75": 387, "p90": 563, "min": 140, "max": 1563, "mean": 357, "n": 260}, {"k": "3 days before", "p10": 241, "p25": 281, "p50": 338, "p75": 443, "p90": 701, "min": 167, "max": 1747, "mean": 417, "n": 255}, {"k": "4 days before", "p10": 268, "p25": 311, "p50": 371, "p75": 465, "p90": 574, "min": 191, "max": 1440, "mean": 418, "n": 188}], "year": [{"k": "2021", "p10": 194, "p25": 257, "p50": 296, "p75": 373, "p90": 473, "min": 170, "max": 772, "mean": 325, "n": 68, "pct": 1.7}, {"k": "2022", "p10": 213, "p25": 267, "p50": 353, "p75": 483, "p90": 697, "min": 75, "max": 1638, "mean": 408, "n": 247, "pct": 2.07}, {"k": "2023", "p10": 150, "p25": 170, "p50": 216, "p75": 271, "p90": 317, "min": 117, "max": 614, "mean": 231, "n": 238, "pct": 1.17}, {"k": "2024", "p10": 206, "p25": 260, "p50": 333, "p75": 453, "p90": 670, "min": 111, "max": 2120, "mean": 411, "n": 246, "pct": 1.41}, {"k": "2025", "p10": 157, "p25": 221, "p50": 295, "p75": 405, "p90": 634, "min": 98, "max": 1409, "mean": 354, "n": 248, "pct": 1.2}, {"k": "2026", "p10": 193, "p25": 257, "p50": 348, "p75": 463, "p90": 690, "min": 127, "max": 1747, "mean": 425, "n": 179, "pct": 1.43}], "weekday": [{"k": "Mon", "p10": 216, "p25": 260, "p50": 332, "p75": 458, "p90": 725, "min": 152, "max": 1638, "mean": 419, "n": 246}, {"k": "Tue", "p10": 168, "p25": 206, "p50": 270, "p75": 361, "p90": 543, "min": 98, "max": 1484, "mean": 326, "n": 245}, {"k": "Wed", "p10": 170, "p25": 210, "p50": 267, "p75": 367, "p90": 553, "min": 117, "max": 2120, "mean": 336, "n": 244}, {"k": "Thu", "p10": 147, "p25": 177, "p50": 262, "p75": 366, "p90": 587, "min": 75, "max": 1563, "mean": 327, "n": 246}, {"k": "Fri", "p10": 243, "p25": 288, "p50": 357, "p75": 446, "p90": 569, "min": 166, "max": 1440, "mean": 396, "n": 242}], "leaders": [{"k": "CE leader above PE leader", "share": 65.7, "p10": 196, "p25": 256, "p50": 339, "p75": 479, "p90": 709, "min": 135, "max": 2120, "mean": 413, "n": 806}, {"k": "Same strike (straddle)", "share": 34.3, "p10": 146, "p25": 184, "p50": 244, "p75": 321, "p90": 394, "min": 75, "max": 676, "mean": 261, "n": 420}], "gap": [{"k": 0, "n": 420, "share": 34.3, "w": 244}, {"k": 100, "n": 454, "share": 37.0, "w": 271}, {"k": 200, "n": 133, "share": 10.8, "w": 363}, {"k": 300, "n": 64, "share": 5.2, "w": 470}, {"k": 400, "n": 36, "share": 2.9, "w": 517}, {"k": 500, "n": 52, "share": 4.2, "w": 649}, {"k": 600, "n": 16, "share": 1.3, "w": 723}, {"k": 700, "n": 9, "share": 0.7, "w": 871}, {"k": 800, "n": 6, "share": 0.5, "w": 926}, {"k": 1000, "n": 26, "share": 2.1, "w": 1132}], "highs": {"p10": 79, "p25": 130, "p50": 190, "p75": 264, "p90": 343, "min": 2, "max": 739, "mean": 204, "n": 1226}, "later": [{"k": "09:20\u201310:30", "p10": 190, "p25": 243, "p50": 320, "p75": 438, "p90": 581, "min": 99, "max": 1690, "mean": 364, "n": 1264}, {"k": "10:30\u201312:30", "p10": 205, "p25": 256, "p50": 339, "p75": 456, "p90": 563, "min": 118, "max": 1195, "mean": 374, "n": 469}, {"k": "12:30\u201315:15", "p10": 190, "p25": 239, "p50": 324, "p75": 417, "p90": 537, "min": 91, "max": 1412, "mean": 359, "n": 461}], "later_all": {"p10": 192, "p25": 245, "p50": 325, "p75": 438, "p90": 566, "min": 91, "max": 1690, "mean": 365, "n": 2194}, "span": ["2021-09-23", "2026-09-22"], "expiries": 260, "narrow": [{"day": "2022-11-24", "width": 75.0, "ce_leader": 18300, "pe_leader": 18300}, {"day": "2025-09-16", "width": 98.0, "ce_leader": 25100, "pe_leader": 25100}, {"day": "2025-02-27", "width": 102.0, "ce_leader": 22600, "pe_leader": 22600}, {"day": "2025-07-24", "width": 104.0, "ce_leader": 25200, "pe_leader": 25200}, {"day": "2025-08-21", "width": 109.0, "ce_leader": 25100, "pe_leader": 25100}], "wide": [{"day": "2024-06-05", "width": 2120.0, "ce_leader": 23000, "pe_leader": 21000}, {"day": "2026-04-08", "width": 1747.0, "ce_leader": 24000, "pe_leader": 22500}, {"day": "2022-03-07", "width": 1638.0, "ce_leader": 17000, "pe_leader": 15500}, {"day": "2026-03-23", "width": 1571.0, "ce_leader": 24000, "pe_leader": 22700}, {"day": "2026-04-02", "width": 1563.0, "ce_leader": 23500, "pe_leader": 22300}]};
+const f0 = v => v == null ? "—" : Math.round(v).toLocaleString("en-IN");
+document.getElementById("sub").textContent = `${D.expiries} weekly expiries · ${D.span[0]} → ${D.span[1]} · ${D.all.n} daily 09:20 ranges · ${D.later_all ? D.later_all.n + " later-in-the-day ranges (after a leader change)" : ""}`;
+const k = (l, v, s) => `<div class="kpi"><div class="k">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+document.getElementById("kpis").innerHTML = [
+  k("Typical 09:20 range", f0(D.all.p50) + " pts", `median · middle half ${f0(D.all.p25)}–${f0(D.all.p75)}`),
+  k("As % of NIFTY", D.pct.p50 + "%", `median · middle half ${D.pct.p25}–${D.pct.p75}%`),
+  k("Day-1 (entry) range", f0(D.day1.p50) + " pts", `median · 1 in 10 under ${f0(D.day1.p10)}, 1 in 10 over ${f0(D.day1.p90)}`),
+  k("Expiry-day range", f0((D.dte.find(x => x.k === "Expiry day") || {}).p50) + " pts", "median — ranges shrink toward expiry"),
+  D.later_all ? k("After a leader change", f0(D.later_all.p50) + " pts", "median width of ranges recalculated later in the day") : ""].join("");
+const e = D.dte.find(x => x.k === "Expiry day"), f4 = D.dte.find(x => x.k === "4 days before"), top = [...D.dist].sort((a, b) => b.n - a.n).slice(0, 3);
+const sameL = D.leaders.find(x => x.k.startsWith("Same"));
+document.getElementById("short").innerHTML = [
+  `The most common 09:20 range widths are <b>${top.map(t => t.bin).join(", ")}</b> points (together ${top.reduce((a, t) => a + t.pct, 0).toFixed(0)}% of days).`,
+  `Half of all 09:20 ranges are between <b>${f0(D.all.p25)} and ${f0(D.all.p75)}</b> points wide (median ${f0(D.all.p50)}, about ${D.pct.p50}% of NIFTY).`,
+  `The range <b>shrinks toward expiry</b>: median ${f4 ? f0(f4.p50) : "—"} four days before, ${e ? f0(e.p50) : "—"} on expiry day — it tracks the option premium, which decays.`,
+  sameL ? `In <b>${sameL.share}%</b> of days both leaders are the <b>same strike</b>; then the width is just the two first-candle highs (median ${f0(sameL.p50)}).` : "",
+  D.later_all ? `Ranges recalculated later in the day (after a leader change) have a median width of <b>${f0(D.later_all.p50)}</b>.` : ""].filter(Boolean).map(x => `<li>${x}</li>`).join("");
+const dist = (id, rows) => document.getElementById(id).innerHTML = `<tr><th>Width (pts)</th><th>Days</th><th>Share</th><th></th><th>Narrower or equal</th></tr>` +
+  rows.map(r => `<tr><td>${r.bin}</td><td>${r.n}</td><td>${r.pct}%</td><td style="text-align:left;width:40%"><span class="bar" style="width:${r.pct * 3}%"></span></td><td>${r.cum}%</td></tr>`).join("");
+dist("tDist", D.dist); dist("tDist1", D.dist_day1);
+const pr = (lab, q, extra = "") => `<tr><td>${lab}</td><td>${q.n}</td>${["p10", "p25", "p50", "p75", "p90", "min", "max"].map(c => `<td>${f0(q[c])}</td>`).join("")}${extra}</tr>`;
+const ph = (extra = "") => `<tr><th></th><th>Count</th><th>10%</th><th>25%</th><th>Median</th><th>75%</th><th>90%</th><th>Min</th><th>Max</th>${extra}</tr>`;
+document.getElementById("tPct").innerHTML = ph() + pr("Every day, 09:20", D.all) + D.dte.map(x => pr("09:20 · " + x.k, x)).join("") +
+  D.weekday.map(x => pr("09:20 · " + x.k, x)).join("") + D.later.map(x => pr("After leader change · " + x.k, x)).join("");
+document.getElementById("tYear").innerHTML = `<tr><th>Year</th><th>Days</th><th>25%</th><th>Median</th><th>75%</th><th>Median % of NIFTY</th></tr>` +
+  D.year.map(x => `<tr><td>${x.k}</td><td>${x.n}</td><td>${f0(x.p25)}</td><td><b>${f0(x.p50)}</b></td><td>${f0(x.p75)}</td><td>${x.pct}%</td></tr>`).join("");
+document.getElementById("tLd").innerHTML = `<tr><th>Leaders at 09:20</th><th>Share</th><th>Median width</th><th>25%</th><th>75%</th></tr>` +
+  D.leaders.map(x => `<tr><td>${x.k}</td><td>${x.share}%</td><td><b>${f0(x.p50)}</b></td><td>${f0(x.p25)}</td><td>${f0(x.p75)}</td></tr>`).join("") +
+  `<tr><td>Sum of the two first-candle highs</td><td></td><td><b>${f0(D.highs.p50)}</b></td><td>${f0(D.highs.p25)}</td><td>${f0(D.highs.p75)}</td></tr>`;
+document.getElementById("tGap").innerHTML = `<tr><th>CE leader − PE leader</th><th>Days</th><th>Share</th><th>Median width</th></tr>` +
+  D.gap.map(x => `<tr><td>${x.k > 0 ? "+" : ""}${x.k}</td><td>${x.n}</td><td>${x.share}%</td><td>${f0(x.w)}</td></tr>`).join("");
+const lst = (id, rows) => document.getElementById(id).innerHTML = `<tr><th>Day</th><th>Width</th><th>CE leader</th><th>PE leader</th></tr>` +
+  rows.map(r => `<tr><td>${r.day}</td><td>${f0(r.width)}</td><td>${r.ce_leader}</td><td>${r.pe_leader}</td></tr>`).join("");
+lst("tNar", D.narrow); lst("tWide", D.wide);
+</script></body></html>

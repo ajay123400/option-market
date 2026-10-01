@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Range Diary</title>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #fff; --border: #e7e8ee; --border-soft: #f1f2f6;
+    --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --up-soft: #e6f7f0; --down: #e0434a; --down-soft: #fdedee;
+    --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --amber: #c07d12; --amber-soft: #fdf3e0;
+    --radius: 16px; --radius-sm: 10px;
+    --shadow: 0 1px 2px rgba(20,22,30,.04), 0 8px 24px rgba(20,22,30,.06); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+
+  /* ---- date bar ---- */
+  .datebar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 28px; background: rgba(242,243,247,.92); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
+  .navbtn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--card); cursor: pointer; font-size: 15px; color: var(--text); box-shadow: var(--shadow-sm); }
+  .navbtn:disabled { opacity: .35; cursor: default; }
+  .datepick { position: relative; display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 7px 16px 7px 14px; box-shadow: var(--shadow-sm); cursor: pointer; }
+  .datepick .lbl { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+  .datepick .cal { font-size: 16px; }
+  .datepick input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+  .todaybtn { border: 1px solid var(--text); background: var(--text); color: #fff; border-radius: 999px; padding: 8px 16px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+  .weekchip { font-size: 12px; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; }
+  .weekchip b { color: var(--text); }
+  .upd { margin-left: auto; font-size: 11.5px; color: var(--muted-2); }
+
+  .page { padding: 18px 28px 40px; display: flex; flex-direction: column; gap: 16px; width: 100%; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; min-width: 0; }
+  .card h3 { margin: 0 0 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .big { font-size: 22px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .sub { font-size: 12px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .up { color: var(--up); } .down { color: var(--down); } .muted { color: var(--muted-2); }
+  .pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+  .pill.UP { background: var(--up-soft); color: var(--up); } .pill.DOWN { background: var(--down-soft); color: var(--down); }
+  .pill.open { background: var(--up-soft); color: #1f7a4d; } .pill.closed { background: var(--accent-soft); color: var(--accent-dark); } .pill.waiting { background: var(--amber-soft); color: var(--amber); }
+  .hl { position: relative; height: 8px; background: var(--bg); border-radius: 4px; margin-top: 12px; }
+  .hl .body { position: absolute; top: 0; bottom: 0; border-radius: 4px; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 5px 14px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .kv span:nth-child(odd) { color: var(--muted); }
+  .kv b { font-weight: 700; }
+
+  /* ---- chart ---- */
+  .chart-wrap { position: relative; }
+  #chart { width: 100%; height: 300px; display: block; }
+  .tip { position: absolute; pointer-events: none; background: var(--text); color: #fff; font-size: 12px; padding: 7px 10px; border-radius: 8px; white-space: nowrap; transform: translate(-50%, -110%); display: none; box-shadow: var(--shadow); font-variant-numeric: tabular-nums; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11.5px; color: var(--muted); margin-top: 8px; }
+  .legend i { display: inline-block; width: 18px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: middle; }
+
+  /* ---- timeline ---- */
+  .cols { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+  .ev { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+  .ev::before { content: ""; position: absolute; left: -19px; top: 16px; width: 12px; height: 12px; border-radius: 50%; background: var(--card); border: 3px solid var(--muted-2); }
+  .ev.DAY_START::before { border-color: var(--accent); } .ev.LEADER_CHANGE::before { border-color: var(--amber); }
+  .ev.DAY_END::before { border-color: var(--text); } .ev.STRAT::before { border-color: var(--down); background: var(--down); }
+  .ev.STRAT.good::before { border-color: var(--up); background: var(--up); }
+  .ev-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .time { font-weight: 800; font-size: 13px; background: var(--bg); border-radius: 6px; padding: 2px 8px; font-variant-numeric: tabular-nums; }
+  .etype { font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+  .etype.DAY_START { color: var(--accent); } .etype.LEADER_CHANGE { color: var(--amber); } .etype.DAY_END { color: var(--text); }
+  .ev-head .pill { margin-left: auto; }
+  .leaders { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; margin-bottom: 6px; }
+  .leaders .old { color: var(--muted-2); text-decoration: line-through; }
+  .leaders .new { font-weight: 800; color: var(--amber); }
+  .weak { font-size: 10px; font-weight: 800; color: var(--down); background: var(--down-soft); border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
+  .rangeline { font-size: 13px; margin-bottom: 8px; }
+  .rangeline b { font-size: 14px; }
+  .sells { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .sell { border: 1px solid var(--border-soft); background: #fbfbfd; border-radius: 8px; padding: 8px 10px; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .sell .t { font-size: 10px; font-weight: 800; letter-spacing: .05em; color: var(--muted); text-transform: uppercase; }
+  .sell .k { font-size: 15px; font-weight: 800; margin: 2px 0; }
+  .sell .alt { color: var(--muted); font-size: 11px; margin-top: 3px; }
+  .popbar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 5px; overflow: hidden; }
+  .popbar div { height: 100%; background: var(--up); }
+  .mkt { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 11.5px; background: var(--bg); border-radius: 6px; padding: 3px 8px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .chip b { color: var(--text); }
+  .strat-line { font-size: 12.5px; line-height: 1.55; }
+  .empty { text-align: center; padding: 50px 20px; color: var(--muted); }
+  .empty .big { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+  .linkbtn { border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: 12.5px; cursor: pointer; margin: 4px; }
+  .note { font-size: 11.5px; color: var(--muted); line-height: 1.55; }
+  @media (max-width: 1000px) { .cols { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) {
+    .topbar, .datebar, .page { padding-left: 12px; padding-right: 12px; }
+    .sells { grid-template-columns: 1fr; } #chart { height: 240px; } .upd { width: 100%; margin-left: 0; }
+  }
+  .tabs { display: inline-flex; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 3px; box-shadow: var(--shadow-sm); }
+  .tabs button { border: none; background: transparent; padding: 7px 16px; border-radius: 999px; font-weight: 700; font-size: 12.5px; color: var(--muted); cursor: pointer; }
+  .tabs button.active { background: var(--text); color: #fff; }
+  .expsel { border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 8px 14px; font-weight: 700; font-size: 13px; box-shadow: var(--shadow-sm); }
+  .dayno { font-size: 11px; font-weight: 800; background: var(--accent-soft); color: var(--accent-dark); border-radius: 999px; padding: 4px 10px; }
+  .views { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+  .verdict { display: inline-block; font-weight: 800; font-size: 13px; padding: 5px 12px; border-radius: 999px; color: #fff; background: var(--text); }
+  .verdict.BULL { background: var(--up); } .verdict.BEAR { background: var(--down); } .verdict.NEU { background: #8b909c; }
+  .vrow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+  .vsmall { font-size: 12px; color: var(--muted); }
+  .seq { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+  .seq span { font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; }
+  .seq .BULLISH { background: var(--up-soft); color: var(--up); } .seq .BEARISH { background: var(--down-soft); color: var(--down); }
+  details.factors { margin-top: 6px; }
+  details.factors summary { cursor: pointer; font-size: 12px; font-weight: 700; color: var(--accent-dark); list-style: none; }
+  details.factors summary::-webkit-details-marker { display: none; }
+  .fac { display: grid; grid-template-columns: 26px minmax(110px, auto) 1fr; gap: 4px 8px; font-size: 12px; margin-top: 6px; align-items: baseline; }
+  .fac .sc { font-weight: 800; text-align: center; border-radius: 4px; font-size: 11px; padding: 1px 0; }
+  .fac .p { background: var(--up-soft); color: var(--up); } .fac .n { background: var(--down-soft); color: var(--down); } .fac .z { background: var(--bg); color: var(--muted); }
+  .fac .nm { font-weight: 700; }
+  .fac .dt { color: var(--muted); }
+  .confirm { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; margin: 6px 0 8px; }
+  .confirm .ok { color: var(--up); font-weight: 700; } .confirm .no { color: var(--down); font-weight: 700; }
+  .confirm .tot { font-weight: 800; padding: 2px 8px; border-radius: 6px; background: var(--bg); }
+  .oiv { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; font-size: 12px; }
+  .oiv b.BULL { color: var(--up); } .oiv b.BEAR { color: var(--down); } .oiv b.NEU { color: var(--muted); }
+  .xgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+  .xday { cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; }
+  .xday:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(20,22,30,.1); }
+  .xday .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .xline { font-size: 12.5px; margin: 5px 0; display: flex; justify-content: space-between; gap: 8px; }
+  .xline > span:first-child { color: var(--muted); }
+  @media (max-width: 700px) { .views { grid-template-columns: 1fr; } }
+  table.ftab { border-collapse: collapse; width: 100%; font-size: 12px; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  table.ftab th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 6px 8px; background: #f7f8fa; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  table.ftab td { padding: 6px 8px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  table.ftab td.nm { font-weight: 700; white-space: nowrap; }
+  table.ftab td.sig { text-align: center; }
+  table.ftab tr.pos td.sig span { background: var(--up-soft); color: var(--up); }
+  table.ftab tr.neg td.sig span { background: var(--down-soft); color: var(--down); }
+  table.ftab tr.zer td.sig span { background: var(--bg); color: var(--muted); }
+  table.ftab td.sig span { display: inline-block; min-width: 28px; font-weight: 800; border-radius: 5px; padding: 2px 6px; }
+  table.ftab tr.pos td.rd { color: var(--up); } table.ftab tr.neg td.rd { color: var(--down); }
+  table.ftab tfoot td { font-weight: 800; background: #fafbfc; }
+  .ftab-wrap { overflow-x: auto; }
+  /* ---- strategy ideas at a snapshot ---- */
+  .ideas-blk { margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 8px; }
+  .ideas-blk h5 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .ideas-blk h5 .envc { text-transform: none; letter-spacing: 0; font-weight: 600; background: var(--bg); border-radius: 6px; padding: 1px 7px; color: var(--text); }
+  .icard { border: 1px solid var(--border); border-radius: 9px; padding: 7px 9px; margin-bottom: 6px; font-size: 12px; }
+  .icard .h { display: flex; justify-content: space-between; gap: 8px; font-weight: 800; }
+  .icard .slot { font-size: 10.5px; font-weight: 700; color: var(--accent-dark); }
+  .icard .lg { color: var(--muted); margin: 2px 0; }
+  .icard .nums { display: flex; flex-wrap: wrap; gap: 3px 12px; font-variant-numeric: tabular-nums; }
+  .icard .st { font-size: 10.5px; font-weight: 800; border-radius: 999px; padding: 1px 7px; white-space: nowrap; }
+  .st.open { background: var(--bg); color: var(--muted); } .st.booked { background: var(--up-soft); color: var(--up); } .st.exited { background: var(--down-soft); color: var(--down); }
+  .rv { font-size: 12px; padding: 5px 0; border-bottom: 1px solid var(--border-soft); }
+  .rv .act { display: inline-block; min-width: 62px; text-align: center; font-weight: 800; border-radius: 6px; padding: 1px 6px; margin-right: 6px; font-size: 11px; }
+  .act.BOOK { background: var(--up-soft); color: var(--up); } .act.EXIT { background: var(--down-soft); color: var(--down); }
+  .act.ADJUST { background: #fdf1dc; color: #b7791f; } .act.HOLD { background: var(--bg); color: var(--muted); }
+  .act.SETTLED { background: var(--accent-soft, #eceefc); color: var(--accent-dark, #3d4cc7); } .act.DAYEND { background: var(--bg); color: var(--text); }
+  table.opt { border-collapse: collapse; font-size: 11.5px; margin: 4px 0 2px 68px; font-variant-numeric: tabular-nums; }
+  table.opt td, table.opt th { padding: 2px 7px; border-bottom: 1px solid var(--border-soft); text-align: right; }
+  table.opt th:first-child, table.opt td:first-child { text-align: left; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Range Diary</h1>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink active" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="datebar">
+  <div class="tabs"><button id="tabDay" class="active">Day</button><button id="tabExp">Expiry</button></div>
+  <select class="expsel" id="expSel" hidden></select>
+  <span id="dayCtl" style="display:contents">
+  <button class="navbtn" id="prevDay" title="Previous trading day">◀</button>
+  <label class="datepick" title="Pick a date">
+    <span class="cal">📅</span><span class="lbl" id="dateLbl">—</span>
+    <input type="date" id="dateInput">
+  </label>
+  <button class="navbtn" id="nextDay" title="Next trading day">▶</button>
+  <button class="todaybtn" id="todayBtn">Today</button>
+  </span>
+  <span class="weekchip" id="weekChip" hidden></span>
+  <span class="upd" id="upd"></span>
+</div>
+
+<div class="page" id="page"><div class="card empty">Loading…</div></div>
+
+<script>
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const n0 = v => v == null ? "—" : Number(v).toLocaleString("en-IN", {maximumFractionDigits: 0});
+const n2 = v => v == null ? "—" : Number(v).toLocaleString("en-IN", {maximumFractionDigits: 2});
+const rs = v => v == null ? "—" : (v < 0 ? "-" : "") + "₹" + Math.abs(v).toLocaleString("en-IN", {maximumFractionDigits: 0});
+const crore = v => v == null ? "—" : (v / 1e7).toFixed(2) + " Cr";
+const longDate = d => new Date(d + "T00:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short", year: "numeric"});
+const shortDate = d => new Date(d + "T00:00:00").toLocaleDateString("en-IN", {day: "2-digit", month: "short"});
+const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+let cur = null, data = null;
+
+function setUrl(q) { try { history.replaceState(null, "", `/diary?${q}`); } catch (e) {} }
+const vcls = v => !v ? "NEU" : v.includes("BULL") ? "BULL" : v.includes("BEAR") ? "BEAR" : "NEU";
+const sgn = n => (n > 0 ? "+" : "") + n;
+
+function factorList(v) {
+  if (!v) return "";
+  return `<div class="ftab-wrap"><table class="ftab">
+    <thead><tr><th>Factor</th><th>Before${v.since ? " (" + v.since.slice(11) + ")" : ""}</th><th>Now</th><th>Change</th><th>Reading</th><th>Signal</th></tr></thead>
+    <tbody>${v.factors.map(x => `<tr class="${x.score > 0 ? "pos" : x.score < 0 ? "neg" : "zer"}">
+      <td class="nm">${esc(x.name)}</td><td>${esc(x.before ?? "")}</td><td>${esc(x.now ?? "")}</td><td>${esc(x.change ?? x.detail)}</td>
+      <td class="rd">${esc(x.reading ?? "")}</td><td class="sig"><span>${sgn(x.score)}</span></td></tr>`).join("")}</tbody>
+    <tfoot><tr><td colspan="5">Total → ${esc(v.verdict)}</td><td class="sig" style="text-align:center">${sgn(v.score)}</td></tr></tfoot>
+  </table></div>`;
+}
+function oiViewBlock(v, open) {
+  if (!v) return `<div class="vsmall">—</div>`;
+  return `<div class="vrow"><span class="verdict ${vcls(v.verdict)}">${v.verdict} ${sgn(v.score)}</span><span class="vsmall">vs ${esc(v.vs)}${v.since ? " (" + v.since.replace("T", " ").slice(5) + ")" : ""}</span></div>
+    <details class="factors" ${open ? "open" : ""}><summary>▸ ${v.factors.length} factors — why</summary>${factorList(v)}</details>`;
+}
+function confirmLine(c) {
+  if (!c) return "";
+  return `<div class="confirm"><span class="tot">${c.aligned}/${c.of} confirm ${c.direction === "UP" ? "▲" : "▼"}</span>
+    ${c.items.map(x => `<span>${esc(x.name)} <b>${esc(x.value)}</b> <span class="${x.ok ? "ok" : "no"}">${x.ok ? "✓" : "✗"}</span></span>`).join(" · ")}</div>`;
+}
+
+async function load(day) {
+  const j = await (await fetch(`/api/diary/day/${day}`)).json();
+  if (!j.ok) { document.getElementById("page").innerHTML = `<div class="card empty">${esc(j.error)}</div>`; return; }
+  cur = j.date; data = j; setUrl(`date=${cur}`);
+  document.getElementById("dateLbl").textContent = longDate(cur);
+  const inp = document.getElementById("dateInput");
+  inp.value = cur;
+  if (j.available && j.available.length) { inp.min = j.available[j.available.length - 1]; inp.max = todayStr(); }
+  document.getElementById("prevDay").disabled = !j.found ? !j.nearest_before : !j.prev_day;
+  document.getElementById("nextDay").disabled = !j.found ? !j.nearest_after : !j.next_day;
+  const wk = document.getElementById("weekChip");
+  wk.hidden = !j.found;
+  if (j.found) wk.innerHTML = `<span class="dayno">Day ${j.day_no}</span> of week <b>${shortDate(j.cycle_start)} → ${shortDate(j.expiry)}</b> expiry`;
+  document.getElementById("upd").textContent = j.updated_at ? "data updated " + j.updated_at.replace("T", " ").slice(0, 16) : "";
+  j.found ? render(j) : renderMissing(j);
+}
+
+function renderMissing(j) {
+  document.getElementById("page").innerHTML = `<div class="card empty">
+    <div class="big">No record for ${longDate(j.date)}</div>
+    <div>Weekend, NSE holiday, or a day before the diary started${j.date === todayStr() ? " — or today's first candle hasn't closed yet (09:20)" : ""}.</div>
+    <div style="margin-top:14px">
+      ${j.nearest_before ? `<button class="linkbtn" onclick="load('${j.nearest_before}')">◀ ${longDate(j.nearest_before)}</button>` : ""}
+      ${j.nearest_after ? `<button class="linkbtn" onclick="load('${j.nearest_after}')">${longDate(j.nearest_after)} ▶</button>` : ""}
+    </div></div>`;
+}
+
+function leaderTxt(r, side) {
+  const l = (r.leaders || {})[side], p = (r.prev_leaders || {})[side], lp = (r.lead_pct || {})[side];
+  if (l == null) return "";
+  const top = ((r.top || {})[side] || []).map(t => `${t.strike}: ${crore(t.volume)}`).join(" · ");
+  return `<span title="${esc(top)}"><span class="muted">${side}</span> ${p != null && p !== l ? `<span class="old">${p}</span> → <span class="new">${l}</span>` : `<b>${l}</b>`}` +
+    (lp != null ? ` <span class="muted">+${lp}%</span>${lp < 5 ? '<span class="weak">WEAK</span>' : ""}` : "") + `</span>`;
+}
+
+function sellBox(b, side) {
+  if (!b || !b.rule) return "";
+  const r = b.rule, s = b.safer;
+  return `<div class="sell"><div class="t">Sell ${side} · your rule</div>
+    <div class="k">${r.strike} <span style="font-weight:600;font-size:13px">@ ${n2(r.premium)}</span></div>
+    <div class="muted">${r.distance != null ? n0(r.distance) + " pts away" : ""}${r.pop != null ? " · POP " + r.pop + "%" : ""}${r.iv != null ? " · IV " + r.iv + "%" : ""}</div>
+    ${r.pop != null ? `<div class="popbar"><div style="width:${r.pop}%"></div></div>` : ""}
+    ${s ? `<div class="alt">Safer: <b>${s.strike}</b> @ ${n2(s.premium)}${s.pop != null ? " · POP " + s.pop + "%" : ""}</div>` : ""}</div>`;
+}
+
+function mktChips(m) {
+  if (!m) return "";
+  return `<div class="mkt">
+    <span class="chip">NIFTY <b>${n2(m.spot)}</b>${m.spot_is_forward ? " (fwd)" : ""}</span>
+    <span class="chip">PCR <b>${m.pcr_oi ?? "—"}</b>${m.pcr_chg_oi != null ? ` · Δ <b>${m.pcr_chg_oi}</b>` : ""}</span>
+    <span class="chip">ATM IV <b>${m.atm_iv != null ? m.atm_iv + "%" : "—"}</b></span>
+    <span class="chip">Straddle <b>${n2(m.atm_straddle)}</b></span>
+    <span class="chip">Max pain <b>${n0(m.max_pain)}</b></span></div>`;
+}
+
+function ideasBlock(b) {
+  if (!b) return "";
+  const e = b.env || {}, rs0 = v => v == null ? "—" : (v < 0 ? "-" : "") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+  const cards = (b.ideas || []).map((i, n) => {
+    const rec = i.record;
+    const legs = i.legs.map(l => `${l.side === "SELL" ? "S" : "B"} ${l.strike}${l.type} @${l.price}`).join(" · ");
+    const stTxt = i.status === "open" ? "tracking" : i.status;
+    return `<div class="icard"><div class="h"><span>${n + 1}. ${esc(i.name)}</span><span class="slot">${esc(i.slot)}</span></div>
+      <div class="lg">${legs}</div>
+      <div class="nums"><span>${i.credit ? "credit" : "debit"} <b>${rs0(Math.abs(i.net_premium))}</b></span>
+        <span>${i.unlimited_loss ? "<b class='down'>unlimited risk</b>" : "max loss <b>" + rs0(i.max_loss) + "</b>"}</span>
+        <span>BE ${(i.breakevens || []).map(x => Math.round(x)).join(" / ") || "—"}</span>
+        ${rec ? `<span>5-yr at similar IV: <b>${Math.round(rec.win_hold)}%</b> win · avg <b>${rs0(rec.avg_hold)}</b> · worst ${rs0(rec.worst_hold)} <span class="muted">(n ${rec.n})</span></span>` : ""}
+        <span class="muted">${esc(i.why || "")}</span></div></div>`;
+  }).join("");
+  const reviews = (b.reviews || []).map(r => {
+    const opts = (r.options || []).length ? `<table class="opt"><tr><th>Adjustment option (for reference)</th><th>Exp. P&amp;L from here</th><th>Switch cost</th><th>Worst 5% avg</th></tr>
+      ${r.options.map(o => `<tr><td>${o.action} · ${esc(o.detail)}</td><td>${rs0(o.ev)}</td><td>${rs0(o.cost)}</td><td>${rs0(o.cvar)}</td></tr>`).join("")}</table>` : "";
+    return `<div class="rv"><span class="act ${String(r.action).replace(/\s/g, "")}">${r.action}</span><b>${esc(r.name)}</b> <span class="muted">[${esc(r.id)}]</span>
+      · P&amp;L <b class="${(r.pnl || 0) >= 0 ? "up" : "down"}">${rs0(r.pnl)}</b>${r.pct != null ? ` (${r.pct > 0 ? "+" : ""}${r.pct}%)` : ""} — ${esc(r.reason || "")}${opts}</div>`;
+  }).join("");
+  if (!cards && !reviews) return "";
+  const revHead = b.kind === "DAY_END" ? "🏁 Day end — the day's ideas at the close" : cards ? "🔧 Earlier ideas — what to do now" : "🔧 Adjustments — earlier ideas";
+  return `<div class="ideas-blk">
+    ${reviews ? `<h5>${revHead}</h5>${reviews}` : ""}
+    ${cards ? `<h5 style="margin-top:${reviews ? "10px" : "0"}">💡 Top 3 ideas <span class="envc">${esc(e.iv_level || "")} · ATM IV ${e.atm_iv ?? "—"}% · ${esc(e.dte_label || "")} · view ${esc(e.view || "")}</span></h5>${cards}` : ""}</div>`;
+}
+
+function evCard(r) {
+  const label = r.kind === "DAY_START" ? "Day start" : r.kind === "DAY_END" ? "Day end" : "Leader change";
+  const sh = r.shift, rg = r.range;
+  return `<div class="ev ${r.kind}">
+    <div class="ev-head"><span class="time">${r.time.slice(11)}</span><span class="etype ${r.kind}">${label}</span>
+      ${sh ? `<span class="pill ${sh.direction}">${sh.direction === "UP" ? "▲ bullish shift" : sh.direction === "DOWN" ? "▼ bearish shift" : "no shift"} ${n0(Math.abs(sh.points))} pts</span>` : ""}
+      ${r.kind === "DAY_END" && r.day_shift ? `<span class="pill ${r.day_shift.direction}">day ${r.day_shift.direction === "UP" ? "▲" : r.day_shift.direction === "DOWN" ? "▼" : "•"} ${n0(Math.abs(r.day_shift.points))} pts</span>` : ""}</div>
+    ${r.intraday_view ? `<div class="vrow" style="margin:0 0 6px"><span class="verdict ${vcls(r.intraday_view)}" style="font-size:11px;padding:3px 10px">Intraday ${r.intraday_view}</span>
+      ${r.shift ? `<span class="vsmall">upper ${sgn(n0(r.shift.upper_move))} · lower ${sgn(n0(r.shift.lower_move))} pts</span>` : ""}</div>` : ""}
+    <div class="leaders">${leaderTxt(r, "CE")}${leaderTxt(r, "PE")}</div>
+    ${rg ? `<div class="rangeline">Range <b>${n0(rg.lower)} – ${n0(rg.upper)}</b> <span class="muted">(${n0(rg.width)} pts · highs CE ${rg.ce_first_high} / PE ${rg.pe_first_high})</span></div>` : ""}
+    ${confirmLine(r.confirm)}
+    ${r.best ? `<div class="sells">${sellBox(r.best.CE, "CE")}${sellBox(r.best.PE, "PE")}</div>` : ""}
+    ${mktChips(r.market)}
+    ${r.oi_view ? `<div class="oiv">Option data vs <b>${esc(r.oi_view.vs)}</b>${r.oi_view.since ? ` (${r.oi_view.since.slice(5).replace("T", " ")})` : ""}:
+      <b class="${vcls(r.oi_view.verdict)}">${r.oi_view.verdict} ${sgn(r.oi_view.score)}</b></div>
+      <details class="factors"><summary>▸ why — factor table</summary>${factorList(r.oi_view)}</details>` : ""}
+    ${ideasBlock(r.ideas_block)}
+  </div>`;
+}
+
+function stratCard(e) {
+  const t = e.time.slice(11);
+  if (e.type === "ENTRY") {
+    return `<div class="ev STRAT good"><div class="ev-head"><span class="time">${t}</span><span class="etype" style="color:var(--up)">Range Strategy · entry</span></div>
+      <div class="strat-line">${e.legs.map(l => `SELL <b>${l.strike} ${l.side}</b> @ ${l.price}`).join(" + ")} · premium <b>${rs(e.premium)}</b> · stop ${rs(e.stop)} · target ${rs(e.target)}</div></div>`;
+  }
+  if (e.type === "RANGE" && e.rolls && e.rolls.length) {
+    return `<div class="ev STRAT"><div class="ev-head"><span class="time">${t}</span><span class="etype" style="color:var(--amber)">Range Strategy · roll</span></div>
+      <div class="strat-line">${e.rolls.map(x => `${x.side}: buy back <b>${x.from}</b> @ ${x.buy_back} (<span class="${x.booked >= 0 ? "up" : "down"}">${rs(x.booked)}</span>) → sell <b>${x.to}</b> @ ${x.sell} <span class="muted">(${esc(x.why)})</span>`).join("<br>")}</div></div>`;
+  }
+  if (e.type === "EXIT") {
+    return `<div class="ev STRAT ${e.net >= 0 ? "good" : ""}"><div class="ev-head"><span class="time">${t}</span><span class="etype" style="color:${e.net >= 0 ? "var(--up)" : "var(--down)"}">Range Strategy · exit (${esc(e.reason)})</span></div>
+      <div class="strat-line">${e.legs.map(l => `${l.strike}${l.side} @ ${l.exit} (<span class="${l.pnl >= 0 ? "up" : "down"}">${rs(l.pnl)}</span>)`).join(" · ")}<br>
+      Gross ${rs(e.realized)} · charges ${rs(e.charges)} · <b class="${e.net >= 0 ? "up" : "down"}">NET ${rs(e.net)}</b></div></div>`;
+  }
+  return "";
+}
+
+// ---- NIFTY vs your range, through the day ------------------------------
+function drawChart(j) {
+  const svg = document.getElementById("chart"), tip = document.getElementById("tip");
+  const pts = (j.nifty || []).map(([t, c]) => ({m: +t.slice(0, 2) * 60 + +t.slice(3), c, t}));
+  const rows = j.rows.filter(r => r.range);
+  if (!pts.length && !rows.length) { svg.innerHTML = `<text x="50%" y="50%" text-anchor="middle" fill="#a2a7b3" font-size="13">No intraday data</text>`; return; }
+  const W = svg.clientWidth || 900, H = svg.clientHeight || 300, pl = 58, pr = 16, pt = 14, pb = 28;
+  const m0 = 9 * 60 + 15, m1 = 15 * 60 + 30;
+  // range as a step function over the day
+  const steps = rows.map(r => ({m: +r.time.slice(11, 13) * 60 + +r.time.slice(14, 16), lo: r.range.lower, hi: r.range.upper, r}));
+  const vals = pts.map(p => p.c).concat(steps.flatMap(s => [s.lo, s.hi]));
+  let lo = Math.min(...vals), hi = Math.max(...vals); const pad = (hi - lo) * 0.08 || 20; lo -= pad; hi += pad;
+  const X = m => pl + (Math.min(Math.max(m, m0), m1) - m0) / (m1 - m0) * (W - pl - pr);
+  const Y = v => pt + (1 - (v - lo) / (hi - lo)) * (H - pt - pb);
+  let band = "", upper = "", lower = "";
+  steps.forEach((s, i) => {
+    const a = i === 0 ? m0 : s.m, b = i + 1 < steps.length ? steps[i + 1].m : m1;
+    band += `<rect x="${X(a)}" y="${Y(s.hi)}" width="${Math.max(0, X(b) - X(a))}" height="${Math.max(0, Y(s.lo) - Y(s.hi))}" fill="#0e9f6e" opacity="0.10"/>`;
+    upper += `${i ? "L" : "M"}${X(a)},${Y(s.hi)} L${X(b)},${Y(s.hi)} `;
+    lower += `${i ? "L" : "M"}${X(a)},${Y(s.lo)} L${X(b)},${Y(s.lo)} `;
+  });
+  const ticksY = []; const stepY = (hi - lo) > 400 ? 100 : 50;
+  for (let v = Math.ceil(lo / stepY) * stepY; v <= hi; v += stepY) ticksY.push(v);
+  const ticksX = ["09:15", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "15:30"];
+  const line = pts.map((p, i) => `${i ? "L" : "M"}${X(p.m).toFixed(1)},${Y(p.c).toFixed(1)}`).join(" ");
+  const marks = steps.filter(s => s.r.kind === "LEADER_CHANGE").map(s => `<line x1="${X(s.m)}" x2="${X(s.m)}" y1="${pt}" y2="${H - pb}" stroke="#c07d12" stroke-dasharray="3,3"/>
+    <circle cx="${X(s.m)}" cy="${pt + 4}" r="4" fill="#c07d12"/>`).join("");
+  const outside = pts.filter(p => { const s = steps.filter(x => x.m <= p.m).pop() || steps[0]; return s && (p.c > s.hi || p.c < s.lo); });
+  svg.innerHTML = `
+    ${ticksY.map(v => `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#eef0f4"/><text x="${pl - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="#8b909c">${n0(v)}</text>`).join("")}
+    ${ticksX.map(t => { const m = +t.slice(0, 2) * 60 + +t.slice(3); return `<text x="${X(m)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="#8b909c">${t}</text>`; }).join("")}
+    ${band}
+    <path d="${upper}" fill="none" stroke="#0e9f6e" stroke-width="1.6" stroke-dasharray="6,4"/>
+    <path d="${lower}" fill="none" stroke="#0e9f6e" stroke-width="1.6" stroke-dasharray="6,4"/>
+    ${marks}
+    <path d="${line}" fill="none" stroke="#14161c" stroke-width="2.2" stroke-linejoin="round"/>
+    ${outside.map(p => `<circle cx="${X(p.m)}" cy="${Y(p.c)}" r="2.6" fill="#e0434a"/>`).join("")}
+    <line id="hov" x1="0" x2="0" y1="${pt}" y2="${H - pb}" stroke="#8b909c" stroke-dasharray="2,3" style="display:none"/>`;
+  svg.onmousemove = ev => {
+    if (!pts.length) return;
+    const rect = svg.getBoundingClientRect(), x = ev.clientX - rect.left;
+    const m = m0 + (x - pl) / (W - pl - pr) * (m1 - m0);
+    const p = pts.reduce((a, b) => Math.abs(b.m - m) < Math.abs(a.m - m) ? b : a);
+    const s = steps.filter(q => q.m <= p.m).pop() || steps[0];
+    const hov = document.getElementById("hov"); hov.setAttribute("x1", X(p.m)); hov.setAttribute("x2", X(p.m)); hov.style.display = "";
+    tip.style.display = "block"; tip.style.left = X(p.m) + "px"; tip.style.top = Y(p.c) + "px";
+    tip.innerHTML = `<b>${p.t}</b> · NIFTY ${n2(p.c)}${s ? `<br>Range ${n0(s.lo)} – ${n0(s.hi)}` : ""}`;
+  };
+  svg.onmouseleave = () => { tip.style.display = "none"; const h = document.getElementById("hov"); if (h) h.style.display = "none"; };
+  document.getElementById("outsideNote").textContent = outside.length ? `NIFTY was outside your range in ${outside.length} of ${pts.length} five-minute candles (red dots).` : (pts.length ? "NIFTY stayed inside your range all day." : "");
+}
+
+function render(j) {
+  const rows = j.rows, start = rows.find(r => r.kind === "DAY_START"), end = rows.find(r => r.kind === "DAY_END");
+  const last = [...rows].reverse().find(r => r.range) || start;
+  const nif = j.nifty || [];
+  const o = end && end.nifty_ohlc ? end.nifty_ohlc : (nif.length ? [nif[0][1], Math.max(...nif.map(x => x[1])), Math.min(...nif.map(x => x[1])), nif[nif.length - 1][1]] : null);
+  const chg = o ? o[3] - o[0] : null;
+  const nChg = rows.filter(r => r.kind === "LEADER_CHANGE").length;
+  const dayShift = start && last && start.range && last.range ? ((last.range.upper + last.range.lower) - (start.range.upper + start.range.lower)) / 2 : null;
+  const mEnd = (end || last || {}).market || {};
+  const st = j.strategy || {};
+  const events = j.events || [];
+  const dayPnl = events.filter(e => e.type === "EXIT").map(e => e.net)[0];
+  // timeline: diary rows + strategy entry/roll/exit cards, by time
+  const items = rows.map(r => ({t: r.time, html: evCard(r), k: 1}))
+    .concat(events.map(e => ({t: e.time, html: stratCard(e), k: 2})).filter(x => x.html))
+    .sort((a, b) => a.t < b.t ? -1 : a.t > b.t ? 1 : a.k - b.k);
+  document.getElementById("page").innerHTML = `
+    <div class="cards">
+      <div class="card"><h3>NIFTY ${end ? "" : '<span class="pill waiting">live</span>'}</h3>
+        <div class="big">${o ? n2(o[3]) : "—"} ${chg != null ? `<span class="${chg >= 0 ? "up" : "down"}" style="font-size:14px">${chg >= 0 ? "+" : ""}${n2(chg)}</span>` : ""}</div>
+        <div class="sub">${o ? `O ${n2(o[0])} · H ${n2(o[1])} · L ${n2(o[2])}` : ""}</div>
+        ${o ? `<div class="hl" title="Day low → high, body = open→close"><div class="body" style="left:0;right:0;background:#e7e8ee"></div>
+          <div class="body" style="left:${(Math.min(o[0], o[3]) - o[2]) / ((o[1] - o[2]) || 1) * 100}%;width:${Math.abs(o[3] - o[0]) / ((o[1] - o[2]) || 1) * 100}%;background:${chg >= 0 ? "var(--up)" : "var(--down)"}"></div></div>` : ""}
+      </div>
+      <div class="card"><h3>Your range ${dayShift != null && Math.abs(dayShift) >= 1 ? `<span class="pill ${dayShift > 0 ? "UP" : "DOWN"}">${dayShift > 0 ? "▲" : "▼"} ${n0(Math.abs(dayShift))} pts</span>` : '<span class="pill">no shift</span>'}</h3>
+        <div class="big">${last && last.range ? `${n0(last.range.lower)} – ${n0(last.range.upper)}` : "—"}</div>
+        <div class="sub">${start && start.range ? `opened ${n0(start.range.lower)} – ${n0(start.range.upper)}` : ""}${last && last.range ? ` · width ${n0(last.range.width)}` : ""}</div>
+      </div>
+      <div class="card"><h3>Leaders</h3>
+        <div class="big">${last ? `${(last.leaders || {}).CE ?? "—"} <span class="muted" style="font-size:13px">CE</span> · ${(last.leaders || {}).PE ?? "—"} <span class="muted" style="font-size:13px">PE</span>` : "—"}</div>
+        <div class="sub">${nChg} leader change${nChg === 1 ? "" : "s"} today${start ? ` · opened CE ${(start.leaders || {}).CE} / PE ${(start.leaders || {}).PE}` : ""}</div>
+      </div>
+      <div class="card"><h3>Market ${end ? "at close" : "now"}</h3>
+        <div class="kv"><span>PCR / ΔPCR</span><b>${mEnd.pcr_oi ?? "—"} / ${mEnd.pcr_chg_oi ?? "—"}</b>
+          <span>ATM IV</span><b>${mEnd.atm_iv != null ? mEnd.atm_iv + "%" : "—"}</b>
+          <span>Straddle</span><b>${n2(mEnd.atm_straddle)}</b>
+          <span>Max pain</span><b>${n0(mEnd.max_pain)}</b></div>
+      </div>
+      <div class="card"><h3>Range Strategy <span class="pill ${st.status}">${esc(st.status || "—")}</span></h3>
+        ${st.exit ? `<div class="big ${st.exit.net >= 0 ? "up" : "down"}">${rs(st.exit.net)}</div><div class="sub">${esc(st.exit.reason)} · ${st.exit.time.replace("T", " ")}</div>`
+          : `<div class="big">${st.premium0 ? rs(st.premium0) : "—"}</div><div class="sub">${st.premium0 ? "premium collected this week" : "no position"}</div>`}
+      </div>
+    </div>
+
+    <div class="views">
+      <div class="card"><h3>Daily view · your range vs previous day</h3>
+        ${j.daily ? `<div class="vrow"><span class="verdict ${vcls(j.daily.view)}">${j.daily.view}</span>
+            <span class="vsmall">${j.daily.points > 0 ? "▲" : j.daily.points < 0 ? "▼" : "•"} ${n0(Math.abs(j.daily.points))} pts (midpoint)</span></div>
+          <div class="kv"><span>${shortDate(j.daily.prev.day)} final</span><b>${n0(j.daily.prev.lower)} – ${n0(j.daily.prev.upper)}</b>
+            <span>Today 09:20</span><b>${n0(j.daily.today.lower)} – ${n0(j.daily.today.upper)}</b>
+            <span>Upper / lower moved</span><b><span class="${j.daily.upper_move >= 0 ? "up" : "down"}">${sgn(n0(j.daily.upper_move))}</span> / <span class="${j.daily.lower_move >= 0 ? "up" : "down"}">${sgn(n0(j.daily.lower_move))}</span></b>
+            <span>Leaders at 09:20</span><b>CE ${j.daily.today.ce_leader} · PE ${j.daily.today.pe_leader}</b></div>
+          ${j.day_no === 1 ? `<div class="note" style="margin-top:8px">Day 1 of the expiry — compared with the previous expiry's last day.</div>` : ""}`
+        : `<div class="vsmall">Needs today's 09:20 candle and a previous day in the diary.</div>`}
+      </div>
+      <div class="card"><h3>Intraday view · leader changes</h3>
+        ${(() => { const seq = rows.filter(r => r.intraday_view); const lastv = seq.length ? seq[seq.length - 1] : null;
+          return lastv ? `<div class="vrow"><span class="verdict ${vcls(lastv.intraday_view)}">${lastv.intraday_view}</span><span class="vsmall">since ${lastv.time.slice(11)} (${seq.length} range shift${seq.length === 1 ? "" : "s"} today)</span></div>
+            <div class="seq">${seq.map(r => `<span class="${r.intraday_view}" title="${esc(r.shift ? `${r.shift.from.join("–")} → ${r.shift.to.join("–")}` : "")}">${r.time.slice(11)} ${r.intraday_view === "BULLISH" ? "▲" : "▼"}</span>`).join("")}</div>`
+            : `<div class="vsmall">No leader change yet today — the daily view stands.</div>`; })()}
+      </div>
+      <div class="card"><h3>Option data view</h3>
+        ${(() => { const lastEv = [...rows].reverse().find(r => r.oi_view && r.kind !== "DAY_END");
+          const dayV = end ? end.oi_view_day : null;
+          return `${start && start.oi_view ? `<div class="vsmall" style="margin-bottom:4px">09:20 vs previous day close</div>${oiViewBlock(start.oi_view, false)}` : ""}
+            ${lastEv && lastEv !== start ? `<div class="vsmall" style="margin:10px 0 4px">Latest (${lastEv.time.slice(11)}) vs the snapshot before</div>${oiViewBlock(lastEv.oi_view, false)}` : ""}
+            ${dayV ? `<div class="vsmall" style="margin:10px 0 4px">Whole day: close vs previous day close</div>${oiViewBlock(dayV, false)}` : ""}`; })()}
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>NIFTY vs your range <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:500">hover for details</span></h3>
+      <div class="chart-wrap"><svg id="chart"></svg><div class="tip" id="tip"></div></div>
+      <div class="legend"><span><i style="background:#14161c;height:3px"></i>NIFTY (5-min)</span><span><i style="background:rgba(14,159,110,.18);border:1.5px dashed #0e9f6e"></i>Your range</span>
+        <span><i style="background:#c07d12;width:3px"></i>Leader change</span><span><i style="background:#e0434a;width:8px;border-radius:50%"></i>Outside range</span></div>
+      <div class="note" id="outsideNote" style="margin-top:6px"></div>
+    </div>
+
+    <div class="cols">
+      <div><h3 style="margin:4px 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)">Timeline · ${items.length} events</h3>
+        <div class="timeline">${items.map(x => x.html).join("")}</div></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="card"><h3>Best strikes to sell ${end ? "(at close)" : "(latest)"}</h3>
+          ${last && last.best ? `<div class="sells" style="grid-template-columns:1fr">${sellBox(last.best.CE, "CE")}${sellBox(last.best.PE, "PE")}</div>` : '<div class="muted">—</div>'}
+          <div class="note">Your rule = round strike nearest the range. Safer = the first strike just outside it. POP = chance of expiring out of the money (from delta).</div>
+        </div>
+        <div class="card"><h3>How to read</h3><div class="note">
+          <b>Lead %</b>: how far the leader is ahead of #2 — <span class="weak">WEAK</span> under 5% (it may flip back).<br>
+          <b>▲ bullish / ▼ bearish shift</b>: the range's midpoint moved up / down.<br>
+          Hover a leader to see the top-3 volumes. Every row is rebuilt from exchange 5-min candles.</div></div>
+      </div>
+    </div>`;
+  drawChart(j);
+}
+
+let mode = "day", expCur = null;
+function setMode(m) {
+  mode = m;
+  document.getElementById("tabDay").classList.toggle("active", m === "day");
+  document.getElementById("tabExp").classList.toggle("active", m === "exp");
+  document.getElementById("dayCtl").style.display = m === "day" ? "contents" : "none";
+  document.getElementById("expSel").hidden = m !== "exp";
+}
+async function loadExpiry(exp) {
+  setMode("exp");
+  const j = await (await fetch(`/api/diary/expiry/${exp || "current"}`)).json();
+  if (!j.ok) { document.getElementById("page").innerHTML = `<div class="card empty">${esc(j.error)}</div>`; return; }
+  expCur = j.expiry; setUrl(`mode=expiry&exp=${j.expiry}`);
+  const sel = document.getElementById("expSel");
+  sel.innerHTML = (j.cycles || []).map(c => `<option value="${c.expiry}" ${c.expiry === j.expiry ? "selected" : ""}>Expiry ${shortDate(c.expiry)} · from ${shortDate(c.cycle_start)}</option>`).join("");
+  const wk = document.getElementById("weekChip"); wk.hidden = false;
+  wk.innerHTML = `Week <b>${shortDate(j.cycle_start)} → ${shortDate(j.expiry)}</b> · ${j.days.length} day(s) · Range Strategy <b>${esc(j.status || "—")}</b>${j.exit_reason ? " (" + esc(j.exit_reason) + ")" : ""}`;
+  document.getElementById("upd").textContent = j.updated_at ? "data updated " + j.updated_at.replace("T", " ").slice(0, 16) : "";
+  if (!j.days.length) { document.getElementById("page").innerHTML = `<div class="card empty">No days recorded for this expiry yet.</div>`; return; }
+  document.getElementById("page").innerHTML = `<div class="xgrid">${j.days.map(d => {
+    const o = d.nifty_ohlc, dv = d.daily, ov = d.oi_view_day;
+    const exits = d.events.filter(e => e.type === "EXIT"), rolls = d.events.filter(e => e.type === "RANGE" && e.rolls && e.rolls.length).length;
+    return `<div class="card xday" onclick="loadDay('${d.date}')">
+      <div class="top"><span><span class="dayno">Day ${d.day_no}</span> <b style="margin-left:6px">${new Date(d.date + "T00:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short"})}</b></span>
+        ${d.in_progress ? '<span class="pill waiting">live</span>' : ""}</div>
+      <div class="xline"><span>Daily view</span><span>${dv ? `<span class="verdict ${vcls(dv.view)}" style="font-size:11px;padding:3px 9px">${dv.view}</span> <span class="vsmall">${dv.points > 0 ? "▲" : dv.points < 0 ? "▼" : ""}${n0(Math.abs(dv.points))}</span>` : "—"}</span></div>
+      <div class="xline"><span>Range 09:20 → close</span><b>${d.open_range ? n0(d.open_range.lower) + "–" + n0(d.open_range.upper) : "—"} → ${d.close_range ? n0(d.close_range.lower) + "–" + n0(d.close_range.upper) : "—"}</b></div>
+      <div class="xline"><span>Intraday</span><span>${d.intraday.sequence.length ? d.intraday.sequence.map(v => `<b class="${v === "BULLISH" ? "up" : "down"}">${v === "BULLISH" ? "▲" : "▼"}</b>`).join(" ") : '<span class="vsmall">no leader change</span>'}</span></div>
+      <div class="xline"><span>Option data (day vs prev close)</span><span>${ov ? `<b class="${vcls(ov.verdict) === "BULL" ? "up" : vcls(ov.verdict) === "BEAR" ? "down" : ""}">${ov.verdict} ${sgn(ov.score)}</b>` : "—"}</span></div>
+      <div class="xline"><span>Confirmation</span><span>${d.confirm ? `<b>${d.confirm.aligned}/${d.confirm.of}</b> <span class="vsmall">(${Math.round(d.confirm.aligned / d.confirm.of * 100)}%)</span>` : "—"}</span></div>
+      <div class="xline"><span>NIFTY</span><span>${o ? `${n2(o[3])} <span class="${o[3] >= o[0] ? "up" : "down"}">(${o[3] >= o[0] ? "+" : ""}${n2(o[3] - o[0])})</span>` : (d.market && d.market.spot ? n2(d.market.spot) : "—")}</span></div>
+      <div class="xline"><span>Leaders at close</span><span>${d.leaders_close ? `CE <b>${d.leaders_close.CE}</b> · PE <b>${d.leaders_close.PE}</b>` : "—"} <span class="vsmall">(${d.leader_changes} change${d.leader_changes === 1 ? "" : "s"})</span></span></div>
+      ${d.events.length ? `<div class="xline"><span>Range Strategy</span><span>${d.events.some(e => e.type === "ENTRY") ? "entry " : ""}${rolls ? rolls + " roll(s) " : ""}${exits.map(e => `<b class="${e.net >= 0 ? "up" : "down"}">exit ${rs(e.net)}</b>`).join("")}</span></div>` : ""}
+    </div>`; }).join("")}</div>
+    <p class="note">Day 1 = the first trading day after the previous expiry (normally Wednesday); its daily view is compared with the previous expiry's last day. Click a day to open its full timeline.</p>`;
+}
+function loadDay(day) { setMode("day"); load(day); }
+document.getElementById("tabDay").addEventListener("click", () => loadDay(cur || todayStr()));
+document.getElementById("tabExp").addEventListener("click", () => loadExpiry(expCur || (data && data.expiry) || "current"));
+document.getElementById("expSel").addEventListener("change", e => loadExpiry(e.target.value));
+document.getElementById("dateInput").addEventListener("change", e => e.target.value && load(e.target.value));
+document.getElementById("todayBtn").addEventListener("click", () => load(todayStr()));
+document.getElementById("prevDay").addEventListener("click", () => data && load(data.found ? data.prev_day : data.nearest_before));
+document.getElementById("nextDay").addEventListener("click", () => data && load(data.found ? data.next_day : data.nearest_after));
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowLeft") document.getElementById("prevDay").click();
+  if (e.key === "ArrowRight") document.getElementById("nextDay").click();
+});
+window.addEventListener("resize", () => data && data.found && drawChart(data));
+const qp = new URLSearchParams(location.search);
+if (qp.get("mode") === "expiry") loadExpiry(qp.get("exp") || "current");
+else load(qp.get("date") || todayStr());
+setInterval(() => {  // today / the current expiry refresh themselves
+  if (mode === "day" && cur === todayStr()) load(cur);
+  else if (mode === "exp" && expCur && document.getElementById("expSel").selectedIndex === 0) loadExpiry(expCur);
+}, 60000);
+</script>
+</body>
+</html>

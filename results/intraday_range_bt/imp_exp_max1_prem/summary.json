@@ -1,0 +1,116 @@
+{
+ "days": 259,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": 44444.0,
+ "gross_rs": 78404.0,
+ "charges": 33960.0,
+ "points": 1303.5,
+ "win_pct": 39.4,
+ "avg_win": 2480.0,
+ "avg_loss": -1328.0,
+ "avg_premium": 41.2,
+ "best_day": {
+  "day": "2025-04-09",
+  "net_rs": 11129.29
+ },
+ "worst_day": {
+  "day": "2025-05-15",
+  "net_rs": -4102.31
+ },
+ "max_drawdown_rs": -29029.0,
+ "stop_loss_days": 154,
+ "reentry_days": 0,
+ "avg_rolls": 0.67,
+ "by_year": {
+  "2021": {
+   "days": 14,
+   "net_rs": -6715.0,
+   "win_pct": 28.6,
+   "pts": -98.9
+  },
+  "2022": {
+   "days": 52,
+   "net_rs": -8029.0,
+   "win_pct": 32.7,
+   "pts": -18.1
+  },
+  "2023": {
+   "days": 50,
+   "net_rs": 1127.0,
+   "win_pct": 36.0,
+   "pts": 146.1
+  },
+  "2024": {
+   "days": 52,
+   "net_rs": 10085.0,
+   "win_pct": 40.4,
+   "pts": 447.0
+  },
+  "2025": {
+   "days": 53,
+   "net_rs": 35381.0,
+   "win_pct": 49.1,
+   "pts": 552.1
+  },
+  "2026": {
+   "days": 38,
+   "net_rs": 12595.0,
+   "win_pct": 42.1,
+   "pts": 275.3
+  }
+ },
+ "by_weekday": {
+  "Mon": {
+   "days": 4,
+   "net_rs": -6286.0,
+   "win_pct": 0.0,
+   "pts": -84.8
+  },
+  "Thu": {
+   "days": 195,
+   "net_rs": 16072.0,
+   "win_pct": 37.4,
+   "pts": 728.1
+  },
+  "Tue": {
+   "days": 52,
+   "net_rs": 22328.0,
+   "win_pct": 48.1,
+   "pts": 435.5
+  },
+  "Wed": {
+   "days": 8,
+   "net_rs": 12330.0,
+   "win_pct": 50.0,
+   "pts": 224.8
+  }
+ },
+ "by_expiry_day": {
+  "expiry day": {
+   "days": 259,
+   "net_rs": 44444.0,
+   "win_pct": 39.4,
+   "pts": 1303.5
+  }
+ },
+ "skipped": 0,
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "first_candle_min": 5,
+  "exit_time": "15:15",
+  "last_entry": "15:00",
+  "slippage": 0.5,
+  "lots": 1,
+  "entry": "range",
+  "roll": "range",
+  "sl_frac": 0.5,
+  "reentries": 0,
+  "max_rolls": 1,
+  "expiry_only": true,
+  "group": "expiry day",
+  "label": "Expiry day \u00b7 max 1 roll \u00b7 SL 50% premium"
+ },
+ "key": "imp_exp_max1_prem"
+}

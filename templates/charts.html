@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option Charts</title>
+<script src="/static/vendor/lightweight-charts.js"></script>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #ffffff; --border: #e7e8ee; --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --up-soft: #e6f7f0; --down: #e0434a; --down-soft: #fdedee;
+    --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --radius: 14px; --radius-sm: 9px;
+    --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  select, button { font-family: inherit; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 10px; font-size: 13px; background: #fff; color: var(--text); }
+  select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  button { cursor: pointer; }
+
+  .controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 28px; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+  .controls label { font-size: 11.5px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: .04em; }
+  .seg { display: inline-flex; background: var(--bg); border-radius: 999px; padding: 3px; }
+  .seg button { border: none; background: transparent; border-radius: 999px; padding: 5px 12px; font-weight: 700; font-size: 12.5px; color: var(--muted); }
+  .seg button.on { background: var(--text); color: #fff; }
+  .seg.ce button.on[data-v="CE"] { background: var(--down); }
+  .seg.ce button.on[data-v="PE"] { background: var(--up); }
+  .grp { display: flex; align-items: center; gap: 8px; }
+  .sep { width: 1px; height: 26px; background: var(--border); }
+  .chk { font-size: 12.5px; font-weight: 600; color: var(--muted); display: flex; gap: 6px; align-items: center; cursor: pointer; }
+
+  .page { padding: 18px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px; align-items: center; }
+  .stats .ttl { font-size: 18px; font-weight: 800; margin-right: 10px; }
+  .chip { background: var(--bg); border-radius: 8px; padding: 5px 10px; font-size: 12px; font-weight: 700; font-family: "SF Mono", Consolas, monospace; }
+  .chip .k { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--muted); font-weight: 600; margin-right: 5px; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .chartwrap { position: relative; padding: 6px 6px 0; }
+  #main { height: 520px; }
+  #oi { height: 150px; border-top: 1px solid var(--border); }
+  .legend { position: absolute; left: 16px; top: 12px; z-index: 3; font-size: 12px; font-family: "SF Mono", Consolas, monospace; pointer-events: none;
+            background: rgba(255,255,255,.85); border-radius: 8px; padding: 6px 9px; line-height: 1.6; }
+  .legend b { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  .oilabel { position: absolute; left: 16px; bottom: 118px; z-index: 3; font-size: 11px; font-weight: 700; color: var(--muted); pointer-events: none; }
+  .empty { padding: 60px; text-align: center; color: var(--muted-2); font-size: 14px; }
+  .hint { font-size: 11.5px; color: var(--muted-2); padding: 0 16px 12px; }
+  .err { color: var(--down); }
+  .drawbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 0 16px 10px; }
+  .drawbar .tool { border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 5px 10px; font-size: 12.5px; font-weight: 700; color: var(--muted); }
+  .drawbar .tool.on { background: var(--text); color: #fff; border-color: var(--text); }
+  .drawbar .tool:disabled { opacity: .45; cursor: not-allowed; }
+  .swatch { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--border); padding: 0; }
+  .swatch.on { box-shadow: 0 0 0 2px var(--text); }
+  .drawhint { font-size: 11.5px; color: var(--muted); }
+  #main.draw-h, #main.draw-t { cursor: crosshair; }
+  #main.grab { cursor: ns-resize; }
+  @media (max-width: 900px) { .controls, .page, .topbar { padding-left: 12px; padding-right: 12px; } #main { height: 380px; } .sep { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Option Charts</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink active" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="controls">
+  <label>Expiry <select id="expiry"></select></label>
+  <div class="sep"></div>
+  <div class="seg" id="mode"><button data-v="single" class="on">Single option</button><button data-v="straddle">Straddle / Strangle</button><button data-v="spot">NIFTY 50</button></div>
+  <div class="grp" id="singleCtl">
+    <label>Strike <select id="strike"></select></label>
+    <div class="seg ce" id="type"><button data-v="CE" class="on">CE</button><button data-v="PE">PE</button></div>
+  </div>
+  <div class="grp" id="stradCtl" hidden>
+    <label>CE <select id="ceStrike"></select></label>
+    <label>PE <select id="peStrike"></select></label>
+  </div>
+  <div class="sep"></div>
+  <div class="seg" id="interval">
+    <button data-v="1">1m</button><button data-v="3">3m</button><button data-v="5" class="on">5m</button>
+    <button data-v="15">15m</button><button data-v="30">30m</button><button data-v="60">1h</button><button data-v="D">1D</button>
+  </div>
+  <div class="sep"></div>
+  <label>From <select id="from"></select></label>
+  <label>To <select id="to"></select></label>
+  <label class="chk" id="showSpotWrap"><input type="checkbox" id="showSpot"> NIFTY line</label>
+</div>
+
+<div class="page">
+  <div class="card">
+    <div class="stats" id="stats"><span class="ttl">Loading…</span></div>
+    <div class="drawbar" id="drawbar">
+      <button class="tool on" data-tool="cursor" title="Select / move lines (Esc)">↖ Cursor</button>
+      <button class="tool" data-tool="h" title="Horizontal support / resistance line (H)">― Horizontal line</button>
+      <button class="tool" data-tool="t" title="Trend line: click start, click end (T)">╱ Trend line</button>
+      <span class="sep"></span>
+      <button class="swatch on" data-color="#e0434a" style="background:#e0434a" title="Resistance red"></button>
+      <button class="swatch" data-color="#0e9f6e" style="background:#0e9f6e" title="Support green"></button>
+      <button class="swatch" data-color="#4f5fe0" style="background:#4f5fe0" title="Blue"></button>
+      <button class="swatch" data-color="#e08a1e" style="background:#e08a1e" title="Amber"></button>
+      <span class="sep"></span>
+      <button class="tool" id="btnUndo" title="Undo last drawing (Ctrl+Z)">↶ Undo</button>
+      <button class="tool" id="btnDel" disabled title="Delete the selected line (Delete)">🗑 Delete</button>
+      <button class="tool" id="btnClear" title="Remove every drawing on this chart">Clear all</button>
+      <span class="drawhint" id="drawHint">Pick a tool to draw. Lines are saved for this chart.</span>
+    </div>
+    <div class="chartwrap">
+      <div class="legend" id="legend"></div>
+      <div id="main"></div>
+      <div class="oilabel">OPEN INTEREST</div>
+      <div id="oi"></div>
+    </div>
+    <div class="hint">Scroll to zoom · drag to pan · double-click the time axis to reset · H = horizontal line · T = trend line · drag a horizontal line to move it · double-click it to name it · Delete removes the selected line. Data: downloaded 1-min history, times in IST.</div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = (n, d = 2) => n == null ? "--" : Number(n).toLocaleString("en-IN", {minimumFractionDigits: d, maximumFractionDigits: d});
+const fmtBig = n => {
+  if (n == null) return "--";
+  const a = Math.abs(n);
+  return a >= 1e7 ? (n / 1e7).toFixed(2) + " Cr" : a >= 1e5 ? (n / 1e5).toFixed(2) + " L" : Math.round(n).toLocaleString("en-IN");
+};
+const segVal = id => $(id).querySelector("button.on").dataset.v;
+function segSet(id, v) { $(id).querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === v)); }
+function store(k, v) { try { localStorage.setItem("charts." + k, v); } catch (e) {} }
+function recall(k) { try { return localStorage.getItem("charts." + k); } catch (e) { return null; } }
+
+// ---- charts -------------------------------------------------------------------------
+const LWC = LightweightCharts;
+const base = {
+  layout: {background: {color: "#ffffff"}, textColor: "#767b87", fontFamily: "-apple-system, Segoe UI, Roboto, Arial, sans-serif"},
+  grid: {vertLines: {color: "#f1f2f6"}, horzLines: {color: "#f1f2f6"}},
+  rightPriceScale: {borderColor: "#e7e8ee", minimumWidth: 78},
+  timeScale: {borderColor: "#e7e8ee", timeVisible: true, secondsVisible: false, rightOffset: 4},
+  crosshair: {mode: LWC.CrosshairMode.Normal},
+};
+const main = LWC.createChart($("main"), {...base, leftPriceScale: {visible: false, borderColor: "#e7e8ee", minimumWidth: 78}});
+const candle = main.addCandlestickSeries({upColor: "#0e9f6e", downColor: "#e0434a", borderVisible: false,
+                                          wickUpColor: "#0e9f6e", wickDownColor: "#e0434a", priceFormat: {type: "custom", minMove: 0.05, formatter: p => p < 0 ? "" : p.toFixed(2)}});
+const vol = main.addHistogramSeries({priceScaleId: "vol", priceFormat: {type: "volume"}, lastValueVisible: false, priceLineVisible: false});
+main.priceScale("vol").applyOptions({scaleMargins: {top: 0.82, bottom: 0}});
+candle.priceScale().applyOptions({scaleMargins: {top: 0.08, bottom: 0.22}});
+const spotLine = main.addLineSeries({priceScaleId: "left", color: "#4f5fe0", lineWidth: 1.5, lastValueVisible: true, priceLineVisible: false, visible: false});
+
+const oiChart = LWC.createChart($("oi"), {...base, leftPriceScale: {visible: false, borderColor: "#e7e8ee", minimumWidth: 78},
+                                         timeScale: {...base.timeScale, visible: true}});
+const oiSeries = oiChart.addAreaSeries({lineColor: "#a26bd6", topColor: "rgba(162,107,214,.25)", bottomColor: "rgba(162,107,214,.02)",
+                                        lineWidth: 2, priceFormat: {type: "volume"}, priceLineVisible: false});
+
+// keep both charts on the same time range while zooming / panning
+let syncing = false;
+function sync(a, b) {
+  a.timeScale().subscribeVisibleLogicalRangeChange(r => {
+    if (syncing || !r || $("oi").hidden) return;  // no OI pane in NIFTY mode -> nothing to keep in step
+    syncing = true; b.timeScale().setVisibleLogicalRange(r); syncing = false;
+  });
+}
+sync(main, oiChart); sync(oiChart, main);
+function resize() {
+  main.applyOptions({width: $("main").clientWidth});
+  oiChart.applyOptions({width: $("oi").clientWidth});
+}
+window.addEventListener("resize", resize);
+
+// ---- legend at the crosshair --------------------------------------------------------
+let byTime = new Map(), spotByTime = new Map(), last = null, mode = "single", intervalD = false;
+function legendFor(c) {
+  if (!c) { $("legend").innerHTML = ""; return; }
+  const chg = c.close - c.open, cls = chg >= 0 ? "up" : "down";
+  const d = new Date(c.time * 1000);
+  const when = d.toLocaleDateString("en-GB", {timeZone: "UTC", weekday: "short", day: "2-digit", month: "short", year: "numeric"})
+             + (intervalD ? "" : " " + d.toLocaleTimeString("en-GB", {timeZone: "UTC", hour: "2-digit", minute: "2-digit"}));
+  const sp = spotByTime.get(c.time);
+  $("legend").innerHTML = `<b>${when}</b><br>
+    O ${fmt(c.open)} &nbsp;H ${fmt(c.high)} &nbsp;L ${fmt(c.low)} &nbsp;C <span class="${cls}">${fmt(c.close)}</span>
+    <span class="${cls}">(${chg >= 0 ? "+" : ""}${fmt(chg)})</span><br>
+    ${mode === "spot" ? "" : `${mode === "straddle" ? `CE ${fmt(c.ce)} + PE ${fmt(c.pe)} &nbsp;` : ""}Vol ${fmtBig(c.volume)} &nbsp;OI ${fmtBig(c.oi)}${sp != null ? ` &nbsp;NIFTY ${fmt(sp)}` : ""}`}`;
+}
+let xhairSync = false;
+main.subscribeCrosshairMove(p => {
+  legendFor(p && p.time ? byTime.get(p.time) : last);
+  if (xhairSync) return; xhairSync = true;
+  const c = p && p.time ? byTime.get(p.time) : null;
+  if (c && c.oi != null) oiChart.setCrosshairPosition(c.oi, c.time, oiSeries); else oiChart.clearCrosshairPosition();
+  xhairSync = false;
+});
+oiChart.subscribeCrosshairMove(p => {
+  legendFor(p && p.time ? byTime.get(p.time) : last);
+  if (xhairSync) return; xhairSync = true;
+  const c = p && p.time ? byTime.get(p.time) : null;
+  if (c) main.setCrosshairPosition(c.close, c.time, candle); else main.clearCrosshairPosition();
+  xhairSync = false;
+});
+
+// ---- controls -----------------------------------------------------------------------
+let meta = null;
+async function loadExpiries() {
+  const j = await (await fetch("/api/sim/expiries")).json();
+  const sel = $("expiry"), groups = {};
+  (j.expiries || []).forEach(e => {
+    if (!groups[e.year]) { groups[e.year] = document.createElement("optgroup"); groups[e.year].label = e.year; sel.appendChild(groups[e.year]); }
+    const o = document.createElement("option"); o.value = e.expiry; o.textContent = e.label; groups[e.year].appendChild(o);
+  });
+  const saved = recall("expiry");
+  if (saved && [...sel.options].some(o => o.value === saved)) sel.value = saved;
+}
+
+function fillStrikes(sel, strikes, want) {
+  sel.innerHTML = strikes.map(k => `<option value="${k}">${k}${k === meta.atm ? " · ATM" : ""}</option>`).join("");
+  sel.value = strikes.includes(+want) ? want : meta.atm;
+}
+function fillDays() {
+  const lab = d => new Date(d + "T00:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short", year: "2-digit"});
+  const opts = meta.days.map(d => `<option value="${d}">${lab(d)}${d === $("expiry").value ? " · expiry" : ""}</option>`).join("");
+  $("from").innerHTML = opts; $("to").innerHTML = opts;
+  $("from").value = meta.default_from; $("to").value = meta.days[meta.days.length - 1];
+}
+
+async function loadMeta() {
+  const exp = $("expiry").value;
+  store("expiry", exp);
+  const j = await (await fetch(`/api/charts/meta?expiry=${exp}`)).json();
+  if (!j.ok) { $("stats").innerHTML = `<span class="err">${j.error}</span>`; return; }
+  meta = j;
+  fillStrikes($("strike"), meta.strikes, meta.atm);
+  fillStrikes($("ceStrike"), meta.strikes, meta.atm);
+  fillStrikes($("peStrike"), meta.strikes, meta.atm);
+  fillDays();
+  await loadData(true);
+}
+
+let reqSeq = 0;
+async function loadData(fit) {
+  if (!meta) return;
+  mode = segVal("mode");
+  const interval = segVal("interval");
+  intervalD = interval === "D";
+  const q = new URLSearchParams({expiry: $("expiry").value, interval, mode,
+    strike: $("strike").value, type: segVal("type"), ce_strike: $("ceStrike").value, pe_strike: $("peStrike").value,
+    from: $("from").value, to: $("to").value});
+  const seq = ++reqSeq;
+  const j = await (await fetch(`/api/charts/data?${q}`)).json();
+  if (seq !== reqSeq) return;  // a newer selection already went out
+  if (!j.ok) { $("stats").innerHTML = `<span class="err">${j.error}</span>`; return; }
+  const cs = j.candles || [];
+  byTime = new Map(cs.map(c => [c.time, c]));
+  spotByTime = new Map((j.spot || []).map(s => [s.time, s.value]));
+  last = cs[cs.length - 1] || null;
+  candle.setData(cs.map(c => ({time: c.time, open: c.open, high: c.high, low: c.low, close: c.close})));
+  vol.setData(cs.map(c => ({time: c.time, value: c.volume, color: c.close >= c.open ? "rgba(14,159,110,.35)" : "rgba(224,67,74,.35)"})));
+  oiSeries.setData(cs.map(c => c.oi != null ? {time: c.time, value: c.oi} : {time: c.time}));
+  spotLine.setData(j.spot || []);
+  const showSpot = $("showSpot").checked && mode !== "spot";
+  vol.applyOptions({visible: mode !== "spot"});
+  spotLine.applyOptions({visible: showSpot});
+  main.applyOptions({leftPriceScale: {visible: showSpot}});
+  oiChart.applyOptions({leftPriceScale: {visible: showSpot}});  // keep the OI plot the same width
+  [main, oiChart].forEach(ch => ch.applyOptions({timeScale: {timeVisible: !intervalD}}));
+  if (fit) { main.timeScale().fitContent(); requestAnimationFrame(() => main.timeScale().fitContent()); }
+  loadDrawings();
+  const r = main.timeScale().getVisibleLogicalRange();
+  if (r && !$("oi").hidden) oiChart.timeScale().setVisibleLogicalRange(r);
+  legendFor(last);
+
+  const s = j.stats;
+  if (!s) { $("stats").innerHTML = `<span class="ttl">${j.title}</span><span class="chip">No trades in this range</span>`; return; }
+  const cls = s.change >= 0 ? "up" : "down";
+  $("stats").innerHTML = `<span class="ttl">${j.title}</span>
+    <span class="chip"><span class="k">${s.from} → ${s.to}</span></span>
+    <span class="chip"><span class="k">Open</span>${fmt(s.first_open)}</span>
+    <span class="chip"><span class="k">Last</span><span class="${cls}">${fmt(s.last_close)} (${s.change >= 0 ? "+" : ""}${fmt(s.change)}${s.change_pct != null ? `, ${s.change_pct}%` : ""})</span></span>
+    <span class="chip"><span class="k">High</span>${fmt(s.high)}</span>
+    <span class="chip"><span class="k">Low</span>${fmt(s.low)}</span>
+    ${mode === "spot" ? "" : `<span class="chip"><span class="k">Volume</span>${fmtBig(s.volume)}</span>
+    <span class="chip"><span class="k">OI</span>${fmtBig(s.oi_last)} <span class="k" style="margin-left:6px">max</span>${fmtBig(s.oi_max)}</span>
+    <span class="chip"><span class="k">Lot</span>${j.lot_size}</span>`}
+    ${mode === "straddle" ? `<span class="chip"><span class="k">Premium / lot</span>${fmt(s.first_open * j.lot_size, 0)} → <span class="${cls}">${fmt(s.last_close * j.lot_size, 0)}</span></span>` : ""}
+    <span class="chip"><span class="k">Bars</span>${s.bars}</span>`;
+}
+
+// ---- drawing tools: horizontal S/R lines + trend lines, saved per chart ----------------
+let tool = "cursor", color = "#e0434a", drawings = [], rendered = [], selected = null, pending = null, preview = null, dragging = null;
+function drawKey() {
+  const m = segVal("mode");
+  if (m === "spot") return "draw.spot";   // NIFTY lines carry across expiries
+  if (m === "straddle") return `draw.${$("expiry").value}.S.${$("ceStrike").value}.${$("peStrike").value}`;
+  return `draw.${$("expiry").value}.${segVal("type")}.${$("strike").value}`;
+}
+function saveDrawings() {
+  try { localStorage.setItem("charts." + drawKey(), JSON.stringify(drawings)); } catch (e) {}
+}
+function loadDrawings() {
+  let d = [];
+  try { d = JSON.parse(localStorage.getItem("charts." + drawKey()) || "[]"); } catch (e) {}
+  drawings = Array.isArray(d) ? d : [];
+  selected = null; cancelPending(); renderDrawings();
+}
+function barTimes() { return [...byTime.keys()].sort((a, b) => a - b); }
+function snapTime(t) {  // nearest bar at or before t (so saved lines survive interval changes)
+  const ts = barTimes(); if (!ts.length) return t;
+  let lo = 0, hi = ts.length - 1;
+  if (t <= ts[0]) return ts[0];
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (ts[m] <= t) lo = m; else hi = m - 1; }
+  return ts[lo];
+}
+function clearRendered() {
+  rendered.forEach(r => { try { r.kind === "h" ? candle.removePriceLine(r.obj) : main.removeSeries(r.obj); } catch (e) {} });
+  rendered = [];
+}
+function renderDrawings() {
+  clearRendered();
+  drawings.forEach((d, idx) => {
+    const sel = selected === idx;
+    if (d.type === "h") {
+      rendered.push({kind: "h", idx, obj: candle.createPriceLine({price: d.price, color: d.color, lineWidth: sel ? 3 : 2,
+        lineStyle: sel ? LWC.LineStyle.Dashed : LWC.LineStyle.Solid, axisLabelVisible: true, title: d.title || ""})});
+    } else if (d.type === "t") {
+      const a = snapTime(d.t1), b = snapTime(d.t2);
+      if (a === b) return;
+      const ser = main.addLineSeries({color: d.color, lineWidth: sel ? 3 : 2, lineStyle: sel ? LWC.LineStyle.Dashed : LWC.LineStyle.Solid,
+        priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false});
+      ser.setData(a < b ? [{time: a, value: d.p1}, {time: b, value: d.p2}] : [{time: b, value: d.p2}, {time: a, value: d.p1}]);
+      rendered.push({kind: "t", idx, obj: ser});
+    }
+  });
+  $("btnDel").disabled = selected == null;
+}
+function setTool(t) {
+  tool = t; cancelPending();
+  document.querySelectorAll("#drawbar .tool[data-tool]").forEach(b => b.classList.toggle("on", b.dataset.tool === t));
+  $("main").classList.toggle("draw-h", t === "h"); $("main").classList.toggle("draw-t", t === "t");
+  $("drawHint").textContent = t === "h" ? "Click on the chart where the support / resistance line should go."
+    : t === "t" ? "Click the trend line's start point, then its end point." : "Click a line to select it · drag a horizontal line to move it · double-click to name it.";
+}
+function cancelPending() {
+  pending = null;
+  if (preview) { try { main.removeSeries(preview); } catch (e) {} preview = null; }
+}
+const round05 = p => Math.round(p * 20) / 20;
+function paneXY(e) {
+  const r = $("main").getBoundingClientRect();
+  return {x: e.clientX - r.left - (main.priceScale("left").width() || 0), y: e.clientY - r.top};
+}
+function hitTest(x, y) {
+  let best = null, bestD = 7;
+  drawings.forEach((d, idx) => {
+    let dist = Infinity;
+    if (d.type === "h") {
+      const py = candle.priceToCoordinate(d.price); if (py != null) dist = Math.abs(py - y);
+    } else {
+      const x1 = main.timeScale().timeToCoordinate(snapTime(d.t1)), x2 = main.timeScale().timeToCoordinate(snapTime(d.t2));
+      const y1 = candle.priceToCoordinate(d.p1), y2 = candle.priceToCoordinate(d.p2);
+      if ([x1, x2, y1, y2].some(v => v == null)) return;
+      const dx = x2 - x1, dy = y2 - y1, L2 = dx * dx + dy * dy || 1;
+      const u = Math.max(0, Math.min(1, ((x - x1) * dx + (y - y1) * dy) / L2));
+      dist = Math.hypot(x - (x1 + u * dx), y - (y1 + u * dy));
+    }
+    if (dist < bestD) { bestD = dist; best = idx; }
+  });
+  return best;
+}
+// Series are added / removed only AFTER the chart's own click dispatch has finished --
+// changing them inside the library's event corrupts its render state.
+main.subscribeClick(p => {
+  if (!p.point) return;
+  const pt = {...p.point}, tm = p.time;
+  setTimeout(() => onChartClick({point: pt, time: tm}), 0);
+});
+function onChartClick(p) {
+  const price = candle.coordinateToPrice(p.point.y);
+  const t = p.time ?? main.timeScale().coordinateToTime(p.point.x);
+  if (tool === "h" && price != null) {
+    drawings.push({type: "h", price: round05(price), color});
+    selected = drawings.length - 1; saveDrawings(); renderDrawings(); setTool("cursor");
+  } else if (tool === "t" && price != null && t != null) {
+    if (!pending) {
+      pending = {t1: t, p1: round05(price)};
+      preview = main.addLineSeries({color, lineWidth: 2, lineStyle: LWC.LineStyle.Dotted, priceLineVisible: false,
+                                    lastValueVisible: false, crosshairMarkerVisible: false});
+      $("drawHint").textContent = "Now click the end point (Esc cancels).";
+    } else {
+      drawings.push({type: "t", t1: pending.t1, p1: pending.p1, t2: t, p2: round05(price), color});
+      selected = drawings.length - 1; saveDrawings(); cancelPending(); renderDrawings(); setTool("cursor");
+    }
+  } else if (tool === "cursor") {
+    const hit = hitTest(p.point.x, p.point.y);
+    if (hit !== selected) { selected = hit; renderDrawings(); }
+  }
+}
+// live preview of the trend line being drawn -- driven by the mouse, not the chart's
+// crosshair event (updating a series from inside that event re-fires it endlessly)
+let previewFrame = 0;
+$("main").addEventListener("mousemove", e => {
+  if (!pending || !preview || previewFrame) return;
+  const {x, y} = paneXY(e);
+  previewFrame = requestAnimationFrame(() => {
+    previewFrame = 0;
+    if (!pending || !preview) return;
+    const t = main.timeScale().coordinateToTime(x), price = candle.coordinateToPrice(y);
+    if (t == null || price == null) return;
+    const a = snapTime(pending.t1), b = snapTime(t);
+    preview.setData(a === b ? [] : a < b ? [{time: a, value: pending.p1}, {time: b, value: price}]
+                                          : [{time: b, value: price}, {time: a, value: pending.p1}]);
+  });
+});
+// drag a horizontal line (the chart's own panning is paused while dragging)
+$("main").addEventListener("mousedown", e => {
+  if (tool !== "cursor" || e.button !== 0) return;
+  const {x, y} = paneXY(e), idx = hitTest(x, y);
+  if (idx == null || drawings[idx].type !== "h") return;
+  dragging = idx; selected = idx;
+  main.applyOptions({handleScroll: false, handleScale: false});
+  e.preventDefault();
+}, true);
+window.addEventListener("mousemove", e => {
+  if (dragging == null) {
+    if (tool === "cursor" && e.target.closest && e.target.closest("#main")) {
+      const {x, y} = paneXY(e), idx = hitTest(x, y);
+      $("main").classList.toggle("grab", idx != null && drawings[idx].type === "h");
+    }
+    return;
+  }
+  const price = candle.coordinateToPrice(paneXY(e).y);
+  if (price == null) return;
+  drawings[dragging].price = round05(price);
+  const r = rendered.find(q => q.idx === dragging);
+  if (r) r.obj.applyOptions({price: drawings[dragging].price});
+});
+window.addEventListener("mouseup", () => {
+  if (dragging == null) return;
+  dragging = null; saveDrawings(); renderDrawings();
+  main.applyOptions({handleScroll: true, handleScale: true});
+});
+$("main").addEventListener("dblclick", e => {
+  const {x, y} = paneXY(e), idx = hitTest(x, y);
+  if (idx == null || drawings[idx].type !== "h") return;
+  const t = prompt("Name for this line (e.g. R1, S1, weekly high):", drawings[idx].title || "");
+  if (t === null) return;
+  drawings[idx].title = t.slice(0, 20); saveDrawings(); renderDrawings();
+});
+function deleteSelected() {
+  if (selected == null) return;
+  drawings.splice(selected, 1); selected = null; saveDrawings(); renderDrawings();
+}
+$("drawbar").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.dataset.tool) setTool(b.dataset.tool);
+  if (b.dataset.color) {
+    color = b.dataset.color;
+    document.querySelectorAll("#drawbar .swatch").forEach(x => x.classList.toggle("on", x === b));
+    if (selected != null) { drawings[selected].color = color; saveDrawings(); renderDrawings(); }
+  }
+});
+$("btnUndo").addEventListener("click", () => { if (drawings.length) { drawings.pop(); selected = null; saveDrawings(); renderDrawings(); } });
+$("btnDel").addEventListener("click", deleteSelected);
+$("btnClear").addEventListener("click", () => {
+  if (drawings.length && confirm("Remove every drawing on this chart?")) { drawings = []; selected = null; saveDrawings(); renderDrawings(); }
+});
+document.addEventListener("keydown", e => {
+  if (["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)) return;
+  if (e.key === "Escape") { setTool("cursor"); selected = null; renderDrawings(); }
+  else if (e.key === "h" || e.key === "H") setTool("h");
+  else if (e.key === "t" || e.key === "T") setTool("t");
+  else if ((e.key === "Delete" || e.key === "Backspace") && selected != null) { e.preventDefault(); deleteSelected(); }
+  else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") { e.preventDefault(); $("btnUndo").click(); }
+});
+
+function onSeg(id, cb) {
+  $(id).addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    segSet(id, b.dataset.v); cb(b.dataset.v);
+  });
+}
+function applyModeUI(v) {
+  $("singleCtl").hidden = v !== "single"; $("stradCtl").hidden = v !== "straddle";
+  $("showSpotWrap").hidden = v === "spot";
+  document.querySelector(".oilabel").hidden = v === "spot"; $("oi").hidden = v === "spot";
+  resize();
+}
+onSeg("mode", v => { applyModeUI(v); store("mode", v); loadData(true); });
+onSeg("type", () => loadData(true));
+onSeg("interval", v => { store("interval", v); loadData(true); });
+$("expiry").addEventListener("change", loadMeta);
+["strike", "ceStrike", "peStrike"].forEach(id => $(id).addEventListener("change", () => loadData(true)));
+$("from").addEventListener("change", () => { if ($("to").value < $("from").value) $("to").value = $("from").value; loadData(true); });
+$("to").addEventListener("change", () => { if ($("from").value > $("to").value) $("from").value = $("to").value; loadData(true); });
+$("showSpot").addEventListener("change", () => { store("spot", $("showSpot").checked ? "1" : ""); loadData(false); });
+
+(async () => {
+  const iv = recall("interval"); if (iv) segSet("interval", iv);
+  const md = recall("mode"); if (md) { segSet("mode", md); applyModeUI(md); }
+  $("showSpot").checked = recall("spot") === "1";
+  resize();
+  await loadExpiries();
+  await loadMeta();
+})();
+</script>
+</body>
+</html>

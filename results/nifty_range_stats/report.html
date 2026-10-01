@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIFTY Range Statistics</title><style>
+:root{--bg:#f3f4f8;--card:#fff;--border:#e6e8ef;--text:#14161c;--muted:#6f7482;--up:#0e9f6e;--down:#e0434a;--accent:#4f5fe0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111318;--card:#1a1d24;--border:#2a2e38;--text:#e8e9ee;--muted:#9097a6}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:24px 16px 60px}h1{font-size:22px;margin:0 0 4px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}h3{font-size:15px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px}.kpi .k{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase}
+.kpi .v{font-size:21px;font-weight:800;font-variant-numeric:tabular-nums}.kpi .s{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-size:11px;text-transform:uppercase}.scroll{overflow-x:auto}.note{color:var(--muted);font-size:12.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.bar{display:inline-block;height:8px;background:var(--accent);border-radius:4px;vertical-align:middle;margin-left:6px;opacity:.7}
+.tabs{display:flex;gap:6px;margin-bottom:14px}.tabs button{font:inherit;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:600}
+.tabs button.on{background:var(--text);color:var(--card)}ul{margin:0;padding-left:18px}li{margin:4px 0}
+</style></head><body><div class="wrap">
+<h1>How far does NIFTY move?</h1><p class="note" id="sub"></p>
+<div class="kpis" id="kpis"></div>
+<div class="card"><h2>In short</h2><ul id="short"></ul></div>
+<div class="tabs" id="tabs"><button data-t="cycle" class="on">Expiry cycle (Day 1 → expiry)</button><button data-t="week">Calendar week (Mon → Fri)</button><button data-t="daily">Daily</button></div>
+<div id="body"></div>
+</div><script>
+const D = {"span": ["2021-09-16", "2026-09-25"], "n": {"days": 1244, "weeks": 263, "cycles": 260}, "daily": {"range": {"25": 134.2, "50": 183.5, "75": 252.7, "90": 340.3, "95": 416.4, "max": 1898.0, "mean": 208.9}, "range_pct": {"25": 0.6, "50": 0.9, "75": 1.2, "90": 1.6, "95": 1.9, "max": 8.2, "mean": 1.0}, "gap": {"25": 25.6, "50": 55.7, "75": 94.9, "90": 164.2, "95": 218.1, "max": 1228.1, "mean": 77.7}, "oc": {"25": 41.7, "50": 85.3, "75": 150.5, "90": 234.1, "95": 290.9, "max": 1183.0, "mean": 109.0}, "up920": {"25": 44.6, "50": 75.0, "75": 130.0, "90": 201.2, "95": 258.3, "max": 701.0, "mean": 99.0}, "dn920": {"25": 44.7, "50": 81.8, "75": 143.0, "90": 231.2, "95": 292.1, "max": 1569.0, "mean": 110.1}, "year_range": {"2021": 197.3, "2022": 189.0, "2023": 139.4, "2024": 200.4, "2025": 197.4, "2026": 207.0}, "year_pct": {"2021": 1.1, "2022": 1.1, "2023": 0.7, "2024": 0.9, "2025": 0.8, "2026": 0.9}, "weekday": {"Fri": {"range": 187.6, "oc": 92.5, "gap": 54.8, "n": 245}, "Mon": {"range": 189.1, "oc": 87.3, "gap": 58.4, "n": 248}, "Thu": {"range": 197.3, "oc": 88.9, "gap": 61.2, "n": 249}, "Tue": {"range": 177.2, "oc": 81.5, "gap": 57.2, "n": 249}, "Wed": {"range": 176.7, "oc": 74.6, "gap": 50.6, "n": 248}}, "bands": [{"x": 100, "range_le": 8.2, "close_within": 59.2}, {"x": 150, "range_le": 34.0, "close_within": 77.9}, {"x": 200, "range_le": 57.6, "close_within": 87.2}, {"x": 250, "range_le": 74.1, "close_within": 93.4}, {"x": 300, "range_le": 84.4, "close_within": 95.6}, {"x": 400, "range_le": 94.3, "close_within": 98.4}, {"x": 500, "range_le": 97.5, "close_within": 99.6}], "big": {"gap_gt_200": 79, "range_gt_500": 31}}, "cycle": {"range": {"25": 372.5, "50": 485.4, "75": 653.6, "90": 862.4, "95": 1047.2, "max": 2057.2, "mean": 548.2}, "range_pct": {"25": 1.8, "50": 2.3, "75": 3.1, "90": 4.1, "95": 4.9, "max": 9.1, "mean": 2.6}, "move": {"25": 125.4, "50": 229.9, "75": 403.8, "90": 609.7, "95": 730.1, "max": 1071.7, "mean": 283.2}, "up": {"25": 94.2, "50": 215.4, "75": 372.6, "90": 553.6, "95": 684.2, "max": 1106.3, "mean": 259.7}, "down": {"25": 69.7, "50": 212.4, "75": 398.4, "90": 664.2, "95": 785.1, "max": 1351.0, "mean": 280.6}, "year_range": {"2021": 532.2, "2022": 510.0, "2023": 363.6, "2024": 617.0, "2025": 455.6, "2026": 560.0}, "year_pct": {"2021": 2.9, "2022": 3.0, "2023": 2.0, "2024": 2.7, "2025": 1.9, "2026": 2.3}, "year_move": {"2021": 186.0, "2022": 248.8, "2023": 186.6, "2024": 263.9, "2025": 200.4, "2026": 261.2}, "bands": [{"x": 100, "close_within": 21.2, "never_beyond": 0.4, "up_beyond": 74.6, "down_beyond": 68.1}, {"x": 150, "close_within": 30.0, "never_beyond": 2.3, "up_beyond": 63.1, "down_beyond": 59.2}, {"x": 200, "close_within": 41.9, "never_beyond": 6.5, "up_beyond": 53.8, "down_beyond": 53.8}, {"x": 250, "close_within": 54.2, "never_beyond": 23.1, "up_beyond": 41.5, "down_beyond": 42.3}, {"x": 300, "close_within": 64.2, "never_beyond": 34.6, "up_beyond": 34.2, "down_beyond": 35.4}, {"x": 400, "close_within": 74.6, "never_beyond": 55.4, "up_beyond": 21.5, "down_beyond": 24.6}, {"x": 500, "close_within": 85.8, "never_beyond": 70.4, "up_beyond": 12.7, "down_beyond": 18.1}, {"x": 600, "close_within": 89.6, "never_beyond": 79.2, "up_beyond": 9.2, "down_beyond": 12.3}, {"x": 800, "close_within": 97.7, "never_beyond": 92.7, "up_beyond": 2.7, "down_beyond": 4.6}], "era": {"Mon": {"n": 4, "range": 908.0, "move": 660.6, "days": 3.8}, "Thu": {"n": 195, "range": 483.1, "move": 229.7, "days": 4.8}, "Tue": {"n": 52, "range": 496.2, "move": 235.7, "days": 4.8}, "Wed": {"n": 9, "range": 373.1, "move": 201.3, "days": 4.0}}, "up_close": 52.7}, "week": {"range": {"25": 369.3, "50": 491.0, "75": 659.9, "90": 787.8, "95": 884.3, "max": 2057.2, "mean": 538.4}, "range_pct": {"25": 1.7, "50": 2.4, "75": 3.2, "90": 4.0, "95": 4.5, "max": 8.8, "mean": 2.6}, "move": {"25": 107.6, "50": 239.5, "75": 429.5, "90": 533.1, "95": 635.2, "max": 1379.2, "mean": 283.6}, "year_range": {"2021": 568.9, "2022": 536.0, "2023": 360.0, "2024": 539.7, "2025": 464.8, "2026": 591.1}, "bands": [{"x": 100, "close_within": 20.9, "never_beyond": 0.0, "up_beyond": 76.4, "down_beyond": 68.4}, {"x": 150, "close_within": 32.7, "never_beyond": 3.0, "up_beyond": 64.3, "down_beyond": 55.9}, {"x": 200, "close_within": 42.2, "never_beyond": 9.9, "up_beyond": 54.8, "down_beyond": 47.5}, {"x": 250, "close_within": 52.1, "never_beyond": 20.9, "up_beyond": 44.5, "down_beyond": 40.7}, {"x": 300, "close_within": 59.3, "never_beyond": 31.9, "up_beyond": 37.3, "down_beyond": 33.5}, {"x": 400, "close_within": 72.6, "never_beyond": 51.3, "up_beyond": 25.9, "down_beyond": 23.6}, {"x": 500, "close_within": 86.3, "never_beyond": 70.7, "up_beyond": 13.3, "down_beyond": 16.3}, {"x": 600, "close_within": 93.2, "never_beyond": 84.4, "up_beyond": 6.5, "down_beyond": 9.1}, {"x": 800, "close_within": 97.7, "never_beyond": 95.1, "up_beyond": 2.7, "down_beyond": 2.3}]}, "leader": {"n": 258, "width_med": 366, "range_med": 489, "range_gt_width": 74.0, "half_width_med": 183, "move_within_half": 43.8}, "worst_cycles": [{"expiry": "2024-06-06", "start": "2024-05-31", "range": 2057.0, "move": 254.0, "up": 744.0, "down": 1313.0}, {"expiry": "2026-02-03", "start": "2026-01-28", "range": 1769.0, "move": 379.0, "up": 1006.0, "down": 764.0}, {"expiry": "2025-04-09", "start": "2025-04-04", "range": 1471.0, "move": -674.0, "up": 42.0, "down": 1351.0}, {"expiry": "2026-03-24", "start": "2026-03-18", "range": 1391.0, "move": -763.0, "up": 141.0, "down": 1250.0}, {"expiry": "2026-03-17", "start": "2026-03-11", "range": 1344.0, "move": -730.0, "up": 10.0, "down": 1334.0}, {"expiry": "2026-03-30", "start": "2026-03-25", "range": 1182.0, "move": -783.0, "up": 303.0, "down": 878.0}, {"expiry": "2025-05-15", "start": "2025-05-09", "range": 1180.0, "move": 922.0, "up": 1003.0, "down": 164.0}, {"expiry": "2022-02-24", "start": "2022-02-18", "range": 1178.0, "move": -1047.0, "up": 116.0, "down": 1061.0}]};
+const f0 = v => v == null ? "—" : Math.round(v).toLocaleString("en-IN");
+const f1 = v => v == null ? "—" : Number(v).toFixed(1);
+document.getElementById("sub").textContent = `NIFTY 50 spot, 1-min data · ${D.span[0]} → ${D.span[1]} · ${D.n.days} days · ${D.n.weeks} calendar weeks · ${D.n.cycles} expiry cycles`;
+const k = (l, v, s) => `<div class="kpi"><div class="k">${l}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+const C = D.cycle, Dy = D.daily, Wk = D.week, L = D.leader;
+document.getElementById("kpis").innerHTML = [
+  k("Expiry cycle high–low", f0(C.range["50"]) + " pts", `median · 75%: ${f0(C.range["75"])} · 90%: ${f0(C.range["90"])}`),
+  k("Cycle: 09:20 Day 1 → expiry close", f0(C.move["50"]) + " pts", `median move · 75%: ${f0(C.move["75"])} · 90%: ${f0(C.move["90"])}`),
+  k("Calendar week high–low", f0(Wk.range["50"]) + " pts", `median · 90%: ${f0(Wk.range["90"])}`),
+  k("Daily high–low", f0(Dy.range["50"]) + " pts", `median · ${f1(Dy.range_pct["50"])}% of NIFTY · 90%: ${f0(Dy.range["90"])}`),
+  k("Daily gap (open vs prev close)", f0(Dy.gap["50"]) + " pts", `median · 90%: ${f0(Dy.gap["90"])} · ${Dy.big.gap_gt_200} gaps > 200`),
+  L ? k("Our Day-1 leader range", f0(L.width_med) + " pts", `median width · NIFTY's cycle high–low beat it in ${L.range_gt_width}% of weeks`) : ""].join("");
+const short = [
+  `An expiry cycle's high–low is typically <b>${f0(C.range["50"])} points</b> (${f1(C.range_pct["50"])}% of NIFTY); 1 cycle in 10 is wider than <b>${f0(C.range["90"])}</b>.`,
+  `From Day 1 09:20 to the expiry close NIFTY ends a median <b>${f0(C.move["50"])} points</b> away — but during the cycle it typically travels <b>${f0(C.up["50"])} up</b> and <b>${f0(C.down["50"])} down</b> from the 09:20 price.`,
+  `NIFTY closed the cycle within ±300 of its Day-1 09:20 price in <b>${C.bands.find(b => b.x === 300).close_within}%</b> of cycles, but stayed within ±300 the whole way in only <b>${C.bands.find(b => b.x === 300).never_beyond}%</b>.`,
+  L ? `Our Day-1 leader range (median <b>${f0(L.width_med)}</b> wide, ±${f0(L.half_width_med)}) is narrower than NIFTY's median cycle high–low (${f0(L.range_med)}); the close ended within half the range width of the 09:20 price in ${L.move_within_half}% of cycles.` : "",
+  `A normal day moves <b>${f0(Dy.range["50"])} points</b> high–low; from 09:20 the day typically extends ${f0(Dy.up920["50"])} up and ${f0(Dy.dn920["50"])} down.`];
+document.getElementById("short").innerHTML = short.filter(Boolean).map(x => `<li>${x}</li>`).join("");
+
+const qrow = (lab, q) => `<tr><td>${lab}</td>${["25", "50", "75", "90", "95", "max", "mean"].map(c => `<td>${f0(q[c])}</td>`).join("")}</tr>`;
+const qhead = `<tr><th></th><th>25%</th><th>Median</th><th>75%</th><th>90%</th><th>95%</th><th>Max</th><th>Mean</th></tr>`;
+const yrTable = (cols) => { const years = Object.keys(cols[0][1]);
+  return `<tr><th>Year</th>${cols.map(c => `<th>${c[0]}</th>`).join("")}</tr>` + years.map(y => `<tr><td>${y}</td>${cols.map(c => `<td>${c[2] ? f1(c[1][y]) + "%" : f0(c[1][y])}</td>`).join("")}</tr>`).join(""); };
+const bandTable = (b) => `<tr><th>±X from 09:20</th><th>Closed within ±X</th><th>Never went beyond ±X</th><th>Went above +X</th><th>Went below −X</th></tr>` +
+  b.map(r => `<tr><td>${r.x}</td><td>${r.close_within}%<span class="bar" style="width:${r.close_within}px"></span></td><td>${r.never_beyond}%<span class="bar" style="width:${r.never_beyond}px"></span></td><td>${r.up_beyond}%</td><td>${r.down_beyond}%</td></tr>`).join("");
+function render(t) {
+  let h = "";
+  if (t === "cycle") {
+    h = `<div class="card"><h2>Expiry cycle — first day after the previous expiry → expiry close (points)</h2><div class="scroll"><table>${qhead}
+      ${qrow("High – low", C.range)}${qrow("|Close − Day-1 09:20 price|", C.move)}${qrow("Max rise above 09:20 price", C.up)}${qrow("Max fall below 09:20 price", C.down)}</table></div>
+      <p class="note">Range as % of NIFTY: median ${f1(C.range_pct["50"])}%, 90% ${f1(C.range_pct["90"])}%. NIFTY closed the cycle higher than its 09:20 price in ${C.up_close}% of cycles.</p></div>
+      <div class="card"><h2>Probability table — Day-1 09:20 price ± X points</h2><div class="scroll"><table>${bandTable(C.bands)}</table></div>
+      <p class="note">"Closed within" = at the expiry close. "Never went beyond" = never traded outside ±X from 09:20 on Day 1 until expiry — what an unadjusted short strangle at ±X needs.</p></div>
+      <div class="grid2"><div class="card"><h2>Median by year</h2><div class="scroll"><table>${yrTable([["High–low", C.year_range], ["High–low %", C.year_pct, 1], ["|Move|", C.year_move]])}</table></div></div>
+      <div class="card"><h2>Thursday vs Tuesday expiries</h2><div class="scroll"><table><tr><th>Expiry day</th><th>Cycles</th><th>Trading days</th><th>High–low</th><th>|Move|</th></tr>
+      ${Object.entries(C.era).map(([w, v]) => `<tr><td>${w}</td><td>${v.n}</td><td>${v.days}</td><td>${f0(v.range)}</td><td>${f0(v.move)}</td></tr>`).join("")}</table></div>
+      <p class="note">Mon/Wed rows = holiday-shifted expiries.</p></div></div>
+      <div class="card"><h2>Widest cycles</h2><div class="scroll"><table><tr><th>Expiry</th><th>Day 1</th><th>High–low</th><th>Close − 09:20</th><th>Max up</th><th>Max down</th></tr>
+      ${D.worst_cycles.map(r => `<tr><td>${r.expiry}</td><td>${r.start}</td><td>${f0(r.range)}</td><td>${f0(r.move)}</td><td>${f0(r.up)}</td><td>${f0(r.down)}</td></tr>`).join("")}</table></div></div>`;
+  } else if (t === "week") {
+    h = `<div class="card"><h2>Calendar week — Monday 09:15 → Friday close (points)</h2><div class="scroll"><table>${qhead}
+      ${qrow("High – low", Wk.range)}${qrow("|Close − Monday 09:20 price|", Wk.move)}</table></div>
+      <p class="note">Range as % of NIFTY: median ${f1(Wk.range_pct["50"])}%, 90% ${f1(Wk.range_pct["90"])}%.</p></div>
+      <div class="card"><h2>Probability table — Monday 09:20 price ± X points</h2><div class="scroll"><table>${bandTable(Wk.bands)}</table></div></div>
+      <div class="card"><h2>Median high–low by year</h2><div class="scroll"><table>${yrTable([["High–low", Wk.year_range]])}</table></div></div>`;
+  } else {
+    const wd = ["Mon", "Tue", "Wed", "Thu", "Fri"].filter(w => Dy.weekday[w]);
+    h = `<div class="card"><h2>Daily (points)</h2><div class="scroll"><table>${qhead}
+      ${qrow("High – low", Dy.range)}${qrow("Gap |open − previous close|", Dy.gap)}${qrow("|Close − open|", Dy.oc)}${qrow("Rise above 09:20 price", Dy.up920)}${qrow("Fall below 09:20 price", Dy.dn920)}</table></div>
+      <p class="note">Range as % of NIFTY: median ${f1(Dy.range_pct["50"])}%, 90% ${f1(Dy.range_pct["90"])}%. Days with a gap over 200 pts: ${Dy.big.gap_gt_200}; days with a range over 500: ${Dy.big.range_gt_500}.</p></div>
+      <div class="grid2"><div class="card"><h2>By weekday (median)</h2><div class="scroll"><table><tr><th>Day</th><th>Days</th><th>High–low</th><th>|Close − open|</th><th>|Gap|</th></tr>
+      ${wd.map(w => `<tr><td>${w}</td><td>${Dy.weekday[w].n}</td><td>${f0(Dy.weekday[w].range)}</td><td>${f0(Dy.weekday[w].oc)}</td><td>${f0(Dy.weekday[w].gap)}</td></tr>`).join("")}</table></div></div>
+      <div class="card"><h2>Median by year</h2><div class="scroll"><table>${yrTable([["High–low", Dy.year_range], ["High–low %", Dy.year_pct, 1]])}</table></div></div></div>
+      <div class="card"><h2>How often a day stays small</h2><div class="scroll"><table><tr><th>X points</th><th>Day's high–low ≤ X</th><th>Close within ±X of 09:20</th></tr>
+      ${Dy.bands.map(b => `<tr><td>${b.x}</td><td>${b.range_le}%</td><td>${b.close_within}%</td></tr>`).join("")}</table></div></div>`;
+  }
+  document.getElementById("body").innerHTML = h;
+}
+document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
+  document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x === b)); render(b.dataset.t); });
+render("cycle");
+</script></body></html>

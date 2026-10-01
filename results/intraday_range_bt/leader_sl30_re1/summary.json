@@ -1,0 +1,137 @@
+{
+ "days": 1225,
+ "from": "2021-09-23",
+ "to": "2026-09-22",
+ "net_rs": -128502.0,
+ "gross_rs": 46932.0,
+ "charges": 175434.0,
+ "points": 862.5,
+ "win_pct": 56.7,
+ "avg_win": 1602.0,
+ "avg_loss": -2343.0,
+ "avg_premium": 168.7,
+ "best_day": {
+  "day": "2025-05-28",
+  "net_rs": 12294.67
+ },
+ "worst_day": {
+  "day": "2025-01-06",
+  "net_rs": -18201.44
+ },
+ "max_drawdown_rs": -176756.0,
+ "stop_loss_days": 373,
+ "reentry_days": 356,
+ "avg_rolls": 0.0,
+ "by_year": {
+  "2021": {
+   "days": 68,
+   "net_rs": -23142.0,
+   "win_pct": 57.4,
+   "pts": -262.0
+  },
+  "2022": {
+   "days": 247,
+   "net_rs": -22583.0,
+   "win_pct": 54.3,
+   "pts": 225.5
+  },
+  "2023": {
+   "days": 238,
+   "net_rs": -29902.0,
+   "win_pct": 55.9,
+   "pts": 52.8
+  },
+  "2024": {
+   "days": 245,
+   "net_rs": -21887.0,
+   "win_pct": 61.2,
+   "pts": 315.8
+  },
+  "2025": {
+   "days": 248,
+   "net_rs": -16509.0,
+   "win_pct": 55.6,
+   "pts": 344.2
+  },
+  "2026": {
+   "days": 179,
+   "net_rs": -14479.0,
+   "win_pct": 56.4,
+   "pts": 186.2
+  }
+ },
+ "by_weekday": {
+  "Fri": {
+   "days": 242,
+   "net_rs": -72651.0,
+   "win_pct": 55.4,
+   "pts": -754.1
+  },
+  "Mon": {
+   "days": 246,
+   "net_rs": -52223.0,
+   "win_pct": 56.1,
+   "pts": -164.3
+  },
+  "Sat": {
+   "days": 1,
+   "net_rs": 8052.0,
+   "win_pct": 100.0,
+   "pts": 109.1
+  },
+  "Sun": {
+   "days": 1,
+   "net_rs": -4709.0,
+   "win_pct": 0.0,
+   "pts": -68.2
+  },
+  "Thu": {
+   "days": 246,
+   "net_rs": -41440.0,
+   "win_pct": 50.8,
+   "pts": 89.4
+  },
+  "Tue": {
+   "days": 245,
+   "net_rs": 44679.0,
+   "win_pct": 64.1,
+   "pts": 1246.2
+  },
+  "Wed": {
+   "days": 244,
+   "net_rs": -10210.0,
+   "win_pct": 57.4,
+   "pts": 404.3
+  }
+ },
+ "by_expiry_day": {
+  "expiry day": {
+   "days": 259,
+   "net_rs": -21877.0,
+   "win_pct": 51.4,
+   "pts": 451.8
+  },
+  "other days": {
+   "days": 966,
+   "net_rs": -106625.0,
+   "win_pct": 58.2,
+   "pts": 410.6
+  }
+ },
+ "skipped": 2,
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "first_candle_min": 5,
+  "exit_time": "15:15",
+  "last_entry": "15:00",
+  "slippage": 0.5,
+  "lots": 1,
+  "label": "Sell leader strikes \u00b7 SL 30% \u00b7 1 re-entry",
+  "entry": "leader",
+  "roll": null,
+  "sl_frac": 0.3,
+  "reentries": 1
+ },
+ "key": "leader_sl30_re1"
+}

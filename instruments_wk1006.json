@@ -1,0 +1,638 @@
+[
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622400CE",
+  "strike": 22400,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622400PE",
+  "strike": 22400,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622450CE",
+  "strike": 22450,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622450PE",
+  "strike": 22450,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622500CE",
+  "strike": 22500,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622500PE",
+  "strike": 22500,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622550CE",
+  "strike": 22550,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622550PE",
+  "strike": 22550,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622600CE",
+  "strike": 22600,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622600PE",
+  "strike": 22600,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622650CE",
+  "strike": 22650,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622650PE",
+  "strike": 22650,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622700CE",
+  "strike": 22700,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622700PE",
+  "strike": 22700,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622750CE",
+  "strike": 22750,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622750PE",
+  "strike": 22750,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622800CE",
+  "strike": 22800,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622800PE",
+  "strike": 22800,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622850CE",
+  "strike": 22850,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622850PE",
+  "strike": 22850,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622900CE",
+  "strike": 22900,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622900PE",
+  "strike": 22900,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622950CE",
+  "strike": 22950,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622950PE",
+  "strike": 22950,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623000CE",
+  "strike": 23000,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623000PE",
+  "strike": 23000,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623050CE",
+  "strike": 23050,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623050PE",
+  "strike": 23050,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623100CE",
+  "strike": 23100,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623100PE",
+  "strike": 23100,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623150CE",
+  "strike": 23150,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623150PE",
+  "strike": 23150,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623200CE",
+  "strike": 23200,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623200PE",
+  "strike": 23200,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623250CE",
+  "strike": 23250,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623250PE",
+  "strike": 23250,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623300CE",
+  "strike": 23300,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623300PE",
+  "strike": 23300,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623350CE",
+  "strike": 23350,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623350PE",
+  "strike": 23350,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623400CE",
+  "strike": 23400,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623400PE",
+  "strike": 23400,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623450CE",
+  "strike": 23450,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623450PE",
+  "strike": 23450,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623500CE",
+  "strike": 23500,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623500PE",
+  "strike": 23500,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623550CE",
+  "strike": 23550,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623550PE",
+  "strike": 23550,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623600CE",
+  "strike": 23600,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623600PE",
+  "strike": 23600,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623650CE",
+  "strike": 23650,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623650PE",
+  "strike": 23650,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623700CE",
+  "strike": 23700,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623700PE",
+  "strike": 23700,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623750CE",
+  "strike": 23750,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623750PE",
+  "strike": 23750,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623800CE",
+  "strike": 23800,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623800PE",
+  "strike": 23800,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623850CE",
+  "strike": 23850,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623850PE",
+  "strike": 23850,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623900CE",
+  "strike": 23900,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623900PE",
+  "strike": 23900,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623950CE",
+  "strike": 23950,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0623950PE",
+  "strike": 23950,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624000CE",
+  "strike": 24000,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624000PE",
+  "strike": 24000,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624050CE",
+  "strike": 24050,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624050PE",
+  "strike": 24050,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624100CE",
+  "strike": 24100,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624100PE",
+  "strike": 24100,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624150CE",
+  "strike": 24150,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624150PE",
+  "strike": 24150,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624200CE",
+  "strike": 24200,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624200PE",
+  "strike": 24200,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624250CE",
+  "strike": 24250,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624250PE",
+  "strike": 24250,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624300CE",
+  "strike": 24300,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624300PE",
+  "strike": 24300,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624350CE",
+  "strike": 24350,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624350PE",
+  "strike": 24350,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624400CE",
+  "strike": 24400,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624400PE",
+  "strike": 24400,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622350CE",
+  "strike": 22350,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622350PE",
+  "strike": 22350,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624450CE",
+  "strike": 24450,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0624450PE",
+  "strike": 24450,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622250CE",
+  "strike": 22250,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622250PE",
+  "strike": 22250,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622300CE",
+  "strike": 22300,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622300PE",
+  "strike": 22300,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622200CE",
+  "strike": 22200,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622200PE",
+  "strike": 22200,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622150CE",
+  "strike": 22150,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622150PE",
+  "strike": 22150,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622100CE",
+  "strike": 22100,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622100PE",
+  "strike": 22100,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622050CE",
+  "strike": 22050,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622050PE",
+  "strike": 22050,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622000CE",
+  "strike": 22000,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0622000PE",
+  "strike": 22000,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0621950CE",
+  "strike": 21950,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0621950PE",
+  "strike": 21950,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0621900CE",
+  "strike": 21900,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0621900PE",
+  "strike": 21900,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0621850CE",
+  "strike": 21850,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY26O0621850PE",
+  "strike": 21850,
+  "type": "PE"
+ }
+]

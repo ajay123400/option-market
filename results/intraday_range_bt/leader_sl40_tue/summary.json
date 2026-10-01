@@ -1,0 +1,104 @@
+{
+ "days": 245,
+ "from": "2021-09-28",
+ "to": "2026-09-22",
+ "net_rs": 78778.0,
+ "gross_rs": 105419.0,
+ "charges": 26641.0,
+ "points": 1674.2,
+ "win_pct": 63.3,
+ "avg_win": 1779.0,
+ "avg_loss": -2189.0,
+ "avg_premium": 152.7,
+ "best_day": {
+  "day": "2025-06-03",
+  "net_rs": 8703.96
+ },
+ "worst_day": {
+  "day": "2025-01-21",
+  "net_rs": -8954.13
+ },
+ "max_drawdown_rs": -21254.0,
+ "stop_loss_days": 48,
+ "reentry_days": 0,
+ "avg_rolls": 0.0,
+ "by_year": {
+  "2021": {
+   "days": 14,
+   "net_rs": 3367.0,
+   "win_pct": 71.4,
+   "pts": 98.0
+  },
+  "2022": {
+   "days": 48,
+   "net_rs": -12232.0,
+   "win_pct": 52.1,
+   "pts": -139.8
+  },
+  "2023": {
+   "days": 44,
+   "net_rs": 18454.0,
+   "win_pct": 79.5,
+   "pts": 462.8
+  },
+  "2024": {
+   "days": 53,
+   "net_rs": 1186.0,
+   "win_pct": 66.0,
+   "pts": 161.6
+  },
+  "2025": {
+   "days": 51,
+   "net_rs": 44683.0,
+   "win_pct": 62.7,
+   "pts": 676.5
+  },
+  "2026": {
+   "days": 35,
+   "net_rs": 23319.0,
+   "win_pct": 51.4,
+   "pts": 415.0
+  }
+ },
+ "by_weekday": {
+  "Tue": {
+   "days": 245,
+   "net_rs": 78778.0,
+   "win_pct": 63.3,
+   "pts": 1674.2
+  }
+ },
+ "by_expiry_day": {
+  "expiry day": {
+   "days": 52,
+   "net_rs": 42608.0,
+   "win_pct": 53.8,
+   "pts": 695.9
+  },
+  "other days": {
+   "days": 193,
+   "net_rs": 36170.0,
+   "win_pct": 65.8,
+   "pts": 978.3
+  }
+ },
+ "skipped": 1,
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "first_candle_min": 5,
+  "exit_time": "15:15",
+  "last_entry": "15:00",
+  "slippage": 0.5,
+  "lots": 1,
+  "label": "Sell leader strikes \u00b7 SL 40% \u00b7 no re-entry \u00b7 Tuesdays only",
+  "entry": "leader",
+  "roll": null,
+  "sl_frac": 0.4,
+  "reentries": 0,
+  "weekdays": [
+   "Tue"
+  ]
+ },
+ "key": "leader_sl40_tue"
+}

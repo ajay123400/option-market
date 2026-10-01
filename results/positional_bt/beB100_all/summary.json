@@ -1,0 +1,79 @@
+{
+ "weeks": 258,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": -497947,
+ "gross_rs": -69913,
+ "charges": 428034,
+ "points": -2019.6,
+ "win_pct": 32.2,
+ "avg_win": 4804,
+ "avg_loss": -5124,
+ "max_drawdown_rs": -560338,
+ "exits": {
+  "EXPIRY": 234,
+  "TARGET": 24
+ },
+ "avg_rolls": 32.17,
+ "avg_premium": 149.8,
+ "by_year": {
+  "2021": {
+   "weeks": 14,
+   "net_rs": -48765,
+   "pts": -379.4,
+   "win_pct": 21.4
+  },
+  "2022": {
+   "weeks": 52,
+   "net_rs": -107066,
+   "pts": -234.3,
+   "win_pct": 30.8
+  },
+  "2023": {
+   "weeks": 50,
+   "net_rs": -127482,
+   "pts": -1043.5,
+   "win_pct": 18.0
+  },
+  "2024": {
+   "weeks": 52,
+   "net_rs": -107663,
+   "pts": -742.2,
+   "win_pct": 26.9
+  },
+  "2025": {
+   "weeks": 52,
+   "net_rs": -29340,
+   "pts": 663.6,
+   "win_pct": 44.2
+  },
+  "2026": {
+   "weeks": 38,
+   "net_rs": -77630,
+   "pts": -283.7,
+   "win_pct": 47.4
+  }
+ },
+ "best": {
+  "expiry": "2026-04-07",
+  "net_rs": 15783.29
+ },
+ "worst": {
+  "expiry": "2025-04-09",
+  "net_rs": -38739.8
+ },
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "check_min": 5,
+  "sl_frac": null,
+  "target_frac": 0.9,
+  "slippage": 0.5,
+  "lots": 1,
+  "cross_pts": 100,
+  "roll_on_expiry_day": true,
+  "approach": "B",
+  "guard": 100,
+  "label": "B \u00b7 breakeven guard 100 \u00b7 every week \u00b7 target 90%"
+ }
+}

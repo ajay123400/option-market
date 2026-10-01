@@ -1,0 +1,16 @@
+@"
+.env
+.env.*
+.fyers_session.json
+__pycache__/
+*.pyc
+*.exe
+*.spec
+build/
+dist/
+node_modules/
+.next/
+*.db
+*.lock
+.claude/
+"@ | Set-Content .gitignore

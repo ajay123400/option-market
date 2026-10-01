@@ -1,0 +1,1410 @@
+{
+ "rows": {
+  "2026-09-29T09:20|DAY_START": {
+   "time": "2026-09-29T09:20",
+   "kind": "DAY_START",
+   "env": {
+    "atm_iv": 26.3,
+    "iv_pct": 67.0,
+    "iv_level": "High IV",
+    "dte": 0,
+    "dte_label": "expiry day",
+    "view": "MILD BEARISH",
+    "view_dir": "bearish",
+    "spot": 22673.65,
+    "slot": "09:30"
+   },
+   "range": {
+    "upper": 22868.8,
+    "lower": 22652.0
+   },
+   "shift": null,
+   "ideas": [
+    {
+     "id": "09-29 09:20#1",
+     "created": "2026-09-29T09:20",
+     "slot": "Best premium selling (naked)",
+     "why": "highest similar-IV record among naked sells",
+     "name": "Short straddle \u00b7 ATM 22700",
+     "tpl": "Short straddle|ATM",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22700,
+       "price": 56.8,
+       "symbol": "NSE:NIFTY26SEP22700CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22700,
+       "price": 71.35,
+       "symbol": "NSE:NIFTY26SEP22700PE"
+      }
+     ],
+     "net_premium": 8329.75,
+     "max_profit": 8219.87,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22573.5,
+      22826.5
+     ],
+     "record": {
+      "n": 64,
+      "win_hold": 65.6,
+      "avg_hold": 1144.3,
+      "worst_hold": -20040.0,
+      "p5_hold": -9828.7,
+      "iv_lo": 23.6,
+      "iv_hi": 29.0
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-29 09:20#2",
+     "created": "2026-09-29T09:20",
+     "slot": "Best defined risk",
+     "why": "highest similar-IV record with capped loss",
+     "name": "Long call butterfly \u00b7 centre 22750, wings 200",
+     "tpl": "Long call butterfly|range mid|w200",
+     "direction": "neutral",
+     "credit": false,
+     "legs": [
+      {
+       "side": "BUY",
+       "type": "CE",
+       "strike": 22550,
+       "price": 156.35,
+       "symbol": "NSE:NIFTY26SEP22550CE"
+      },
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22750,
+       "price": 37.55,
+       "symbol": "NSE:NIFTY26SEP22750CE"
+      },
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22750,
+       "price": 37.55,
+       "symbol": "NSE:NIFTY26SEP22750CE"
+      },
+      {
+       "side": "BUY",
+       "type": "CE",
+       "strike": 22950,
+       "price": 7.25,
+       "symbol": "NSE:NIFTY26SEP22950CE"
+      }
+     ],
+     "net_premium": -5752.5,
+     "max_profit": 7029.85,
+     "max_loss": -5970.15,
+     "unlimited_loss": false,
+     "breakevens": [
+      22641.8,
+      22858.2
+     ],
+     "record": {
+      "n": 40,
+      "win_hold": 60.0,
+      "avg_hold": 828.2,
+      "worst_hold": -6399.8,
+      "p5_hold": -6167.1,
+      "iv_lo": 24.2,
+      "iv_hi": 28.5
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-29 09:20#3",
+     "created": "2026-09-29T09:20",
+     "slot": "Best for the bearish view",
+     "why": "suits the mild bearish view",
+     "name": "Bear put spread \u00b7 buy 22800, width 100",
+     "tpl": "Bear put spread|buy ATM+100|w100",
+     "direction": "bearish",
+     "credit": false,
+     "legs": [
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22800,
+       "price": 138.55,
+       "symbol": "NSE:NIFTY26SEP22800PE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22700,
+       "price": 71.35,
+       "symbol": "NSE:NIFTY26SEP22700PE"
+      }
+     ],
+     "net_premium": -4368.0,
+     "max_profit": 2012.24,
+     "max_loss": -4487.76,
+     "unlimited_loss": false,
+     "breakevens": [
+      22731.0
+     ],
+     "record": {
+      "n": 64,
+      "win_hold": 64.1,
+      "avg_hold": 265.7,
+      "worst_hold": -4910.1,
+      "p5_hold": -4437.1,
+      "iv_lo": 23.6,
+      "iv_hi": 29.0
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    }
+   ],
+   "reviews": []
+  },
+  "2026-09-29T09:25|LEADER_CHANGE": {
+   "time": "2026-09-29T09:25",
+   "kind": "LEADER_CHANGE",
+   "env": {
+    "atm_iv": 25.83,
+    "iv_pct": 64.0,
+    "iv_level": "Normal IV",
+    "dte": 0,
+    "dte_label": "expiry day",
+    "view": "NEUTRAL",
+    "view_dir": "neutral",
+    "spot": 22660.2,
+    "slot": "09:30"
+   },
+   "range": {
+    "upper": 22768.8,
+    "lower": 22600.2
+   },
+   "shift": -75.9,
+   "ideas": [
+    {
+     "id": "09-29 09:25#1",
+     "created": "2026-09-29T09:25",
+     "slot": "Best premium selling (naked)",
+     "why": "highest similar-IV record among naked sells",
+     "name": "Short strangle \u00b7 \u03940.10",
+     "tpl": "Short strangle|\u03940.10",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22900,
+       "price": 9,
+       "symbol": "NSE:NIFTY26SEP22900CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22450,
+       "price": 8.25,
+       "symbol": "NSE:NIFTY26SEP22450PE"
+      }
+     ],
+     "net_premium": 1121.25,
+     "max_profit": 1024.76,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22434.2,
+      22915.8
+     ],
+     "record": {
+      "n": 64,
+      "win_hold": 89.1,
+      "avg_hold": 377.1,
+      "worst_hold": -10949.3,
+      "p5_hold": -1991.1,
+      "iv_lo": 23.2,
+      "iv_hi": 28.3
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-29 09:25#2",
+     "created": "2026-09-29T09:25",
+     "slot": "Best defined risk",
+     "why": "highest similar-IV record with capped loss",
+     "name": "Iron butterfly \u00b7 ATM 22700, wings 400",
+     "tpl": "Iron butterfly|ATM|w400",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22700,
+       "price": 50.7,
+       "symbol": "NSE:NIFTY26SEP22700CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22700,
+       "price": 75.3,
+       "symbol": "NSE:NIFTY26SEP22700PE"
+      },
+      {
+       "side": "BUY",
+       "type": "CE",
+       "strike": 23100,
+       "price": 3.05,
+       "symbol": "NSE:NIFTY26SEP23100CE"
+      },
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22300,
+       "price": 2.75,
+       "symbol": "NSE:NIFTY26SEP22300PE"
+      }
+     ],
+     "net_premium": 7813.0,
+     "max_profit": 7608.27,
+     "max_loss": -18391.73,
+     "unlimited_loss": false,
+     "breakevens": [
+      22582.9,
+      22817.1
+     ],
+     "record": {
+      "n": 64,
+      "win_hold": 60.9,
+      "avg_hold": 841.5,
+      "worst_hold": -18286.9,
+      "p5_hold": -7708.9,
+      "iv_lo": 23.2,
+      "iv_hi": 28.3
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-29 09:25#3",
+     "created": "2026-09-29T09:25",
+     "slot": "Next best",
+     "why": "next highest similar-IV record",
+     "name": "Short straddle \u00b7 ATM 22700",
+     "tpl": "Short straddle|ATM",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22700,
+       "price": 50.7,
+       "symbol": "NSE:NIFTY26SEP22700CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22700,
+       "price": 75.3,
+       "symbol": "NSE:NIFTY26SEP22700PE"
+      }
+     ],
+     "net_premium": 8190.0,
+     "max_profit": 8080.37,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22575.7,
+      22824.3
+     ],
+     "record": {
+      "n": 64,
+      "win_hold": 62.5,
+      "avg_hold": 1178.6,
+      "worst_hold": -20040.0,
+      "p5_hold": -7448.9,
+      "iv_lo": 23.2,
+      "iv_hi": 28.3
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    }
+   ],
+   "reviews": [
+    {
+     "id": "09-29 09:20#1",
+     "name": "Short straddle \u00b7 ATM 22700",
+     "pnl": 62.9,
+     "pct": 1.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -1241.0,
+       "cost": 0.0,
+       "cvar": -27787.0,
+       "max_loss": null
+      },
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 64.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll CE side 22700\u219222800 (tested: 40 pts away, \u03940.44)",
+       "ev": -942.0,
+       "cost": 60.0,
+       "cvar": -27700.0,
+       "max_loss": null
+      },
+      {
+       "action": "ADJUST",
+       "detail": "close the CE side only (tested)",
+       "ev": -430.0,
+       "cost": 32.0,
+       "cvar": -26238.0,
+       "max_loss": null
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22700\u219222550 (tested: -40 pts away, \u03940.56)",
+       "ev": -1280.0,
+       "cost": 61.0,
+       "cvar": -26398.0,
+       "max_loss": null
+      },
+      {
+       "action": "ADJUST",
+       "detail": "close the PE side only (tested)",
+       "ev": -812.0,
+       "cost": 32.0,
+       "cvar": -23251.0,
+       "max_loss": null
+      }
+     ],
+     "action": "EXIT",
+     "reason": "close everything now",
+     "new_legs": null,
+     "gain": 1733.0
+    },
+    {
+     "id": "09-29 09:20#2",
+     "name": "Long call butterfly \u00b7 centre 22750, wings 200",
+     "pnl": -198.14,
+     "pct": -3.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -595.0,
+       "cost": 0.0,
+       "cvar": -5901.0,
+       "max_loss": -5901.17
+      }
+     ],
+     "action": "HOLD",
+     "reason": "range shifted -- but holding still has the best expected P&L"
+    },
+    {
+     "id": "09-29 09:20#3",
+     "name": "Bear put spread \u00b7 buy 22800, width 100",
+     "pnl": 86.79,
+     "pct": 2.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -382.0,
+       "cost": 0.0,
+       "cvar": -4655.0,
+       "max_loss": -4654.8
+      },
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 79.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22700\u219222550 (tested: -40 pts away, \u03940.56)",
+       "ev": -88.0,
+       "cost": 139.0,
+       "cvar": -2050.0,
+       "max_loss": -2049.79
+      }
+     ],
+     "action": "EXIT",
+     "reason": "close everything now",
+     "new_legs": null,
+     "gain": 396.0
+    }
+   ]
+  },
+  "2026-09-29T09:40|LEADER_CHANGE": {
+   "time": "2026-09-29T09:40",
+   "kind": "LEADER_CHANGE",
+   "env": {
+    "atm_iv": 28.71,
+    "iv_pct": 77.0,
+    "iv_level": "High IV",
+    "dte": 0,
+    "dte_label": "expiry day",
+    "view": "BEARISH",
+    "view_dir": "bearish",
+    "spot": 22594,
+    "slot": "09:30"
+   },
+   "range": {
+    "upper": 22730.8,
+    "lower": 22500.2
+   },
+   "shift": -69.0,
+   "ideas": [
+    {
+     "id": "09-29 09:40#1",
+     "created": "2026-09-29T09:40",
+     "slot": "Best premium selling (naked)",
+     "why": "highest similar-IV record among naked sells",
+     "name": "Short strangle \u00b7 \u03940.20",
+     "tpl": "Short strangle|\u03940.20",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22750,
+       "price": 20.35,
+       "symbol": "NSE:NIFTY26SEP22750CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22450,
+       "price": 19.75,
+       "symbol": "NSE:NIFTY26SEP22450PE"
+      }
+     ],
+     "net_premium": 2606.5,
+     "max_profit": 2507.25,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22411.4,
+      22788.6
+     ],
+     "record": {
+      "n": 54,
+      "win_hold": 75.9,
+      "avg_hold": 621.6,
+      "worst_hold": -10473.7,
+      "p5_hold": -6312.6,
+      "iv_lo": 25.1,
+      "iv_hi": 32.1
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-29 09:40#2",
+     "created": "2026-09-29T09:40",
+     "slot": "Best defined risk",
+     "why": "highest similar-IV record with capped loss",
+     "name": "Iron condor \u00b7 \u03940.20, wings 300",
+     "tpl": "Iron condor|\u03940.20|w300",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22750,
+       "price": 20.35,
+       "symbol": "NSE:NIFTY26SEP22750CE"
+      },
+      {
+       "side": "BUY",
+       "type": "CE",
+       "strike": 23050,
+       "price": 3.55,
+       "symbol": "NSE:NIFTY26SEP23050CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22450,
+       "price": 19.75,
+       "symbol": "NSE:NIFTY26SEP22450PE"
+      },
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22150,
+       "price": 2.35,
+       "symbol": "NSE:NIFTY26SEP22150PE"
+      }
+     ],
+     "net_premium": 2223.0,
+     "max_profit": 2028.64,
+     "max_loss": -17471.36,
+     "unlimited_loss": false,
+     "breakevens": [
+      22418.8,
+      22781.2
+     ],
+     "record": {
+      "n": 54,
+      "win_hold": 74.1,
+      "avg_hold": 281.7,
+      "worst_hold": -10748.5,
+      "p5_hold": -6711.1,
+      "iv_lo": 25.1,
+      "iv_hi": 32.1
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-29 09:40#3",
+     "created": "2026-09-29T09:40",
+     "slot": "Best for the bearish view",
+     "why": "suits the bearish view",
+     "name": "Reverse jade lizard \u00b7 \u03940.30",
+     "tpl": "Reverse jade lizard|\u03940.30",
+     "direction": "bearish",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22700,
+       "price": 30.95,
+       "symbol": "NSE:NIFTY26SEP22700CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22500,
+       "price": 30.25,
+       "symbol": "NSE:NIFTY26SEP22500PE"
+      },
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22400,
+       "price": 13,
+       "symbol": "NSE:NIFTY26SEP22400PE"
+      }
+     ],
+     "net_premium": 3133.0,
+     "max_profit": 2982.43,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22454.1,
+      22745.9
+     ],
+     "record": {
+      "n": 62,
+      "win_hold": 61.3,
+      "avg_hold": 107.7,
+      "worst_hold": -13369.6,
+      "p5_hold": -5700.9,
+      "iv_lo": 25.1,
+      "iv_hi": 32.1
+     },
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    }
+   ],
+   "reviews": [
+    {
+     "id": "09-29 09:20#2",
+     "name": "Long call butterfly \u00b7 centre 22750, wings 200",
+     "pnl": -1739.92,
+     "pct": -30.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -146.0,
+       "cost": 0.0,
+       "cvar": -4340.0,
+       "max_loss": -4340.35
+      }
+     ],
+     "action": "HOLD",
+     "reason": "range shifted -- but holding still has the best expected P&L"
+    },
+    {
+     "id": "09-29 09:25#1",
+     "name": "Short strangle \u00b7 \u03940.10",
+     "pnl": -668.72,
+     "pct": -60.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -134.0,
+       "cost": 0.0,
+       "cvar": -19703.0,
+       "max_loss": null
+      },
+      {
+       "action": "ADJUST",
+       "detail": "range shifted down: roll CE 22900\u219222750 for more premium",
+       "ev": -276.0,
+       "cost": 54.0,
+       "cvar": -22524.0,
+       "max_loss": null
+      }
+     ],
+     "action": "HOLD",
+     "reason": "range shifted -- but holding still has the best expected P&L"
+    },
+    {
+     "id": "09-29 09:25#2",
+     "name": "Iron butterfly \u00b7 ATM 22700, wings 400",
+     "pnl": -1991.28,
+     "pct": -25.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -270.0,
+       "cost": 0.0,
+       "cvar": -16521.0,
+       "max_loss": -16520.72
+      },
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 116.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22700\u219222450 (tested: -106 pts away, \u03940.71)",
+       "ev": -556.0,
+       "cost": 117.0,
+       "cvar": -19879.0,
+       "max_loss": -23205.52
+      },
+      {
+       "action": "ADJUST",
+       "detail": "close the PE side only (tested)",
+       "ev": -377.0,
+       "cost": 63.0,
+       "cvar": -17343.0,
+       "max_loss": -24280.15
+      }
+     ],
+     "action": "EXIT",
+     "reason": "close everything now",
+     "new_legs": null,
+     "gain": 485.0
+    },
+    {
+     "id": "09-29 09:25#3",
+     "name": "Short straddle \u00b7 ATM 22700",
+     "pnl": -2138.27,
+     "pct": -26.0,
+     "options": [
+      {
+       "action": "HOLD",
+       "detail": "keep as is",
+       "ev": -159.0,
+       "cost": 0.0,
+       "cvar": -26983.0,
+       "max_loss": null
+      },
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 63.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22700\u219222450 (tested: -106 pts away, \u03940.71)",
+       "ev": -356.0,
+       "cost": 64.0,
+       "cvar": -23580.0,
+       "max_loss": null
+      },
+      {
+       "action": "ADJUST",
+       "detail": "close the PE side only (tested)",
+       "ev": -240.0,
+       "cost": 35.0,
+       "cvar": -19180.0,
+       "max_loss": null
+      }
+     ],
+     "action": "EXIT",
+     "reason": "close everything now",
+     "new_legs": null,
+     "gain": 636.0
+    }
+   ]
+  },
+  "2026-09-29T15:40|DAY_END": {
+   "time": "2026-09-29T15:40",
+   "kind": "DAY_END",
+   "env": null,
+   "range": null,
+   "shift": null,
+   "ideas": [],
+   "reviews": [
+    {
+     "id": "09-29 09:20#2",
+     "name": "Long call butterfly \u00b7 centre 22750, wings 200",
+     "pnl": 5050.5,
+     "pct": 88.0,
+     "action": "SETTLED",
+     "reason": "expired: NIFTY closed 22,716",
+     "options": []
+    },
+    {
+     "id": "09-29 09:25#1",
+     "name": "Short strangle \u00b7 \u03940.10",
+     "pnl": 1121.25,
+     "pct": 100.0,
+     "action": "SETTLED",
+     "reason": "expired: NIFTY closed 22,716",
+     "options": []
+    },
+    {
+     "id": "09-29 09:40#1",
+     "name": "Short strangle \u00b7 \u03940.20",
+     "pnl": 2606.5,
+     "pct": 100.0,
+     "action": "SETTLED",
+     "reason": "expired: NIFTY closed 22,716",
+     "options": []
+    },
+    {
+     "id": "09-29 09:40#2",
+     "name": "Iron condor \u00b7 \u03940.20, wings 300",
+     "pnl": 2223.0,
+     "pct": 100.0,
+     "action": "SETTLED",
+     "reason": "expired: NIFTY closed 22,716",
+     "options": []
+    },
+    {
+     "id": "09-29 09:40#3",
+     "name": "Reverse jade lizard \u00b7 \u03940.30",
+     "pnl": 2080.0,
+     "pct": 66.0,
+     "action": "SETTLED",
+     "reason": "expired: NIFTY closed 22,716",
+     "options": []
+    }
+   ]
+  }
+ },
+ "book": {
+  "09-29 09:20#1": {
+   "id": "09-29 09:20#1",
+   "created": "2026-09-29T09:20",
+   "slot": "Best premium selling (naked)",
+   "why": "highest similar-IV record among naked sells",
+   "name": "Short straddle \u00b7 ATM 22700",
+   "tpl": "Short straddle|ATM",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22700,
+     "price": 56.8,
+     "symbol": "NSE:NIFTY26SEP22700CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22700,
+     "price": 71.35,
+     "symbol": "NSE:NIFTY26SEP22700PE"
+    }
+   ],
+   "net_premium": 8329.75,
+   "max_profit": 8219.87,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22573.5,
+    22826.5
+   ],
+   "record": {
+    "n": 64,
+    "win_hold": 65.6,
+    "avg_hold": 1144.3,
+    "worst_hold": -20040.0,
+    "p5_hold": -9828.7,
+    "iv_lo": 23.6,
+    "iv_hi": 29.0
+   },
+   "status": "exited",
+   "booked": 0.0,
+   "last_pnl": 62.9,
+   "history": [
+    {
+     "time": "2026-09-29T09:25",
+     "action": "EXIT",
+     "pnl": 62.9,
+     "reason": "close everything now"
+    }
+   ],
+   "result": 62.9
+  },
+  "09-29 09:20#2": {
+   "id": "09-29 09:20#2",
+   "created": "2026-09-29T09:20",
+   "slot": "Best defined risk",
+   "why": "highest similar-IV record with capped loss",
+   "name": "Long call butterfly \u00b7 centre 22750, wings 200",
+   "tpl": "Long call butterfly|range mid|w200",
+   "direction": "neutral",
+   "credit": false,
+   "legs": [
+    {
+     "side": "BUY",
+     "type": "CE",
+     "strike": 22550,
+     "price": 156.35,
+     "symbol": "NSE:NIFTY26SEP22550CE"
+    },
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22750,
+     "price": 37.55,
+     "symbol": "NSE:NIFTY26SEP22750CE"
+    },
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22750,
+     "price": 37.55,
+     "symbol": "NSE:NIFTY26SEP22750CE"
+    },
+    {
+     "side": "BUY",
+     "type": "CE",
+     "strike": 22950,
+     "price": 7.25,
+     "symbol": "NSE:NIFTY26SEP22950CE"
+    }
+   ],
+   "net_premium": -5752.5,
+   "max_profit": 7029.85,
+   "max_loss": -5970.15,
+   "unlimited_loss": false,
+   "breakevens": [
+    22641.8,
+    22858.2
+   ],
+   "record": {
+    "n": 40,
+    "win_hold": 60.0,
+    "avg_hold": 828.2,
+    "worst_hold": -6399.8,
+    "p5_hold": -6167.1,
+    "iv_lo": 24.2,
+    "iv_hi": 28.5
+   },
+   "status": "expired",
+   "booked": 0.0,
+   "last_pnl": 5050.5,
+   "history": [
+    {
+     "time": "2026-09-29T09:25",
+     "action": "HOLD",
+     "pnl": -198.14,
+     "reason": "range shifted -- but holding still has the best expected P&L"
+    },
+    {
+     "time": "2026-09-29T09:40",
+     "action": "HOLD",
+     "pnl": -1739.92,
+     "reason": "range shifted -- but holding still has the best expected P&L"
+    },
+    {
+     "time": "2026-09-29T15:40",
+     "action": "SETTLED",
+     "pnl": 5050.5,
+     "reason": "expired: NIFTY closed 22,716"
+    }
+   ],
+   "result": 5050.5
+  },
+  "09-29 09:20#3": {
+   "id": "09-29 09:20#3",
+   "created": "2026-09-29T09:20",
+   "slot": "Best for the bearish view",
+   "why": "suits the mild bearish view",
+   "name": "Bear put spread \u00b7 buy 22800, width 100",
+   "tpl": "Bear put spread|buy ATM+100|w100",
+   "direction": "bearish",
+   "credit": false,
+   "legs": [
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22800,
+     "price": 138.55,
+     "symbol": "NSE:NIFTY26SEP22800PE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22700,
+     "price": 71.35,
+     "symbol": "NSE:NIFTY26SEP22700PE"
+    }
+   ],
+   "net_premium": -4368.0,
+   "max_profit": 2012.24,
+   "max_loss": -4487.76,
+   "unlimited_loss": false,
+   "breakevens": [
+    22731.0
+   ],
+   "record": {
+    "n": 64,
+    "win_hold": 64.1,
+    "avg_hold": 265.7,
+    "worst_hold": -4910.1,
+    "p5_hold": -4437.1,
+    "iv_lo": 23.6,
+    "iv_hi": 29.0
+   },
+   "status": "exited",
+   "booked": 0.0,
+   "last_pnl": 86.79,
+   "history": [
+    {
+     "time": "2026-09-29T09:25",
+     "action": "EXIT",
+     "pnl": 86.79,
+     "reason": "close everything now"
+    }
+   ],
+   "result": 86.79
+  },
+  "09-29 09:25#1": {
+   "id": "09-29 09:25#1",
+   "created": "2026-09-29T09:25",
+   "slot": "Best premium selling (naked)",
+   "why": "highest similar-IV record among naked sells",
+   "name": "Short strangle \u00b7 \u03940.10",
+   "tpl": "Short strangle|\u03940.10",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22900,
+     "price": 9,
+     "symbol": "NSE:NIFTY26SEP22900CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22450,
+     "price": 8.25,
+     "symbol": "NSE:NIFTY26SEP22450PE"
+    }
+   ],
+   "net_premium": 1121.25,
+   "max_profit": 1024.76,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22434.2,
+    22915.8
+   ],
+   "record": {
+    "n": 64,
+    "win_hold": 89.1,
+    "avg_hold": 377.1,
+    "worst_hold": -10949.3,
+    "p5_hold": -1991.1,
+    "iv_lo": 23.2,
+    "iv_hi": 28.3
+   },
+   "status": "expired",
+   "booked": 0.0,
+   "last_pnl": 1121.25,
+   "history": [
+    {
+     "time": "2026-09-29T09:40",
+     "action": "HOLD",
+     "pnl": -668.72,
+     "reason": "range shifted -- but holding still has the best expected P&L"
+    },
+    {
+     "time": "2026-09-29T15:40",
+     "action": "SETTLED",
+     "pnl": 1121.25,
+     "reason": "expired: NIFTY closed 22,716"
+    }
+   ],
+   "result": 1121.25
+  },
+  "09-29 09:25#2": {
+   "id": "09-29 09:25#2",
+   "created": "2026-09-29T09:25",
+   "slot": "Best defined risk",
+   "why": "highest similar-IV record with capped loss",
+   "name": "Iron butterfly \u00b7 ATM 22700, wings 400",
+   "tpl": "Iron butterfly|ATM|w400",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22700,
+     "price": 50.7,
+     "symbol": "NSE:NIFTY26SEP22700CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22700,
+     "price": 75.3,
+     "symbol": "NSE:NIFTY26SEP22700PE"
+    },
+    {
+     "side": "BUY",
+     "type": "CE",
+     "strike": 23100,
+     "price": 3.05,
+     "symbol": "NSE:NIFTY26SEP23100CE"
+    },
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22300,
+     "price": 2.75,
+     "symbol": "NSE:NIFTY26SEP22300PE"
+    }
+   ],
+   "net_premium": 7813.0,
+   "max_profit": 7608.27,
+   "max_loss": -18391.73,
+   "unlimited_loss": false,
+   "breakevens": [
+    22582.9,
+    22817.1
+   ],
+   "record": {
+    "n": 64,
+    "win_hold": 60.9,
+    "avg_hold": 841.5,
+    "worst_hold": -18286.9,
+    "p5_hold": -7708.9,
+    "iv_lo": 23.2,
+    "iv_hi": 28.3
+   },
+   "status": "exited",
+   "booked": 0.0,
+   "last_pnl": -1991.28,
+   "history": [
+    {
+     "time": "2026-09-29T09:40",
+     "action": "EXIT",
+     "pnl": -1991.28,
+     "reason": "close everything now"
+    }
+   ],
+   "result": -1991.28
+  },
+  "09-29 09:25#3": {
+   "id": "09-29 09:25#3",
+   "created": "2026-09-29T09:25",
+   "slot": "Next best",
+   "why": "next highest similar-IV record",
+   "name": "Short straddle \u00b7 ATM 22700",
+   "tpl": "Short straddle|ATM",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22700,
+     "price": 50.7,
+     "symbol": "NSE:NIFTY26SEP22700CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22700,
+     "price": 75.3,
+     "symbol": "NSE:NIFTY26SEP22700PE"
+    }
+   ],
+   "net_premium": 8190.0,
+   "max_profit": 8080.37,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22575.7,
+    22824.3
+   ],
+   "record": {
+    "n": 64,
+    "win_hold": 62.5,
+    "avg_hold": 1178.6,
+    "worst_hold": -20040.0,
+    "p5_hold": -7448.9,
+    "iv_lo": 23.2,
+    "iv_hi": 28.3
+   },
+   "status": "exited",
+   "booked": 0.0,
+   "last_pnl": -2138.27,
+   "history": [
+    {
+     "time": "2026-09-29T09:40",
+     "action": "EXIT",
+     "pnl": -2138.27,
+     "reason": "close everything now"
+    }
+   ],
+   "result": -2138.27
+  },
+  "09-29 09:40#1": {
+   "id": "09-29 09:40#1",
+   "created": "2026-09-29T09:40",
+   "slot": "Best premium selling (naked)",
+   "why": "highest similar-IV record among naked sells",
+   "name": "Short strangle \u00b7 \u03940.20",
+   "tpl": "Short strangle|\u03940.20",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22750,
+     "price": 20.35,
+     "symbol": "NSE:NIFTY26SEP22750CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22450,
+     "price": 19.75,
+     "symbol": "NSE:NIFTY26SEP22450PE"
+    }
+   ],
+   "net_premium": 2606.5,
+   "max_profit": 2507.25,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22411.4,
+    22788.6
+   ],
+   "record": {
+    "n": 54,
+    "win_hold": 75.9,
+    "avg_hold": 621.6,
+    "worst_hold": -10473.7,
+    "p5_hold": -6312.6,
+    "iv_lo": 25.1,
+    "iv_hi": 32.1
+   },
+   "status": "expired",
+   "booked": 0.0,
+   "last_pnl": 2606.5,
+   "history": [
+    {
+     "time": "2026-09-29T15:40",
+     "action": "SETTLED",
+     "pnl": 2606.5,
+     "reason": "expired: NIFTY closed 22,716"
+    }
+   ],
+   "result": 2606.5
+  },
+  "09-29 09:40#2": {
+   "id": "09-29 09:40#2",
+   "created": "2026-09-29T09:40",
+   "slot": "Best defined risk",
+   "why": "highest similar-IV record with capped loss",
+   "name": "Iron condor \u00b7 \u03940.20, wings 300",
+   "tpl": "Iron condor|\u03940.20|w300",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22750,
+     "price": 20.35,
+     "symbol": "NSE:NIFTY26SEP22750CE"
+    },
+    {
+     "side": "BUY",
+     "type": "CE",
+     "strike": 23050,
+     "price": 3.55,
+     "symbol": "NSE:NIFTY26SEP23050CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22450,
+     "price": 19.75,
+     "symbol": "NSE:NIFTY26SEP22450PE"
+    },
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22150,
+     "price": 2.35,
+     "symbol": "NSE:NIFTY26SEP22150PE"
+    }
+   ],
+   "net_premium": 2223.0,
+   "max_profit": 2028.64,
+   "max_loss": -17471.36,
+   "unlimited_loss": false,
+   "breakevens": [
+    22418.8,
+    22781.2
+   ],
+   "record": {
+    "n": 54,
+    "win_hold": 74.1,
+    "avg_hold": 281.7,
+    "worst_hold": -10748.5,
+    "p5_hold": -6711.1,
+    "iv_lo": 25.1,
+    "iv_hi": 32.1
+   },
+   "status": "expired",
+   "booked": 0.0,
+   "last_pnl": 2223.0,
+   "history": [
+    {
+     "time": "2026-09-29T15:40",
+     "action": "SETTLED",
+     "pnl": 2223.0,
+     "reason": "expired: NIFTY closed 22,716"
+    }
+   ],
+   "result": 2223.0
+  },
+  "09-29 09:40#3": {
+   "id": "09-29 09:40#3",
+   "created": "2026-09-29T09:40",
+   "slot": "Best for the bearish view",
+   "why": "suits the bearish view",
+   "name": "Reverse jade lizard \u00b7 \u03940.30",
+   "tpl": "Reverse jade lizard|\u03940.30",
+   "direction": "bearish",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22700,
+     "price": 30.95,
+     "symbol": "NSE:NIFTY26SEP22700CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22500,
+     "price": 30.25,
+     "symbol": "NSE:NIFTY26SEP22500PE"
+    },
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22400,
+     "price": 13,
+     "symbol": "NSE:NIFTY26SEP22400PE"
+    }
+   ],
+   "net_premium": 3133.0,
+   "max_profit": 2982.43,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22454.1,
+    22745.9
+   ],
+   "record": {
+    "n": 62,
+    "win_hold": 61.3,
+    "avg_hold": 107.7,
+    "worst_hold": -13369.6,
+    "p5_hold": -5700.9,
+    "iv_lo": 25.1,
+    "iv_hi": 32.1
+   },
+   "status": "expired",
+   "booked": 0.0,
+   "last_pnl": 2080.0,
+   "history": [
+    {
+     "time": "2026-09-29T15:40",
+     "action": "SETTLED",
+     "pnl": 2080.0,
+     "reason": "expired: NIFTY closed 22,716"
+    }
+   ],
+   "result": 2080.0
+  }
+ }
+}

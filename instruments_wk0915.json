@@ -1,0 +1,722 @@
+[
+ {
+  "token": 12099842,
+  "symbol": "NIFTY2691522700CE",
+  "strike": 22700.0,
+  "type": "CE"
+ },
+ {
+  "token": 12100098,
+  "symbol": "NIFTY2691522700PE",
+  "strike": 22700.0,
+  "type": "PE"
+ },
+ {
+  "token": 12100354,
+  "symbol": "NIFTY2691522750CE",
+  "strike": 22750.0,
+  "type": "CE"
+ },
+ {
+  "token": 12100610,
+  "symbol": "NIFTY2691522750PE",
+  "strike": 22750.0,
+  "type": "PE"
+ },
+ {
+  "token": 12100866,
+  "symbol": "NIFTY2691522800CE",
+  "strike": 22800.0,
+  "type": "CE"
+ },
+ {
+  "token": 12101122,
+  "symbol": "NIFTY2691522800PE",
+  "strike": 22800.0,
+  "type": "PE"
+ },
+ {
+  "token": 12101378,
+  "symbol": "NIFTY2691522850CE",
+  "strike": 22850.0,
+  "type": "CE"
+ },
+ {
+  "token": 12101634,
+  "symbol": "NIFTY2691522850PE",
+  "strike": 22850.0,
+  "type": "PE"
+ },
+ {
+  "token": 12101890,
+  "symbol": "NIFTY2691522900CE",
+  "strike": 22900.0,
+  "type": "CE"
+ },
+ {
+  "token": 12102146,
+  "symbol": "NIFTY2691522900PE",
+  "strike": 22900.0,
+  "type": "PE"
+ },
+ {
+  "token": 12102402,
+  "symbol": "NIFTY2691522950CE",
+  "strike": 22950.0,
+  "type": "CE"
+ },
+ {
+  "token": 12102658,
+  "symbol": "NIFTY2691522950PE",
+  "strike": 22950.0,
+  "type": "PE"
+ },
+ {
+  "token": 12102914,
+  "symbol": "NIFTY2691523000CE",
+  "strike": 23000.0,
+  "type": "CE"
+ },
+ {
+  "token": 12103170,
+  "symbol": "NIFTY2691523000PE",
+  "strike": 23000.0,
+  "type": "PE"
+ },
+ {
+  "token": 12103426,
+  "symbol": "NIFTY2691523050CE",
+  "strike": 23050.0,
+  "type": "CE"
+ },
+ {
+  "token": 12103682,
+  "symbol": "NIFTY2691523050PE",
+  "strike": 23050.0,
+  "type": "PE"
+ },
+ {
+  "token": 12103938,
+  "symbol": "NIFTY2691523100CE",
+  "strike": 23100.0,
+  "type": "CE"
+ },
+ {
+  "token": 12104194,
+  "symbol": "NIFTY2691523100PE",
+  "strike": 23100.0,
+  "type": "PE"
+ },
+ {
+  "token": 12104450,
+  "symbol": "NIFTY2691523150CE",
+  "strike": 23150.0,
+  "type": "CE"
+ },
+ {
+  "token": 12104706,
+  "symbol": "NIFTY2691523150PE",
+  "strike": 23150.0,
+  "type": "PE"
+ },
+ {
+  "token": 12104962,
+  "symbol": "NIFTY2691523200CE",
+  "strike": 23200.0,
+  "type": "CE"
+ },
+ {
+  "token": 12105218,
+  "symbol": "NIFTY2691523200PE",
+  "strike": 23200.0,
+  "type": "PE"
+ },
+ {
+  "token": 12105474,
+  "symbol": "NIFTY2691523250CE",
+  "strike": 23250.0,
+  "type": "CE"
+ },
+ {
+  "token": 12105730,
+  "symbol": "NIFTY2691523250PE",
+  "strike": 23250.0,
+  "type": "PE"
+ },
+ {
+  "token": 12105986,
+  "symbol": "NIFTY2691523300CE",
+  "strike": 23300.0,
+  "type": "CE"
+ },
+ {
+  "token": 12106242,
+  "symbol": "NIFTY2691523300PE",
+  "strike": 23300.0,
+  "type": "PE"
+ },
+ {
+  "token": 12106498,
+  "symbol": "NIFTY2691523350CE",
+  "strike": 23350.0,
+  "type": "CE"
+ },
+ {
+  "token": 12106754,
+  "symbol": "NIFTY2691523350PE",
+  "strike": 23350.0,
+  "type": "PE"
+ },
+ {
+  "token": 12107010,
+  "symbol": "NIFTY2691523400CE",
+  "strike": 23400.0,
+  "type": "CE"
+ },
+ {
+  "token": 12107266,
+  "symbol": "NIFTY2691523400PE",
+  "strike": 23400.0,
+  "type": "PE"
+ },
+ {
+  "token": 12107522,
+  "symbol": "NIFTY2691523450CE",
+  "strike": 23450.0,
+  "type": "CE"
+ },
+ {
+  "token": 12107778,
+  "symbol": "NIFTY2691523450PE",
+  "strike": 23450.0,
+  "type": "PE"
+ },
+ {
+  "token": 12108034,
+  "symbol": "NIFTY2691523500CE",
+  "strike": 23500.0,
+  "type": "CE"
+ },
+ {
+  "token": 12108290,
+  "symbol": "NIFTY2691523500PE",
+  "strike": 23500.0,
+  "type": "PE"
+ },
+ {
+  "token": 12108546,
+  "symbol": "NIFTY2691523550CE",
+  "strike": 23550.0,
+  "type": "CE"
+ },
+ {
+  "token": 12108802,
+  "symbol": "NIFTY2691523550PE",
+  "strike": 23550.0,
+  "type": "PE"
+ },
+ {
+  "token": 12109058,
+  "symbol": "NIFTY2691523600CE",
+  "strike": 23600.0,
+  "type": "CE"
+ },
+ {
+  "token": 12109314,
+  "symbol": "NIFTY2691523600PE",
+  "strike": 23600.0,
+  "type": "PE"
+ },
+ {
+  "token": 12109570,
+  "symbol": "NIFTY2691523650CE",
+  "strike": 23650.0,
+  "type": "CE"
+ },
+ {
+  "token": 12109826,
+  "symbol": "NIFTY2691523650PE",
+  "strike": 23650.0,
+  "type": "PE"
+ },
+ {
+  "token": 12110082,
+  "symbol": "NIFTY2691523700CE",
+  "strike": 23700.0,
+  "type": "CE"
+ },
+ {
+  "token": 12110338,
+  "symbol": "NIFTY2691523700PE",
+  "strike": 23700.0,
+  "type": "PE"
+ },
+ {
+  "token": 12110594,
+  "symbol": "NIFTY2691523750CE",
+  "strike": 23750.0,
+  "type": "CE"
+ },
+ {
+  "token": 12110850,
+  "symbol": "NIFTY2691523750PE",
+  "strike": 23750.0,
+  "type": "PE"
+ },
+ {
+  "token": 12111106,
+  "symbol": "NIFTY2691523800CE",
+  "strike": 23800.0,
+  "type": "CE"
+ },
+ {
+  "token": 12111362,
+  "symbol": "NIFTY2691523800PE",
+  "strike": 23800.0,
+  "type": "PE"
+ },
+ {
+  "token": 12111618,
+  "symbol": "NIFTY2691523850CE",
+  "strike": 23850.0,
+  "type": "CE"
+ },
+ {
+  "token": 12111874,
+  "symbol": "NIFTY2691523850PE",
+  "strike": 23850.0,
+  "type": "PE"
+ },
+ {
+  "token": 12112642,
+  "symbol": "NIFTY2691523900CE",
+  "strike": 23900.0,
+  "type": "CE"
+ },
+ {
+  "token": 12112898,
+  "symbol": "NIFTY2691523900PE",
+  "strike": 23900.0,
+  "type": "PE"
+ },
+ {
+  "token": 12113154,
+  "symbol": "NIFTY2691523950CE",
+  "strike": 23950.0,
+  "type": "CE"
+ },
+ {
+  "token": 12113410,
+  "symbol": "NIFTY2691523950PE",
+  "strike": 23950.0,
+  "type": "PE"
+ },
+ {
+  "token": 12113666,
+  "symbol": "NIFTY2691524000CE",
+  "strike": 24000.0,
+  "type": "CE"
+ },
+ {
+  "token": 12113922,
+  "symbol": "NIFTY2691524000PE",
+  "strike": 24000.0,
+  "type": "PE"
+ },
+ {
+  "token": 12114178,
+  "symbol": "NIFTY2691524050CE",
+  "strike": 24050.0,
+  "type": "CE"
+ },
+ {
+  "token": 12114434,
+  "symbol": "NIFTY2691524050PE",
+  "strike": 24050.0,
+  "type": "PE"
+ },
+ {
+  "token": 12114690,
+  "symbol": "NIFTY2691524100CE",
+  "strike": 24100.0,
+  "type": "CE"
+ },
+ {
+  "token": 12114946,
+  "symbol": "NIFTY2691524100PE",
+  "strike": 24100.0,
+  "type": "PE"
+ },
+ {
+  "token": 12115202,
+  "symbol": "NIFTY2691524150CE",
+  "strike": 24150.0,
+  "type": "CE"
+ },
+ {
+  "token": 12115458,
+  "symbol": "NIFTY2691524150PE",
+  "strike": 24150.0,
+  "type": "PE"
+ },
+ {
+  "token": 12115714,
+  "symbol": "NIFTY2691524200CE",
+  "strike": 24200.0,
+  "type": "CE"
+ },
+ {
+  "token": 12115970,
+  "symbol": "NIFTY2691524200PE",
+  "strike": 24200.0,
+  "type": "PE"
+ },
+ {
+  "token": 12116226,
+  "symbol": "NIFTY2691524250CE",
+  "strike": 24250.0,
+  "type": "CE"
+ },
+ {
+  "token": 12116482,
+  "symbol": "NIFTY2691524250PE",
+  "strike": 24250.0,
+  "type": "PE"
+ },
+ {
+  "token": 12116738,
+  "symbol": "NIFTY2691524300CE",
+  "strike": 24300.0,
+  "type": "CE"
+ },
+ {
+  "token": 12116994,
+  "symbol": "NIFTY2691524300PE",
+  "strike": 24300.0,
+  "type": "PE"
+ },
+ {
+  "token": 12117250,
+  "symbol": "NIFTY2691524350CE",
+  "strike": 24350.0,
+  "type": "CE"
+ },
+ {
+  "token": 12117506,
+  "symbol": "NIFTY2691524350PE",
+  "strike": 24350.0,
+  "type": "PE"
+ },
+ {
+  "token": 12117762,
+  "symbol": "NIFTY2691524400CE",
+  "strike": 24400.0,
+  "type": "CE"
+ },
+ {
+  "token": 12118018,
+  "symbol": "NIFTY2691524400PE",
+  "strike": 24400.0,
+  "type": "PE"
+ },
+ {
+  "token": 12118274,
+  "symbol": "NIFTY2691524450CE",
+  "strike": 24450.0,
+  "type": "CE"
+ },
+ {
+  "token": 12118530,
+  "symbol": "NIFTY2691524450PE",
+  "strike": 24450.0,
+  "type": "PE"
+ },
+ {
+  "token": 12118786,
+  "symbol": "NIFTY2691524500CE",
+  "strike": 24500.0,
+  "type": "CE"
+ },
+ {
+  "token": 12119042,
+  "symbol": "NIFTY2691524500PE",
+  "strike": 24500.0,
+  "type": "PE"
+ },
+ {
+  "token": 12119298,
+  "symbol": "NIFTY2691524550CE",
+  "strike": 24550.0,
+  "type": "CE"
+ },
+ {
+  "token": 12119810,
+  "symbol": "NIFTY2691524550PE",
+  "strike": 24550.0,
+  "type": "PE"
+ },
+ {
+  "token": 12120322,
+  "symbol": "NIFTY2691524600CE",
+  "strike": 24600.0,
+  "type": "CE"
+ },
+ {
+  "token": 12120578,
+  "symbol": "NIFTY2691524600PE",
+  "strike": 24600.0,
+  "type": "PE"
+ },
+ {
+  "token": 12120834,
+  "symbol": "NIFTY2691524650CE",
+  "strike": 24650.0,
+  "type": "CE"
+ },
+ {
+  "token": 12121090,
+  "symbol": "NIFTY2691524650PE",
+  "strike": 24650.0,
+  "type": "PE"
+ },
+ {
+  "token": 12121346,
+  "symbol": "NIFTY2691524700CE",
+  "strike": 24700.0,
+  "type": "CE"
+ },
+ {
+  "token": 12121602,
+  "symbol": "NIFTY2691524700PE",
+  "strike": 24700.0,
+  "type": "PE"
+ },
+ {
+  "token": 12121858,
+  "symbol": "NIFTY2691524750CE",
+  "strike": 24750.0,
+  "type": "CE"
+ },
+ {
+  "token": 12122114,
+  "symbol": "NIFTY2691524750PE",
+  "strike": 24750.0,
+  "type": "PE"
+ },
+ {
+  "token": 12122370,
+  "symbol": "NIFTY2691524800CE",
+  "strike": 24800.0,
+  "type": "CE"
+ },
+ {
+  "token": 12122882,
+  "symbol": "NIFTY2691524800PE",
+  "strike": 24800.0,
+  "type": "PE"
+ },
+ {
+  "token": 12123138,
+  "symbol": "NIFTY2691524850CE",
+  "strike": 24850.0,
+  "type": "CE"
+ },
+ {
+  "token": 12123650,
+  "symbol": "NIFTY2691524850PE",
+  "strike": 24850.0,
+  "type": "PE"
+ },
+ {
+  "token": 12123906,
+  "symbol": "NIFTY2691524900CE",
+  "strike": 24900.0,
+  "type": "CE"
+ },
+ {
+  "token": 12124162,
+  "symbol": "NIFTY2691524900PE",
+  "strike": 24900.0,
+  "type": "PE"
+ },
+ {
+  "token": 12124418,
+  "symbol": "NIFTY2691524950CE",
+  "strike": 24950.0,
+  "type": "CE"
+ },
+ {
+  "token": 12124674,
+  "symbol": "NIFTY2691524950PE",
+  "strike": 24950.0,
+  "type": "PE"
+ },
+ {
+  "token": 12124930,
+  "symbol": "NIFTY2691525000CE",
+  "strike": 25000.0,
+  "type": "CE"
+ },
+ {
+  "token": 12125186,
+  "symbol": "NIFTY2691525000PE",
+  "strike": 25000.0,
+  "type": "PE"
+ },
+ {
+  "token": 12125442,
+  "symbol": "NIFTY2691525050CE",
+  "strike": 25050.0,
+  "type": "CE"
+ },
+ {
+  "token": 12125698,
+  "symbol": "NIFTY2691525050PE",
+  "strike": 25050.0,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522550CE",
+  "strike": 22550,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522550PE",
+  "strike": 22550,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522600CE",
+  "strike": 22600,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522600PE",
+  "strike": 22600,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522650CE",
+  "strike": 22650,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522650PE",
+  "strike": 22650,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522500CE",
+  "strike": 22500,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522500PE",
+  "strike": 22500,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522450CE",
+  "strike": 22450,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522450PE",
+  "strike": 22450,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522400CE",
+  "strike": 22400,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522400PE",
+  "strike": 22400,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522250CE",
+  "strike": 22250,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522250PE",
+  "strike": 22250,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522300CE",
+  "strike": 22300,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522300PE",
+  "strike": 22300,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522350CE",
+  "strike": 22350,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522350PE",
+  "strike": 22350,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522200CE",
+  "strike": 22200,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522200PE",
+  "strike": 22200,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522150CE",
+  "strike": 22150,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522150PE",
+  "strike": 22150,
+  "type": "PE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522100CE",
+  "strike": 22100,
+  "type": "CE"
+ },
+ {
+  "token": null,
+  "symbol": "NIFTY2691522100PE",
+  "strike": 22100,
+  "type": "PE"
+ }
+]

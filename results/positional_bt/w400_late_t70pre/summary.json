@@ -1,0 +1,80 @@
+{
+ "weeks": 154,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": 321730,
+ "gross_rs": 369253,
+ "charges": 47524,
+ "points": 6451.0,
+ "win_pct": 69.5,
+ "avg_win": 6917,
+ "avg_loss": -8901,
+ "max_drawdown_rs": -53278,
+ "exits": {
+  "EXPIRY": 115,
+  "TARGET": 39
+ },
+ "avg_rolls": 4.44,
+ "avg_premium": 159.6,
+ "by_year": {
+  "2021": {
+   "weeks": 10,
+   "net_rs": 25930,
+   "pts": 581.2,
+   "win_pct": 80.0
+  },
+  "2022": {
+   "weeks": 40,
+   "net_rs": 116783,
+   "pts": 2575.4,
+   "win_pct": 75.0
+  },
+  "2023": {
+   "weeks": 4,
+   "net_rs": 3659,
+   "pts": 99.8,
+   "win_pct": 50.0
+  },
+  "2024": {
+   "weeks": 39,
+   "net_rs": 36966,
+   "pts": 988.9,
+   "win_pct": 59.0
+  },
+  "2025": {
+   "weeks": 31,
+   "net_rs": 118239,
+   "pts": 1742.0,
+   "win_pct": 77.4
+  },
+  "2026": {
+   "weeks": 30,
+   "net_rs": 20153,
+   "pts": 463.5,
+   "win_pct": 66.7
+  }
+ },
+ "best": {
+  "expiry": "2025-02-06",
+  "net_rs": 19538.14
+ },
+ "worst": {
+  "expiry": "2026-05-12",
+  "net_rs": -36754.53
+ },
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "check_min": 5,
+  "sl_frac": null,
+  "target_frac": 0.7,
+  "slippage": 0.5,
+  "lots": 1,
+  "cross_pts": 100,
+  "roll_on_expiry_day": true,
+  "min_width": 400,
+  "late_entry": true,
+  "label": "Enter on first range >= 400 (Day 1 or later, till day before expiry) \u00b7 no hedge \u00b7 no SL \u00b7 target 70% until the day before expiry, then hold",
+  "target_pre_expiry_only": true
+ }
+}

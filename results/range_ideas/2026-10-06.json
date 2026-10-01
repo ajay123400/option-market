@@ -1,0 +1,821 @@
+{
+ "rows": {
+  "2026-09-30T09:20|DAY_START": {
+   "time": "2026-09-30T09:20",
+   "kind": "DAY_START",
+   "env": {
+    "atm_iv": 12.51,
+    "iv_pct": 33.0,
+    "iv_level": "IV rule: no live reading (market closed / before 09:30)",
+    "dte": 3,
+    "dte_label": "3 days to expiry",
+    "view": "MILD BULLISH",
+    "view_dir": "bullish",
+    "spot": 22720.55,
+    "slot": "09:30"
+   },
+   "range": {
+    "upper": 22847.5,
+    "lower": 22488.6
+   },
+   "shift": null,
+   "ideas": [
+    {
+     "id": "09-30 09:20#1",
+     "created": "2026-09-30T09:20",
+     "slot": "Best premium selling (naked)",
+     "why": "highest similar-IV record among naked sells",
+     "name": "Short strangle \u00b7 \u03940.30",
+     "tpl": "Short strangle|\u03940.30",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 23000,
+       "price": 61.6,
+       "symbol": "NSE:NIFTY26O0623000CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22600,
+       "price": 81,
+       "symbol": "NSE:NIFTY26O0622600PE"
+      }
+     ],
+     "net_premium": 9269.0,
+     "max_profit": 9157.37,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22459.1,
+      23140.9
+     ],
+     "record": {
+      "n": 60,
+      "win_hold": 76.7,
+      "avg_hold": 1378.0,
+      "worst_hold": -34328.3,
+      "p5_hold": -19993.7,
+      "iv_lo": 11.2,
+      "iv_hi": 13.8
+     },
+     "dte0": 3,
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-30 09:20#2",
+     "created": "2026-09-30T09:20",
+     "slot": "Best defined risk",
+     "why": "highest similar-IV record with capped loss",
+     "name": "Iron condor \u00b7 \u03940.25, wings 200",
+     "tpl": "Iron condor|\u03940.25|w200",
+     "direction": "neutral",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 23050,
+       "price": 48.35,
+       "symbol": "NSE:NIFTY26O0623050CE"
+      },
+      {
+       "side": "BUY",
+       "type": "CE",
+       "strike": 23250,
+       "price": 18.4,
+       "symbol": "NSE:NIFTY26O0623250CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22500,
+       "price": 56.55,
+       "symbol": "NSE:NIFTY26O0622500PE"
+      },
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22300,
+       "price": 27.1,
+       "symbol": "NSE:NIFTY26O0622300PE"
+      }
+     ],
+     "net_premium": 3861.0,
+     "max_profit": 3654.04,
+     "max_loss": -9345.96,
+     "unlimited_loss": false,
+     "breakevens": [
+      22443.8,
+      23106.2
+     ],
+     "record": {
+      "n": 60,
+      "win_hold": 76.7,
+      "avg_hold": 812.3,
+      "worst_hold": -9878.9,
+      "p5_hold": -9375.7,
+      "iv_lo": 11.2,
+      "iv_hi": 13.8
+     },
+     "dte0": 3,
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "09-30 09:20#3",
+     "created": "2026-09-30T09:20",
+     "slot": "Best for the bullish view",
+     "why": "suits the mild bullish view",
+     "name": "Bull put spread \u00b7 range, width 100",
+     "tpl": "Bull put spread|range|w100",
+     "direction": "bullish",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22500,
+       "price": 56.55,
+       "symbol": "NSE:NIFTY26O0622500PE"
+      },
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22400,
+       "price": 38.95,
+       "symbol": "NSE:NIFTY26O0622400PE"
+      }
+     ],
+     "net_premium": 1144.0,
+     "max_profit": 1038.06,
+     "max_loss": -5461.94,
+     "unlimited_loss": false,
+     "breakevens": [
+      22484.0
+     ],
+     "record": {
+      "n": 39,
+      "win_hold": 82.1,
+      "avg_hold": 273.1,
+      "worst_hold": -5951.7,
+      "p5_hold": -4996.9,
+      "iv_lo": 11.2,
+      "iv_hi": 14.0
+     },
+     "dte0": 3,
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    }
+   ],
+   "reviews": []
+  },
+  "2026-09-30T15:40|DAY_END": {
+   "time": "2026-09-30T15:40",
+   "kind": "DAY_END",
+   "env": null,
+   "range": null,
+   "shift": null,
+   "ideas": [],
+   "reviews": [
+    {
+     "id": "09-30 09:20#1",
+     "name": "Short strangle \u00b7 \u03940.30",
+     "pnl": -369.96,
+     "pct": -4.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "09-30 09:20#2",
+     "name": "Iron condor \u00b7 \u03940.25, wings 200",
+     "pnl": -46.32,
+     "pct": -1.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "09-30 09:20#3",
+     "name": "Bull put spread \u00b7 range, width 100",
+     "pnl": -642.75,
+     "pct": -56.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    }
+   ]
+  },
+  "2026-10-01T09:20|DAY_START": {
+   "time": "2026-10-01T09:20",
+   "kind": "DAY_START",
+   "env": {
+    "atm_iv": 11.99,
+    "iv_pct": 27.0,
+    "iv_level": "IV rule: no live reading (market closed / before 09:30)",
+    "dte": 2,
+    "dte_label": "2 days to expiry",
+    "view": "MILD BEARISH",
+    "view_dir": "bearish",
+    "spot": 22547.95,
+    "slot": "09:30"
+   },
+   "range": {
+    "upper": 22714.6,
+    "lower": 22363.0
+   },
+   "shift": null,
+   "ideas": [
+    {
+     "id": "10-01 09:20#1",
+     "created": "2026-10-01T09:20",
+     "slot": "Best premium selling (naked)",
+     "why": "highest similar-IV record among naked sells",
+     "name": "Short call \u00b7 range",
+     "tpl": "Short call|range",
+     "direction": "bearish",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22700,
+       "price": 76.2,
+       "symbol": "NSE:NIFTY26O0622700CE"
+      }
+     ],
+     "net_premium": 4953.0,
+     "max_profit": 4896.59,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22775.3
+     ],
+     "record": {
+      "n": 38,
+      "win_hold": 78.9,
+      "avg_hold": 1964.2,
+      "worst_hold": -13562.9,
+      "p5_hold": -3433.9,
+      "iv_lo": 10.4,
+      "iv_hi": 13.8
+     },
+     "dte0": 2,
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "10-01 09:20#2",
+     "created": "2026-10-01T09:20",
+     "slot": "Best defined risk",
+     "why": "highest similar-IV record with capped loss",
+     "name": "Bear call spread \u00b7 range, width 300",
+     "tpl": "Bear call spread|range|w300",
+     "direction": "bearish",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22700,
+       "price": 76.2,
+       "symbol": "NSE:NIFTY26O0622700CE"
+      },
+      {
+       "side": "BUY",
+       "type": "CE",
+       "strike": 23000,
+       "price": 17.4,
+       "symbol": "NSE:NIFTY26O0623000CE"
+      }
+     ],
+     "net_premium": 3822.0,
+     "max_profit": 3716.29,
+     "max_loss": -15783.71,
+     "unlimited_loss": false,
+     "breakevens": [
+      22757.2
+     ],
+     "record": {
+      "n": 36,
+      "win_hold": 80.6,
+      "avg_hold": 1447.3,
+      "worst_hold": -13823.9,
+      "p5_hold": -4110.1,
+      "iv_lo": 10.4,
+      "iv_hi": 13.4
+     },
+     "dte0": 2,
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    },
+    {
+     "id": "10-01 09:20#3",
+     "created": "2026-10-01T09:20",
+     "slot": "Best for the bearish view",
+     "why": "suits the mild bearish view",
+     "name": "Reverse jade lizard \u00b7 \u03940.30",
+     "tpl": "Reverse jade lizard|\u03940.30",
+     "direction": "bearish",
+     "credit": true,
+     "legs": [
+      {
+       "side": "SELL",
+       "type": "CE",
+       "strike": 22750,
+       "price": 59.9,
+       "symbol": "NSE:NIFTY26O0622750CE"
+      },
+      {
+       "side": "SELL",
+       "type": "PE",
+       "strike": 22400,
+       "price": 64.15,
+       "symbol": "NSE:NIFTY26O0622400PE"
+      },
+      {
+       "side": "BUY",
+       "type": "PE",
+       "strike": 22300,
+       "price": 42.4,
+       "symbol": "NSE:NIFTY26O0622300PE"
+      }
+     ],
+     "net_premium": 5307.25,
+     "max_profit": 5145.54,
+     "max_loss": null,
+     "unlimited_loss": true,
+     "breakevens": [
+      22320.8,
+      22829.2
+     ],
+     "record": {
+      "n": 62,
+      "win_hold": 72.6,
+      "avg_hold": 1214.5,
+      "worst_hold": -10510.2,
+      "p5_hold": -5770.8,
+      "iv_lo": 10.5,
+      "iv_hi": 13.4
+     },
+     "dte0": 2,
+     "status": "open",
+     "booked": 0.0,
+     "last_pnl": 0.0,
+     "history": []
+    }
+   ],
+   "reviews": [
+    {
+     "id": "09-30 09:20#1",
+     "name": "Short strangle \u00b7 \u03940.30",
+     "pnl": -1117.79,
+     "pct": -12.0,
+     "options": [
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 68.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22600\u219222300 (tested: -52 pts away, \u03940.52)",
+       "ev": 241.0,
+       "cost": 73.0,
+       "cvar": -31162.0,
+       "max_loss": null
+      },
+      {
+       "action": "ADJUST",
+       "detail": "close the PE side only (tested)",
+       "ev": -56.0,
+       "cost": 41.0,
+       "cvar": -18998.0,
+       "max_loss": null
+      }
+     ],
+     "action": "HOLD",
+     "reason": "tested: PE 22600 (-52 pts, \u03940.52) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    },
+    {
+     "id": "09-30 09:20#2",
+     "name": "Iron condor \u00b7 \u03940.25, wings 200",
+     "pnl": -274.29,
+     "pct": -7.0,
+     "options": [
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 120.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22500\u219222300 (tested: 48 pts away, \u03940.4)",
+       "ev": -191.0,
+       "cost": 128.0,
+       "cvar": -11159.0,
+       "max_loss": -11159.15
+      },
+      {
+       "action": "ADJUST",
+       "detail": "close the PE side only (tested)",
+       "ev": -163.0,
+       "cost": 69.0,
+       "cvar": -9877.0,
+       "max_loss": -12615.79
+      }
+     ],
+     "action": "HOLD",
+     "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    },
+    {
+     "id": "09-30 09:20#3",
+     "name": "Bull put spread \u00b7 range, width 100",
+     "pnl": -1037.4,
+     "pct": -91.0,
+     "options": [
+      {
+       "action": "EXIT",
+       "detail": "close everything now",
+       "ev": 0.0,
+       "cost": 72.0,
+       "cvar": 0.0,
+       "max_loss": 0.0
+      },
+      {
+       "action": "ADJUST",
+       "detail": "roll PE side 22500\u219222300 (tested: 48 pts away, \u03940.4)",
+       "ev": -61.0,
+       "cost": 132.0,
+       "cvar": -5659.0,
+       "max_loss": -5658.75
+      }
+     ],
+     "action": "HOLD",
+     "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    }
+   ]
+  }
+ },
+ "book": {
+  "09-30 09:20#1": {
+   "id": "09-30 09:20#1",
+   "created": "2026-09-30T09:20",
+   "slot": "Best premium selling (naked)",
+   "why": "highest similar-IV record among naked sells",
+   "name": "Short strangle \u00b7 \u03940.30",
+   "tpl": "Short strangle|\u03940.30",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 23000,
+     "price": 61.6,
+     "symbol": "NSE:NIFTY26O0623000CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22600,
+     "price": 81,
+     "symbol": "NSE:NIFTY26O0622600PE"
+    }
+   ],
+   "net_premium": 9269.0,
+   "max_profit": 9157.37,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22459.1,
+    23140.9
+   ],
+   "record": {
+    "n": 60,
+    "win_hold": 76.7,
+    "avg_hold": 1378.0,
+    "worst_hold": -34328.3,
+    "p5_hold": -19993.7,
+    "iv_lo": 11.2,
+    "iv_hi": 13.8
+   },
+   "dte0": 3,
+   "status": "open",
+   "booked": 0.0,
+   "last_pnl": -1117.79,
+   "history": [
+    {
+     "time": "2026-09-30T15:40",
+     "action": "DAY END",
+     "pnl": -369.96,
+     "reason": "marked at the close"
+    },
+    {
+     "time": "2026-10-01T09:20",
+     "action": "HOLD",
+     "pnl": -1117.79,
+     "reason": "tested: PE 22600 (-52 pts, \u03940.52) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    }
+   ]
+  },
+  "09-30 09:20#2": {
+   "id": "09-30 09:20#2",
+   "created": "2026-09-30T09:20",
+   "slot": "Best defined risk",
+   "why": "highest similar-IV record with capped loss",
+   "name": "Iron condor \u00b7 \u03940.25, wings 200",
+   "tpl": "Iron condor|\u03940.25|w200",
+   "direction": "neutral",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 23050,
+     "price": 48.35,
+     "symbol": "NSE:NIFTY26O0623050CE"
+    },
+    {
+     "side": "BUY",
+     "type": "CE",
+     "strike": 23250,
+     "price": 18.4,
+     "symbol": "NSE:NIFTY26O0623250CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22500,
+     "price": 56.55,
+     "symbol": "NSE:NIFTY26O0622500PE"
+    },
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22300,
+     "price": 27.1,
+     "symbol": "NSE:NIFTY26O0622300PE"
+    }
+   ],
+   "net_premium": 3861.0,
+   "max_profit": 3654.04,
+   "max_loss": -9345.96,
+   "unlimited_loss": false,
+   "breakevens": [
+    22443.8,
+    23106.2
+   ],
+   "record": {
+    "n": 60,
+    "win_hold": 76.7,
+    "avg_hold": 812.3,
+    "worst_hold": -9878.9,
+    "p5_hold": -9375.7,
+    "iv_lo": 11.2,
+    "iv_hi": 13.8
+   },
+   "dte0": 3,
+   "status": "open",
+   "booked": 0.0,
+   "last_pnl": -274.29,
+   "history": [
+    {
+     "time": "2026-09-30T15:40",
+     "action": "DAY END",
+     "pnl": -46.32,
+     "reason": "marked at the close"
+    },
+    {
+     "time": "2026-10-01T09:20",
+     "action": "HOLD",
+     "pnl": -274.29,
+     "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    }
+   ]
+  },
+  "09-30 09:20#3": {
+   "id": "09-30 09:20#3",
+   "created": "2026-09-30T09:20",
+   "slot": "Best for the bullish view",
+   "why": "suits the mild bullish view",
+   "name": "Bull put spread \u00b7 range, width 100",
+   "tpl": "Bull put spread|range|w100",
+   "direction": "bullish",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22500,
+     "price": 56.55,
+     "symbol": "NSE:NIFTY26O0622500PE"
+    },
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22400,
+     "price": 38.95,
+     "symbol": "NSE:NIFTY26O0622400PE"
+    }
+   ],
+   "net_premium": 1144.0,
+   "max_profit": 1038.06,
+   "max_loss": -5461.94,
+   "unlimited_loss": false,
+   "breakevens": [
+    22484.0
+   ],
+   "record": {
+    "n": 39,
+    "win_hold": 82.1,
+    "avg_hold": 273.1,
+    "worst_hold": -5951.7,
+    "p5_hold": -4996.9,
+    "iv_lo": 11.2,
+    "iv_hi": 14.0
+   },
+   "dte0": 3,
+   "status": "open",
+   "booked": 0.0,
+   "last_pnl": -1037.4,
+   "history": [
+    {
+     "time": "2026-09-30T15:40",
+     "action": "DAY END",
+     "pnl": -642.75,
+     "reason": "marked at the close"
+    },
+    {
+     "time": "2026-10-01T09:20",
+     "action": "HOLD",
+     "pnl": -1037.4,
+     "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    }
+   ]
+  },
+  "10-01 09:20#1": {
+   "id": "10-01 09:20#1",
+   "created": "2026-10-01T09:20",
+   "slot": "Best premium selling (naked)",
+   "why": "highest similar-IV record among naked sells",
+   "name": "Short call \u00b7 range",
+   "tpl": "Short call|range",
+   "direction": "bearish",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22700,
+     "price": 76.2,
+     "symbol": "NSE:NIFTY26O0622700CE"
+    }
+   ],
+   "net_premium": 4953.0,
+   "max_profit": 4896.59,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22775.3
+   ],
+   "record": {
+    "n": 38,
+    "win_hold": 78.9,
+    "avg_hold": 1964.2,
+    "worst_hold": -13562.9,
+    "p5_hold": -3433.9,
+    "iv_lo": 10.4,
+    "iv_hi": 13.8
+   },
+   "dte0": 2,
+   "status": "open",
+   "booked": 0.0,
+   "last_pnl": 0.0,
+   "history": []
+  },
+  "10-01 09:20#2": {
+   "id": "10-01 09:20#2",
+   "created": "2026-10-01T09:20",
+   "slot": "Best defined risk",
+   "why": "highest similar-IV record with capped loss",
+   "name": "Bear call spread \u00b7 range, width 300",
+   "tpl": "Bear call spread|range|w300",
+   "direction": "bearish",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22700,
+     "price": 76.2,
+     "symbol": "NSE:NIFTY26O0622700CE"
+    },
+    {
+     "side": "BUY",
+     "type": "CE",
+     "strike": 23000,
+     "price": 17.4,
+     "symbol": "NSE:NIFTY26O0623000CE"
+    }
+   ],
+   "net_premium": 3822.0,
+   "max_profit": 3716.29,
+   "max_loss": -15783.71,
+   "unlimited_loss": false,
+   "breakevens": [
+    22757.2
+   ],
+   "record": {
+    "n": 36,
+    "win_hold": 80.6,
+    "avg_hold": 1447.3,
+    "worst_hold": -13823.9,
+    "p5_hold": -4110.1,
+    "iv_lo": 10.4,
+    "iv_hi": 13.4
+   },
+   "dte0": 2,
+   "status": "open",
+   "booked": 0.0,
+   "last_pnl": 0.0,
+   "history": []
+  },
+  "10-01 09:20#3": {
+   "id": "10-01 09:20#3",
+   "created": "2026-10-01T09:20",
+   "slot": "Best for the bearish view",
+   "why": "suits the mild bearish view",
+   "name": "Reverse jade lizard \u00b7 \u03940.30",
+   "tpl": "Reverse jade lizard|\u03940.30",
+   "direction": "bearish",
+   "credit": true,
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22750,
+     "price": 59.9,
+     "symbol": "NSE:NIFTY26O0622750CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22400,
+     "price": 64.15,
+     "symbol": "NSE:NIFTY26O0622400PE"
+    },
+    {
+     "side": "BUY",
+     "type": "PE",
+     "strike": 22300,
+     "price": 42.4,
+     "symbol": "NSE:NIFTY26O0622300PE"
+    }
+   ],
+   "net_premium": 5307.25,
+   "max_profit": 5145.54,
+   "max_loss": null,
+   "unlimited_loss": true,
+   "breakevens": [
+    22320.8,
+    22829.2
+   ],
+   "record": {
+    "n": 62,
+    "win_hold": 72.6,
+    "avg_hold": 1214.5,
+    "worst_hold": -10510.2,
+    "p5_hold": -5770.8,
+    "iv_lo": 10.5,
+    "iv_hi": 13.4
+   },
+   "dte0": 2,
+   "status": "open",
+   "booked": 0.0,
+   "last_pnl": 0.0,
+   "history": []
+  }
+ }
+}

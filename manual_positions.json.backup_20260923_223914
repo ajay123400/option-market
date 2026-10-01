@@ -1,0 +1,47 @@
+[
+ {
+  "id": "1790136551649",
+  "batch_id": "batch_1790144016122",
+  "symbol": "NSE:NIFTY26SEP23100PE",
+  "strike": 23100.0,
+  "type": "PE",
+  "side": "BUY",
+  "qty": 1,
+  "entry_price": 32.0,
+  "expiry": "",
+  "entry_time": "2026-09-23T09:39:11",
+  "sl": null,
+  "target": null,
+  "trade_type": "POSITIONAL"
+ },
+ {
+  "id": "1790136740290",
+  "batch_id": "batch_1790144016122",
+  "symbol": "NSE:NIFTY26SEP23600CE",
+  "strike": 23600.0,
+  "type": "CE",
+  "side": "SELL",
+  "qty": 1,
+  "entry_price": 43.9,
+  "expiry": "",
+  "entry_time": "2026-09-23T09:42:20",
+  "sl": null,
+  "target": null,
+  "trade_type": "POSITIONAL"
+ },
+ {
+  "id": "1790148950448",
+  "batch_id": "batch_1790144016122",
+  "symbol": "NSE:NIFTY26SEP23400PE",
+  "strike": 23400.0,
+  "type": "PE",
+  "side": "SELL",
+  "qty": 1,
+  "entry_price": 87.0,
+  "expiry": "",
+  "entry_time": "2026-09-23T13:05:50",
+  "sl": null,
+  "target": null,
+  "trade_type": "POSITIONAL"
+ }
+]

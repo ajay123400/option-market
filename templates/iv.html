@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IV & Skew</title>
+<script src="/static/vendor/lightweight-charts.js"></script>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #ffffff; --border: #e7e8ee; --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --up-soft: #e6f7f0; --down: #e0434a; --down-soft: #fdedee; --amber: #b7791f; --amber-soft: #fdf1dc;
+    --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --radius: 14px; --radius-sm: 9px;
+    --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  button { font-family: inherit; cursor: pointer; }
+  .controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .controls label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .seg { display: inline-flex; background: var(--bg); border-radius: 999px; padding: 3px; }
+  .seg button { border: none; background: transparent; border-radius: 999px; padding: 5px 12px; font-weight: 700; font-size: 12.5px; color: var(--muted); }
+  .seg button.on { background: var(--text); color: #fff; }
+  .page { padding: 18px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .card h3 { margin: 0; padding: 12px 16px 0; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .now { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; padding: 14px 16px; }
+  .rule { border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+  .rule .t { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .rule .v { font-size: 20px; font-weight: 800; margin: 2px 0; }
+  .rule .s { font-size: 12px; color: var(--muted); }
+  .rule.ok { background: var(--up-soft); border-color: #bfe8d6; } .rule.ok .v { color: var(--up); }
+  .rule.warn { background: var(--amber-soft); border-color: #f1d9ad; } .rule.warn .v { color: var(--amber); }
+  .chartwrap { position: relative; padding: 6px 6px 0; }
+  #ivc { height: 380px; } #skc { height: 240px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--muted); padding: 8px 16px 12px; }
+  .legend i { display: inline-block; width: 14px; height: 3px; margin-right: 6px; vertical-align: middle; border-radius: 2px; }
+  .legend i.dash { background: none; border-top: 2px dashed #9aa0ab; height: 0; }
+  .legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+  .tip { position: absolute; left: 16px; top: 12px; z-index: 3; font-size: 12px; background: rgba(255,255,255,.9); border-radius: 8px; padding: 6px 9px; pointer-events: none; line-height: 1.5; }
+  .bt { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; padding: 12px 16px 16px; font-size: 12.5px; }
+  .bt div { background: var(--bg); border-radius: 10px; padding: 10px 12px; line-height: 1.55; }
+  .bt b.up { color: var(--up); } .bt b.down { color: var(--down); }
+  .note { font-size: 11.5px; color: var(--muted-2); padding: 0 16px 12px; }
+  .err { color: var(--down); padding: 20px; }
+  @media (max-width: 900px) { .controls, .page, .topbar { padding-left: 12px; padding-right: 12px; } #ivc { height: 300px; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>IV & Skew</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink active" href="/iv">IV & Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="controls">
+  <label>IV at</label>
+  <div class="seg" id="slot"><button data-v="09:30" class="on">09:30</button><button data-v="12:00">12:00</button><button data-v="14:30">14:30</button></div>
+  <label>Show</label>
+  <div class="seg" id="span"><button data-v="182">6M</button><button data-v="365" class="on">1Y</button><button data-v="730">2Y</button><button data-v="all">All</button></div>
+</div>
+
+<div class="page">
+  <div class="card"><h3>Right now · current weekly expiry</h3><div class="now" id="now"><div class="rule"><div class="s">Loading…</div></div></div>
+    <div class="note" id="nowNote"></div></div>
+
+  <div class="card">
+    <h3>ATM IV vs the sell-day threshold</h3>
+    <div class="chartwrap"><div id="ivc"></div><div class="tip" id="ivTip"></div></div>
+    <div class="legend"><span><i style="background:#4f5fe0"></i>ATM IV (current weekly expiry, 1–4 days left)</span>
+      <span><i class="dash"></i>Threshold: 60th percentile of the past 500 days at this time</span>
+      <span><i class="dot" style="background:#0e9f6e"></i>Sell day</span>
+      <span><i class="dot" style="background:#f59e0b"></i>Today (live)</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Put skew (25Δ put IV − 25Δ call IV, 09:30)</h3>
+    <div class="chartwrap"><div id="skc"></div><div class="tip" id="skTip"></div></div>
+    <div class="legend"><span><i style="background:#eb6834"></i>Put skew (vol points)</span>
+      <span><i class="dash"></i>Steep-skew threshold (60th percentile, past 500 days)</span>
+      <span><i class="dot" style="background:#f59e0b"></i>Today (live)</span></div>
+  </div>
+
+  <div class="card"><h3>What the backtest found (1 lot, held to expiry, out of sample)</h3><div class="bt" id="bt"></div>
+    <div class="note">Information only — nothing here places an order. Thresholds move with the market: they are re-computed every day from the past 500 entry days.</div></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const LWC = LightweightCharts;
+const rs = v => v == null ? "—" : (v < 0 ? "−" : "") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+const segVal = id => $(id).querySelector("button.on").dataset.v;
+const base = {
+  layout: {background: {color: "#ffffff"}, textColor: "#767b87", fontFamily: "-apple-system, Segoe UI, Roboto, Arial, sans-serif"},
+  grid: {vertLines: {visible: false}, horzLines: {color: "#f1f2f6"}},
+  rightPriceScale: {borderColor: "#e7e8ee", minimumWidth: 60},
+  timeScale: {borderColor: "#e7e8ee", rightOffset: 3},
+  crosshair: {mode: LWC.CrosshairMode.Normal},
+};
+const ivc = LWC.createChart($("ivc"), base), skc = LWC.createChart($("skc"), base);
+const ivLine = ivc.addLineSeries({color: "#4f5fe0", lineWidth: 2, priceLineVisible: false, priceFormat: {type: "custom", formatter: v => v.toFixed(1) + "%"}});
+const ivThr = ivc.addLineSeries({color: "#9aa0ab", lineWidth: 1.5, lineStyle: LWC.LineStyle.Dashed, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false});
+const ivNow = ivc.addLineSeries({color: "#f59e0b", lineWidth: 1, lineVisible: false, pointMarkersVisible: true, priceLineVisible: false, lastValueVisible: true,
+                                 priceFormat: {type: "custom", formatter: v => v.toFixed(1) + "%"}});
+const skLine = skc.addLineSeries({color: "#eb6834", lineWidth: 2, priceLineVisible: false, priceFormat: {type: "custom", formatter: v => v.toFixed(2)}});
+const skThr = skc.addLineSeries({color: "#9aa0ab", lineWidth: 1.5, lineStyle: LWC.LineStyle.Dashed, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false});
+const skNow = skc.addLineSeries({color: "#f59e0b", lineWidth: 1, lineVisible: false, pointMarkersVisible: true, priceLineVisible: false, lastValueVisible: true});
+new ResizeObserver(() => { ivc.applyOptions({width: $("ivc").clientWidth}); skc.applyOptions({width: $("skc").clientWidth}); }).observe(document.body);
+
+let H = null, LIVE = null;
+const today = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+
+function drawIv() {
+  if (!H) return;
+  const s = H.series[segVal("slot")] || [];
+  ivLine.setData(s.map(r => ({time: r.day, value: r.iv})));
+  ivThr.setData(s.map(r => r.thr == null ? {time: r.day} : {time: r.day, value: r.thr}));
+  ivLine.setMarkers(s.filter(r => r.thr != null && r.iv >= r.thr).map(r => ({time: r.day, position: "inBar", color: "#0e9f6e", shape: "circle", size: 0.6})));
+  const last = s.length ? s[s.length - 1].day : null;
+  const pts = [];
+  if (LIVE && LIVE.atm_iv != null && LIVE.window === "ok" && (!last || today() > last)) pts.push({time: today(), value: LIVE.atm_iv});
+  ivNow.setData(pts);
+  skLine.setData(H.skew.map(r => ({time: r.day, value: r.skew})));
+  skThr.setData(H.skew.map(r => r.thr == null ? {time: r.day} : {time: r.day, value: r.thr}));
+  const lastSk = H.skew.length ? H.skew[H.skew.length - 1].day : null;
+  skNow.setData(LIVE && LIVE.skew25 != null && LIVE.window === "ok" && (!lastSk || today() > lastSk) ? [{time: today(), value: LIVE.skew25}] : []);
+  setSpan();
+}
+function setSpan() {
+  const v = segVal("span");
+  [ivc, skc].forEach(c => {
+    if (v === "all") { c.timeScale().fitContent(); return; }
+    const to = new Date(Date.now() + 5.5 * 3600e3), from = new Date(to - (+v) * 86400e3);
+    c.timeScale().setVisibleRange({from: from.toISOString().slice(0, 10), to: to.toISOString().slice(0, 10)});
+  });
+}
+function tip(chart, el, fmt) {
+  chart.subscribeCrosshairMove(p => {
+    if (!p.time) { el.innerHTML = ""; return; }
+    el.innerHTML = fmt(p);
+  });
+}
+tip(ivc, $("ivTip"), p => {
+  const a = p.seriesData.get(ivLine), b = p.seriesData.get(ivThr), n = p.seriesData.get(ivNow);
+  const v = a ? a.value : n ? n.value : null, t = b && b.value != null ? b.value : null;
+  return `<b>${p.time}</b> · IV ${v == null ? "—" : v.toFixed(1) + "%"}${t != null ? ` · threshold ${t.toFixed(1)}%` : ""}${v != null && t != null ? (v >= t ? ` · <b style="color:#0e9f6e">sell day</b>` : " · normal") : ""}${n ? " · live" : ""}`;
+});
+tip(skc, $("skTip"), p => {
+  const a = p.seriesData.get(skLine), b = p.seriesData.get(skThr), n = p.seriesData.get(skNow);
+  const v = a ? a.value : n ? n.value : null, t = b && b.value != null ? b.value : null;
+  return `<b>${p.time}</b> · skew ${v == null ? "—" : v.toFixed(2)}${t != null ? ` · threshold ${t.toFixed(2)}` : ""}${v != null && t != null && v >= t ? ` · <b style="color:#b7791f">steep</b>` : ""}`;
+});
+
+function renderNow() {
+  const L = LIVE, box = $("now");
+  if (!L) { box.innerHTML = `<div class="rule"><div class="s">Live status unavailable.</div></div>`; return; }
+  const T = L.thresholds || {}, bt = L.backtest;
+  renderBacktest(bt);
+  if (!L.live && L.last_day) {
+    const D = L.last_day;
+    box.innerHTML = Object.entries(D.slots).map(([k, x]) => `
+      <div class="rule ${x.sell ? "ok" : ""}"><div class="t">${D.day} · ${k}</div><div class="v">${x.iv.toFixed(1)}%</div>
+        <div class="s">threshold ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"} · ${x.sell ? "sell day" : "normal"}</div></div>`).join("") +
+      `<div class="rule ${D.skew_steep ? "warn" : ""}"><div class="t">${D.day} · put skew</div><div class="v">${D.skew25 == null ? "—" : D.skew25.toFixed(2)}</div>
+        <div class="s">threshold ${D.skew_thr == null ? "—" : D.skew_thr.toFixed(2)} · ${D.skew_steep ? "steep" : "not steep"}</div></div>`;
+    $("nowNote").textContent = `${L.market === "OPEN" ? "Before 09:30" : "Market closed"} — showing the last stored day (${D.dte} trading day${D.dte === 1 ? "" : "s"} to its expiry). The live check runs from 09:30 while the market is open.`;
+    return;
+  }
+  const open = L.market === "OPEN" && L.bucket;
+  const ivCls = !open || L.window !== "ok" ? "" : L.iv_ok ? "ok" : "";
+  const ivText = L.atm_iv == null ? "—" : L.atm_iv.toFixed(1) + "%";
+  const thrNow = open ? L.iv_thr_now : T["09:30"];
+  const win = L.window === "ok" ? `${L.dte} trading day${L.dte === 1 ? "" : "s"} left` : L.window === "expiry_day" ? "Expiry day" : `${L.dte} trading days left`;
+  const reads = Object.entries(L.readings || {}).map(([k, r]) => `${k}: ${r.atm_iv.toFixed(1)}%`).join(" · ");
+  box.innerHTML = `
+    <div class="rule ${L.sell_day ? "ok" : ""}"><div class="t">Sell day?</div><div class="v">${L.sell_day ? "Yes" : open ? "No" : "—"}</div>
+      <div class="s">${open ? (L.sell_day ? "IV above the threshold, inside the 1–4 day window" : "IV below the threshold or outside the window") : "Checked from 09:30 while the market is open"}</div></div>
+    <div class="rule ${ivCls}"><div class="t">ATM IV ${open ? "now (" + L.time + ")" : ""}</div><div class="v">${ivText}</div>
+      <div class="s">threshold ${thrNow == null ? "—" : thrNow.toFixed(1) + "%"} ${open ? "(" + L.bucket + " bucket)" : "(09:30)"}${reads ? "<br>today at " + reads : ""}</div></div>
+    <div class="rule ${L.window === "ok" ? "ok" : "warn"}"><div class="t">Expiry window · ${L.expiry || ""}</div><div class="v">${win}</div>
+      <div class="s">${L.window === "ok" ? "Inside the tested 1–4 day window" : L.window === "expiry_day" ? "Not tested — expiry day entries earned ~nothing" : "Next week's expiry did worse per day held"}</div></div>
+    <div class="rule ${L.skew_steep ? "warn" : ""}"><div class="t">Put skew</div><div class="v">${L.skew25 == null ? "—" : L.skew25.toFixed(2)}</div>
+      <div class="s">threshold ${T.skew == null ? "—" : T.skew.toFixed(2)} · ${L.skew_steep ? "steep → put side preferred" : "not steep"}</div></div>`;
+  $("nowNote").textContent = "The live IV is the tested rule when compared with the threshold of the time bucket it falls in (09:30–12:00 → 09:30, 12:00–14:30 → 12:00, after 14:30 → 14:30).";
+}
+function renderBacktest(B) {
+  if (!B) return;
+  $("bt").innerHTML = `
+    <div><b>IV level</b> — short straddle on sell days <b class="up">${rs(B.iv.straddle_sell)}</b> a trade vs <b class="down">${rs(B.iv.straddle_normal)}</b> on normal days; strangle Δ0.20 <b class="up">${rs(B.iv.strangle_sell)}</b> vs ${rs(B.iv.strangle_normal)}. Days that became sell days later in the day: ${rs(B.iv.late_sell)}; sell days that faded by 12:00: ${rs(B.iv.faded)}.</div>
+    <div><b>Expiry window</b> — short strangle Δ0.15 earned <b class="up">${rs(B.window.this_week_per_day)}</b> per day held when entered 1–4 days before expiry vs ${rs(B.window.next_week_per_day)} from next week's expiry; entries on expiry day earned ~nothing.</div>
+    <div><b>Put skew</b> — on steep-skew days the short put Δ0.20 made <b class="up">${rs(B.skew.put_steep)}</b> vs short call ${rs(B.skew.call_steep)}; on flat days put ${rs(B.skew.put_flat)} vs call ${rs(B.skew.call_flat)}.</div>`;
+}
+
+async function loadHistory() {
+  const j = await (await fetch("/api/iv/history")).json();
+  if (!j.ok) { $("ivc").innerHTML = `<div class="err">${j.error || "IV history unavailable"}</div>`; return; }
+  H = j; drawIv();
+}
+async function loadLive() {
+  try {
+    const j = await (await fetch("/api/chain?strikecount=20")).json();
+    LIVE = j.ok ? j.sell : null;
+  } catch (e) { LIVE = null; }
+  renderNow(); drawIv();
+}
+["slot", "span"].forEach(id => $(id).addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  $(id).querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  id === "slot" ? drawIv() : setSpan();
+}));
+loadHistory().then(loadLive);
+setInterval(() => { if (LIVE && LIVE.market === "OPEN") loadLive(); }, 60000);
+</script>
+</body>
+</html>

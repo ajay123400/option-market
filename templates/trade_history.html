@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade History</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #fff; color: #1a1a1a; }
+  .topbar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+  .topbar h1 { font-size: 15px; margin: 0; font-weight: 600; }
+  a.navlink { font-size: 12px; color: #666; text-decoration: none; border: 1px solid #ddd; border-radius: 5px; padding: 4px 9px; }
+  a.navlink.active { color: #fff; background: #1a1a1a; border-color: #1a1a1a; pointer-events: none; }
+
+  .summary-strip { display: flex; gap: 14px; padding: 14px 16px; border-bottom: 1px solid #eee; flex-wrap: wrap; }
+  .stat { background: #f7f7f7; border-radius: 8px; padding: 10px 16px; min-width: 120px; }
+  .stat .label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.03em; }
+  .stat .value { font-size: 20px; font-weight: 800; }
+  .up { color: #0a8f5b; } .down { color: #d84040; }
+
+  .content { padding: 12px 16px; }
+  .day-block { margin-bottom: 18px; border: 1px solid #eee; border-radius: 8px; overflow: hidden; }
+  .day-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: #fafafa; font-weight: 700; font-size: 13px; }
+  .day-header .pnl { font-size: 14px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+  thead th { padding: 7px 8px; font-weight: 600; color: #8a8f98; font-size: 10.5px; text-align: center; border-bottom: 1px solid #eee; }
+  tbody td { padding: 6px 8px; text-align: center; border-bottom: 1px solid #f5f5f5; }
+  .side-badge { padding: 1px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .side-badge.CE { background: #fce4e4; color: #b33030; }
+  .side-badge.PE { background: #e0f5ea; color: #0a7a4d; }
+  .exit-badge { font-size: 10.5px; color: #999; }
+  .placeholder { text-align: center; color: #aaa; padding: 60px 20px; }
+  .day-block { overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Algo Paper Log</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="summary-strip">
+  <div class="stat"><div class="label">Net P&amp;L (after est. charges)</div><div class="value" id="totalPnl">-</div></div>
+  <div class="stat"><div class="label">Trading Days</div><div class="value" id="totalDays">-</div></div>
+  <div class="stat"><div class="label">Total Trades</div><div class="value" id="totalTrades">-</div></div>
+  <div class="stat"><div class="label">Win Days</div><div class="value" id="winDays">-</div></div>
+</div>
+
+<div class="content" id="content">
+  <div class="placeholder">Loading...</div>
+</div>
+
+<script>
+function money(n) {
+  if (n === null || n === undefined) return "-";
+  const sign = n < 0 ? "-" : "";
+  return sign + "₹" + Math.abs(n).toLocaleString("en-IN", {maximumFractionDigits: 2});
+}
+function pnlClass(n) { return n > 0 ? "up" : (n < 0 ? "down" : ""); }
+function timeOf(iso) {
+  if (!iso) return "-";
+  return new Date(iso).toLocaleTimeString("en-IN", {hour: "2-digit", minute: "2-digit"});
+}
+
+async function load() {
+  const res = await fetch("/api/history");
+  const j = await res.json();
+  if (!j.ok) {
+    document.getElementById("content").innerHTML = `<div class="placeholder">Error: ${j.error}</div>`;
+    return;
+  }
+  if (!j.trades.length) {
+    document.getElementById("content").innerHTML = `<div class="placeholder">No paper trades recorded yet.<br>Run <code>paper_trade.py</code> on a trading day -- entries and exits will show up here permanently.</div>`;
+    document.getElementById("totalPnl").textContent = money(0);
+    document.getElementById("totalDays").textContent = "0";
+    document.getElementById("totalTrades").textContent = "0";
+    document.getElementById("winDays").textContent = "0";
+    return;
+  }
+
+  const totalPnl = j.summary.reduce((s, d) => s + d.net_pnl, 0);  // net of est. charges
+  const winDays = j.summary.filter(d => d.net_pnl > 0).length;
+  document.getElementById("totalPnl").textContent = money(totalPnl);
+  document.getElementById("totalPnl").className = "value " + pnlClass(totalPnl);
+  document.getElementById("totalDays").textContent = j.summary.length;
+  document.getElementById("totalTrades").textContent = j.trades.length;
+  document.getElementById("winDays").textContent = `${winDays}/${j.summary.length}`;
+
+  const byDate = {};
+  j.trades.forEach(t => { (byDate[t.date] = byDate[t.date] || []).push(t); });
+
+  const dates = Object.keys(byDate).sort().reverse();
+  const html = dates.map(date => {
+    const dayTrades = byDate[date];
+    const dayPnl = dayTrades.reduce((s, t) => s + (t.net_pnl ?? t.pnl ?? 0), 0);
+    const rows = dayTrades.map(t => `
+      <tr>
+        <td><span class="side-badge ${t.side}">${t.side}</span></td>
+        <td>${t.strike ?? "-"}</td>
+        <td>${timeOf(t.entry_time)}</td>
+        <td>${t.entry_price != null ? money(t.entry_price) : "-"}</td>
+        <td>${timeOf(t.exit_time)}</td>
+        <td>${t.exit_price != null ? money(t.exit_price) : "-"}</td>
+        <td>${t.hedge_strike ?? "-"}</td>
+        <td><span class="exit-badge">${t.exit_type}</span></td>
+        <td class="${pnlClass(t.pnl)}">${money(t.pnl)}</td>
+        <td>${money(t.charges)}</td>
+        <td class="${pnlClass(t.net_pnl)}"><strong>${money(t.net_pnl)}</strong></td>
+      </tr>`).join("");
+    return `<div class="day-block">
+      <div class="day-header">
+        <span>${date} &middot; ${dayTrades.length} trade${dayTrades.length > 1 ? "s" : ""}</span>
+        <span class="pnl ${pnlClass(dayPnl)}">${money(dayPnl)}</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Side</th><th>Strike</th><th>Entry Time</th><th>Entry ₹</th>
+          <th>Exit Time</th><th>Exit ₹</th><th>Hedge</th><th>Reason</th><th>Gross</th><th>Charges</th><th>Net P&amp;L</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join("");
+
+  document.getElementById("content").innerHTML = html;
+}
+
+load();
+</script>
+</body>
+</html>

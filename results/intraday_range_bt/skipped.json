@@ -1,0 +1,322 @@
+[
+ {
+  "day": "2021-06-23",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-06-24",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-06-25",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-06-28",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18100 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-06-29",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-06-30",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-07-01",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-07-02",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-07-05",
+  "expiry": "2021-09-30",
+  "reason": "no leaders at 09:20"
+ },
+ {
+  "day": "2021-07-06",
+  "expiry": "2021-09-30",
+  "reason": "no leaders at 09:20"
+ },
+ {
+  "day": "2021-07-07",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18150 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-07-08",
+  "expiry": "2021-09-30",
+  "reason": "no price for 19000 CE / 17950 PE at 09:20"
+ },
+ {
+  "day": "2021-07-09",
+  "expiry": "2021-09-30",
+  "reason": "no price for 19250 CE / 17950 PE at 09:20"
+ },
+ {
+  "day": "2021-07-12",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-07-13",
+  "expiry": "2021-09-30",
+  "reason": "no leaders at 09:20"
+ },
+ {
+  "day": "2021-07-14",
+  "expiry": "2021-09-30",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2021-07-15",
+  "expiry": "2021-09-30",
+  "reason": "no leaders at 09:20"
+ },
+ {
+  "day": "2021-07-16",
+  "expiry": "2021-09-30",
+  "reason": "no leaders at 09:20"
+ },
+ {
+  "day": "2021-07-19",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18100 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-07-20",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18200 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-07-22",
+  "expiry": "2021-09-30",
+  "reason": "no leaders at 09:20"
+ },
+ {
+  "day": "2021-07-23",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18100 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-07-26",
+  "expiry": "2021-09-30",
+  "reason": "no price for 19100 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-07-27",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18050 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-07-28",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18250 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-07-29",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18150 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-07-30",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18200 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-08-02",
+  "expiry": "2021-09-30",
+  "reason": "no price for 19100 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-08-03",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18050 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-08-04",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17800 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-05",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18250 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2021-08-06",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17700 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-09",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17700 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-10",
+  "expiry": "2021-09-30",
+  "reason": "no price for 18200 CE / 17450 PE at 09:20"
+ },
+ {
+  "day": "2021-08-11",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17700 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-12",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17700 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-13",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17650 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-16",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17900 CE / 17300 PE at 09:20"
+ },
+ {
+  "day": "2021-08-17",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17550 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-18",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17450 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-20",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17650 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-23",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17500 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-24",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17500 CE / 16950 PE at 09:20"
+ },
+ {
+  "day": "2021-08-25",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17450 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-26",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17450 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-27",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17450 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2021-08-30",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17350 CE / 16850 PE at 09:20"
+ },
+ {
+  "day": "2021-08-31",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17250 CE / 16800 PE at 09:20"
+ },
+ {
+  "day": "2021-09-01",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17400 CE / 16750 PE at 09:20"
+ },
+ {
+  "day": "2021-09-02",
+  "expiry": "2021-09-30",
+  "reason": "no price for 17600 CE / 16900 PE at 09:20"
+ },
+ {
+  "day": "2022-02-25",
+  "expiry": "2022-03-03",
+  "reason": "no price for 17400 CE / 16400 PE at 09:20"
+ },
+ {
+  "day": "2022-03-16",
+  "expiry": "2022-03-17",
+  "reason": "no price for 17000 CE / 15900 PE at 09:20"
+ },
+ {
+  "day": "2022-04-22",
+  "expiry": "2022-04-28",
+  "reason": "no price for 18000 CE / 17100 PE at 09:20"
+ },
+ {
+  "day": "2023-03-24",
+  "expiry": "2023-03-29",
+  "reason": "no price for 17250 CE / 17000 PE at 09:20"
+ },
+ {
+  "day": "2024-03-19",
+  "expiry": "2024-03-21",
+  "reason": "no price for 22850 CE / 22000 PE at 09:20"
+ },
+ {
+  "day": "2024-05-18",
+  "expiry": "2024-05-23",
+  "reason": "no data at exit time"
+ },
+ {
+  "day": "2024-06-07",
+  "expiry": "2024-06-13",
+  "reason": "no price for 24200 CE / 22800 PE at 09:20"
+ },
+ {
+  "day": "2024-06-10",
+  "expiry": "2024-06-13",
+  "reason": "no price for 24100 CE / 22950 PE at 09:20"
+ },
+ {
+  "day": "2024-06-11",
+  "expiry": "2024-06-13",
+  "reason": "no price for 24150 CE / 23200 PE at 09:20"
+ },
+ {
+  "day": "2025-02-28",
+  "expiry": "2025-03-06",
+  "reason": "no price for 23150 CE / 22400 PE at 09:20"
+ },
+ {
+  "day": "2025-10-21",
+  "expiry": "2025-10-28",
+  "reason": "no 09:15 data"
+ },
+ {
+  "day": "2026-04-02",
+  "expiry": "2026-04-07",
+  "reason": "no price for 23850 CE / 22250 PE at 09:20"
+ },
+ {
+  "day": "2026-05-07",
+  "expiry": "2026-05-12",
+  "reason": "no price for 25200 CE / 24350 PE at 09:20"
+ },
+ {
+  "day": "2026-06-08",
+  "expiry": "2026-06-09",
+  "reason": "no price for 24100 CE / 23000 PE at 09:20"
+ }
+]

@@ -1,0 +1,4732 @@
+{
+ "2025-09-23": {
+  "status": "done",
+  "strikes": [
+   24050,
+   26450
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 494029,
+  "week": [
+   "2025-09-16",
+   "2025-09-23"
+  ],
+  "fetched_at": "2026-09-26T10:13:39",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-09-22": {
+  "status": "done",
+  "strikes": [
+   22100,
+   24600
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 543565,
+  "week": [
+   "2026-09-15",
+   "2026-09-22"
+  ],
+  "fetched_at": "2026-09-26T10:14:42",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-09-15": {
+  "status": "done",
+  "strikes": [
+   22100,
+   24750
+  ],
+  "contracts": 101,
+  "empty": 0,
+  "rows": 545433,
+  "week": [
+   "2026-09-08",
+   "2026-09-15"
+  ],
+  "fetched_at": "2026-09-26T10:15:16",
+  "tried_empty": [
+   "22100CE",
+   "22150CE",
+   "22200CE",
+   "22250CE",
+   "22350CE",
+   "22450CE",
+   "22550CE"
+  ],
+  "widened": 500
+ },
+ "2026-09-08": {
+  "status": "done",
+  "strikes": [
+   22600,
+   25150
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 588863,
+  "week": [
+   "2026-09-01",
+   "2026-09-08"
+  ],
+  "fetched_at": "2026-09-26T10:15:49",
+  "tried_empty": [
+   "22600CE",
+   "22700CE",
+   "22750CE",
+   "22850CE"
+  ],
+  "widened": 500
+ },
+ "2026-09-01": {
+  "status": "done",
+  "strikes": [
+   22950,
+   25400
+  ],
+  "contracts": 99,
+  "empty": 0,
+  "rows": 645967,
+  "week": [
+   "2026-08-25",
+   "2026-09-01"
+  ],
+  "fetched_at": "2026-09-26T10:16:19",
+  "tried_empty": [
+   "22950CE"
+  ],
+  "widened": 500
+ },
+ "2026-08-25": {
+  "status": "done",
+  "strikes": [
+   23050,
+   25350
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 1704088,
+  "week": [
+   "2026-08-18",
+   "2026-08-25"
+  ],
+  "fetched_at": "2026-09-26T10:16:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-08-18": {
+  "status": "done",
+  "strikes": [
+   23150,
+   25600
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 630922,
+  "week": [
+   "2026-08-11",
+   "2026-08-18"
+  ],
+  "fetched_at": "2026-09-26T10:17:20",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-08-11": {
+  "status": "done",
+  "strikes": [
+   23450,
+   25700
+  ],
+  "contracts": 92,
+  "empty": 0,
+  "rows": 563688,
+  "week": [
+   "2026-08-04",
+   "2026-08-11"
+  ],
+  "fetched_at": "2026-09-26T10:17:40",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-08-04": {
+  "status": "done",
+  "strikes": [
+   22950,
+   25750
+  ],
+  "contracts": 113,
+  "empty": 0,
+  "rows": 692805,
+  "week": [
+   "2026-07-28",
+   "2026-08-04"
+  ],
+  "fetched_at": "2026-09-26T10:18:10",
+  "tried_empty": [
+   "25750PE"
+  ],
+  "widened": 500
+ },
+ "2026-07-28": {
+  "status": "done",
+  "strikes": [
+   22600,
+   25250
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 1965395,
+  "week": [
+   "2026-07-21",
+   "2026-07-28"
+  ],
+  "fetched_at": "2026-09-26T10:18:52",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-07-21": {
+  "status": "done",
+  "strikes": [
+   23000,
+   25350
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 543218,
+  "week": [
+   "2026-07-14",
+   "2026-07-21"
+  ],
+  "fetched_at": "2026-09-26T10:19:15",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-07-14": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25550
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 647939,
+  "week": [
+   "2026-07-07",
+   "2026-07-14"
+  ],
+  "fetched_at": "2026-09-26T10:19:46",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-07-07": {
+  "status": "done",
+  "strikes": [
+   22850,
+   25550
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 622159,
+  "week": [
+   "2026-06-30",
+   "2026-07-07"
+  ],
+  "fetched_at": "2026-09-26T10:20:14",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-06-30": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25250
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 1926647,
+  "week": [
+   "2026-06-23",
+   "2026-06-30"
+  ],
+  "fetched_at": "2026-09-26T10:20:50",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-06-23": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25200
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 642528,
+  "week": [
+   "2026-06-16",
+   "2026-06-23"
+  ],
+  "fetched_at": "2026-09-26T10:21:09",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-06-16": {
+  "status": "done",
+  "strikes": [
+   22050,
+   25000
+  ],
+  "contracts": 120,
+  "empty": 0,
+  "rows": 723740,
+  "week": [
+   "2026-06-09",
+   "2026-06-16"
+  ],
+  "fetched_at": "2026-09-26T10:21:35",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-06-09": {
+  "status": "done",
+  "strikes": [
+   22050,
+   24550
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 658230,
+  "week": [
+   "2026-06-02",
+   "2026-06-09"
+  ],
+  "fetched_at": "2026-09-26T10:21:59",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-06-02": {
+  "status": "done",
+  "strikes": [
+   22250,
+   25100
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 777218,
+  "week": [
+   "2026-05-26",
+   "2026-06-02"
+  ],
+  "fetched_at": "2026-09-26T10:22:24",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-05-26": {
+  "status": "done",
+  "strikes": [
+   22400,
+   25100
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 1862305,
+  "week": [
+   "2026-05-19",
+   "2026-05-26"
+  ],
+  "fetched_at": "2026-09-26T10:23:24",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-05-19": {
+  "status": "done",
+  "strikes": [
+   22250,
+   24850
+  ],
+  "contracts": 105,
+  "empty": 0,
+  "rows": 617533,
+  "week": [
+   "2026-05-12",
+   "2026-05-19"
+  ],
+  "fetched_at": "2026-09-26T10:23:45",
+  "tried_empty": [
+   "22550CE"
+  ],
+  "widened": 500
+ },
+ "2026-05-12": {
+  "status": "done",
+  "strikes": [
+   22350,
+   25500
+  ],
+  "contracts": 128,
+  "empty": 0,
+  "rows": 675701,
+  "week": [
+   "2026-05-05",
+   "2026-05-12"
+  ],
+  "fetched_at": "2026-09-26T10:24:12",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-05-05": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25350
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 594395,
+  "week": [
+   "2026-04-28",
+   "2026-05-05"
+  ],
+  "fetched_at": "2026-09-26T10:24:37",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-04-28": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25600
+  ],
+  "contracts": 114,
+  "empty": 0,
+  "rows": 1860935,
+  "week": [
+   "2026-04-21",
+   "2026-04-28"
+  ],
+  "fetched_at": "2026-09-26T10:25:34",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-04-21": {
+  "status": "done",
+  "strikes": [
+   22550,
+   25600
+  ],
+  "contracts": 124,
+  "empty": 0,
+  "rows": 542193,
+  "week": [
+   "2026-04-13",
+   "2026-04-21"
+  ],
+  "fetched_at": "2026-09-26T10:26:02",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-04-13": {
+  "status": "done",
+  "strikes": [
+   21700,
+   25050
+  ],
+  "contracts": 136,
+  "empty": 0,
+  "rows": 600326,
+  "week": [
+   "2026-04-07",
+   "2026-04-13"
+  ],
+  "fetched_at": "2026-09-26T10:26:44",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-04-07": {
+  "status": "done",
+  "strikes": [
+   21200,
+   24150
+  ],
+  "contracts": 120,
+  "empty": 0,
+  "rows": 501948,
+  "week": [
+   "2026-03-30",
+   "2026-04-07"
+  ],
+  "fetched_at": "2026-09-26T10:27:31",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-03-30": {
+  "status": "done",
+  "strikes": [
+   21300,
+   24450
+  ],
+  "contracts": 128,
+  "empty": 0,
+  "rows": 1077987,
+  "week": [
+   "2026-03-24",
+   "2026-03-30"
+  ],
+  "fetched_at": "2026-09-26T10:29:10",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-03-24": {
+  "status": "done",
+  "strikes": [
+   21450,
+   24850
+  ],
+  "contracts": 138,
+  "empty": 0,
+  "rows": 616453,
+  "week": [
+   "2026-03-17",
+   "2026-03-24"
+  ],
+  "fetched_at": "2026-09-26T10:30:12",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-03-17": {
+  "status": "done",
+  "strikes": [
+   21950,
+   25300
+  ],
+  "contracts": 136,
+  "empty": 0,
+  "rows": 540680,
+  "week": [
+   "2026-03-10",
+   "2026-03-17"
+  ],
+  "fetched_at": "2026-09-26T10:30:51",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-03-10": {
+  "status": "done",
+  "strikes": [
+   22700,
+   26000
+  ],
+  "contracts": 132,
+  "empty": 0,
+  "rows": 595079,
+  "week": [
+   "2026-03-02",
+   "2026-03-10"
+  ],
+  "fetched_at": "2026-09-26T10:31:18",
+  "tried_empty": [
+   "22700CE",
+   "22850CE"
+  ],
+  "widened": 500
+ },
+ "2026-03-02": {
+  "status": "done",
+  "strikes": [
+   23600,
+   26650
+  ],
+  "contracts": 124,
+  "empty": 0,
+  "rows": 851894,
+  "week": [
+   "2026-02-24",
+   "2026-03-02"
+  ],
+  "fetched_at": "2026-09-26T10:31:51",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-02-24": {
+  "status": "done",
+  "strikes": [
+   24350,
+   26900
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 1307948,
+  "week": [
+   "2026-02-17",
+   "2026-02-24"
+  ],
+  "fetched_at": "2026-09-26T10:32:19",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-02-17": {
+  "status": "done",
+  "strikes": [
+   24350,
+   27000
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 719916,
+  "week": [
+   "2026-02-10",
+   "2026-02-17"
+  ],
+  "fetched_at": "2026-09-26T10:32:43",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-02-10": {
+  "status": "done",
+  "strikes": [
+   24500,
+   27350
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 754069,
+  "week": [
+   "2026-02-03",
+   "2026-02-10"
+  ],
+  "fetched_at": "2026-09-26T10:33:10",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-02-03": {
+  "status": "done",
+  "strikes": [
+   23550,
+   27350
+  ],
+  "contracts": 154,
+  "empty": 0,
+  "rows": 941037,
+  "week": [
+   "2026-01-27",
+   "2026-02-03"
+  ],
+  "fetched_at": "2026-09-26T10:33:48",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-01-27": {
+  "status": "done",
+  "strikes": [
+   23900,
+   26600
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 1803718,
+  "week": [
+   "2026-01-20",
+   "2026-01-27"
+  ],
+  "fetched_at": "2026-09-26T10:34:19",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-01-20": {
+  "status": "done",
+  "strikes": [
+   24150,
+   26900
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 537630,
+  "week": [
+   "2026-01-13",
+   "2026-01-20"
+  ],
+  "fetched_at": "2026-09-26T10:34:42",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-01-13": {
+  "status": "done",
+  "strikes": [
+   24450,
+   27250
+  ],
+  "contracts": 114,
+  "empty": 0,
+  "rows": 596710,
+  "week": [
+   "2026-01-06",
+   "2026-01-13"
+  ],
+  "fetched_at": "2026-09-26T10:35:06",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2026-01-06": {
+  "status": "done",
+  "strikes": [
+   24900,
+   27350
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 577038,
+  "week": [
+   "2025-12-30",
+   "2026-01-06"
+  ],
+  "fetched_at": "2026-09-26T10:35:29",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-12-30": {
+  "status": "done",
+  "strikes": [
+   24900,
+   27250
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 1779817,
+  "week": [
+   "2025-12-23",
+   "2025-12-30"
+  ],
+  "fetched_at": "2026-09-26T10:36:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-12-23": {
+  "status": "done",
+  "strikes": [
+   24750,
+   27250
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 656074,
+  "week": [
+   "2025-12-16",
+   "2025-12-23"
+  ],
+  "fetched_at": "2026-09-26T10:36:24",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-12-16": {
+  "status": "done",
+  "strikes": [
+   24700,
+   27050
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 624201,
+  "week": [
+   "2025-12-09",
+   "2025-12-16"
+  ],
+  "fetched_at": "2026-09-26T10:36:44",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-12-09": {
+  "status": "done",
+  "strikes": [
+   24750,
+   27200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 651142,
+  "week": [
+   "2025-12-02",
+   "2025-12-09"
+  ],
+  "fetched_at": "2026-09-26T10:37:06",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-12-02": {
+  "status": "done",
+  "strikes": [
+   24850,
+   27350
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 751888,
+  "week": [
+   "2025-11-25",
+   "2025-12-02"
+  ],
+  "fetched_at": "2026-09-26T10:37:30",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-11-25": {
+  "status": "done",
+  "strikes": [
+   24850,
+   27250
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1378008,
+  "week": [
+   "2025-11-18",
+   "2025-11-25"
+  ],
+  "fetched_at": "2026-09-26T10:37:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-11-18": {
+  "status": "done",
+  "strikes": [
+   24450,
+   27050
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 618309,
+  "week": [
+   "2025-11-11",
+   "2025-11-18"
+  ],
+  "fetched_at": "2026-09-26T10:38:20",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-11-11": {
+  "status": "done",
+  "strikes": [
+   24300,
+   26800
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 562578,
+  "week": [
+   "2025-11-04",
+   "2025-11-11"
+  ],
+  "fetched_at": "2026-09-26T10:38:46",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-11-04": {
+  "status": "done",
+  "strikes": [
+   24600,
+   27100
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 591708,
+  "week": [
+   "2025-10-28",
+   "2025-11-04"
+  ],
+  "fetched_at": "2026-09-26T10:39:11",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-10-28": {
+  "status": "done",
+  "strikes": [
+   24700,
+   27100
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1325091,
+  "week": [
+   "2025-10-20",
+   "2025-10-28"
+  ],
+  "fetched_at": "2026-09-26T10:39:41",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-10-20": {
+  "status": "done",
+  "strikes": [
+   24050,
+   26950
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 538485,
+  "week": [
+   "2025-10-14",
+   "2025-10-20"
+  ],
+  "fetched_at": "2026-09-26T10:40:12",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-10-14": {
+  "status": "done",
+  "strikes": [
+   24000,
+   26350
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 504712,
+  "week": [
+   "2025-10-07",
+   "2025-10-14"
+  ],
+  "fetched_at": "2026-09-26T10:40:33",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-10-07": {
+  "status": "done",
+  "strikes": [
+   23600,
+   26200
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 545571,
+  "week": [
+   "2025-09-30",
+   "2025-10-07"
+  ],
+  "fetched_at": "2026-09-26T10:40:55",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-09-30": {
+  "status": "done",
+  "strikes": [
+   23600,
+   26250
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 2136284,
+  "week": [
+   "2025-09-23",
+   "2025-09-30"
+  ],
+  "fetched_at": "2026-09-26T10:41:39",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-09-16": {
+  "status": "done",
+  "strikes": [
+   23800,
+   26250
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 497751,
+  "week": [
+   "2025-09-09",
+   "2025-09-16"
+  ],
+  "fetched_at": "2026-09-26T10:41:58",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-09-09": {
+  "status": "done",
+  "strikes": [
+   23500,
+   26000
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 487276,
+  "week": [
+   "2025-09-02",
+   "2025-09-09"
+  ],
+  "fetched_at": "2026-09-26T10:42:21",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-09-02": {
+  "status": "done",
+  "strikes": [
+   23400,
+   25750
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 483190,
+  "week": [
+   "2025-08-28",
+   "2025-09-02"
+  ],
+  "fetched_at": "2026-09-26T10:42:40",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-08-28": {
+  "status": "done",
+  "strikes": [
+   23500,
+   26150
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 1795565,
+  "week": [
+   "2025-08-21",
+   "2025-08-28"
+  ],
+  "fetched_at": "2026-09-26T10:43:11",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-08-21": {
+  "status": "done",
+  "strikes": [
+   23600,
+   26150
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 546926,
+  "week": [
+   "2025-08-14",
+   "2025-08-21"
+  ],
+  "fetched_at": "2026-09-26T10:43:31",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-08-14": {
+  "status": "done",
+  "strikes": [
+   23350,
+   25700
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 591317,
+  "week": [
+   "2025-08-07",
+   "2025-08-14"
+  ],
+  "fetched_at": "2026-09-26T10:43:49",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-08-07": {
+  "status": "done",
+  "strikes": [
+   23350,
+   25950
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 670588,
+  "week": [
+   "2025-07-31",
+   "2025-08-07"
+  ],
+  "fetched_at": "2026-09-26T10:44:14",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-07-31": {
+  "status": "done",
+  "strikes": [
+   23600,
+   26250
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 1970809,
+  "week": [
+   "2025-07-24",
+   "2025-07-31"
+  ],
+  "fetched_at": "2026-09-26T10:44:47",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-07-24": {
+  "status": "done",
+  "strikes": [
+   23900,
+   26250
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 635686,
+  "week": [
+   "2025-07-17",
+   "2025-07-24"
+  ],
+  "fetched_at": "2026-09-26T10:45:06",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-07-17": {
+  "status": "done",
+  "strikes": [
+   24000,
+   26500
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 649214,
+  "week": [
+   "2025-07-10",
+   "2025-07-17"
+  ],
+  "fetched_at": "2026-09-26T10:45:27",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-07-10": {
+  "status": "done",
+  "strikes": [
+   24350,
+   26600
+  ],
+  "contracts": 92,
+  "empty": 0,
+  "rows": 588617,
+  "week": [
+   "2025-07-03",
+   "2025-07-10"
+  ],
+  "fetched_at": "2026-09-26T10:45:46",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-07-03": {
+  "status": "done",
+  "strikes": [
+   24250,
+   26650
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 681043,
+  "week": [
+   "2025-06-26",
+   "2025-07-03"
+  ],
+  "fetched_at": "2026-09-26T10:46:08",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-06-26": {
+  "status": "done",
+  "strikes": [
+   23750,
+   26550
+  ],
+  "contracts": 114,
+  "empty": 0,
+  "rows": 1716028,
+  "week": [
+   "2025-06-19",
+   "2025-06-26"
+  ],
+  "fetched_at": "2026-09-26T10:46:43",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-06-19": {
+  "status": "done",
+  "strikes": [
+   23450,
+   26200
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 640616,
+  "week": [
+   "2025-06-12",
+   "2025-06-19"
+  ],
+  "fetched_at": "2026-09-26T10:47:06",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-06-12": {
+  "status": "done",
+  "strikes": [
+   23600,
+   26200
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 631676,
+  "week": [
+   "2025-06-05",
+   "2025-06-12"
+  ],
+  "fetched_at": "2026-09-26T10:47:29",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-06-05": {
+  "status": "done",
+  "strikes": [
+   23500,
+   25900
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 660658,
+  "week": [
+   "2025-05-29",
+   "2025-06-05"
+  ],
+  "fetched_at": "2026-09-26T10:47:50",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-05-29": {
+  "status": "done",
+  "strikes": [
+   23450,
+   26100
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 1449529,
+  "week": [
+   "2025-05-22",
+   "2025-05-29"
+  ],
+  "fetched_at": "2026-09-26T10:48:19",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-05-22": {
+  "status": "done",
+  "strikes": [
+   23450,
+   26100
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 604548,
+  "week": [
+   "2025-05-15",
+   "2025-05-22"
+  ],
+  "fetched_at": "2026-09-26T10:48:41",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-05-15": {
+  "status": "done",
+  "strikes": [
+   22950,
+   26100
+  ],
+  "contracts": 128,
+  "empty": 0,
+  "rows": 681521,
+  "week": [
+   "2025-05-08",
+   "2025-05-15"
+  ],
+  "fetched_at": "2026-09-26T10:49:10",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-05-08": {
+  "status": "done",
+  "strikes": [
+   23150,
+   25600
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 515689,
+  "week": [
+   "2025-04-30",
+   "2025-05-08"
+  ],
+  "fetched_at": "2026-09-26T10:49:32",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-04-30": {
+  "status": "done",
+  "strikes": [
+   22850,
+   25450
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 705805,
+  "week": [
+   "2025-04-24",
+   "2025-04-30"
+  ],
+  "fetched_at": "2026-09-26T10:49:54",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-04-24": {
+  "status": "done",
+  "strikes": [
+   22300,
+   25350
+  ],
+  "contracts": 124,
+  "empty": 0,
+  "rows": 1647987,
+  "week": [
+   "2025-04-17",
+   "2025-04-24"
+  ],
+  "fetched_at": "2026-09-26T10:50:29",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-04-17": {
+  "status": "done",
+  "strikes": [
+   21350,
+   24850
+  ],
+  "contracts": 142,
+  "empty": 0,
+  "rows": 541780,
+  "week": [
+   "2025-04-09",
+   "2025-04-17"
+  ],
+  "fetched_at": "2026-09-26T10:50:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-04-09": {
+  "status": "done",
+  "strikes": [
+   20750,
+   24300
+  ],
+  "contracts": 144,
+  "empty": 0,
+  "rows": 663823,
+  "week": [
+   "2025-04-03",
+   "2025-04-09"
+  ],
+  "fetched_at": "2026-09-26T10:51:38",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-04-03": {
+  "status": "done",
+  "strikes": [
+   22150,
+   24650
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 643461,
+  "week": [
+   "2025-03-27",
+   "2025-04-03"
+  ],
+  "fetched_at": "2026-09-26T10:51:58",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-03-27": {
+  "status": "done",
+  "strikes": [
+   21950,
+   24850
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 1898874,
+  "week": [
+   "2025-03-20",
+   "2025-03-27"
+  ],
+  "fetched_at": "2026-09-26T10:52:36",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-03-20": {
+  "status": "done",
+  "strikes": [
+   21350,
+   24200
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 586084,
+  "week": [
+   "2025-03-13",
+   "2025-03-20"
+  ],
+  "fetched_at": "2026-09-26T10:53:00",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-03-13": {
+  "status": "done",
+  "strikes": [
+   21250,
+   23700
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 541586,
+  "week": [
+   "2025-03-06",
+   "2025-03-13"
+  ],
+  "fetched_at": "2026-09-26T10:53:19",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-03-06": {
+  "status": "done",
+  "strikes": [
+   20950,
+   23600
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 555747,
+  "week": [
+   "2025-02-27",
+   "2025-03-06"
+  ],
+  "fetched_at": "2026-09-26T10:53:45",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-02-27": {
+  "status": "done",
+  "strikes": [
+   21500,
+   23900
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1299558,
+  "week": [
+   "2025-02-20",
+   "2025-02-27"
+  ],
+  "fetched_at": "2026-09-26T10:54:09",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-02-20": {
+  "status": "done",
+  "strikes": [
+   21750,
+   24250
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 495845,
+  "week": [
+   "2025-02-13",
+   "2025-02-20"
+  ],
+  "fetched_at": "2026-09-26T10:54:29",
+  "tried_empty": [
+   "21750CE",
+   "21850CE"
+  ],
+  "widened": 500
+ },
+ "2025-02-13": {
+  "status": "done",
+  "strikes": [
+   21800,
+   24750
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 596585,
+  "week": [
+   "2025-02-06",
+   "2025-02-13"
+  ],
+  "fetched_at": "2026-09-26T10:54:54",
+  "tried_empty": [
+   "21850CE",
+   "21950CE"
+  ],
+  "widened": 500
+ },
+ "2025-02-06": {
+  "status": "done",
+  "strikes": [
+   22150,
+   24800
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 665648,
+  "week": [
+   "2025-01-30",
+   "2025-02-06"
+  ],
+  "fetched_at": "2026-09-26T10:55:20",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-01-30": {
+  "status": "done",
+  "strikes": [
+   21800,
+   24350
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 1589261,
+  "week": [
+   "2025-01-23",
+   "2025-01-30"
+  ],
+  "fetched_at": "2026-09-26T10:55:49",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-01-23": {
+  "status": "done",
+  "strikes": [
+   22000,
+   24450
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 524431,
+  "week": [
+   "2025-01-16",
+   "2025-01-23"
+  ],
+  "fetched_at": "2026-09-26T10:56:08",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2025-01-16": {
+  "status": "done",
+  "strikes": [
+   22050,
+   24700
+  ],
+  "contracts": 105,
+  "empty": 0,
+  "rows": 538970,
+  "week": [
+   "2025-01-09",
+   "2025-01-16"
+  ],
+  "fetched_at": "2026-09-26T10:56:29",
+  "tried_empty": [
+   "22150CE",
+   "22250CE",
+   "22350CE"
+  ],
+  "widened": 500
+ },
+ "2025-01-09": {
+  "status": "done",
+  "strikes": [
+   22500,
+   25250
+  ],
+  "contracts": 111,
+  "empty": 0,
+  "rows": 557903,
+  "week": [
+   "2025-01-02",
+   "2025-01-09"
+  ],
+  "fetched_at": "2026-09-26T10:56:56",
+  "tried_empty": [
+   "22550CE"
+  ],
+  "widened": 500
+ },
+ "2025-01-02": {
+  "status": "done",
+  "strikes": [
+   22450,
+   25250
+  ],
+  "contracts": 113,
+  "empty": 0,
+  "rows": 631183,
+  "week": [
+   "2024-12-26",
+   "2025-01-02"
+  ],
+  "fetched_at": "2026-09-26T10:57:20",
+  "tried_empty": [
+   "22450CE"
+  ],
+  "widened": 500
+ },
+ "2024-12-26": {
+  "status": "done",
+  "strikes": [
+   22550,
+   25050
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 1534790,
+  "week": [
+   "2024-12-19",
+   "2024-12-26"
+  ],
+  "fetched_at": "2026-09-26T10:58:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-12-19": {
+  "status": "done",
+  "strikes": [
+   22850,
+   25800
+  ],
+  "contracts": 120,
+  "empty": 0,
+  "rows": 657664,
+  "week": [
+   "2024-12-12",
+   "2024-12-19"
+  ],
+  "fetched_at": "2026-09-26T10:58:32",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-12-12": {
+  "status": "done",
+  "strikes": [
+   23300,
+   25850
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 614496,
+  "week": [
+   "2024-12-05",
+   "2024-12-12"
+  ],
+  "fetched_at": "2026-09-26T10:58:59",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-12-05": {
+  "status": "done",
+  "strikes": [
+   22850,
+   25850
+  ],
+  "contracts": 122,
+  "empty": 0,
+  "rows": 692251,
+  "week": [
+   "2024-11-28",
+   "2024-12-05"
+  ],
+  "fetched_at": "2026-09-26T10:59:26",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-11-28": {
+  "status": "done",
+  "strikes": [
+   22250,
+   25350
+  ],
+  "contracts": 126,
+  "empty": 0,
+  "rows": 1573394,
+  "week": [
+   "2024-11-21",
+   "2024-11-28"
+  ],
+  "fetched_at": "2026-09-26T11:00:00",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-11-21": {
+  "status": "done",
+  "strikes": [
+   22250,
+   24800
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 441183,
+  "week": [
+   "2024-11-14",
+   "2024-11-21"
+  ],
+  "fetched_at": "2026-09-26T11:00:20",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-11-14": {
+  "status": "done",
+  "strikes": [
+   22500,
+   25500
+  ],
+  "contracts": 122,
+  "empty": 0,
+  "rows": 619826,
+  "week": [
+   "2024-11-07",
+   "2024-11-14"
+  ],
+  "fetched_at": "2026-09-26T11:00:46",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-11-07": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25550
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 601674,
+  "week": [
+   "2024-10-31",
+   "2024-11-07"
+  ],
+  "fetched_at": "2026-09-26T11:01:14",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-10-31": {
+  "status": "done",
+  "strikes": [
+   23050,
+   25500
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 1611002,
+  "week": [
+   "2024-10-24",
+   "2024-10-31"
+  ],
+  "fetched_at": "2026-09-26T11:01:42",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-10-24": {
+  "status": "done",
+  "strikes": [
+   23350,
+   26050
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 597887,
+  "week": [
+   "2024-10-17",
+   "2024-10-24"
+  ],
+  "fetched_at": "2026-09-26T11:02:05",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-10-17": {
+  "status": "done",
+  "strikes": [
+   23750,
+   26200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 533961,
+  "week": [
+   "2024-10-10",
+   "2024-10-17"
+  ],
+  "fetched_at": "2026-09-26T11:02:24",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-10-10": {
+  "status": "done",
+  "strikes": [
+   23700,
+   26650
+  ],
+  "contracts": 119,
+  "empty": 0,
+  "rows": 633439,
+  "week": [
+   "2024-10-03",
+   "2024-10-10"
+  ],
+  "fetched_at": "2026-09-26T11:02:53",
+  "tried_empty": [
+   "23850CE"
+  ],
+  "widened": 500
+ },
+ "2024-10-03": {
+  "status": "done",
+  "strikes": [
+   24250,
+   27300
+  ],
+  "contracts": 122,
+  "empty": 0,
+  "rows": 712305,
+  "week": [
+   "2024-09-26",
+   "2024-10-03"
+  ],
+  "fetched_at": "2026-09-26T11:03:21",
+  "tried_empty": [
+   "27050PE",
+   "27250PE"
+  ],
+  "widened": 500
+ },
+ "2024-09-26": {
+  "status": "done",
+  "strikes": [
+   24400,
+   27250
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 1444794,
+  "week": [
+   "2024-09-19",
+   "2024-09-26"
+  ],
+  "fetched_at": "2026-09-26T11:03:53",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-09-19": {
+  "status": "done",
+  "strikes": [
+   23950,
+   26600
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 583889,
+  "week": [
+   "2024-09-12",
+   "2024-09-19"
+  ],
+  "fetched_at": "2026-09-26T11:04:15",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-09-12": {
+  "status": "done",
+  "strikes": [
+   23750,
+   26450
+  ],
+  "contracts": 107,
+  "empty": 0,
+  "rows": 588712,
+  "week": [
+   "2024-09-05",
+   "2024-09-12"
+  ],
+  "fetched_at": "2026-09-26T11:04:38",
+  "tried_empty": [
+   "26350PE",
+   "26400PE",
+   "26450PE"
+  ],
+  "widened": 500
+ },
+ "2024-09-05": {
+  "status": "done",
+  "strikes": [
+   24000,
+   26350
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 541795,
+  "week": [
+   "2024-08-29",
+   "2024-09-05"
+  ],
+  "fetched_at": "2026-09-26T11:04:59",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-08-29": {
+  "status": "done",
+  "strikes": [
+   23750,
+   26200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 1368436,
+  "week": [
+   "2024-08-22",
+   "2024-08-29"
+  ],
+  "fetched_at": "2026-09-26T11:05:27",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-08-22": {
+  "status": "done",
+  "strikes": [
+   23100,
+   25850
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 600593,
+  "week": [
+   "2024-08-14",
+   "2024-08-22"
+  ],
+  "fetched_at": "2026-09-26T11:05:51",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-08-14": {
+  "status": "done",
+  "strikes": [
+   23100,
+   25450
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 521624,
+  "week": [
+   "2024-08-08",
+   "2024-08-14"
+  ],
+  "fetched_at": "2026-09-26T11:06:10",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-08-08": {
+  "status": "done",
+  "strikes": [
+   22900,
+   26100
+  ],
+  "contracts": 130,
+  "empty": 0,
+  "rows": 680836,
+  "week": [
+   "2024-08-01",
+   "2024-08-08"
+  ],
+  "fetched_at": "2026-09-26T11:06:40",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-08-01": {
+  "status": "done",
+  "strikes": [
+   23200,
+   26100
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 725661,
+  "week": [
+   "2024-07-25",
+   "2024-08-01"
+  ],
+  "fetched_at": "2026-09-26T11:07:07",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-07-25": {
+  "status": "done",
+  "strikes": [
+   23050,
+   25850
+  ],
+  "contracts": 111,
+  "empty": 0,
+  "rows": 1368975,
+  "week": [
+   "2024-07-18",
+   "2024-07-25"
+  ],
+  "fetched_at": "2026-09-26T11:07:39",
+  "tried_empty": [
+   "25650PE",
+   "25750PE",
+   "25850PE"
+  ],
+  "widened": 500
+ },
+ "2024-07-18": {
+  "status": "done",
+  "strikes": [
+   23200,
+   25850
+  ],
+  "contracts": 107,
+  "empty": 0,
+  "rows": 514001,
+  "week": [
+   "2024-07-11",
+   "2024-07-18"
+  ],
+  "fetched_at": "2026-09-26T11:08:01",
+  "tried_empty": [
+   "25850PE"
+  ],
+  "widened": 500
+ },
+ "2024-07-11": {
+  "status": "done",
+  "strikes": [
+   23150,
+   25450
+  ],
+  "contracts": 93,
+  "empty": 0,
+  "rows": 522487,
+  "week": [
+   "2024-07-04",
+   "2024-07-11"
+  ],
+  "fetched_at": "2026-09-26T11:08:19",
+  "tried_empty": [
+   "25450PE"
+  ],
+  "widened": 500
+ },
+ "2024-07-04": {
+  "status": "done",
+  "strikes": [
+   22800,
+   25400
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 588428,
+  "week": [
+   "2024-06-27",
+   "2024-07-04"
+  ],
+  "fetched_at": "2026-09-26T11:08:43",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-06-27": {
+  "status": "done",
+  "strikes": [
+   22350,
+   25100
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 1688647,
+  "week": [
+   "2024-06-20",
+   "2024-06-27"
+  ],
+  "fetched_at": "2026-09-26T11:09:21",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-06-20": {
+  "status": "done",
+  "strikes": [
+   22350,
+   24650
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 429996,
+  "week": [
+   "2024-06-13",
+   "2024-06-20"
+  ],
+  "fetched_at": "2026-09-26T11:09:38",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-06-13": {
+  "status": "done",
+  "strikes": [
+   21650,
+   24500
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 550763,
+  "week": [
+   "2024-06-06",
+   "2024-06-13"
+  ],
+  "fetched_at": "2026-09-26T11:10:02",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-06-06": {
+  "status": "done",
+  "strikes": [
+   20300,
+   24350
+  ],
+  "contracts": 164,
+  "empty": 0,
+  "rows": 733277,
+  "week": [
+   "2024-05-30",
+   "2024-06-06"
+  ],
+  "fetched_at": "2026-09-26T11:10:46",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-05-30": {
+  "status": "done",
+  "strikes": [
+   21400,
+   24100
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 1706593,
+  "week": [
+   "2024-05-23",
+   "2024-05-30"
+  ],
+  "fetched_at": "2026-09-26T11:11:19",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-05-23": {
+  "status": "done",
+  "strikes": [
+   21050,
+   24000
+  ],
+  "contracts": 120,
+  "empty": 0,
+  "rows": 638991,
+  "week": [
+   "2024-05-16",
+   "2024-05-23"
+  ],
+  "fetched_at": "2026-09-26T11:11:45",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-05-16": {
+  "status": "done",
+  "strikes": [
+   20800,
+   23450
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 562096,
+  "week": [
+   "2024-05-09",
+   "2024-05-16"
+  ],
+  "fetched_at": "2026-09-26T11:12:08",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-05-09": {
+  "status": "done",
+  "strikes": [
+   20950,
+   23800
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 568790,
+  "week": [
+   "2024-05-02",
+   "2024-05-09"
+  ],
+  "fetched_at": "2026-09-26T11:12:36",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-05-02": {
+  "status": "done",
+  "strikes": [
+   21300,
+   23800
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 548820,
+  "week": [
+   "2024-04-25",
+   "2024-05-02"
+  ],
+  "fetched_at": "2026-09-26T11:12:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-04-25": {
+  "status": "done",
+  "strikes": [
+   20800,
+   23650
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 2074265,
+  "week": [
+   "2024-04-18",
+   "2024-04-25"
+  ],
+  "fetched_at": "2026-09-26T11:13:33",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-04-18": {
+  "status": "done",
+  "strikes": [
+   20950,
+   23800
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 524492,
+  "week": [
+   "2024-04-10",
+   "2024-04-18"
+  ],
+  "fetched_at": "2026-09-26T11:13:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-04-10": {
+  "status": "done",
+  "strikes": [
+   21300,
+   23800
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 497772,
+  "week": [
+   "2024-04-04",
+   "2024-04-10"
+  ],
+  "fetched_at": "2026-09-26T11:14:15",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-04-04": {
+  "status": "done",
+  "strikes": [
+   21150,
+   23600
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 561138,
+  "week": [
+   "2024-03-28",
+   "2024-04-04"
+  ],
+  "fetched_at": "2026-09-26T11:14:40",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-03-28": {
+  "status": "done",
+  "strikes": [
+   20900,
+   23500
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 1811239,
+  "week": [
+   "2024-03-21",
+   "2024-03-28"
+  ],
+  "fetched_at": "2026-09-26T11:15:15",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-03-21": {
+  "status": "done",
+  "strikes": [
+   20700,
+   23200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 486077,
+  "week": [
+   "2024-03-14",
+   "2024-03-21"
+  ],
+  "fetched_at": "2026-09-26T11:15:37",
+  "tried_empty": [
+   "23050PE",
+   "23150PE"
+  ],
+  "widened": 500
+ },
+ "2024-03-14": {
+  "status": "done",
+  "strikes": [
+   20900,
+   23550
+  ],
+  "contracts": 107,
+  "empty": 0,
+  "rows": 532130,
+  "week": [
+   "2024-03-07",
+   "2024-03-14"
+  ],
+  "fetched_at": "2026-09-26T11:16:01",
+  "tried_empty": [
+   "23450PE"
+  ],
+  "widened": 500
+ },
+ "2024-03-07": {
+  "status": "done",
+  "strikes": [
+   20850,
+   23550
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 584356,
+  "week": [
+   "2024-02-29",
+   "2024-03-07"
+  ],
+  "fetched_at": "2026-09-26T11:16:25",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-02-29": {
+  "status": "done",
+  "strikes": [
+   20850,
+   23300
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 1606595,
+  "week": [
+   "2024-02-22",
+   "2024-02-29"
+  ],
+  "fetched_at": "2026-09-26T11:16:55",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-02-22": {
+  "status": "done",
+  "strikes": [
+   20800,
+   23250
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 525562,
+  "week": [
+   "2024-02-15",
+   "2024-02-22"
+  ],
+  "fetched_at": "2026-09-26T11:17:16",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-02-15": {
+  "status": "done",
+  "strikes": [
+   20550,
+   23000
+  ],
+  "contracts": 99,
+  "empty": 0,
+  "rows": 507745,
+  "week": [
+   "2024-02-08",
+   "2024-02-15"
+  ],
+  "fetched_at": "2026-09-26T11:17:35",
+  "tried_empty": [
+   "22950PE"
+  ],
+  "widened": 500
+ },
+ "2024-02-08": {
+  "status": "done",
+  "strikes": [
+   20650,
+   23150
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 522121,
+  "week": [
+   "2024-02-01",
+   "2024-02-08"
+  ],
+  "fetched_at": "2026-09-26T11:17:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-02-01": {
+  "status": "done",
+  "strikes": [
+   20250,
+   22850
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 585482,
+  "week": [
+   "2024-01-25",
+   "2024-02-01"
+  ],
+  "fetched_at": "2026-09-26T11:18:20",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-01-25": {
+  "status": "done",
+  "strikes": [
+   20150,
+   22750
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 1343996,
+  "week": [
+   "2024-01-18",
+   "2024-01-25"
+  ],
+  "fetched_at": "2026-09-26T11:18:48",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-01-18": {
+  "status": "done",
+  "strikes": [
+   20300,
+   23100
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 607899,
+  "week": [
+   "2024-01-11",
+   "2024-01-18"
+  ],
+  "fetched_at": "2026-09-26T11:19:11",
+  "tried_empty": [
+   "23050PE",
+   "23100PE"
+  ],
+  "widened": 500
+ },
+ "2024-01-11": {
+  "status": "done",
+  "strikes": [
+   20450,
+   22750
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 561520,
+  "week": [
+   "2024-01-04",
+   "2024-01-11"
+  ],
+  "fetched_at": "2026-09-26T11:19:28",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2024-01-04": {
+  "status": "done",
+  "strikes": [
+   20500,
+   22850
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 581796,
+  "week": [
+   "2023-12-28",
+   "2024-01-04"
+  ],
+  "fetched_at": "2026-09-26T11:19:50",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-12-28": {
+  "status": "done",
+  "strikes": [
+   20000,
+   22800
+  ],
+  "contracts": 113,
+  "empty": 0,
+  "rows": 1173229,
+  "week": [
+   "2023-12-21",
+   "2023-12-28"
+  ],
+  "fetched_at": "2026-09-26T11:20:19",
+  "tried_empty": [
+   "22650PE"
+  ],
+  "widened": 500
+ },
+ "2023-12-21": {
+  "status": "done",
+  "strikes": [
+   20000,
+   22600
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 489735,
+  "week": [
+   "2023-12-14",
+   "2023-12-21"
+  ],
+  "fetched_at": "2026-09-26T11:20:39",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-12-14": {
+  "status": "done",
+  "strikes": [
+   19750,
+   22200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 452354,
+  "week": [
+   "2023-12-07",
+   "2023-12-14"
+  ],
+  "fetched_at": "2026-09-26T11:21:02",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-12-07": {
+  "status": "done",
+  "strikes": [
+   19000,
+   21950
+  ],
+  "contracts": 115,
+  "empty": 0,
+  "rows": 537322,
+  "week": [
+   "2023-11-30",
+   "2023-12-07"
+  ],
+  "fetched_at": "2026-09-26T11:21:28",
+  "tried_empty": [
+   "21550PE",
+   "21600PE",
+   "21650PE",
+   "21850PE",
+   "21900PE"
+  ],
+  "widened": 500
+ },
+ "2023-11-30": {
+  "status": "done",
+  "strikes": [
+   18750,
+   21150
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1408291,
+  "week": [
+   "2023-11-23",
+   "2023-11-30"
+  ],
+  "fetched_at": "2026-09-26T11:21:54",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-11-23": {
+  "status": "done",
+  "strikes": [
+   18650,
+   20850
+  ],
+  "contracts": 90,
+  "empty": 0,
+  "rows": 468551,
+  "week": [
+   "2023-11-16",
+   "2023-11-23"
+  ],
+  "fetched_at": "2026-09-26T11:22:09",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-11-16": {
+  "status": "done",
+  "strikes": [
+   18350,
+   20850
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 478316,
+  "week": [
+   "2023-11-09",
+   "2023-11-16"
+  ],
+  "fetched_at": "2026-09-26T11:22:28",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-11-09": {
+  "status": "done",
+  "strikes": [
+   18050,
+   20450
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 494712,
+  "week": [
+   "2023-11-02",
+   "2023-11-09"
+  ],
+  "fetched_at": "2026-09-26T11:22:51",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-11-02": {
+  "status": "done",
+  "strikes": [
+   17850,
+   20250
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 545306,
+  "week": [
+   "2023-10-26",
+   "2023-11-02"
+  ],
+  "fetched_at": "2026-09-26T11:23:11",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-10-26": {
+  "status": "done",
+  "strikes": [
+   17850,
+   20700
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 1603641,
+  "week": [
+   "2023-10-19",
+   "2023-10-26"
+  ],
+  "fetched_at": "2026-09-26T11:23:43",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-10-19": {
+  "status": "done",
+  "strikes": [
+   18500,
+   20850
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 475131,
+  "week": [
+   "2023-10-12",
+   "2023-10-19"
+  ],
+  "fetched_at": "2026-09-26T11:24:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-10-12": {
+  "status": "done",
+  "strikes": [
+   18500,
+   20850
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 410643,
+  "week": [
+   "2023-10-05",
+   "2023-10-12"
+  ],
+  "fetched_at": "2026-09-26T11:24:17",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-10-05": {
+  "status": "done",
+  "strikes": [
+   18350,
+   20750
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 430147,
+  "week": [
+   "2023-09-28",
+   "2023-10-05"
+  ],
+  "fetched_at": "2026-09-26T11:24:40",
+  "tried_empty": [
+   "18350CE",
+   "18450CE",
+   "20750PE"
+  ],
+  "widened": 500
+ },
+ "2023-09-28": {
+  "status": "done",
+  "strikes": [
+   18500,
+   20850
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 1566562,
+  "week": [
+   "2023-09-21",
+   "2023-09-28"
+  ],
+  "fetched_at": "2026-09-26T11:25:08",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-09-21": {
+  "status": "done",
+  "strikes": [
+   18700,
+   21200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 367564,
+  "week": [
+   "2023-09-14",
+   "2023-09-21"
+  ],
+  "fetched_at": "2026-09-26T11:25:24",
+  "tried_empty": [
+   "18750CE",
+   "21150PE"
+  ],
+  "widened": 500
+ },
+ "2023-09-14": {
+  "status": "done",
+  "strikes": [
+   18550,
+   21150
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 402774,
+  "week": [
+   "2023-09-07",
+   "2023-09-14"
+  ],
+  "fetched_at": "2026-09-26T11:25:43",
+  "tried_empty": [
+   "21050PE",
+   "21100PE"
+  ],
+  "widened": 500
+ },
+ "2023-09-07": {
+  "status": "done",
+  "strikes": [
+   18200,
+   20750
+  ],
+  "contracts": 101,
+  "empty": 0,
+  "rows": 468589,
+  "week": [
+   "2023-08-31",
+   "2023-09-07"
+  ],
+  "fetched_at": "2026-09-26T11:26:12",
+  "tried_empty": [
+   "20350PE",
+   "20650PE",
+   "20750PE"
+  ],
+  "widened": 500
+ },
+ "2023-08-31": {
+  "status": "done",
+  "strikes": [
+   18200,
+   20600
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1622387,
+  "week": [
+   "2023-08-24",
+   "2023-08-31"
+  ],
+  "fetched_at": "2026-09-26T11:26:39",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-08-24": {
+  "status": "done",
+  "strikes": [
+   18250,
+   20600
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 433169,
+  "week": [
+   "2023-08-17",
+   "2023-08-24"
+  ],
+  "fetched_at": "2026-09-26T11:26:56",
+  "tried_empty": [
+   "20550PE"
+  ],
+  "widened": 500
+ },
+ "2023-08-17": {
+  "status": "done",
+  "strikes": [
+   18250,
+   20600
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 436080,
+  "week": [
+   "2023-08-10",
+   "2023-08-17"
+  ],
+  "fetched_at": "2026-09-26T11:27:12",
+  "tried_empty": [
+   "20550PE"
+  ],
+  "widened": 500
+ },
+ "2023-08-10": {
+  "status": "done",
+  "strikes": [
+   18300,
+   20650
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 487889,
+  "week": [
+   "2023-08-03",
+   "2023-08-10"
+  ],
+  "fetched_at": "2026-09-26T11:27:35",
+  "tried_empty": [
+   "20650PE"
+  ],
+  "widened": 500
+ },
+ "2023-08-03": {
+  "status": "done",
+  "strikes": [
+   18300,
+   20850
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 593249,
+  "week": [
+   "2023-07-27",
+   "2023-08-03"
+  ],
+  "fetched_at": "2026-09-26T11:27:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-07-27": {
+  "status": "done",
+  "strikes": [
+   18600,
+   21000
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1010003,
+  "week": [
+   "2023-07-20",
+   "2023-07-27"
+  ],
+  "fetched_at": "2026-09-26T11:28:18",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-07-20": {
+  "status": "done",
+  "strikes": [
+   18400,
+   21000
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 512824,
+  "week": [
+   "2023-07-13",
+   "2023-07-20"
+  ],
+  "fetched_at": "2026-09-26T11:28:40",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-07-13": {
+  "status": "done",
+  "strikes": [
+   18300,
+   20550
+  ],
+  "contracts": 92,
+  "empty": 0,
+  "rows": 436821,
+  "week": [
+   "2023-07-06",
+   "2023-07-13"
+  ],
+  "fetched_at": "2026-09-26T11:28:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-07-06": {
+  "status": "done",
+  "strikes": [
+   18000,
+   20500
+  ],
+  "contracts": 99,
+  "empty": 0,
+  "rows": 433953,
+  "week": [
+   "2023-06-29",
+   "2023-07-06"
+  ],
+  "fetched_at": "2026-09-26T11:29:20",
+  "tried_empty": [
+   "20250PE",
+   "20400PE",
+   "20450PE"
+  ],
+  "widened": 500
+ },
+ "2023-06-29": {
+  "status": "failed",
+  "error": "no candles for any contract"
+ },
+ "2023-06-28": {
+  "status": "failed",
+  "error": "no candles for any contract"
+ },
+ "2023-06-22": {
+  "status": "done",
+  "strikes": [
+   17200,
+   19900
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 527427,
+  "week": [
+   "2023-06-15",
+   "2023-06-22"
+  ],
+  "fetched_at": "2026-09-26T11:30:13",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-06-15": {
+  "status": "done",
+  "strikes": [
+   17550,
+   19800
+  ],
+  "contracts": 90,
+  "empty": 0,
+  "rows": 485313,
+  "week": [
+   "2023-06-08",
+   "2023-06-15"
+  ],
+  "fetched_at": "2026-09-26T11:30:30",
+  "tried_empty": [
+   "19750PE",
+   "19800PE"
+  ],
+  "widened": 500
+ },
+ "2023-06-08": {
+  "status": "done",
+  "strikes": [
+   17450,
+   19800
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 497776,
+  "week": [
+   "2023-06-01",
+   "2023-06-08"
+  ],
+  "fetched_at": "2026-09-26T11:30:49",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-06-01": {
+  "status": "done",
+  "strikes": [
+   17200,
+   19650
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 577399,
+  "week": [
+   "2023-05-25",
+   "2023-06-01"
+  ],
+  "fetched_at": "2026-09-26T11:31:10",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-05-25": {
+  "status": "done",
+  "strikes": [
+   17050,
+   19400
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 1277842,
+  "week": [
+   "2023-05-18",
+   "2023-05-25"
+  ],
+  "fetched_at": "2026-09-26T11:31:33",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-05-18": {
+  "status": "done",
+  "strikes": [
+   17100,
+   19450
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 435422,
+  "week": [
+   "2023-05-11",
+   "2023-05-18"
+  ],
+  "fetched_at": "2026-09-26T11:31:50",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-05-11": {
+  "status": "done",
+  "strikes": [
+   17050,
+   19400
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 427567,
+  "week": [
+   "2023-05-04",
+   "2023-05-11"
+  ],
+  "fetched_at": "2026-09-26T11:32:07",
+  "tried_empty": [
+   "19400PE"
+  ],
+  "widened": 500
+ },
+ "2023-05-04": {
+  "status": "done",
+  "strikes": [
+   16800,
+   19250
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 465415,
+  "week": [
+   "2023-04-27",
+   "2023-05-04"
+  ],
+  "fetched_at": "2026-09-26T11:32:31",
+  "tried_empty": [
+   "19150PE",
+   "19250PE"
+  ],
+  "widened": 500
+ },
+ "2023-04-27": {
+  "status": "done",
+  "strikes": [
+   16550,
+   18950
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1467574,
+  "week": [
+   "2023-04-20",
+   "2023-04-27"
+  ],
+  "fetched_at": "2026-09-26T11:32:58",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-04-20": {
+  "status": "done",
+  "strikes": [
+   16550,
+   18850
+  ],
+  "contracts": 93,
+  "empty": 0,
+  "rows": 372416,
+  "week": [
+   "2023-04-13",
+   "2023-04-20"
+  ],
+  "fetched_at": "2026-09-26T11:33:13",
+  "tried_empty": [
+   "16650CE"
+  ],
+  "widened": 500
+ },
+ "2023-04-13": {
+  "status": "done",
+  "strikes": [
+   16500,
+   18850
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 401148,
+  "week": [
+   "2023-04-06",
+   "2023-04-13"
+  ],
+  "fetched_at": "2026-09-26T11:33:28",
+  "tried_empty": [
+   "18650PE",
+   "18850PE"
+  ],
+  "widened": 500
+ },
+ "2023-04-06": {
+  "status": "done",
+  "strikes": [
+   16200,
+   18650
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 460661,
+  "week": [
+   "2023-03-30",
+   "2023-04-06"
+  ],
+  "fetched_at": "2026-09-26T11:33:55",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-03-30": {
+  "status": "done",
+  "strikes": [
+   16000,
+   18000
+  ],
+  "contracts": 5,
+  "empty": 0,
+  "rows": 1865,
+  "week": [
+   "2023-03-29",
+   "2023-03-30"
+  ],
+  "fetched_at": "2026-09-26T11:33:56",
+  "tried_empty": [
+   "15950CE",
+   "15950PE",
+   "16000CE",
+   "16050CE",
+   "16050PE",
+   "16100CE",
+   "16100PE",
+   "16150CE",
+   "16150PE",
+   "16200CE",
+   "16200PE",
+   "16250CE",
+   "16250PE",
+   "16300CE",
+   "16300PE",
+   "16350CE",
+   "16350PE",
+   "16400CE",
+   "16400PE",
+   "16450CE",
+   "16450PE",
+   "16500CE",
+   "16500PE",
+   "16550CE",
+   "16550PE",
+   "16600CE",
+   "16600PE",
+   "16650CE",
+   "16650PE",
+   "16700CE",
+   "16700PE",
+   "16750CE",
+   "16750PE",
+   "16800CE",
+   "16800PE",
+   "16850CE",
+   "16850PE",
+   "16900CE",
+   "16900PE",
+   "16950CE",
+   "16950PE",
+   "17050CE",
+   "17050PE",
+   "17100CE",
+   "17100PE",
+   "17150CE",
+   "17150PE",
+   "17200CE",
+   "17200PE",
+   "17250CE",
+   "17250PE",
+   "17300CE",
+   "17300PE",
+   "17350CE",
+   "17350PE",
+   "17400CE",
+   "17400PE",
+   "17450CE",
+   "17450PE",
+   "17500CE",
+   "17500PE",
+   "17550CE",
+   "17550PE",
+   "17600CE",
+   "17600PE",
+   "17650CE",
+   "17650PE",
+   "17700CE",
+   "17700PE",
+   "17750CE",
+   "17750PE",
+   "17800CE",
+   "17800PE",
+   "17850CE",
+   "17850PE",
+   "17900CE",
+   "17900PE",
+   "17950CE",
+   "17950PE",
+   "18050CE",
+   "18050PE",
+   "18100CE",
+   "18100PE",
+   "18150CE",
+   "18150PE"
+  ],
+  "widened": 500
+ },
+ "2023-03-29": {
+  "status": "done",
+  "strikes": [
+   15900,
+   18200
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 1257401,
+  "week": [
+   "2023-03-23",
+   "2023-03-29"
+  ],
+  "fetched_at": "2026-09-26T11:34:21",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-03-23": {
+  "status": "done",
+  "strikes": [
+   15850,
+   18200
+  ],
+  "contracts": 93,
+  "empty": 0,
+  "rows": 495755,
+  "week": [
+   "2023-03-16",
+   "2023-03-23"
+  ],
+  "fetched_at": "2026-09-26T11:34:37",
+  "tried_empty": [
+   "15850CE",
+   "15900CE",
+   "15950CE"
+  ],
+  "widened": 500
+ },
+ "2023-03-16": {
+  "status": "done",
+  "strikes": [
+   15850,
+   18750
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 495977,
+  "week": [
+   "2023-03-09",
+   "2023-03-16"
+  ],
+  "fetched_at": "2026-09-26T11:35:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-03-09": {
+  "status": "done",
+  "strikes": [
+   16300,
+   18800
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 467467,
+  "week": [
+   "2023-03-02",
+   "2023-03-09"
+  ],
+  "fetched_at": "2026-09-26T11:35:26",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-03-02": {
+  "status": "done",
+  "strikes": [
+   16250,
+   18600
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 557915,
+  "week": [
+   "2023-02-23",
+   "2023-03-02"
+  ],
+  "fetched_at": "2026-09-26T11:35:44",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-02-23": {
+  "status": "done",
+  "strikes": [
+   16450,
+   19150
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 1525205,
+  "week": [
+   "2023-02-16",
+   "2023-02-23"
+  ],
+  "fetched_at": "2026-09-26T11:36:15",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-02-16": {
+  "status": "done",
+  "strikes": [
+   16700,
+   19150
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 493492,
+  "week": [
+   "2023-02-09",
+   "2023-02-16"
+  ],
+  "fetched_at": "2026-09-26T11:36:33",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-02-09": {
+  "status": "done",
+  "strikes": [
+   16450,
+   18900
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 499542,
+  "week": [
+   "2023-02-02",
+   "2023-02-09"
+  ],
+  "fetched_at": "2026-09-26T11:36:51",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-02-02": {
+  "status": "done",
+  "strikes": [
+   16350,
+   19100
+  ],
+  "contracts": 111,
+  "empty": 0,
+  "rows": 577289,
+  "week": [
+   "2023-01-25",
+   "2023-02-02"
+  ],
+  "fetched_at": "2026-09-26T11:37:20",
+  "tried_empty": [
+   "16350CE"
+  ],
+  "widened": 500
+ },
+ "2023-01-25": {
+  "status": "done",
+  "strikes": [
+   16850,
+   19200
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 1410205,
+  "week": [
+   "2023-01-19",
+   "2023-01-25"
+  ],
+  "fetched_at": "2026-09-26T11:37:47",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-01-19": {
+  "status": "done",
+  "strikes": [
+   16750,
+   19200
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 510344,
+  "week": [
+   "2023-01-12",
+   "2023-01-19"
+  ],
+  "fetched_at": "2026-09-26T11:38:05",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2023-01-12": {
+  "status": "done",
+  "strikes": [
+   16750,
+   19150
+  ],
+  "contracts": 97,
+  "empty": 0,
+  "rows": 492754,
+  "week": [
+   "2023-01-05",
+   "2023-01-12"
+  ],
+  "fetched_at": "2026-09-26T11:38:23",
+  "tried_empty": [
+   "19150PE"
+  ],
+  "widened": 500
+ },
+ "2023-01-05": {
+  "status": "done",
+  "strikes": [
+   16900,
+   19250
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 523744,
+  "week": [
+   "2022-12-29",
+   "2023-01-05"
+  ],
+  "fetched_at": "2026-09-26T11:38:45",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-12-29": {
+  "status": "done",
+  "strikes": [
+   16750,
+   19300
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 1662724,
+  "week": [
+   "2022-12-22",
+   "2022-12-29"
+  ],
+  "fetched_at": "2026-09-26T11:39:14",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-12-22": {
+  "status": "done",
+  "strikes": [
+   17050,
+   19650
+  ],
+  "contracts": 103,
+  "empty": 0,
+  "rows": 489589,
+  "week": [
+   "2022-12-15",
+   "2022-12-22"
+  ],
+  "fetched_at": "2026-09-26T11:39:33",
+  "tried_empty": [
+   "17050CE",
+   "17150CE",
+   "19650PE"
+  ],
+  "widened": 500
+ },
+ "2022-12-15": {
+  "status": "done",
+  "strikes": [
+   17350,
+   19700
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 477874,
+  "week": [
+   "2022-12-08",
+   "2022-12-15"
+  ],
+  "fetched_at": "2026-09-26T11:39:50",
+  "tried_empty": [
+   "19650PE"
+  ],
+  "widened": 500
+ },
+ "2022-12-08": {
+  "status": "done",
+  "strikes": [
+   17550,
+   19900
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 478189,
+  "week": [
+   "2022-12-01",
+   "2022-12-08"
+  ],
+  "fetched_at": "2026-09-26T11:40:15",
+  "tried_empty": [
+   "19800PE",
+   "19850PE"
+  ],
+  "widened": 500
+ },
+ "2022-12-01": {
+  "status": "done",
+  "strikes": [
+   17300,
+   19900
+  ],
+  "contracts": 105,
+  "empty": 0,
+  "rows": 541335,
+  "week": [
+   "2022-11-24",
+   "2022-12-01"
+  ],
+  "fetched_at": "2026-09-26T11:40:35",
+  "tried_empty": [
+   "19600PE"
+  ],
+  "widened": 500
+ },
+ "2022-11-24": {
+  "status": "done",
+  "strikes": [
+   17150,
+   19550
+  ],
+  "contracts": 97,
+  "empty": 0,
+  "rows": 1218855,
+  "week": [
+   "2022-11-17",
+   "2022-11-24"
+  ],
+  "fetched_at": "2026-09-26T11:40:59",
+  "tried_empty": [
+   "19150PE"
+  ],
+  "widened": 500
+ },
+ "2022-11-17": {
+  "status": "done",
+  "strikes": [
+   16950,
+   19450
+  ],
+  "contracts": 99,
+  "empty": 0,
+  "rows": 458578,
+  "week": [
+   "2022-11-10",
+   "2022-11-17"
+  ],
+  "fetched_at": "2026-09-26T11:41:18",
+  "tried_empty": [
+   "16950CE",
+   "17050CE",
+   "19450PE"
+  ],
+  "widened": 500
+ },
+ "2022-11-10": {
+  "status": "done",
+  "strikes": [
+   16950,
+   19300
+  ],
+  "contracts": 94,
+  "empty": 0,
+  "rows": 418292,
+  "week": [
+   "2022-11-03",
+   "2022-11-10"
+  ],
+  "fetched_at": "2026-09-26T11:41:35",
+  "tried_empty": [
+   "19100PE",
+   "19250PE"
+  ],
+  "widened": 500
+ },
+ "2022-11-03": {
+  "status": "done",
+  "strikes": [
+   16650,
+   19200
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 485450,
+  "week": [
+   "2022-10-27",
+   "2022-11-03"
+  ],
+  "fetched_at": "2026-09-26T11:42:01",
+  "tried_empty": [
+   "19150PE",
+   "19200PE"
+  ],
+  "widened": 500
+ },
+ "2022-10-27": {
+  "status": "done",
+  "strikes": [
+   16400,
+   18800
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 1487475,
+  "week": [
+   "2022-10-20",
+   "2022-10-27"
+  ],
+  "fetched_at": "2026-09-26T11:42:27",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-10-20": {
+  "status": "done",
+  "strikes": [
+   15950,
+   18600
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 544500,
+  "week": [
+   "2022-10-13",
+   "2022-10-20"
+  ],
+  "fetched_at": "2026-09-26T11:42:47",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-10-13": {
+  "status": "done",
+  "strikes": [
+   15950,
+   18450
+  ],
+  "contracts": 101,
+  "empty": 0,
+  "rows": 484508,
+  "week": [
+   "2022-10-06",
+   "2022-10-13"
+  ],
+  "fetched_at": "2026-09-26T11:43:05",
+  "tried_empty": [
+   "18450PE"
+  ],
+  "widened": 500
+ },
+ "2022-10-06": {
+  "status": "done",
+  "strikes": [
+   15750,
+   18450
+  ],
+  "contracts": 105,
+  "empty": 0,
+  "rows": 520444,
+  "week": [
+   "2022-09-29",
+   "2022-10-06"
+  ],
+  "fetched_at": "2026-09-26T11:43:34",
+  "tried_empty": [
+   "15850CE",
+   "15900CE",
+   "15950CE",
+   "18350PE",
+   "18450PE"
+  ],
+  "widened": 500
+ },
+ "2022-09-29": {
+  "status": "done",
+  "strikes": [
+   15800,
+   18700
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 1832760,
+  "week": [
+   "2022-09-22",
+   "2022-09-29"
+  ],
+  "fetched_at": "2026-09-26T11:44:09",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-09-22": {
+  "status": "done",
+  "strikes": [
+   16450,
+   19100
+  ],
+  "contracts": 107,
+  "empty": 0,
+  "rows": 555549,
+  "week": [
+   "2022-09-15",
+   "2022-09-22"
+  ],
+  "fetched_at": "2026-09-26T11:44:29",
+  "tried_empty": [
+   "16450CE"
+  ],
+  "widened": 500
+ },
+ "2022-09-15": {
+  "status": "done",
+  "strikes": [
+   16700,
+   19100
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 509668,
+  "week": [
+   "2022-09-08",
+   "2022-09-15"
+  ],
+  "fetched_at": "2026-09-26T11:44:47",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-09-08": {
+  "status": "done",
+  "strikes": [
+   16450,
+   18800
+  ],
+  "contracts": 95,
+  "empty": 0,
+  "rows": 473103,
+  "week": [
+   "2022-09-01",
+   "2022-09-08"
+  ],
+  "fetched_at": "2026-09-26T11:45:11",
+  "tried_empty": [
+   "18750PE"
+  ],
+  "widened": 500
+ },
+ "2022-09-01": {
+  "status": "done",
+  "strikes": [
+   16150,
+   18800
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 568845,
+  "week": [
+   "2022-08-25",
+   "2022-09-01"
+  ],
+  "fetched_at": "2026-09-26T11:45:32",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-08-25": {
+  "status": "done",
+  "strikes": [
+   16350,
+   19000
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 1207079,
+  "week": [
+   "2022-08-18",
+   "2022-08-25"
+  ],
+  "fetched_at": "2026-09-26T11:45:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-08-18": {
+  "status": "done",
+  "strikes": [
+   16600,
+   18950
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 411821,
+  "week": [
+   "2022-08-11",
+   "2022-08-18"
+  ],
+  "fetched_at": "2026-09-26T11:46:15",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-08-11": {
+  "status": "done",
+  "strikes": [
+   16150,
+   18700
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 478057,
+  "week": [
+   "2022-08-04",
+   "2022-08-11"
+  ],
+  "fetched_at": "2026-09-26T11:46:36",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-08-04": {
+  "status": "done",
+  "strikes": [
+   15750,
+   18500
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 584480,
+  "week": [
+   "2022-07-28",
+   "2022-08-04"
+  ],
+  "fetched_at": "2026-09-26T11:47:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-07-28": {
+  "status": "done",
+  "strikes": [
+   15450,
+   17950
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 1613341,
+  "week": [
+   "2022-07-21",
+   "2022-07-28"
+  ],
+  "fetched_at": "2026-09-26T11:47:30",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-07-21": {
+  "status": "done",
+  "strikes": [
+   14850,
+   17650
+  ],
+  "contracts": 113,
+  "empty": 0,
+  "rows": 570480,
+  "week": [
+   "2022-07-14",
+   "2022-07-21"
+  ],
+  "fetched_at": "2026-09-26T11:47:52",
+  "tried_empty": [
+   "17650PE"
+  ],
+  "widened": 500
+ },
+ "2022-07-14": {
+  "status": "done",
+  "strikes": [
+   14850,
+   17300
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 543745,
+  "week": [
+   "2022-07-07",
+   "2022-07-14"
+  ],
+  "fetched_at": "2026-09-26T11:48:13",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-07-07": {
+  "status": "done",
+  "strikes": [
+   14500,
+   17150
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 625867,
+  "week": [
+   "2022-06-30",
+   "2022-07-07"
+  ],
+  "fetched_at": "2026-09-26T11:48:38",
+  "tried_empty": [
+   "17050PE",
+   "17150PE"
+  ],
+  "widened": 500
+ },
+ "2022-06-30": {
+  "status": "done",
+  "strikes": [
+   14350,
+   16950
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 1496232,
+  "week": [
+   "2022-06-23",
+   "2022-06-30"
+  ],
+  "fetched_at": "2026-09-26T11:49:08",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-06-23": {
+  "status": "done",
+  "strikes": [
+   14200,
+   16850
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 559013,
+  "week": [
+   "2022-06-16",
+   "2022-06-23"
+  ],
+  "fetched_at": "2026-09-26T11:49:27",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-06-16": {
+  "status": "done",
+  "strikes": [
+   14350,
+   17500
+  ],
+  "contracts": 128,
+  "empty": 0,
+  "rows": 598119,
+  "week": [
+   "2022-06-09",
+   "2022-06-16"
+  ],
+  "fetched_at": "2026-09-26T11:49:58",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-06-09": {
+  "status": "done",
+  "strikes": [
+   15250,
+   17800
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 551275,
+  "week": [
+   "2022-06-02",
+   "2022-06-09"
+  ],
+  "fetched_at": "2026-09-26T11:50:20",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-06-02": {
+  "status": "done",
+  "strikes": [
+   14900,
+   17700
+  ],
+  "contracts": 114,
+  "empty": 0,
+  "rows": 639282,
+  "week": [
+   "2022-05-26",
+   "2022-06-02"
+  ],
+  "fetched_at": "2026-09-26T11:50:43",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-05-26": {
+  "status": "done",
+  "strikes": [
+   14800,
+   17400
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 1298584,
+  "week": [
+   "2022-05-19",
+   "2022-05-26"
+  ],
+  "fetched_at": "2026-09-26T11:51:11",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-05-19": {
+  "status": "done",
+  "strikes": [
+   14750,
+   17400
+  ],
+  "contracts": 107,
+  "empty": 0,
+  "rows": 488552,
+  "week": [
+   "2022-05-12",
+   "2022-05-19"
+  ],
+  "fetched_at": "2026-09-26T11:51:30",
+  "tried_empty": [
+   "14800CE"
+  ],
+  "widened": 500
+ },
+ "2022-05-12": {
+  "status": "done",
+  "strikes": [
+   14750,
+   17950
+  ],
+  "contracts": 129,
+  "empty": 0,
+  "rows": 569949,
+  "week": [
+   "2022-05-05",
+   "2022-05-12"
+  ],
+  "fetched_at": "2026-09-26T11:52:02",
+  "tried_empty": [
+   "14850CE"
+  ],
+  "widened": 500
+ },
+ "2022-05-05": {
+  "status": "done",
+  "strikes": [
+   15600,
+   18400
+  ],
+  "contracts": 114,
+  "empty": 0,
+  "rows": 559507,
+  "week": [
+   "2022-04-28",
+   "2022-05-05"
+  ],
+  "fetched_at": "2026-09-26T11:52:27",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-04-28": {
+  "status": "done",
+  "strikes": [
+   15900,
+   18400
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 1548383,
+  "week": [
+   "2022-04-21",
+   "2022-04-28"
+  ],
+  "fetched_at": "2026-09-26T11:52:56",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-04-21": {
+  "status": "done",
+  "strikes": [
+   15800,
+   18650
+  ],
+  "contracts": 115,
+  "empty": 0,
+  "rows": 526213,
+  "week": [
+   "2022-04-13",
+   "2022-04-21"
+  ],
+  "fetched_at": "2026-09-26T11:53:19",
+  "tried_empty": [
+   "15850CE"
+  ],
+  "widened": 500
+ },
+ "2022-04-13": {
+  "status": "done",
+  "strikes": [
+   16450,
+   18850
+  ],
+  "contracts": 98,
+  "empty": 0,
+  "rows": 487195,
+  "week": [
+   "2022-04-07",
+   "2022-04-13"
+  ],
+  "fetched_at": "2026-09-26T11:53:38",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-04-07": {
+  "status": "done",
+  "strikes": [
+   16400,
+   19100
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 614990,
+  "week": [
+   "2022-03-31",
+   "2022-04-07"
+  ],
+  "fetched_at": "2026-09-26T11:54:05",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-03-31": {
+  "status": "done",
+  "strikes": [
+   16000,
+   18550
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 1748878,
+  "week": [
+   "2022-03-24",
+   "2022-03-31"
+  ],
+  "fetched_at": "2026-09-26T11:54:37",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-03-24": {
+  "status": "done",
+  "strikes": [
+   16000,
+   18450
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 571690,
+  "week": [
+   "2022-03-17",
+   "2022-03-24"
+  ],
+  "fetched_at": "2026-09-26T11:54:57",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-03-17": {
+  "status": "done",
+  "strikes": [
+   15450,
+   18350
+  ],
+  "contracts": 118,
+  "empty": 0,
+  "rows": 531272,
+  "week": [
+   "2022-03-10",
+   "2022-03-17"
+  ],
+  "fetched_at": "2026-09-26T11:55:23",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-03-10": {
+  "status": "done",
+  "strikes": [
+   14650,
+   17750
+  ],
+  "contracts": 126,
+  "empty": 0,
+  "rows": 557116,
+  "week": [
+   "2022-03-03",
+   "2022-03-10"
+  ],
+  "fetched_at": "2026-09-26T11:55:54",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-03-03": {
+  "status": "done",
+  "strikes": [
+   15200,
+   17800
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 511221,
+  "week": [
+   "2022-02-24",
+   "2022-03-03"
+  ],
+  "fetched_at": "2026-09-26T11:56:17",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-02-24": {
+  "status": "done",
+  "strikes": [
+   15200,
+   18450
+  ],
+  "contracts": 132,
+  "empty": 0,
+  "rows": 1645219,
+  "week": [
+   "2022-02-17",
+   "2022-02-24"
+  ],
+  "fetched_at": "2026-09-26T11:57:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-02-17": {
+  "status": "done",
+  "strikes": [
+   15800,
+   18650
+  ],
+  "contracts": 116,
+  "empty": 0,
+  "rows": 516261,
+  "week": [
+   "2022-02-10",
+   "2022-02-17"
+  ],
+  "fetched_at": "2026-09-26T11:57:26",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-02-10": {
+  "status": "done",
+  "strikes": [
+   16050,
+   18800
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 515300,
+  "week": [
+   "2022-02-03",
+   "2022-02-10"
+  ],
+  "fetched_at": "2026-09-26T11:57:54",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-02-03": {
+  "status": "done",
+  "strikes": [
+   15850,
+   18800
+  ],
+  "contracts": 120,
+  "empty": 0,
+  "rows": 558603,
+  "week": [
+   "2022-01-27",
+   "2022-02-03"
+  ],
+  "fetched_at": "2026-09-26T11:58:21",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-01-27": {
+  "status": "done",
+  "strikes": [
+   15850,
+   18950
+  ],
+  "contracts": 126,
+  "empty": 0,
+  "rows": 1770080,
+  "week": [
+   "2022-01-20",
+   "2022-01-27"
+  ],
+  "fetched_at": "2026-09-26T11:59:05",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-01-20": {
+  "status": "done",
+  "strikes": [
+   16650,
+   19350
+  ],
+  "contracts": 110,
+  "empty": 0,
+  "rows": 481853,
+  "week": [
+   "2022-01-13",
+   "2022-01-20"
+  ],
+  "fetched_at": "2026-09-26T11:59:28",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-01-13": {
+  "status": "done",
+  "strikes": [
+   16650,
+   19250
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 471113,
+  "week": [
+   "2022-01-06",
+   "2022-01-13"
+  ],
+  "fetched_at": "2026-09-26T11:59:50",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2022-01-06": {
+  "status": "done",
+  "strikes": [
+   16150,
+   18950
+  ],
+  "contracts": 114,
+  "empty": 0,
+  "rows": 556785,
+  "week": [
+   "2021-12-30",
+   "2022-01-06"
+  ],
+  "fetched_at": "2026-09-26T12:00:16",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-12-30": {
+  "status": "done",
+  "strikes": [
+   15400,
+   19200
+  ],
+  "contracts": 154,
+  "empty": 0,
+  "rows": 2226873,
+  "week": [
+   "2021-12-23",
+   "2021-12-30"
+  ],
+  "fetched_at": "2026-09-26T12:00:50",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-12-23": {
+  "status": "done",
+  "strikes": [
+   15400,
+   18400
+  ],
+  "contracts": 122,
+  "empty": 0,
+  "rows": 565515,
+  "week": [
+   "2021-12-16",
+   "2021-12-23"
+  ],
+  "fetched_at": "2026-09-26T12:01:18",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-12-16": {
+  "status": "done",
+  "strikes": [
+   16200,
+   18650
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 495216,
+  "week": [
+   "2021-12-09",
+   "2021-12-16"
+  ],
+  "fetched_at": "2026-09-26T12:01:40",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-12-09": {
+  "status": "done",
+  "strikes": [
+   15900,
+   18550
+  ],
+  "contracts": 108,
+  "empty": 0,
+  "rows": 479739,
+  "week": [
+   "2021-12-02",
+   "2021-12-09"
+  ],
+  "fetched_at": "2026-09-26T12:02:04",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-12-02": {
+  "status": "done",
+  "strikes": [
+   15800,
+   18550
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 469291,
+  "week": [
+   "2021-11-25",
+   "2021-12-02"
+  ],
+  "fetched_at": "2026-09-26T12:02:28",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-11-25": {
+  "status": "done",
+  "strikes": [
+   16200,
+   18950
+  ],
+  "contracts": 112,
+  "empty": 0,
+  "rows": 1500609,
+  "week": [
+   "2021-11-18",
+   "2021-11-25"
+  ],
+  "fetched_at": "2026-09-26T12:03:04",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-11-18": {
+  "status": "done",
+  "strikes": [
+   16700,
+   19200
+  ],
+  "contracts": 102,
+  "empty": 0,
+  "rows": 437746,
+  "week": [
+   "2021-11-11",
+   "2021-11-18"
+  ],
+  "fetched_at": "2026-09-26T12:03:25",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-11-11": {
+  "status": "done",
+  "strikes": [
+   16750,
+   19100
+  ],
+  "contracts": 96,
+  "empty": 0,
+  "rows": 421362,
+  "week": [
+   "2021-11-03",
+   "2021-11-11"
+  ],
+  "fetched_at": "2026-09-26T12:03:44",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-11-03": {
+  "status": "done",
+  "strikes": [
+   16600,
+   19200
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 501316,
+  "week": [
+   "2021-10-28",
+   "2021-11-03"
+  ],
+  "fetched_at": "2026-09-26T12:04:07",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-10-28": {
+  "status": "done",
+  "strikes": [
+   16800,
+   19400
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 1279606,
+  "week": [
+   "2021-10-21",
+   "2021-10-28"
+  ],
+  "fetched_at": "2026-09-26T12:04:39",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-10-21": {
+  "status": "done",
+  "strikes": [
+   17050,
+   19600
+  ],
+  "contracts": 104,
+  "empty": 0,
+  "rows": 449463,
+  "week": [
+   "2021-10-14",
+   "2021-10-21"
+  ],
+  "fetched_at": "2026-09-26T12:05:01",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-10-14": {
+  "status": "done",
+  "strikes": [
+   16750,
+   19350
+  ],
+  "contracts": 106,
+  "empty": 0,
+  "rows": 467369,
+  "week": [
+   "2021-10-07",
+   "2021-10-14"
+  ],
+  "fetched_at": "2026-09-26T12:05:24",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-10-07": {
+  "status": "done",
+  "strikes": [
+   16450,
+   18900
+  ],
+  "contracts": 100,
+  "empty": 0,
+  "rows": 508240,
+  "week": [
+   "2021-09-30",
+   "2021-10-07"
+  ],
+  "fetched_at": "2026-09-26T12:05:45",
+  "tried_empty": [],
+  "widened": 500
+ },
+ "2021-09-30": {
+  "status": "done",
+  "strikes": [
+   16500,
+   18950
+  ],
+  "contracts": 99,
+  "empty": 0,
+  "rows": 1116952,
+  "week": [
+   "2021-09-22",
+   "2021-09-30"
+  ],
+  "fetched_at": "2026-09-26T12:06:12",
+  "tried_empty": [
+   "18950PE"
+  ],
+  "widened": 500
+ },
+ "2026-09-29": {
+  "status": "done",
+  "strikes": [
+   21550,
+   24500
+  ],
+  "contracts": 119,
+  "empty": 0,
+  "rows": 2041428,
+  "week": [
+   "2026-09-22",
+   "2026-09-29"
+  ],
+  "fetched_at": "2026-09-30T19:04:23",
+  "tried_empty": [
+   "21550CE"
+  ],
+  "widened": 500
+ },
+ "2026-10-06": {
+  "status": "live",
+  "strikes": [
+   21550,
+   23800
+  ],
+  "contracts": 91,
+  "empty": 1,
+  "rows": 370992,
+  "week": [
+   "2026-09-29",
+   "2026-10-06"
+  ],
+  "widened": 500,
+  "fetched_at": "2026-09-30T19:06:00"
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "weeks": 258,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": 123820,
+ "gross_rs": 203276,
+ "charges": 79455,
+ "points": 2700.8,
+ "win_pct": 66.7,
+ "avg_win": 5756,
+ "avg_loss": -10072,
+ "max_drawdown_rs": -104439,
+ "exits": {
+  "TARGET": 142,
+  "EXPIRY": 101,
+  "STOP LOSS": 15
+ },
+ "avg_rolls": 4.14,
+ "avg_premium": 149.8,
+ "by_year": {
+  "2021": {
+   "weeks": 14,
+   "net_rs": -802,
+   "pts": 71.3,
+   "win_pct": 64.3
+  },
+  "2022": {
+   "weeks": 52,
+   "net_rs": 58230,
+   "pts": 1483.7,
+   "win_pct": 67.3
+  },
+  "2023": {
+   "weeks": 50,
+   "net_rs": -38613,
+   "pts": -500.7,
+   "win_pct": 64.0
+  },
+  "2024": {
+   "weeks": 52,
+   "net_rs": -19505,
+   "pts": -560.3,
+   "win_pct": 59.6
+  },
+  "2025": {
+   "weeks": 52,
+   "net_rs": 112026,
+   "pts": 1818.0,
+   "win_pct": 76.9
+  },
+  "2026": {
+   "weeks": 38,
+   "net_rs": 12484,
+   "pts": 388.7,
+   "win_pct": 65.8
+  }
+ },
+ "best": {
+  "expiry": "2025-02-06",
+  "net_rs": 19538.14
+ },
+ "worst": {
+  "expiry": "2025-04-09",
+  "net_rs": -66804.65
+ },
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "check_min": 5,
+  "sl_frac": 3.0,
+  "target_frac": 0.7,
+  "slippage": 0.5,
+  "lots": 1,
+  "cross_pts": 100,
+  "roll_on_expiry_day": true,
+  "label": "No hedge \u00b7 disaster stop at 3x premium"
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "weeks": 258,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": 280173,
+ "gross_rs": 357591,
+ "charges": 77419,
+ "points": 5595.1,
+ "win_pct": 62.0,
+ "avg_win": 7089,
+ "avg_loss": -8715,
+ "max_drawdown_rs": -64233,
+ "exits": {
+  "EXPIRY": 258
+ },
+ "avg_rolls": 4.63,
+ "avg_premium": 149.8,
+ "by_year": {
+  "2021": {
+   "weeks": 14,
+   "net_rs": 20438,
+   "pts": 500.2,
+   "win_pct": 64.3
+  },
+  "2022": {
+   "weeks": 52,
+   "net_rs": 30435,
+   "pts": 918.2,
+   "win_pct": 61.5
+  },
+  "2023": {
+   "weeks": 50,
+   "net_rs": -17291,
+   "pts": -86.2,
+   "win_pct": 60.0
+  },
+  "2024": {
+   "weeks": 52,
+   "net_rs": 22905,
+   "pts": 715.9,
+   "win_pct": 55.8
+  },
+  "2025": {
+   "weeks": 52,
+   "net_rs": 163852,
+   "pts": 2439.4,
+   "win_pct": 71.2
+  },
+  "2026": {
+   "weeks": 38,
+   "net_rs": 59834,
+   "pts": 1107.8,
+   "win_pct": 60.5
+  }
+ },
+ "best": {
+  "expiry": "2025-02-06",
+  "net_rs": 26913.84
+ },
+ "worst": {
+  "expiry": "2026-05-12",
+  "net_rs": -36754.53
+ },
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "check_min": 5,
+  "sl_frac": null,
+  "target_frac": null,
+  "slippage": 0.5,
+  "lots": 1,
+  "cross_pts": 100,
+  "roll_on_expiry_day": true,
+  "label": "No hedge \u00b7 no SL \u00b7 NO target"
+ }
+}

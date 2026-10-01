@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIFTY Option Chain</title>
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    --ink: #1a1c1e; --muted: #8a8f98; --faint: #b8bcc4;
+    --line: #eceef0; --line-strong: #dfe2e6;
+    --up: #0a8f5b; --up-soft: #e4f5ec; --down: #d13b3b; --down-soft: #fbe9e9;
+    --amber: #b8790a; --amber-soft: #fdf2df; --amber-line: #eab84f;
+    --surface: #fff; --surface-alt: #fafafb; --strike-bg: #f7f7f4;
+  }
+  html, body { height: 100%; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--surface); color: var(--ink); -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; }
+
+  .topbar { display: flex; align-items: center; gap: 14px; padding: 11px 18px; background: var(--surface); border-bottom: 1px solid var(--line-strong); flex-wrap: wrap; }
+  .topbar h1 { font-size: 14.5px; margin: 0; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .navlink { font-size: 12px; color: var(--muted); text-decoration: none; border: 1px solid var(--line-strong); border-radius: 6px; padding: 4px 10px; transition: color 0.15s, border-color 0.15s, background 0.15s; }
+  .navlink:hover { color: var(--ink); border-color: var(--faint); background: var(--surface-alt); }
+  .navlink.active { color: #fff; background: var(--ink); border-color: var(--ink); pointer-events: none; }
+  .spot { font-size: 17px; font-weight: 700; padding: 4px 12px; border-radius: 7px; background: var(--surface-alt); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+  .spot.up { color: var(--up); } .spot.down { color: var(--down); }
+  select { border: 1px solid var(--line-strong); border-radius: 6px; padding: 5px 9px; font-size: 12.5px; background: var(--surface); color: var(--ink); }
+  .status { margin-left: auto; font-size: 11.5px; color: var(--faint); display: flex; align-items: center; }
+  .dot { display:inline-block; width:6px; height:6px; border-radius:50%; background: var(--up); margin-right:6px; transition: background 0.2s; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 12.5px; table-layout: fixed; font-variant-numeric: tabular-nums; }
+  thead { position: sticky; top: 0; z-index: 20; }
+  thead .section-row th { padding: 9px 4px 5px; font-weight: 700; font-size: 12px; text-align: center; background: var(--surface); letter-spacing: 0.03em; border: 1px solid var(--line-strong); }
+  thead .section-row .calls-label { color: var(--down); text-align: left; padding-left: 16px; }
+  thead .section-row .puts-label { color: var(--up); text-align: right; padding-right: 16px; }
+  thead .col-row th { padding: 5px 6px 9px; font-weight: 600; color: var(--muted); font-size: 10.5px; text-align: center; background: var(--surface); letter-spacing: 0.02em; border: 1px solid var(--line-strong); }
+  tbody td { padding: 7px 6px; text-align: center; vertical-align: middle; position: relative; transition: background-color 0.35s ease; border: 1px solid var(--line); }
+  tbody tr:hover td { background: var(--surface-alt); }
+
+  .strike-cell { font-weight: 700; background: var(--strike-bg) !important; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+
+  .ltp-cell { position: relative; }
+  .trade-actions { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.9); opacity: 0; display: flex; gap: 3px; background: var(--surface); padding: 3px; border-radius: 6px; box-shadow: 0 2px 10px rgba(20,20,20,0.16); z-index: 5; pointer-events: none; transition: opacity 0.12s ease, transform 0.12s ease; }
+  .ltp-cell:hover .trade-actions { opacity: 1; transform: translate(-50%,-50%) scale(1); pointer-events: auto; }
+  .ltp-cell:hover strong { visibility: hidden; }
+  .tbtn { border: none; border-radius: 4px; width: 23px; height: 21px; font-size: 11px; font-weight: 700; color: #fff; cursor: pointer; transition: filter 0.1s; }
+  .tbtn.sell { background: var(--down); } .tbtn.buy { background: var(--up); }
+  .tbtn:hover { filter: brightness(1.1); }
+
+  .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(6px); background: var(--ink); color: #fff; padding: 9px 18px; border-radius: 22px; font-size: 12.5px; opacity: 0; transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; z-index: 100; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .chg-main { display: block; }
+  .chg-pct { display: block; font-size: 10px; margin-top: 1px; opacity: 0.85; }
+  .up { color: var(--up); } .down { color: var(--down); }
+
+
+  /* In-the-money shading: calls below spot / puts above spot -- distinct
+     from plain out-of-the-money strikes. Highlight styles set inline
+     (OI/OI-change top-3, leader amber) paint over this automatically. */
+  .itm { background: #f7efd3; }
+  .strike-cell.atm { background: #1a1c1e !important; color: #fff; }
+  tr.atm-row td { border-top: 2px solid #1a1c1e; }
+
+  /* Top-volume strike per side -- the exact signal the trading strategy
+     watches -- gets a restrained amber accent (a left/right rule + tint,
+     not a loud badge) so it reads at a glance without fighting the OI heat
+     coloring, which uses its own red/green tint for a different metric. */
+  .vol-leader { background: rgba(234, 184, 79, 0.45) !important; font-weight: 700; color: var(--amber); }
+  .vol-raw { font-weight: 700; text-decoration: underline dotted; }
+  .chain-stats { flex: 0 0 auto; padding: 6px 18px; font-size: 11.5px; color: var(--muted); border-bottom: 1px solid var(--line-strong); display: flex; gap: 18px; flex-wrap: wrap; }
+  .chain-stats b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+
+  .toggle { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+  .toggle button { border: 1px solid var(--line-strong); background: var(--surface); color: var(--muted); border-radius: 12px; padding: 3px 11px; font-size: 11px; cursor: pointer; transition: all 0.15s; }
+  .toggle button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .wrap { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .greeks-note { flex: 0 0 auto; padding: 6px 20px; font-size: 10.5px; color: var(--muted); border-top: 1px solid var(--line-strong); background: var(--surface); }
+
+  .iv-panel { flex: 0 0 auto; border-top: 1px solid var(--line-strong); padding: 8px 20px 6px; background: var(--surface); }
+  .iv-title { font-size: 12px; font-weight: 700; color: var(--ink); }
+  .iv-note { font-size: 10.5px; color: var(--muted); font-weight: 500; margin-left: 6px; }
+  #ivChart { width: 100%; height: 190px; display: block; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  .wrap::-webkit-scrollbar { width: 9px; }
+  .wrap::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 5px; }
+  .err { padding: 16px; color: var(--down); }
+  .ltp-cell { cursor: pointer; }
+  .market-pill { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: var(--down-soft); color: var(--down); }
+  .market-pill.open { background: var(--up-soft); color: var(--up); }
+  /* order ticket */
+  .ticket-overlay { position: fixed; inset: 0; background: rgba(20,22,30,0.35); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
+  .ticket-overlay.open { display: flex; }
+  .ticket { background: #fff; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 12px 40px rgba(0,0,0,0.25); overflow: hidden; }
+  .ticket-head { padding: 14px 18px; color: #fff; font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+  .ticket-head.BUY { background: var(--up); } .ticket-head.SELL { background: var(--down); }
+  .ticket-body { padding: 14px 18px; font-size: 12.5px; }
+  .ticket-side { display: flex; gap: 6px; margin-bottom: 12px; }
+  .ticket-side button { flex: 1; padding: 7px; border: 1px solid var(--line-strong); background: #fff; border-radius: 6px; font-weight: 700; cursor: pointer; }
+  .ticket-side button.active.BUY { background: var(--up); color: #fff; border-color: var(--up); }
+  .ticket-side button.active.SELL { background: var(--down); color: #fff; border-color: var(--down); }
+  .trow { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--line); }
+  .trow span:first-child { color: var(--muted); }
+  .trow b { font-variant-numeric: tabular-nums; }
+  .trow.warn b { color: var(--down); }
+  .ticket-foot { display: flex; gap: 8px; padding: 12px 18px 16px; }
+  .ticket-foot button { flex: 1; padding: 9px; border-radius: 7px; border: 1px solid var(--line-strong); background: #fff; font-weight: 700; cursor: pointer; }
+  .ticket-foot button.confirm { color: #fff; border: none; }
+  .ticket-foot button.confirm.BUY { background: var(--up); } .ticket-foot button.confirm.SELL { background: var(--down); }
+  .ticket-note { font-size: 10.5px; color: var(--muted); padding: 0 18px 10px; }
+  @media (max-width: 900px) {
+    .topbar { padding: 10px 12px; gap: 8px; }
+    table { min-width: 860px; font-size: 12px; }
+    .status { margin-left: 0; }
+  }
+  @media (hover: none) { .trade-actions { display: none; } }
+  /* ---- your range + market view ---- */
+  .range-bar { flex: 0 0 auto; padding: 8px 18px; font-size: 12px; border-bottom: 1px solid var(--line-strong); background: #f4fbf7; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .range-bar b { font-variant-numeric: tabular-nums; }
+  .rv-main { font-weight: 700; color: var(--ink); }
+  .rv-shift { font-weight: 700; padding: 2px 8px; border-radius: 10px; font-size: 11px; }
+  .rv-shift.UP { background: var(--up-soft); color: var(--up); } .rv-shift.DOWN { background: var(--down-soft); color: var(--down); } .rv-shift.FLAT { background: var(--surface-alt); color: var(--muted); }
+  .rv-live { font-weight: 800; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #fff4d6; color: #9a6508; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .55; } }
+  .verdict { font-weight: 800; font-size: 11.5px; padding: 3px 10px; border-radius: 10px; cursor: pointer; border: none; }
+  .verdict.BULL { background: var(--up); color: #fff; } .verdict.BEAR { background: var(--down); color: #fff; } .verdict.NEU { background: var(--ink); color: #fff; }
+  .view-panel { flex: 0 0 auto; padding: 10px 18px 12px; border-bottom: 1px solid var(--line-strong); background: var(--surface); display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr); gap: 18px; font-size: 12px; }
+  .view-panel h4 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .view-panel ul { margin: 0; padding-left: 16px; line-height: 1.6; }
+  .sig { display: flex; gap: 8px; align-items: baseline; padding: 2px 0; }
+  .sig .sc { font-weight: 800; min-width: 22px; text-align: center; border-radius: 4px; font-size: 11px; }
+  .sig .sc.p { background: var(--up-soft); color: var(--up); } .sig .sc.n { background: var(--down-soft); color: var(--down); } .sig .sc.z { background: var(--surface-alt); color: var(--muted); }
+  .view-note { grid-column: 1 / -1; font-size: 10.5px; color: var(--muted); }
+  td.in-range.strike-cell { box-shadow: inset 4px 0 0 #7fd3ab, inset -4px 0 0 #7fd3ab; }
+  .rtag { display: block; font-size: 9.5px; font-weight: 800; margin-top: 2px; letter-spacing: .02em; }
+  .rtag.up { color: var(--up); } .rtag.low { color: var(--down); }
+  @media (max-width: 900px) { .view-panel { grid-template-columns: 1fr; } }
+  .view-bar { flex: 0 0 auto; padding: 8px 18px; font-size: 12px; border-bottom: 1px solid var(--line-strong); background: #f6f7ff; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .view-bar .vlabel { font-weight: 800; color: var(--ink); }
+  .vchip { display: inline-flex; gap: 5px; align-items: baseline; padding: 3px 9px; border-radius: 10px; background: #fff; border: 1px solid var(--line-strong); }
+  .vchip.p { border-color: #9fdcbf; } .vchip.n { border-color: #f1b3b3; }
+  .vchip .sc { font-weight: 800; font-size: 11px; } .vchip.p .sc { color: var(--up); } .vchip.n .sc { color: var(--down); } .vchip.z .sc { color: var(--muted); }
+  .vbig { font-weight: 800; font-size: 12.5px; padding: 4px 11px; border-radius: 10px; color: #fff; }
+  .vbig.BULL { background: var(--up); } .vbig.BEAR { background: var(--down); } .vbig.NEU { background: var(--ink); }
+  /* elements toggled with the hidden attribute must really hide, even when
+     a class gives them display:flex/grid (that bug kept panels visible) */
+  [hidden] { display: none !important; }
+  .insight-strip { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 6px 14px; border-bottom: 1px solid var(--line-strong); background: var(--surface-alt); font-size: 11.5px; overflow-x: auto; white-space: nowrap; }
+  .insight-strip::-webkit-scrollbar { height: 0; }
+  .ins { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line-strong); cursor: pointer; }
+  .ins:empty { display: none; }
+  .ins.muted { color: var(--muted); }
+  .ins b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .ins .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .ins.BULL { border-color: #9fdcbf; } .ins.BEAR { border-color: #f1b3b3; }
+  .ins .UP { color: var(--up); font-weight: 800; } .ins .DOWN { color: var(--down); font-weight: 800; }
+  .ins.SELL { border-color: #9fdcbf; background: #e9f8f1; color: #0b7a55; font-weight: 700; } .ins.SELL b { color: #0b7a55; }
+  .ins.WIN { border-color: #f1d9ad; background: #fdf6e8; color: #9a6508; }
+  .ruleck { display: grid; grid-template-columns: 18px 1fr; gap: 3px 8px; margin: 6px 0; font-size: 12px; }
+  .ruleck .ic { font-weight: 800; } .ruleck .ic.ok { color: var(--up); } .ruleck .ic.no { color: var(--muted); } .ruleck .ic.hint { color: #b7791f; }
+  .ruleck .bt { grid-column: 2; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
+  .eye-btn { margin-left: auto; flex: 0 0 auto; position: relative; border: 1px solid var(--ink); background: var(--ink); color: #fff; border-radius: 10px; padding: 4px 11px; font-size: 11.5px; font-weight: 700; cursor: pointer; }
+  .eye-badge { position: absolute; top: -6px; right: -6px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--down); color: #fff; font-size: 10px; font-weight: 800; line-height: 17px; text-align: center; }
+  .drawer-scrim { position: fixed; inset: 0; background: rgba(20,22,30,0.25); z-index: 40; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: var(--surface); box-shadow: -8px 0 30px rgba(0,0,0,0.18); z-index: 41; transform: translateX(105%); transition: transform 0.22s ease; display: flex; flex-direction: column; }
+  .drawer.open { transform: translateX(0); }
+  .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line-strong); font-size: 13.5px; }
+  .drawer-x { border: none; background: var(--surface-alt); border-radius: 8px; width: 28px; height: 28px; cursor: pointer; font-size: 13px; }
+  .drawer-body { overflow-y: auto; padding: 4px 16px 16px; font-size: 12.5px; }
+  .drawer-body section { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .drawer-body section:empty { display: none; }
+  .drawer-body h4 { margin: 0 0 8px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .drawer-body ul { margin: 0; padding-left: 16px; line-height: 1.55; }
+  .drawer-body li.crit { color: var(--down); font-weight: 600; }
+  .dgrid { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; }
+  .dgrid span:nth-child(odd) { color: var(--muted); }
+  .idea { border: 1px solid var(--line-strong); border-radius: 10px; padding: 9px 11px; margin-bottom: 8px; }
+  .idea .t { display: flex; justify-content: space-between; gap: 8px; font-weight: 700; }
+  .idea .l { color: var(--muted); font-size: 11.5px; margin: 3px 0 5px; }
+  .idea .n { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 10px; font-size: 11.5px; font-variant-numeric: tabular-nums; }
+  .idea .n span { color: var(--muted); } .idea a { font-size: 11.5px; font-weight: 700; color: var(--accent, #4f5fe0); text-decoration: none; }
+  .idea .warnb { font-size: 10px; font-weight: 800; color: #b7791f; background: #fdf1dc; border-radius: 999px; padding: 1px 6px; white-space: nowrap; }
+  .idea .fitb { font-size: 10px; font-weight: 800; color: #0e9f6e; background: #e6f7f0; border-radius: 999px; padding: 1px 6px; }
+  .drawer-note { font-size: 10.5px; color: var(--muted); margin: 12px 0 0; }
+  .vbig { font-weight: 800; font-size: 11.5px; padding: 3px 10px; border-radius: 10px; color: #fff; }
+  .vbig.BULL { background: var(--up); } .vbig.BEAR { background: var(--down); } .vbig.NEU { background: var(--ink); }
+  .hist { font-variant-numeric: tabular-nums; }
+  .hist div { padding: 2px 0; }
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="ticket-overlay" id="ticketOverlay">
+  <div class="ticket" role="dialog" aria-modal="true">
+    <div class="ticket-head" id="ticketHead"><span id="ticketTitle">—</span><span id="ticketMarket" style="font-size:11px;opacity:.9"></span></div>
+    <div class="ticket-body">
+      <div class="ticket-side">
+        <button type="button" class="BUY" id="tkBuy">BUY</button>
+        <button type="button" class="SELL" id="tkSell">SELL</button>
+      </div>
+      <div class="trow"><span>Lots</span><span><input id="tkLots" type="number" min="1" value="1" style="width:64px;text-align:center;border:1px solid var(--line-strong);border-radius:6px;padding:3px"> <span id="tkUnits" style="color:var(--muted)"></span></span></div>
+      <div class="trow"><span>Trade type</span><b id="tkType">—</b></div>
+      <div class="trow"><span>LTP · Bid / Ask</span><b id="tkQuote">…</b></div>
+      <div class="trow"><span>Paper fill (at bid/ask)</span><b id="tkFill">…</b></div>
+      <div class="trow"><span>Premium value</span><b id="tkPremium">…</b></div>
+      <div class="trow"><span>Margin required (Fyers)</span><b id="tkMargin">…</b></div>
+      <div class="trow"><span>Est. charges (round trip)</span><b id="tkCharges">…</b></div>
+      <div class="trow" id="tkRiskRow"><span>Max loss (this leg, at expiry)</span><b id="tkRisk">…</b></div>
+    </div>
+    <div class="ticket-note">Paper trade only — nothing is sent to the exchange. Press Enter to confirm, Esc to cancel.</div>
+    <div class="ticket-foot">
+      <button type="button" id="tkCancel">Cancel</button>
+      <button type="button" class="confirm" id="tkConfirm">Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="topbar">
+  <h1>NIFTY Option Chain</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink active" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+  <span class="spot" id="spotVal">--</span>
+  <span class="market-pill" id="marketPill">…</span>
+  <select id="expirySelect"></select>
+  <div class="toggle">
+    Qty / Lot
+    <button id="btnQty" class="active">Qty</button>
+    <button id="btnLot">Lot</button>
+  </div>
+  <div class="toggle" title="New trades added from this chain will be tagged this way">
+    Order Type
+    <button id="btnIntraday" class="active">Intraday</button>
+    <button id="btnPositional">Positional</button>
+  </div>
+  <div class="toggle" title="Delta/Theta computed from LTP via Black-Scholes (Fyers doesn't provide Greeks directly) -- an approximation, see the note below the table when on">
+    Greeks
+    <button id="btnGreeksOff" class="active">Off</button>
+    <button id="btnGreeksOn">On</button>
+  </div>
+  <div class="toggle" title="Number of lots to trade when you click S/B on a strike">
+    Lots
+    <input id="orderLots" type="number" min="1" value="1" style="width:44px;border:1px solid var(--line-strong);border-radius:6px;padding:3px 6px;font-size:12px;text-align:center;">
+  </div>
+  <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">connecting...</span></div>
+</div>
+<div class="insight-strip" id="insightStrip">
+  <span class="ins" id="insSell" title="Premium-selling checklist (backtested rules) -- click for details"></span>
+  <span class="ins" id="insView"></span>
+  <span class="ins" id="insRange"></span>
+  <span class="ins muted" id="insStats"></span>
+  <span class="ins" id="insAlgo"></span>
+  <span class="ins" id="insIdea" title="Best strategy idea for this expiry right now -- click for the top 3"></span>
+  <button class="eye-btn" id="btnInsights" title="Open the full market view, your range, suggestions and stats">👁 Details<span class="eye-badge" id="eyeBadge" hidden></span></button>
+</div>
+<div class="drawer-scrim" id="drawerScrim" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head"><b>Market insights</b><button class="drawer-x" id="drawerClose" title="Close (Esc)">✕</button></div>
+  <div class="drawer-body">
+    <section id="dSell"></section>
+    <section id="dTips"></section>
+    <section id="dView"></section>
+    <section id="dIdeas"></section>
+    <section id="dRange"></section>
+    <section id="dStats"></section>
+    <p class="drawer-note">Signals from your range method and the option chain — decision support, not a trade instruction.</p>
+  </div>
+</aside>
+<div class="wrap">
+<table>
+  <thead id="chainHead"></thead>
+  <tbody id="chainBody">
+    <tr><td colspan="11" style="padding:20px;">Loading...</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="iv-panel" id="ivPanel" hidden>
+  <span class="iv-title">IV Smile</span>
+  <span class="iv-note">Implied Volatility by strike — Call IV (red) vs Put IV (green)</span>
+  <svg id="ivChart" viewBox="0 0 1600 190"></svg>
+</div>
+<div class="greeks-note" id="greeksNote" hidden>Delta/Theta/IV are computed here from LTP via Black-Scholes (Fyers doesn't provide Greeks directly) -- an approximation using a synthetic forward price (from put-call parity, since NIFTY options price off the futures, not the raw index), not exchange-verified figures. Can show "—" for illiquid/stale-quote strikes where a valid IV can't be solved for.</div>
+
+<script>
+let currentExpiry = "";
+let lotSize = 65;
+let qtyMode = true;
+let orderTradeType = "INTRADAY";
+let showGreeks = false;
+
+function renderHead() {
+  const extra = showGreeks ? 3 : 0;
+  document.getElementById("chainHead").innerHTML = `
+    <tr class="section-row">
+      <th colspan="${5 + extra}" class="calls-label">CALLS</th>
+      <th></th>
+      <th colspan="${5 + extra}" class="puts-label">PUTS</th>
+    </tr>
+    <tr class="col-row">
+      <th>Change</th><th>OI</th><th>OI Chg</th><th>Volume</th>
+      ${showGreeks ? `<th>Theta</th><th>Delta</th><th>IV</th>` : ``}
+      <th>LTP</th>
+      <th>Strike</th>
+      <th>LTP</th>
+      ${showGreeks ? `<th>IV</th><th>Delta</th><th>Theta</th>` : ``}
+      <th>Volume</th><th>OI Chg</th><th>OI</th><th>Change</th>
+    </tr>
+  `;
+}
+document.getElementById("btnGreeksOn").addEventListener("click", () => {
+  showGreeks = true;
+  document.getElementById("btnGreeksOn").classList.add("active");
+  document.getElementById("btnGreeksOff").classList.remove("active");
+  document.getElementById("greeksNote").hidden = false;
+  document.getElementById("ivPanel").hidden = false;
+  renderHead();
+  loadChain();
+});
+document.getElementById("btnGreeksOff").addEventListener("click", () => {
+  showGreeks = false;
+  document.getElementById("btnGreeksOff").classList.add("active");
+  document.getElementById("btnGreeksOn").classList.remove("active");
+  document.getElementById("greeksNote").hidden = true;
+  document.getElementById("ivPanel").hidden = true;
+  renderHead();
+  loadChain();
+});
+
+function fmtNum(n) {
+  if (n === null || n === undefined) return "-";
+  return Math.round(n).toLocaleString("en-US");
+}
+function fmtQty(n) {
+  if (n === null || n === undefined) return "-";
+  const v = qtyMode ? n : n / lotSize;
+  return fmtNum(v);
+}
+function fmtPrice(n) {
+  if (n === null || n === undefined) return "-";
+  return Number(n).toFixed(2).replace(/\.00$/, "");
+}
+function fmtGreek(n, decimals) {
+  if (n === null || n === undefined) return "—";
+  return Number(n).toFixed(decimals);
+}
+function signClass(n) { return n > 0 ? "up" : (n < 0 ? "down" : ""); }
+function invSignClass(n) { return n > 0 ? "down" : (n < 0 ? "up" : ""); }
+
+// Sparse highlighting -- only the top-3 strikes per side get a coloured
+// pill (by OI magnitude, or by |OI change| magnitude), instead of tinting
+// every row by magnitude. Fewer coloured cells, but the ones that light up
+// are the ones that actually matter.
+function topNStrikes(strikes, getter, n) {
+  return new Set(
+    strikes.map(s => ({ strike: s.strike, val: Math.abs(getter(s)) }))
+      .filter(x => x.val > 0)
+      .sort((a, b) => b.val - a.val)
+      .slice(0, n)
+      .map(x => x.strike)
+  );
+}
+// OI Change needs its top-n picked separately by sign, not by raw magnitude
+// -- ranking by |value| alone would happily show 3 strikes that are ALL
+// OI-buildup (or all unwinding) whenever one side's swings are simply
+// bigger, silently hiding the other direction's most-important strikes.
+// Picking top-n positive (buildup, coloured green) and top-n negative
+// (unwinding, red) independently guarantees both directions are visible.
+function topNSigned(strikes, getter, n) {
+  const vals = strikes.map(s => ({ strike: s.strike, val: getter(s) })).filter(x => x.val);
+  const positives = vals.filter(x => x.val > 0).sort((a, b) => b.val - a.val).slice(0, n);
+  const negatives = vals.filter(x => x.val < 0).sort((a, b) => a.val - b.val).slice(0, n);
+  return new Set([...positives, ...negatives].map(x => x.strike));
+}
+const CE_RGB = "216,64,64";
+const PE_RGB = "10,143,91";
+const UP_RGB = "10,143,91";
+const DOWN_RGB = "216,64,64";
+const HILITE_ALPHA = 0.30;
+
+async function loadExpiries() {
+  const res = await fetch("/api/expiries");
+  const j = await res.json();
+  if (!j.ok) { document.getElementById("statusText").textContent = "error: " + j.error; return; }
+  const sel = document.getElementById("expirySelect");
+  sel.innerHTML = "";
+  j.expiries.forEach((e) => {
+    const opt = document.createElement("option");
+    opt.value = e.expiry === j.expiries[0].expiry ? "" : e.expiry;
+    const [dd, mm, yy] = e.date.split("-");
+    const dte = Math.round((new Date(`${yy}-${mm}-${dd}T00:00:00`) - new Date(new Date().toDateString())) / 86400000);
+    opt.textContent = `${e.date} (${e.expiry_flag === "W" ? "Weekly" : "Monthly"}) · ${dte === 0 ? "expiry today" : dte + " DTE"}`;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener("change", () => { currentExpiry = sel.value; loadChain(); });
+}
+
+let chainInFlight = false;
+async function loadChain() {
+  if (chainInFlight) return;  // a slow Fyers call must not stack up overlapping polls
+  chainInFlight = true;
+  try {
+    const res = await fetch(`/api/chain?strikecount=10&expiry=${currentExpiry}${showGreeks ? "&greeks=1" : ""}`);
+    const j = await res.json();
+    if (!j.ok) {
+      document.getElementById("chainBody").innerHTML = `<tr><td colspan="${showGreeks ? 17 : 11}" class="err"></td></tr>`;
+      document.querySelector("#chainBody .err").textContent = j.error;  // text, not HTML
+      document.getElementById("statusDot").style.background = "#d84040";
+      document.getElementById("statusText").textContent = "error";
+      return;
+    }
+    render(j);
+    const open = j.market && j.market.state === "OPEN";
+    lastMarket = j.market;
+    const pill = document.getElementById("marketPill");
+    pill.textContent = j.market ? j.market.label : "";
+    pill.className = "market-pill" + (open ? " open" : "");
+    document.getElementById("statusDot").style.background = open ? "#0a8f5b" : "#b8bcc4";
+    // Outside market hours these are LAST TRADED prices, not live ones.
+    document.getElementById("statusText").textContent =
+      (open ? "live · fetched " : "last traded prices · fetched ") + new Date().toLocaleTimeString();
+  } catch (e) {
+    document.getElementById("statusDot").style.background = "#d84040";
+    document.getElementById("statusText").textContent = "connection error — prices NOT updating";
+  } finally {
+    chainInFlight = false;
+  }
+}
+let lastMarket = null;
+
+function render(data) {
+  document.getElementById("spotVal").textContent = fmtPrice(data.spot);
+
+  const strikes = data.strikes;
+  const ceTopOi = topNStrikes(strikes, s => s.ce?.oi || 0, 3);
+  const peTopOi = topNStrikes(strikes, s => s.pe?.oi || 0, 3);
+  const ceTopChg = topNSigned(strikes, s => s.ce?.oich || 0, 3);
+  const peTopChg = topNSigned(strikes, s => s.pe?.oich || 0, 3);
+
+  // Volume-leader highlight = YOUR method's leader: the 100-pt strike with
+  // the highest volume today, read straight from the Volume column shown
+  // (so the highlight always sits on the biggest number).
+  let ceLeaderStrike = null, maxCeVol = 0;
+  let peLeaderStrike = null, maxPeVol = 0;
+  strikes.forEach(s => {
+    if (s.strike % 100 !== 0) return;
+    const cv = s.ce?.volume || 0, pv = s.pe?.volume || 0;
+    if (cv > maxCeVol) { maxCeVol = cv; ceLeaderStrike = s.strike; }
+    if (pv > maxPeVol) { maxPeVol = pv; peLeaderStrike = s.strike; }
+  });
+  const leaderCls = "vol-leader";
+  const leaderTip = "Volume leader (your method): highest volume today among 100-pt strikes";
+  renderInsights(data);
+  renderSell(data.sell);
+  // your range, drawn on the strike column (only for the expiry it belongs to)
+  const rv = data.range && data.range.for_viewed_expiry ? data.range : null;
+  const cur = rv ? (rv.live && rv.live.changed ? rv.live : rv.official) : null;
+  const nearest = v => strikes.length ? strikes.reduce((a, b) => Math.abs(b.strike - v) < Math.abs(a.strike - v) ? b : a).strike : null;
+  const upRow = cur ? nearest(cur.upper) : null, lowRow = cur ? nearest(cur.lower) : null;
+  const rangeTag = (k) => !cur ? "" :
+    (k === upRow ? `<span class="rtag up">▲ UPPER ${cur.upper.toFixed(0)}</span>` : "") +
+    (k === lowRow ? `<span class="rtag low">▼ LOWER ${cur.lower.toFixed(0)}</span>` : "");
+  const inRange = (k) => cur && k >= cur.lower && k <= cur.upper;
+
+  const rows = [];
+  const atmStrike = strikes.length ? strikes.reduce((a, b) => Math.abs(b.strike - data.spot) < Math.abs(a.strike - data.spot) ? b : a).strike : null;
+  strikes.forEach(s => {
+    const pe = s.pe || {}, ce = s.ce || {};
+    const ceOiStyle = ceTopOi.has(s.strike) ? `background: rgba(${CE_RGB}, ${HILITE_ALPHA});` : "";
+    const peOiStyle = peTopOi.has(s.strike) ? `background: rgba(${PE_RGB}, ${HILITE_ALPHA});` : "";
+    // CALL OI buildup = fresh call writing = resistance forming = bearish
+    // for the market (red); CALL OI unwinding = that resistance lifting =
+    // bullish (green). PUT OI buildup = fresh put writing = support
+    // forming = bullish (green); PUT OI unwinding = support breaking =
+    // bearish (red) -- so the two sides use OPPOSITE colours for the same
+    // sign of OI change, not a shared "positive=green" rule.
+    const ceChgStyle = ceTopChg.has(s.strike) ? `background: rgba(${(ce.oich || 0) >= 0 ? DOWN_RGB : UP_RGB}, ${HILITE_ALPHA});` : "";
+    const peChgStyle = peTopChg.has(s.strike) ? `background: rgba(${(pe.oich || 0) >= 0 ? UP_RGB : DOWN_RGB}, ${HILITE_ALPHA});` : "";
+    const ceIsLeader = s.strike === ceLeaderStrike;
+    const peIsLeader = s.strike === peLeaderStrike;
+    // ITM shading -- calls below spot / puts above spot get a subtle tint
+    // so it's obvious at a glance which strikes actually have intrinsic
+    // value, same convention as Kite/Sensibull. Plain inline highlight
+    // styles above (OI/OI-change top-3, leader amber) naturally paint over
+    // this tint since inline beats a class with no !important.
+    const ceItm = s.strike < data.spot ? "itm" : "";
+    const peItm = s.strike > data.spot ? "itm" : "";
+
+    // Column order, outward from Strike on both sides: LTP, Volume, OI Chg,
+    // OI, Change -- price and volume sit closest to the strike since those
+    // are what you look at first; OI/OI-change (highlighted sparsely, only
+    // the top-3 strikes per side) sit further out.
+    rows.push(`<tr class="${s.strike === atmStrike ? 'atm-row' : ''}">
+      <td class="${ceItm}">
+        <span class="chg-main">${fmtPrice(ce.ltpch)}</span>
+        <span class="chg-pct">${fmtPrice(ce.ltpchp)}%</span>
+      </td>
+      <td class="${ceItm}" style="${ceOiStyle}">${fmtQty(ce.oi)}</td>
+      <td class="${ceItm} ${ceTopChg.has(s.strike) ? invSignClass(ce.oich) : ''}" style="${ceChgStyle}">
+        <span class="chg-main">${fmtQty(ce.oich)}</span>
+        <span class="chg-pct">${fmtPrice(ce.oichp)}%</span>
+      </td>
+      <td class="${ceIsLeader ? leaderCls : ceItm}" ${ceIsLeader ? `title="${leaderTip}"` : ""}>${fmtQty(ce.volume)}</td>
+      ${showGreeks ? `<td class="${ceItm}">${fmtGreek(ce.theta, 2)}</td><td class="${ceItm}">${fmtGreek(ce.delta, 3)}</td><td class="${ceItm}">${ce.iv != null ? ce.iv + '%' : '—'}</td>` : ``}
+      <td class="ltp-cell ${ceItm}" ${ce.symbol ? `onclick="openTicket('${ce.symbol}',${s.strike},'CE','BUY')"` : ""} title="Click to open an order ticket">
+        <strong>${fmtPrice(ce.ltp)}</strong>
+        ${ce.symbol ? `<span class="trade-actions">
+          <button class="tbtn buy" onclick="event.stopPropagation();openTicket('${ce.symbol}',${s.strike},'CE','BUY')">B</button>
+          <button class="tbtn sell" onclick="event.stopPropagation();openTicket('${ce.symbol}',${s.strike},'CE','SELL')">S</button>
+        </span>` : ""}
+      </td>
+      <td class="strike-cell ${s.strike === atmStrike ? 'atm' : ''} ${inRange(s.strike) ? 'in-range' : ''}" ${s.strike === atmStrike ? 'title="At the money (nearest strike to spot)"' : ""}>${fmtPrice(s.strike)}${rangeTag(s.strike)}</td>
+      <td class="ltp-cell ${peItm}" ${pe.symbol ? `onclick="openTicket('${pe.symbol}',${s.strike},'PE','BUY')"` : ""} title="Click to open an order ticket">
+        <strong>${fmtPrice(pe.ltp)}</strong>
+        ${pe.symbol ? `<span class="trade-actions">
+          <button class="tbtn buy" onclick="event.stopPropagation();openTicket('${pe.symbol}',${s.strike},'PE','BUY')">B</button>
+          <button class="tbtn sell" onclick="event.stopPropagation();openTicket('${pe.symbol}',${s.strike},'PE','SELL')">S</button>
+        </span>` : ""}
+      </td>
+      ${showGreeks ? `<td class="${peItm}">${pe.iv != null ? pe.iv + '%' : '—'}</td><td class="${peItm}">${fmtGreek(pe.delta, 3)}</td><td class="${peItm}">${fmtGreek(pe.theta, 2)}</td>` : ``}
+      <td class="${peIsLeader ? leaderCls : peItm}" ${peIsLeader ? `title="${leaderTip}"` : ""}>${fmtQty(pe.volume)}</td>
+      <td class="${peItm} ${peTopChg.has(s.strike) ? signClass(pe.oich) : ''}" style="${peChgStyle}">
+        <span class="chg-main">${fmtQty(pe.oich)}</span>
+        <span class="chg-pct">${fmtPrice(pe.oichp)}%</span>
+      </td>
+      <td class="${peItm}" style="${peOiStyle}">${fmtQty(pe.oi)}</td>
+      <td class="${peItm}">
+        <span class="chg-main">${fmtPrice(pe.ltpch)}</span>
+        <span class="chg-pct">${fmtPrice(pe.ltpchp)}%</span>
+      </td>
+    </tr>`);
+  });
+  const firstRender = !document.getElementById("chainBody").dataset.rendered;
+  document.getElementById("chainBody").innerHTML = rows.join("");
+  document.getElementById("chainBody").dataset.rendered = "1";
+  if (firstRender) {  // narrow screens scroll the table horizontally -- start centred on the strike column
+    const wrap = document.querySelector(".wrap");
+    wrap.scrollLeft = (wrap.scrollWidth - wrap.clientWidth) / 2;
+  }
+  if (showGreeks) renderIvChart(strikes, data.spot);
+}
+
+function niceStep(range, targetTicks) {
+  const raw = range / targetTicks;
+  const mag = Math.pow(10, Math.floor(Math.log10(raw || 1)));
+  const norm = raw / mag;
+  return (norm >= 5 ? 5 : norm >= 2 ? 2 : 1) * mag;
+}
+
+// IV Smile -- Call IV vs Put IV plotted per strike. Reuses the same
+// `strikes` the table already has (iv is only present when Greeks is on,
+// same data the Delta/Theta/IV columns show), so no extra API call.
+function renderIvChart(strikes, spot) {
+  const svg = document.getElementById("ivChart");
+  const pts = strikes.map(s => ({ strike: s.strike, ceIv: s.ce?.iv, peIv: s.pe?.iv }));
+  const allIv = pts.flatMap(p => [p.ceIv, p.peIv]).filter(v => v != null);
+  if (!allIv.length) { svg.innerHTML = `<text x="800" y="95" text-anchor="middle" fill="#b8bcc4" font-size="13">No IV could be computed for this chain right now</text>`; return; }
+
+  const W = 1600, H = 190, padL = 45, padR = 20, padT = 12, padB = 46;
+  const prices = pts.map(p => p.strike);
+  const minP = Math.min(...prices), maxP = Math.max(...prices);
+  let minV = Math.min(...allIv), maxV = Math.max(...allIv);
+  const pad = Math.max(0.5, (maxV - minV) * 0.15);
+  minV -= pad; maxV += pad;
+
+  const x = p => padL + (p - minP) / (maxP - minP || 1) * (W - padL - padR);
+  const y = v => padT + (1 - (v - minV) / (maxV - minV || 1)) * (H - padT - padB);
+
+  const yStep = niceStep(maxV - minV, 4);
+  const yTicks = [];
+  for (let v = Math.ceil(minV / yStep) * yStep; v <= maxV; v += yStep) yTicks.push(Math.round(v * 10) / 10);
+
+  const linePath = (key) => {
+    let d = "", started = false;
+    pts.forEach(p => {
+      const v = p[key];
+      if (v == null) { started = false; return; }
+      d += `${started ? "L" : "M"}${x(p.strike).toFixed(1)},${y(v).toFixed(1)} `;
+      started = true;
+    });
+    return d;
+  };
+  const dots = (key, color) => pts.filter(p => p[key] != null)
+    .map(p => `<circle cx="${x(p.strike).toFixed(1)}" cy="${y(p[key]).toFixed(1)}" r="2.5" fill="${color}"/>`).join("");
+
+  svg.innerHTML = `
+    ${yTicks.map(v => `<line x1="${padL}" y1="${y(v).toFixed(1)}" x2="${W - padR}" y2="${y(v).toFixed(1)}" stroke="#eceef0"/>
+      <text x="${padL - 8}" y="${(y(v) + 3.5).toFixed(1)}" text-anchor="end" font-size="10" fill="#8a8f98">${v}%</text>`).join("")}
+    <path d="${linePath("ceIv")}" fill="none" stroke="#d13b3b" stroke-width="1.8"/>
+    <path d="${linePath("peIv")}" fill="none" stroke="#0a8f5b" stroke-width="1.8"/>
+    ${dots("ceIv", "#d13b3b")}
+    ${dots("peIv", "#0a8f5b")}
+    ${spot ? `<line x1="${x(spot).toFixed(1)}" y1="${padT}" x2="${x(spot).toFixed(1)}" y2="${H - padB}" stroke="#b8bcc4" stroke-width="1" stroke-dasharray="4,3"/>` : ""}
+    ${pts.map(p => `<text x="${x(p.strike).toFixed(1)}" y="${H - padB + 12}" text-anchor="end" font-size="9" fill="#8a8f98" transform="rotate(-45 ${x(p.strike).toFixed(1)},${H - padB + 12})">${p.strike}</text>`).join("")}
+  `;
+}
+
+document.getElementById("btnQty").addEventListener("click", () => {
+  qtyMode = true;
+  document.getElementById("btnQty").classList.add("active");
+  document.getElementById("btnLot").classList.remove("active");
+  loadChain();
+});
+document.getElementById("btnLot").addEventListener("click", () => {
+  qtyMode = false;
+  document.getElementById("btnLot").classList.add("active");
+  document.getElementById("btnQty").classList.remove("active");
+  loadChain();
+});
+
+document.getElementById("btnIntraday").addEventListener("click", () => {
+  orderTradeType = "INTRADAY";
+  document.getElementById("btnIntraday").classList.add("active");
+  document.getElementById("btnPositional").classList.remove("active");
+});
+document.getElementById("btnPositional").addEventListener("click", () => {
+  orderTradeType = "POSITIONAL";
+  document.getElementById("btnPositional").classList.add("active");
+  document.getElementById("btnIntraday").classList.remove("active");
+});
+
+renderHead();
+loadExpiries().then(loadChain);
+setInterval(loadChain, 3000);
+
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+const vcls = v => v.includes("BULL") ? "BULL" : v.includes("BEAR") ? "BEAR" : "NEU";
+const escH = x => String(x ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const sgn = n => (n > 0 ? "+" : "") + n;
+// A suggestion is "critical" (counted on the eye badge, shown in red) when
+// it's about a sold leg / the range being threatened right now.
+const isCrit = t => /IN THE MONEY|only \d+ pts from NIFTY|is ABOVE the range|is BELOW the range|narrow/.test(t);
+
+function renderInsights(data) {
+  const view = data.view, rv = data.range, st = data.stats;
+  const cur = rv ? (rv.live && rv.live.changed ? rv.live : rv.official) : null;
+  const shift = rv ? ((rv.live && rv.live.shift) || rv.last_shift) : null;
+  const legs = rv ? Object.values((rv.strategy || {}).legs || {}) : [];
+
+  // ---- slim strip -----------------------------------------------------------
+  document.getElementById("insView").className = "ins " + (view ? vcls(view.verdict) : "");
+  document.getElementById("insView").innerHTML = view ?
+    `📊 <b>${view.option_verdict}</b> ${sgn(view.option_score)}${view.range_signal ? ` · with range <b>${view.verdict}</b> ${sgn(view.score)}` : ""}` : "";
+  document.getElementById("insRange").innerHTML = cur ?
+    `📐 <b>${cur.lower.toFixed(0)}–${cur.upper.toFixed(0)}</b> (${(cur.upper - cur.lower).toFixed(0)})` +
+    (shift && shift.direction !== "FLAT" ? ` <span class="${shift.direction}">${shift.direction === "UP" ? "▲" : "▼"}${Math.abs(shift.points).toFixed(0)}</span>` : "") +
+    (rv.live && rv.live.changed ? ` <b style="color:#9a6508">LIVE</b>` : "") +
+    (rv.own ? ` <span style="color:var(--amber)" title="This expiry's own volume leaders (the range engine tracks another expiry)">own</span>` : "") : "";
+  document.getElementById("insStats").innerHTML = st ?
+    `PCR <b>${st.pcr_oi ?? "—"}</b> · MaxPain <b>${st.max_pain ?? "—"}</b> · Straddle <b>${st.atm_straddle ?? "—"}</b>` +
+    (st.iv_rank != null ? ` · IVR <b>${st.iv_rank}</b>` : "") : "";
+  document.getElementById("insAlgo").innerHTML = legs.length ? `📐 holds <b>${legs.map(l => l.strike + l.side).join(" + ")}</b>` : "";
+  const crit = view ? view.suggestions.filter(isCrit).length : 0;
+  const badge = document.getElementById("eyeBadge");
+  badge.hidden = !crit; badge.textContent = crit;
+
+  // ---- drawer sections (rendered every poll, visible when open) ----------------
+  document.getElementById("dTips").innerHTML = view ? `<h4>For your method ${crit ? `<span style="color:var(--down)">${crit} to watch</span>` : ""}</h4>
+    <ul>${view.suggestions.map(t => `<li class="${isCrit(t) ? "crit" : ""}">${escH(t)}</li>`).join("")}</ul>` : "";
+  document.getElementById("dView").innerHTML = view ? `<h4>Market view <span class="vbig ${vcls(view.verdict)}">${view.verdict} ${sgn(view.score)}</span></h4>
+    <div style="margin-bottom:6px">Option data alone: <span class="vbig ${vcls(view.option_verdict)}">${view.option_verdict} ${sgn(view.option_score)}</span></div>
+    ${view.signals.map(x => `<div class="sig"><span class="sc ${x.score > 0 ? "p" : x.score < 0 ? "n" : "z"}">${sgn(x.score)}</span><span><b>${escH(x.name)}</b>: ${escH(x.why)}</span></div>`).join("")}` : "";
+  document.getElementById("dRange").innerHTML = cur ? `<h4>Your range ${rv.own ? `<span style="color:var(--amber)" title="The range engine tracks the ${escH(rv.engine_expiry || "current")} expiry. This one uses the same rules on THIS expiry's own 100-pt volume leaders and their first 5-min candle highs (${escH(cur.day || "today")}).">this expiry · own leaders, ${escH(cur.day || "today")}</span>` : !rv.for_viewed_expiry ? `<span style="color:var(--amber)">for ${rv.expiry} expiry</span>` : `<span>cycle ${rv.cycle_start} → ${rv.expiry}</span>`}</h4>
+    <div class="dgrid">
+      <span>Range</span><span><b>${cur.lower.toFixed(0)} – ${cur.upper.toFixed(0)}</b> (${(cur.upper - cur.lower).toFixed(0)} pts)${rv.live && rv.live.changed ? " · <b style='color:#9a6508'>LIVE leader change</b> (engine confirms at candle close)" : ""}</span>
+      <span>CE leader</span><span><b>${cur.ce_leader}</b> · first-candle high ${cur.ce_first_high}</span>
+      <span>PE leader</span><span><b>${cur.pe_leader}</b> · first-candle high ${cur.pe_first_high}</span>
+      <span>Last shift</span><span>${shift ? `<b class="${shift.direction}">${shift.direction}</b> ${Math.abs(shift.points).toFixed(0)} pts (${shift.from.join("–")} → ${shift.to.join("–")})` : "none yet this cycle"}</span>
+      <span>This week</span><span>${rv.cycle_shift ? `${rv.cycle_shift.direction} ${Math.abs(rv.cycle_shift.points).toFixed(0)} pts` : "—"}</span>
+      ${rv.own ? "" : `<span>Range Strategy</span><span>${legs.length ? legs.map(l => `<b>${l.strike} ${l.side}</b> @${l.entry}`).join(" + ") : (rv.strategy || {}).status + (rv.strategy && rv.strategy.exit_reason ? " (" + rv.strategy.exit_reason + ")" : "")}</span>`}
+    </div>
+    ${rv.history && rv.history.length > 1 ? `<div class="hist" style="margin-top:8px;color:var(--muted)">${rv.history.slice().reverse().slice(0, 6).map(h => `<div>${h.time.slice(5).replace("T", " ")} · ${h.lower.toFixed(0)}–${h.upper.toFixed(0)} · CE ${h.ce_leader} / PE ${h.pe_leader}</div>`).join("")}</div>` : ""}` : "";
+  document.getElementById("dStats").innerHTML = st ? `<h4>Chain stats</h4><div class="dgrid">
+      <span>PCR (OI)</span><span><b>${st.pcr_oi ?? "—"}</b></span>
+      <span>PCR (today's ΔOI)</span><span><b>${st.pcr_chg_oi ?? "—"}</b></span>
+      <span>Max pain</span><span><b>${st.max_pain ?? "—"}</b></span>
+      <span>ATM straddle</span><span><b>₹${st.atm_straddle ?? "—"}</b> (±${st.expected_move_pct ?? "—"}% expected move)</span>
+      <span>Resistance / Support</span><span><b>${st.resistance ?? "—"}</b> (call wall) / <b>${st.support ?? "—"}</b> (put wall)
+        ${st.walls && st.walls.window ? `<br><span class="muted" style="font-size:11px">walls near the market (±${st.walls.window} pts), ${st.walls.method}${(st.walls.resistance_detail || [])[1] ? ` · #2 resistance ${st.walls.resistance_detail[1].strike}` : ""}${(st.walls.support_detail || [])[1] ? ` · #2 support ${st.walls.support_detail[1].strike}` : ""}</span>` : ""}</span>
+      ${st.atm_iv != null ? `<span>ATM IV</span><span><b>${st.atm_iv}%</b> · IV Rank <b>${st.iv_rank ?? "—"}</b> · %ile <b>${st.iv_percentile ?? "—"}</b> (1y ${st.iv_1y_low}–${st.iv_1y_high}%)</span>` : ""}
+    </div>` : "";
+}
+
+// ---- premium-selling checklist (sell_rules.py; information only) -----------------------
+function renderSell(S) {
+  const chip = document.getElementById("insSell"), sec = document.getElementById("dSell");
+  if (S && !S.live && S.last_day) {
+    const L = S.last_day, r = L.slots["09:30"] || Object.values(L.slots)[0];
+    const anySell = Object.values(L.slots).some(x => x.sell);
+    chip.className = "ins " + (anySell ? "SELL" : "muted");
+    chip.innerHTML = `${S.market === "OPEN" ? "Before 09:30" : "Market closed"} · ${L.day.slice(5)}: ${anySell ? "✓ sell day" : "normal day"} · IV ${r.iv.toFixed(1)}%`;
+    sec.innerHTML = `<h4>Selling checklist <a href="/iv" style="font-size:11px;font-weight:600;margin-left:6px">history →</a></h4>
+      <div class="muted" style="font-size:12px;margin-bottom:6px">Live check starts at 09:30. Last stored day (${L.day}, ${L.dte} day${L.dte === 1 ? "" : "s"} to its expiry):</div>
+      <div class="ruleck">${Object.entries(L.slots).map(([k, x]) => `<span class="ic ${x.sell ? "ok" : "no"}">${x.sell ? "✓" : "✗"}</span><span><b>${k}</b> ATM IV ${x.iv.toFixed(1)}% vs ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"}</span>`).join("")}
+      <span class="ic ${L.skew_steep ? "hint" : "no"}">${L.skew_steep ? "↓" : "·"}</span><span><b>Put skew</b> ${L.skew25 == null ? "—" : L.skew25.toFixed(2)} vs ${L.skew_thr == null ? "—" : L.skew_thr.toFixed(2)}</span></div>`;
+    return;
+  }
+  if (!S || S.atm_iv == null) { chip.innerHTML = ""; sec.innerHTML = ""; return; }
+  const T = S.thresholds || {}, B = S.backtest || {}, open = S.market === "OPEN" && S.bucket;
+  const rsx = v => v == null ? "—" : (v < 0 ? "−" : "") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+  const thr = open ? S.iv_thr_now : T["09:30"];
+  chip.className = "ins " + (S.sell_day ? "SELL" : S.window !== "ok" ? "WIN" : "muted");
+  chip.innerHTML = S.window !== "ok"
+    ? `⏱ ${S.window === "expiry_day" ? "Expiry day" : S.dte + " days left"} · rule tested for 1–4`
+    : S.sell_day ? `✓ Sell day · IV <b>${S.atm_iv.toFixed(1)}%</b> ≥ ${thr.toFixed(1)}`
+    : `Normal day · IV <b>${S.atm_iv.toFixed(1)}%</b>${thr != null ? " < " + thr.toFixed(1) : ""}`;
+  if (S.skew_steep && S.window === "ok") chip.innerHTML += ` · put skew steep`;
+  const reads = Object.entries(S.readings || {}).map(([k, r]) => `${k} ${r.atm_iv.toFixed(1)}%`).join(", ");
+  const row = (cls, icon, head, bt) => `<span class="ic ${cls}">${icon}</span><span>${head}</span>${bt ? `<span class="bt">${bt}</span>` : ""}`;
+  sec.innerHTML = `<h4>Selling checklist <a href="/iv" style="font-size:11px;font-weight:600;margin-left:6px">history →</a></h4>
+    <div class="ruleck">
+      ${row(S.iv_ok ? "ok" : "no", S.iv_ok ? "✓" : "✗", `<b>IV level</b>: ATM IV ${S.atm_iv.toFixed(1)}% vs threshold ${thr == null ? "—" : thr.toFixed(1) + "%"} ${open ? "(" + S.bucket + " bucket, now " + S.time + ")" : "(09:30)"}${reads ? " · today " + reads : ""}`,
+        `test: straddle ${rsx(B.iv && B.iv.straddle_sell)} a trade on sell days vs ${rsx(B.iv && B.iv.straddle_normal)} on normal days`)}
+      ${row(S.window === "ok" ? "ok" : "no", S.window === "ok" ? "✓" : "✗", `<b>Expiry window</b>: ${S.window === "expiry_day" ? "expiry day" : S.dte + " trading day" + (S.dte === 1 ? "" : "s") + " left"} (best 1–4)`,
+        `test: ${rsx(B.window && B.window.this_week_per_day)} vs ${rsx(B.window && B.window.next_week_per_day)} per day held (this week vs next week)`)}
+      ${row(S.skew_steep ? "hint" : "no", S.skew_steep ? "↓" : "·", `<b>Put skew</b>: ${S.skew25 == null ? "—" : S.skew25.toFixed(2)} vs ${T.skew == null ? "—" : T.skew.toFixed(2)} — ${S.skew_steep ? "steep, put side preferred" : "not steep"}`,
+        `test on steep days: short put ${rsx(B.skew && B.skew.put_steep)} vs short call ${rsx(B.skew && B.skew.call_steep)}`)}
+    </div>
+    <div class="muted" style="font-size:11px">Information only. Thresholds = 60th percentile of the past 500 days at the same time of day.</div>`;
+}
+
+function openDrawer(open) {
+  document.getElementById("drawer").classList.toggle("open", open);
+  document.getElementById("drawer").setAttribute("aria-hidden", open ? "false" : "true");
+  document.getElementById("drawerScrim").hidden = !open;
+}
+document.getElementById("btnInsights").addEventListener("click", () => openDrawer(true));
+["insSell", "insView", "insRange", "insStats", "insAlgo", "insIdea"].forEach(id => document.getElementById(id).addEventListener("click", () => openDrawer(true)));
+
+// ---- top 3 strategy ideas (from /api/ideas -- the Strategy Builder's panel) -------------
+const ideaKey = it => it.legs.map(l => `${l.side[0]}${l.strike}${l.type}`).join(" ");
+function topIdeas(list) {
+  // defined risk only. Tiers: (1) suits view + IV, positive historical EV, POP >= 55%;
+  // (2) suits the view, same bar; (3) anything meeting the bar; then the rest.
+  // Within a tier: historical EV per rupee of max loss. One variant per strategy type.
+  const defined = list.filter(i => !i.unlimited_loss && i.max_loss != null && i.max_loss < 0);
+  // odds from the 5-year template record (real option prices) when it has enough trades,
+  // else from NIFTY's historical moves
+  const tr = i => i.track && i.track.enough ? (i.track.similar || i.track) : null;  // similar-IV record first
+  const ev = i => tr(i) ? tr(i).avg_hold : (i.ev_hist ?? i.ev_model);
+  const pop = i => tr(i) ? tr(i).win_hold : (i.pop_hist ?? i.pop_model);
+  const good = i => ev(i) > 0 && pop(i) >= 55;
+  const tiers = [[defined.filter(i => i.fit.both && good(i)), "✓ fits view + IV · good odds", "fitb"],
+                 [defined.filter(i => i.fit.direction && good(i)), "fits view · good odds", "fitb"],
+                 [defined.filter(good), "good odds, but against the view", "warnb"],
+                 [defined.filter(i => i.fit.both), "fits now, but weak odds", "warnb"],
+                 [defined, "best of the rest", "warnb"]];
+  const score = i => ev(i) / -i.max_loss;
+  const out = [], seen = new Set();
+  for (const [t, why, cls] of tiers) {
+    for (const i of [...t].sort((a, b) => score(b) - score(a))) {
+      const base = i.name.split(" · ")[0];
+      if (seen.has(base)) continue;
+      seen.add(base); out.push({...i, why, whyCls: cls});
+      if (out.length === 3) return out;
+    }
+  }
+  return out;
+}
+let ideasSeq = 0;
+async function loadTopIdeas() {
+  const seq = ++ideasSeq;
+  try {
+    const j = await (await fetch(`/api/ideas?expiry=${currentExpiry || ""}`)).json();
+    if (seq !== ideasSeq || !j.ok) return;
+    const top = topIdeas(j.ideas), e = j.env;
+    const rs = v => v == null ? "—" : (v < 0 ? "-" : "") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+    const t1 = top[0];
+    document.getElementById("insIdea").innerHTML = t1 ? `💡 <b>${t1.name.split(" · ")[0]}</b> · ${t1.track && t1.track.enough ? `5-yr win ${Math.round((t1.track.similar || t1.track).win_hold)}%` : `POP ${t1.pop_hist ?? t1.pop_model}%`}` : "";
+    document.getElementById("dIdeas").innerHTML = top.length ? `<h4>Top 3 strategy ideas <span>1 lot · IV ${e.atm_iv}% (${e.iv_regime}) · view ${e.verdict}</span></h4>` +
+      top.map(i => `<div class="idea"><div class="t"><span>${i.name}</span><span class="${i.whyCls}">${i.why}</span></div>
+        <div class="l">${i.legs.map(l => `${l.side === "SELL" ? "S" : "B"} ${l.strike} ${l.type} @${l.price}`).join(" · ")}</div>
+        <div class="n"><div><span>Premium</span> ${rs(i.net_premium)}</div><div><span>Max P / L</span> ${i.max_profit == null ? "unlimited" : rs(i.max_profit)} / ${rs(i.max_loss)}</div>
+          ${i.track && i.track.enough
+            ? (() => { const r = i.track.similar || i.track; return `<div><span>5-yr win${i.track.similar ? " (similar IV)" : ""}</span> ${Math.round(r.win_hold)}% <span>(n ${r.n})</span></div><div><span>5-yr avg / worst</span> ${rs(r.avg_hold)} / ${rs(r.worst_hold)}</div>`; })()
+            : `<div><span>POP (history)</span> ${i.pop_hist ?? "—"}%</div><div><span>EV (history)</span> ${rs(i.ev_hist)}</div>`}
+          <div><span>Breakeven</span> ${i.breakevens.map(b => Math.round(b)).join(" / ")}</div><div><span>θ / day</span> ${rs(i.greeks.theta)}</div></div>
+        <a href="/strategy?idea=${encodeURIComponent(ideaKey(i))}&expiry=${encodeURIComponent(currentExpiry || "")}" title="Open the Strategy Builder with these legs staged in the basket">Open in Strategy Builder →</a></div>`).join("") +
+      `<p class="drawer-note" style="margin:4px 0 6px">Defined-risk ideas only. "Good odds" = positive average P&amp;L and 55%+ win rate in the 5-year record of the same template at the same days-to-expiry and time, in weeks with an IV like today's (real option prices); ranked by average P&amp;L per rupee of max loss.</p>
+       <a href="/strategy" style="font-size:11.5px">See all ${j.ideas.length} ideas →</a>` : "";
+  } catch (err) { /* keep the last ideas */ }
+}
+loadTopIdeas();
+setInterval(loadTopIdeas, 60000);
+document.getElementById("expirySelect").addEventListener("change", () => setTimeout(loadTopIdeas, 300));
+document.getElementById("drawerClose").addEventListener("click", () => openDrawer(false));
+document.getElementById("drawerScrim").addEventListener("click", () => openDrawer(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && document.getElementById("drawer").classList.contains("open")) openDrawer(false); });
+
+// ---- Order ticket: every order is reviewed before it's added -- price,
+// bid/ask, the fill it will actually get, premium, Fyers margin, charges and
+// the leg's own max loss. Replaces the old one-click hover buttons that
+// added a leg instantly with no confirmation.
+let ticket = null;
+function inr(n) { return n == null ? "—" : "₹" + Number(n).toLocaleString("en-IN", {maximumFractionDigits: 2}); }
+
+function openTicket(symbol, strike, type, side) {
+  const lots = Math.max(1, parseInt(document.getElementById("orderLots").value) || 1);
+  ticket = {symbol, strike, type, side, seq: 0};
+  document.getElementById("tkLots").value = lots;
+  document.getElementById("ticketOverlay").classList.add("open");
+  setTicketSide(side);
+  document.getElementById("tkConfirm").focus();
+}
+function closeTicket() { document.getElementById("ticketOverlay").classList.remove("open"); ticket = null; }
+function setTicketSide(side) {
+  ticket.side = side;
+  document.getElementById("tkBuy").classList.toggle("active", side === "BUY");
+  document.getElementById("tkSell").classList.toggle("active", side === "SELL");
+  document.getElementById("ticketHead").className = "ticket-head " + side;
+  const conf = document.getElementById("tkConfirm");
+  conf.className = "confirm " + side;
+  refreshTicket();
+}
+async function refreshTicket() {
+  if (!ticket) return;
+  const t = ticket, seq = ++t.seq;
+  const lots = Math.max(1, parseInt(document.getElementById("tkLots").value) || 1);
+  const expLabel = document.getElementById("expirySelect").selectedOptions[0]?.textContent.split(" ")[0] || "";
+  document.getElementById("ticketTitle").textContent = `${t.side} NIFTY ${expLabel} ${t.strike} ${t.type}`;
+  document.getElementById("ticketMarket").textContent = lastMarket ? lastMarket.label : "";
+  document.getElementById("tkUnits").textContent = `× ${lotSize} = ${lots * lotSize} qty`;
+  document.getElementById("tkType").textContent = orderTradeType === "INTRADAY" ? "Intraday (auto square-off 15:25)" : "Positional";
+  document.getElementById("tkConfirm").textContent = `Confirm ${t.side}`;
+  ["tkQuote", "tkFill", "tkPremium", "tkMargin", "tkCharges"].forEach(id => document.getElementById(id).textContent = "…");
+  try {
+    const q = await (await fetch(`/api/quote?symbol=${encodeURIComponent(t.symbol)}&side=${t.side}`)).json();
+    if (seq !== t.seq || ticket !== t) return;
+    if (!q.ok) { document.getElementById("tkQuote").textContent = q.error; return; }
+    t.fill = q.fill_price;
+    const spread = (q.ask > 0 && q.bid > 0) ? q.ask - q.bid : null;
+    document.getElementById("tkQuote").textContent = `${inr(q.ltp)} · ${q.bid > 0 ? inr(q.bid) : "—"} / ${q.ask > 0 ? inr(q.ask) : "—"}${spread != null ? ` (spread ${spread.toFixed(2)})` : ""}`;
+    document.getElementById("tkFill").textContent = `${inr(q.fill_price)} (${q.fill_basis})`;
+    const premium = q.fill_price * lots * lotSize;
+    document.getElementById("tkPremium").textContent = `${inr(premium)} ${t.side === "SELL" ? "received" : "paid"}`;
+    const risk = document.getElementById("tkRisk"), riskRow = document.getElementById("tkRiskRow");
+    if (t.side === "BUY") { risk.textContent = inr(premium) + " (premium)"; riskRow.className = "trow"; }
+    else if (t.type === "CE") { risk.textContent = "UNLIMITED — hedge it"; riskRow.className = "trow warn"; }
+    else { risk.textContent = inr((t.strike - q.fill_price) * lots * lotSize) + " (index to 0)"; riskRow.className = "trow warn"; }
+    const m = await (await fetch("/api/margin", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({legs: [{symbol: t.symbol, side: t.side, qty: lots, price: q.fill_price}]})})).json();
+    if (seq !== t.seq || ticket !== t) return;
+    document.getElementById("tkMargin").textContent = m.ok ? inr(m.margin_total) : "unavailable";
+    document.getElementById("tkCharges").textContent = m.ok ? inr(m.est_round_trip_charges) : "—";
+  } catch (e) {
+    document.getElementById("tkQuote").textContent = "network error";
+  }
+}
+document.getElementById("tkBuy").addEventListener("click", () => setTicketSide("BUY"));
+document.getElementById("tkSell").addEventListener("click", () => setTicketSide("SELL"));
+document.getElementById("tkLots").addEventListener("input", () => refreshTicket());
+document.getElementById("tkCancel").addEventListener("click", closeTicket);
+document.getElementById("ticketOverlay").addEventListener("click", (e) => { if (e.target.id === "ticketOverlay") closeTicket(); });
+document.addEventListener("keydown", (e) => {
+  if (!ticket) return;
+  if (e.key === "Escape") closeTicket();
+  if (e.key === "Enter" && e.target.id !== "tkCancel") { e.preventDefault(); confirmTicket(); }
+});
+document.getElementById("tkConfirm").addEventListener("click", confirmTicket);
+
+async function confirmTicket() {
+  if (!ticket) return;
+  const t = ticket;
+  const lots = Math.max(1, parseInt(document.getElementById("tkLots").value) || 1);
+  closeTicket();
+  try {
+    // No entry_price sent: the server fills at the live bid (SELL) / ask (BUY).
+    const res = await fetch("/api/manual/add_leg", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({symbol: t.symbol, strike: t.strike, type: t.type, side: t.side, qty: lots, expiry: currentExpiry, trade_type: orderTradeType}),
+    });
+    const j = await res.json();
+    if (!j.ok) { showToast("Error: " + j.error); return; }
+    const typeLabel = orderTradeType === "INTRADAY" ? "Intraday" : "Positional";
+    showToast(`${t.side} ${lots} lot ${t.strike}${t.type} (${typeLabel}) filled @ ₹${j.leg.entry_price} — see Strategy Builder`);
+  } catch (e) {
+    showToast("Could not add leg (network error)");
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+{
+ "trades": {
+  "2026-09-28|B|straddle": {
+   "id": "2026-09-28|B|straddle",
+   "day": "2026-09-28",
+   "time": "09:30",
+   "setup": "B",
+   "strategy": "straddle",
+   "name": "Short straddle \u00b7 ATM 22900",
+   "expiry": "2026-10-06",
+   "expiry_ts": "1791281400",
+   "exit_rule": "ivnormal",
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22900,
+     "price": 216.65,
+     "symbol": "NSE:NIFTY26O0622900CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22900,
+     "price": 160.25,
+     "symbol": "NSE:NIFTY26O0622900PE"
+    }
+   ],
+   "lot": 65,
+   "entry_charges": 81.85,
+   "credit": 24498.5,
+   "iv_at_entry": 16.38,
+   "status": "closed",
+   "pnl": 3719.52,
+   "history": [],
+   "note": "backfilled 2026-09-29 from the 1-min history (the plan page did not exist yet)",
+   "marked": "2026-09-30 09:32",
+   "closed": "2026-09-30 09:32",
+   "close_reason": "IV normal (12.9% < 15.2%)",
+   "exit_charges": 56.38
+  },
+  "2026-10-01|A|straddle": {
+   "id": "2026-10-01|A|straddle",
+   "day": "2026-10-01",
+   "time": "12:59",
+   "setup": "A",
+   "strategy": "straddle",
+   "name": "Short straddle \u00b7 ATM 22350",
+   "expiry": "2026-10-06",
+   "expiry_ts": "1791281400",
+   "exit_rule": "hold",
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22350,
+     "price": 156.65,
+     "symbol": "NSE:NIFTY26O0622350CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 22350,
+     "price": 150.1,
+     "symbol": "NSE:NIFTY26O0622350PE"
+    }
+   ],
+   "lot": 65,
+   "entry_charges": 75.4,
+   "credit": 19938.75,
+   "iv_at_entry": 14.56,
+   "status": "open",
+   "pnl": 1377.21,
+   "history": [],
+   "marked": "2026-10-01 13:34"
+  },
+  "2026-10-01|A|strangle": {
+   "id": "2026-10-01|A|strangle",
+   "day": "2026-10-01",
+   "time": "12:59",
+   "setup": "A",
+   "strategy": "strangle",
+   "name": "Short strangle \u00b7 \u03940.15",
+   "expiry": "2026-10-06",
+   "expiry_ts": "1791281400",
+   "exit_rule": "hold",
+   "legs": [
+    {
+     "side": "SELL",
+     "type": "CE",
+     "strike": 22800,
+     "price": 29.2,
+     "symbol": "NSE:NIFTY26O0622800CE"
+    },
+    {
+     "side": "SELL",
+     "type": "PE",
+     "strike": 21900,
+     "price": 31.9,
+     "symbol": "NSE:NIFTY26O0621900PE"
+    }
+   ],
+   "lot": 65,
+   "entry_charges": 52.82,
+   "credit": 3971.5,
+   "iv_at_entry": 14.56,
+   "status": "open",
+   "pnl": 802.12,
+   "history": [],
+   "marked": "2026-10-01 13:34"
+  }
+ }
+}

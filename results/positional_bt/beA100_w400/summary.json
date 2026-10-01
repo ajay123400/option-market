@@ -1,0 +1,81 @@
+{
+ "weeks": 154,
+ "from": "2021-09-30",
+ "to": "2026-09-22",
+ "net_rs": 114011,
+ "gross_rs": 248798,
+ "charges": 134787,
+ "points": 4654.7,
+ "win_pct": 61.0,
+ "avg_win": 6445,
+ "avg_loss": -8198,
+ "max_drawdown_rs": -79894,
+ "exits": {
+  "EXPIRY": 153,
+  "TARGET": 1
+ },
+ "avg_rolls": 13.06,
+ "avg_premium": 369.8,
+ "by_year": {
+  "2021": {
+   "weeks": 10,
+   "net_rs": 20649,
+   "pts": 548.3,
+   "win_pct": 60.0
+  },
+  "2022": {
+   "weeks": 40,
+   "net_rs": 14175,
+   "pts": 1043.6,
+   "win_pct": 62.5
+  },
+  "2023": {
+   "weeks": 4,
+   "net_rs": -5936,
+   "pts": -59.3,
+   "win_pct": 25.0
+  },
+  "2024": {
+   "weeks": 39,
+   "net_rs": 9766,
+   "pts": 1244.6,
+   "win_pct": 53.8
+  },
+  "2025": {
+   "weeks": 31,
+   "net_rs": 63714,
+   "pts": 1265.0,
+   "win_pct": 71.0
+  },
+  "2026": {
+   "weeks": 30,
+   "net_rs": 11643,
+   "pts": 612.4,
+   "win_pct": 63.3
+  }
+ },
+ "best": {
+  "expiry": "2026-04-21",
+  "net_rs": 20419.79
+ },
+ "worst": {
+  "expiry": "2026-02-03",
+  "net_rs": -48174.38
+ },
+ "config": {
+  "leader_step": 100,
+  "sell_step": 50,
+  "check_min": 5,
+  "sl_frac": null,
+  "target_frac": 0.9,
+  "slippage": 0.5,
+  "lots": 1,
+  "cross_pts": 100,
+  "roll_on_expiry_day": true,
+  "min_width": 400,
+  "late_entry": true,
+  "approach": "A",
+  "a_shift": 100,
+  "label": "A \u00b7 centred straddle, move on 100+ shift \u00b7 \u2265400 late entry \u00b7 target 90%"
+ }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Range Respect Test</title><style>
+:root{--bg:#f3f4f8;--card:#fff;--border:#e6e8ef;--text:#14161c;--muted:#6f7482;--up:#0e9f6e;--down:#e0434a;--accent:#4f5fe0;--ours:#eef0fd}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111318;--card:#1a1d24;--border:#2a2e38;--text:#e8e9ee;--muted:#9097a6;--ours:#23284a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:24px 16px 60px}h1{font-size:22px;margin:0 0 4px}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px;min-width:0}
+table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-size:11px;text-transform:uppercase}tr.ours td{background:var(--ours);font-weight:600}.scroll{overflow-x:auto}.note{color:var(--muted);font-size:12.5px}
+.rules{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;font-size:13.5px}.rules b{color:var(--muted)}ul{margin:0;padding-left:18px}li{margin:4px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<h1>Does NIFTY respect our range?</h1><p class="note" id="sub"></p>
+<div class="card"><h2>How it was measured</h2><div class="rules" id="rules"></div></div>
+<div class="card"><h2>In short</h2><ul id="short"></ul></div>
+<div class="card"><h2>What happens after NIFTY reaches a level (same day)</h2><div class="scroll"><table id="t1"></table></div>
+<p class="note">Rejected / broke / neither are shares of the touched levels. "Fake" = share of the breaks that came back 20+ pts inside the level the same day.</p></div>
+<div class="grid2">
+<div class="card"><h2>Our range vs random levels, same distance</h2><div class="scroll"><table id="t2"></table></div>
+<p class="note">Touched levels only, grouped by distance from the 09:20 price — a fair like-for-like check.</p></div>
+<div class="card"><h2>Our range by days to expiry</h2><div class="scroll"><table id="t3"></table></div></div>
+</div>
+</div><script>
+const D = {"summary": [{"kind": "OI wall (max CE / PE OI)", "side": "lower / support", "levels": 1225, "dist": 305, "touched": 19.7, "rejected": 35.7, "broke": 57.7, "fake": 43.2, "neither": 6.6, "touches": 1.42, "multi": 33.2, "closed_beyond": 51.9, "beyond_med": 74.0}, {"kind": "OI wall (max CE / PE OI)", "side": "upper / resistance", "levels": 1225, "dist": 405, "touched": 10.4, "rejected": 32.3, "broke": 49.6, "fake": 41.3, "neither": 18.1, "touches": 1.24, "multi": 19.7, "closed_beyond": 48.0, "beyond_med": 50.0}, {"kind": "Our range", "side": "lower / support", "levels": 1186, "dist": 139, "touched": 32.4, "rejected": 36.7, "broke": 52.3, "fake": 46.3, "neither": 10.9, "touches": 1.51, "multi": 35.4, "closed_beyond": 48.2, "beyond_med": 77.0}, {"kind": "Our range", "side": "upper / resistance", "levels": 1206, "dist": 141, "touched": 24.0, "rejected": 40.0, "broke": 42.1, "fake": 32.8, "neither": 17.9, "touches": 1.35, "multi": 28.3, "closed_beyond": 45.5, "beyond_med": 60.0}, {"kind": "Previous day high / low", "side": "lower / support", "levels": 960, "dist": 136, "touched": 34.9, "rejected": 34.0, "broke": 58.5, "fake": 51.0, "neither": 7.5, "touches": 1.56, "multi": 39.4, "closed_beyond": 46.6, "beyond_med": 73.0}, {"kind": "Previous day high / low", "side": "upper / resistance", "levels": 827, "dist": 128, "touched": 32.3, "rejected": 34.8, "broke": 51.3, "fake": 45.3, "neither": 13.9, "touches": 1.47, "multi": 37.1, "closed_beyond": 44.9, "beyond_med": 62.0}, {"kind": "Random (same distance, other day)", "side": "lower / support", "levels": 1196, "dist": 139, "touched": 33.9, "rejected": 41.1, "broke": 52.0, "fake": 54.5, "neither": 6.9, "touches": 1.55, "multi": 39.2, "closed_beyond": 46.8, "beyond_med": 66.0}, {"kind": "Random (same distance, other day)", "side": "upper / resistance", "levels": 1207, "dist": 141, "touched": 28.0, "rejected": 35.8, "broke": 50.9, "fake": 49.4, "neither": 13.3, "touches": 1.47, "multi": 32.0, "closed_beyond": 50.6, "beyond_med": 73.0}], "dm": [{"kind": "Our range", "bucket": "20\u2013100", "n": 350, "rejected": 37.7, "broke": 50.0}, {"kind": "Our range", "bucket": "100\u2013150", "n": 189, "rejected": 34.4, "broke": 48.1}, {"kind": "Our range", "bucket": "150\u2013200", "n": 77, "rejected": 46.8, "broke": 41.6}, {"kind": "Our range", "bucket": "200\u2013300", "n": 52, "rejected": 36.5, "broke": 48.1}, {"kind": "Our range", "bucket": "300+", "n": 6, "rejected": 83.3, "broke": 0.0}, {"kind": "Random (same distance, other day)", "bucket": "20\u2013100", "n": 408, "rejected": 39.5, "broke": 53.4}, {"kind": "Random (same distance, other day)", "bucket": "100\u2013150", "n": 209, "rejected": 36.4, "broke": 49.3}, {"kind": "Random (same distance, other day)", "bucket": "150\u2013200", "n": 92, "rejected": 39.1, "broke": 47.8}, {"kind": "Random (same distance, other day)", "bucket": "200\u2013300", "n": 31, "rejected": 45.2, "broke": 48.4}, {"kind": "Random (same distance, other day)", "bucket": "300+", "n": 4, "rejected": 25.0, "broke": 75.0}], "dte": [{"dte": 0, "n": 498, "touched": 42.0, "rejected": 37.3, "broke": 50.2}, {"dte": 1, "n": 502, "touched": 32.1, "rejected": 40.4, "broke": 47.2}, {"dte": 2, "n": 512, "touched": 24.6, "rejected": 38.1, "broke": 46.0}, {"dte": 3, "n": 501, "touched": 22.6, "rejected": 38.1, "broke": 45.1}, {"dte": 4, "n": 373, "touched": 17.2, "rejected": 35.9, "broke": 50.0}], "days": 1226, "span": ["2021-09-23", "2026-09-22"], "params": {"touch": 10, "break": 20, "reject": 60, "away": 40}}, P = D.params;
+document.getElementById("sub").textContent = `${D.days} trading days · ${D.span[0]} → ${D.span[1]} · NIFTY 50 1-min bars after 09:20 · levels fixed at 09:20 each day`;
+document.getElementById("rules").innerHTML = `
+<b>Levels</b><span><b>Our range</b> = the day's 09:20 UPPER / LOWER. <b>Random</b> = the same distances from 09:20 as our levels but taken from another day (baseline for "any level that far away"). <b>Previous day</b> high / low. <b>OI wall</b> = strike with the most CE OI above / PE OI below at 09:19.</span>
+<b>Touched</b><span>price comes within ${P.touch} pts of the level after 09:20.</span>
+<b>Rejected</b><span>after the touch, price moves ${P.reject} pts back before breaking.</span>
+<b>Broke</b><span>a 5-min candle closes ${P.break}+ pts beyond the level.</span>
+<b>Retests</b><span>separate touches of the level, with a ${P.away}+ pt move away in between.</span>`;
+const S = D.summary, f = v => v == null ? "—" : v;
+const get = (k, s) => S.find(x => x.kind === k && x.side.startsWith(s));
+const ou = get("Our range", "upper"), ol = get("Our range", "lower"), ru = get("Random", "upper"), rl = get("Random", "lower");
+const rj = (a, b) => ((a.rejected + b.rejected) / 2).toFixed(0), br = (a, b) => ((a.broke + b.broke) / 2).toFixed(0);
+document.getElementById("short").innerHTML = [
+  `When NIFTY reaches <b>our UPPER / LOWER</b> the same day, it is <b>rejected ~${rj(ou, ol)}%</b> of the time and <b>breaks ~${br(ou, ol)}%</b>.`,
+  `A <b>random level at the same distance</b> is rejected ~${rj(ru, rl)}% and broken ~${br(ru, rl)}% — compare the two to see whether the range adds anything beyond distance.`,
+  `Our levels are reached on ${((ou.touched + ol.touched) / 2).toFixed(0)}% of days (median ${ou.dist} pts above / ${ol.dist} below the 09:20 price); once reached they are touched ${((ou.touches + ol.touches) / 2).toFixed(1)} times on average.`,
+  `Of the breaks of our levels, ${((ou.fake + ol.fake) / 2).toFixed(0)}% turned out fake (came back inside the same day).`].map(x => `<li>${x}</li>`).join("");
+document.getElementById("t1").innerHTML = `<tr><th>Level</th><th>Side</th><th>Days</th><th>Median distance</th><th>Touched</th><th>Rejected</th><th>Broke</th><th>…of which fake</th><th>Neither</th><th>Avg touches</th><th>2+ touches</th><th>Closed beyond</th><th>Median overshoot on a break</th></tr>` +
+  S.map(r => `<tr${r.kind === "Our range" ? ' class="ours"' : ""}><td>${r.kind}</td><td>${r.side}</td><td>${r.levels}</td><td>${r.dist}</td><td>${r.touched}%</td><td>${f(r.rejected)}%</td><td>${f(r.broke)}%</td><td>${f(r.fake)}%</td><td>${f(r.neither)}%</td><td>${f(r.touches)}</td><td>${f(r.multi)}%</td><td>${f(r.closed_beyond)}%</td><td>${f(r.beyond_med)}</td></tr>`).join("");
+const buckets = [...new Set(D.dm.map(x => x.bucket))];
+document.getElementById("t2").innerHTML = `<tr><th>Distance</th><th>Ours: n</th><th>Ours: rejected</th><th>Ours: broke</th><th>Random: n</th><th>Random: rejected</th><th>Random: broke</th></tr>` +
+  buckets.map(b => { const o = D.dm.find(x => x.bucket === b && x.kind === "Our range") || {}, r = D.dm.find(x => x.bucket === b && x.kind !== "Our range") || {};
+    return `<tr><td>${b}</td><td>${f(o.n)}</td><td>${f(o.rejected)}%</td><td>${f(o.broke)}%</td><td>${f(r.n)}</td><td>${f(r.rejected)}%</td><td>${f(r.broke)}%</td></tr>`; }).join("");
+document.getElementById("t3").innerHTML = `<tr><th>Days to expiry</th><th>Levels</th><th>Touched</th><th>Rejected</th><th>Broke</th></tr>` +
+  D.dte.map(r => `<tr><td>${r.dte === 0 ? "Expiry day" : r.dte}</td><td>${r.n}</td><td>${r.touched}%</td><td>${r.rejected}%</td><td>${r.broke}%</td></tr>`).join("");
+</script></body></html>

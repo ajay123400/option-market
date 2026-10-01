@@ -1,0 +1,5829 @@
+{
+ "cycle_start": "2026-09-16",
+ "expiry": "2026-09-22",
+ "updated_at": "2026-09-25T16:24:02+05:30",
+ "status": "closed",
+ "exit_reason": "TARGET",
+ "diary": [
+  {
+   "time": "2026-09-16T09:20",
+   "day": "2026-09-16",
+   "kind": "DAY_START",
+   "leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "prev_leaders": null,
+   "leader_changed": false,
+   "top": {
+    "CE": [
+     {
+      "strike": 23200,
+      "volume": 7149740
+     },
+     {
+      "strike": 23300,
+      "volume": 6788860
+     },
+     {
+      "strike": 23500,
+      "volume": 5458505
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23200,
+      "volume": 8678605
+     },
+     {
+      "strike": 23000,
+      "volume": 5042115
+     },
+     {
+      "strike": 23300,
+      "volume": 4188080
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 5.3,
+    "PE": 72.1
+   },
+   "range": {
+    "lower": 22979.3,
+    "upper": 23351.95,
+    "width": 372.7,
+    "ce_first_high": 220.7,
+    "pe_first_high": 151.95,
+    "since": "2026-09-16T09:20"
+   },
+   "best": {
+    "CE": {
+     "rule": null,
+     "safer": {
+      "strike": 23500,
+      "premium": 68.6,
+      "distance": 252.8,
+      "iv": 12.47,
+      "delta": 0.29,
+      "pop": 71.0
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23000,
+      "premium": 66.9,
+      "distance": 247.2,
+      "iv": 14.36,
+      "delta": -0.2525,
+      "pop": 74.8
+     },
+     "safer": {
+      "strike": 22900,
+      "premium": 47.95,
+      "distance": 347.2,
+      "iv": 14.77,
+      "delta": -0.1912,
+      "pop": 80.9
+     }
+    }
+   },
+   "market": {
+    "spot": 23247.25,
+    "spot_is_forward": false,
+    "forward": 23285.8,
+    "pcr_oi": 0.94,
+    "pcr_chg_oi": 2.67,
+    "support": 23200,
+    "resistance": 23500,
+    "atm_iv": 13.51,
+    "walls": {
+     "resistance": 23500,
+     "support": 23200,
+     "window": 670,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 5986435,
+       "distance": 253,
+       "weight": 5082973
+      },
+      {
+       "strike": 23300,
+       "oi": 4424615,
+       "distance": 53,
+       "weight": 4285251
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 7829445,
+       "distance": 47,
+       "weight": 7608551
+      },
+      {
+       "strike": 23000,
+       "oi": 6209970,
+       "distance": 247,
+       "weight": 5293167
+      }
+     ]
+    },
+    "atm_strike": 23200,
+    "atm_straddle": 334.95,
+    "max_pain": 23400
+   },
+   "day_range": {
+    "lower": 22979.3,
+    "upper": 23351.95,
+    "width": 372.7,
+    "ce_leader": 23200,
+    "pe_leader": 23200,
+    "ce_first_high": 220.7,
+    "pe_first_high": 151.95
+   },
+   "oi_view": {
+    "vs": "previous day close",
+    "since": "2026-09-15T15:40",
+    "score": 5,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 1,
+      "before": "23,118.6",
+      "now": "23,247.2",
+      "change": "+129 pts (+0.56%)",
+      "reading": "up",
+      "detail": "23,118.6 \u2192 23,247.2 (+129 pts (+0.56%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22600\u201323600)",
+      "score": 1,
+      "before": "PE 311 L \u00b7 CE 186 L",
+      "now": "PE 399 L \u00b7 CE 210 L",
+      "change": "PE +88.7 L \u00b7 CE +24.2 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 311 L \u00b7 CE 186 L \u2192 PE 399 L \u00b7 CE 210 L (PE +88.7 L \u00b7 CE +24.2 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "0.83",
+      "now": "0.94",
+      "change": "+0.11",
+      "reading": "puts gaining vs calls",
+      "detail": "0.83 \u2192 0.94 (+0.11) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23000",
+      "now": "23200 \u00b7 78 L \u00b7 47 pts away",
+      "change": "+200",
+      "reading": "support moved up",
+      "detail": "23000 \u2192 23200 \u00b7 78 L \u00b7 47 pts away (+200) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 60 L \u00b7 253 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 60 L \u00b7 253 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23100 CE vs PE",
+      "score": 1,
+      "before": "CE 224.1 \u00b7 PE 132.8",
+      "now": "CE 277.1 \u00b7 PE 91.6",
+      "change": "CE +24% \u00b7 PE -31%",
+      "reading": "calls stronger",
+      "detail": "CE 224.1 \u00b7 PE 132.8 \u2192 CE 277.1 \u00b7 PE 91.6 (CE +24% \u00b7 PE -31%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "13.67%",
+      "now": "13.51%",
+      "change": "-0.16",
+      "reading": "no signal",
+      "detail": "13.67% \u2192 13.51% (-0.16) \u2014 no signal"
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-16T09:25",
+   "day": "2026-09-16",
+   "kind": "LEADER_CHANGE",
+   "leaders": {
+    "CE": 23300,
+    "PE": 23200
+   },
+   "prev_leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23300,
+      "volume": 10246405
+     },
+     {
+      "strike": 23200,
+      "volume": 10002070
+     },
+     {
+      "strike": 23500,
+      "volume": 7595185
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23200,
+      "volume": 13379665
+     },
+     {
+      "strike": 23000,
+      "volume": 7662005
+     },
+     {
+      "strike": 23300,
+      "volume": 6842875
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 2.4,
+    "PE": 74.6
+   },
+   "range": {
+    "lower": 23038.3,
+    "upper": 23451.95,
+    "width": 413.7,
+    "ce_first_high": 161.7,
+    "pe_first_high": 151.95,
+    "since": "2026-09-16T09:25"
+   },
+   "shift": {
+    "direction": "UP",
+    "points": 79.5,
+    "upper_move": 100.0,
+    "lower_move": 59.0,
+    "from": [
+     22979,
+     23352
+    ],
+    "to": [
+     23038,
+     23452
+    ]
+   },
+   "intraday_view": "BULLISH",
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23500,
+      "premium": 62.15,
+      "distance": 263.8,
+      "iv": 12.48,
+      "delta": 0.2694,
+      "pop": 73.1
+     },
+     "safer": {
+      "strike": 23600,
+      "premium": 38.25,
+      "distance": 363.8,
+      "iv": 12.3,
+      "delta": 0.1874,
+      "pop": 81.3
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23000,
+      "premium": 71.7,
+      "distance": 236.2,
+      "iv": 14.23,
+      "delta": -0.2682,
+      "pop": 73.2
+     },
+     "safer": {
+      "strike": 22900,
+      "premium": 51.95,
+      "distance": 336.2,
+      "iv": 14.7,
+      "delta": -0.2045,
+      "pop": 79.5
+     }
+    }
+   },
+   "market": {
+    "spot": 23236.25,
+    "spot_is_forward": false,
+    "forward": 23262.2,
+    "pcr_oi": 0.95,
+    "pcr_chg_oi": 1.86,
+    "support": 23200,
+    "resistance": 23500,
+    "atm_iv": 13.48,
+    "walls": {
+     "resistance": 23500,
+     "support": 23200,
+     "window": 662,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 6228170,
+       "distance": 264,
+       "weight": 5235014
+      },
+      {
+       "strike": 23300,
+       "oi": 5223465,
+       "distance": 64,
+       "weight": 5022137
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 8886085,
+       "distance": 36,
+       "weight": 8691332
+      },
+      {
+       "strike": 23000,
+       "oi": 7017205,
+       "distance": 236,
+       "weight": 6014898
+      }
+     ]
+    },
+    "atm_strike": 23200,
+    "atm_straddle": 330.8,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "09:20 snapshot",
+    "since": "2026-09-16T09:20",
+    "score": 0,
+    "verdict": "NEUTRAL",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,247.2",
+      "now": "23,236.2",
+      "change": "-11 pts (-0.05%)",
+      "reading": "down",
+      "detail": "23,247.2 \u2192 23,236.2 (-11 pts (-0.05%)) \u2014 down"
+     },
+     {
+      "name": "OI writing (22700\u201323700)",
+      "score": 1,
+      "before": "PE 379 L \u00b7 CE 251 L",
+      "now": "PE 413 L \u00b7 CE 271 L",
+      "change": "PE +34.0 L \u00b7 CE +20.2 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 379 L \u00b7 CE 251 L \u2192 PE 413 L \u00b7 CE 271 L (PE +34.0 L \u00b7 CE +20.2 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 0,
+      "before": "0.94",
+      "now": "0.95",
+      "change": "+0.01",
+      "reading": "little change",
+      "detail": "0.94 \u2192 0.95 (+0.01) \u2014 little change"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23200",
+      "now": "23200 \u00b7 89 L \u00b7 36 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23200 \u2192 23200 \u00b7 89 L \u00b7 36 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 62 L \u00b7 264 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 62 L \u00b7 264 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23200 CE vs PE",
+      "score": -1,
+      "before": "CE 210.1 \u00b7 PE 124.8",
+      "now": "CE 196.3 \u00b7 PE 134.4",
+      "change": "CE -7% \u00b7 PE +8%",
+      "reading": "puts stronger",
+      "detail": "CE 210.1 \u00b7 PE 124.8 \u2192 CE 196.3 \u00b7 PE 134.4 (CE -7% \u00b7 PE +8%) \u2014 puts stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "13.51%",
+      "now": "13.48%",
+      "change": "-0.03",
+      "reading": "no signal",
+      "detail": "13.51% \u2192 13.48% (-0.03) \u2014 no signal"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "UP",
+    "aligned": 2,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "-11 pts",
+      "ok": false
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+13.8 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "+0.007",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-16T09:35",
+   "day": "2026-09-16",
+   "kind": "LEADER_CHANGE",
+   "leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "prev_leaders": {
+    "CE": 23300,
+    "PE": 23200
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23200,
+      "volume": 16741530
+     },
+     {
+      "strike": 23300,
+      "volume": 16295565
+     },
+     {
+      "strike": 23500,
+      "volume": 11789440
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23200,
+      "volume": 31038735
+     },
+     {
+      "strike": 23000,
+      "volume": 15624635
+     },
+     {
+      "strike": 23300,
+      "volume": 13771550
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 2.7,
+    "PE": 98.7
+   },
+   "range": {
+    "lower": 22979.3,
+    "upper": 23351.95,
+    "width": 372.7,
+    "ce_first_high": 220.7,
+    "pe_first_high": 151.95,
+    "since": "2026-09-16T09:35"
+   },
+   "shift": {
+    "direction": "DOWN",
+    "points": -79.5,
+    "upper_move": -100.0,
+    "lower_move": -59.0,
+    "from": [
+     23038,
+     23452
+    ],
+    "to": [
+     22979,
+     23352
+    ]
+   },
+   "intraday_view": "BEARISH",
+   "best": {
+    "CE": {
+     "rule": null,
+     "safer": {
+      "strike": 23500,
+      "premium": 60.85,
+      "distance": 290.6,
+      "iv": 12.74,
+      "delta": 0.2613,
+      "pop": 73.9
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23000,
+      "premium": 78.65,
+      "distance": 209.4,
+      "iv": 14.53,
+      "delta": -0.2831,
+      "pop": 71.7
+     },
+     "safer": {
+      "strike": 22900,
+      "premium": 57.1,
+      "distance": 309.4,
+      "iv": 14.95,
+      "delta": -0.2174,
+      "pop": 78.3
+     }
+    }
+   },
+   "market": {
+    "spot": 23209.4,
+    "spot_is_forward": false,
+    "forward": 23247.88,
+    "pcr_oi": 0.91,
+    "pcr_chg_oi": 1.24,
+    "support": 23200,
+    "resistance": 23300,
+    "atm_iv": 13.73,
+    "walls": {
+     "resistance": 23300,
+     "support": 23200,
+     "window": 670,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23300,
+       "oi": 5911295,
+       "distance": 91,
+       "weight": 5591460
+      },
+      {
+       "strike": 23500,
+       "oi": 6729450,
+       "distance": 291,
+       "weight": 5561592
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 9046115,
+       "distance": 9,
+       "weight": 8995333
+      },
+      {
+       "strike": 23000,
+       "oi": 7183735,
+       "distance": 209,
+       "weight": 6285392
+      }
+     ]
+    },
+    "atm_strike": 23200,
+    "atm_straddle": 334.9,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "previous snapshot",
+    "since": "2026-09-16T09:25",
+    "score": -2,
+    "verdict": "BEARISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,236.2",
+      "now": "23,209.4",
+      "change": "-27 pts (-0.12%)",
+      "reading": "down",
+      "detail": "23,236.2 \u2192 23,209.4 (-27 pts (-0.12%)) \u2014 down"
+     },
+     {
+      "name": "OI writing (22700\u201323700)",
+      "score": -1,
+      "before": "PE 413 L \u00b7 CE 271 L",
+      "now": "PE 426 L \u00b7 CE 302 L",
+      "change": "PE +12.9 L \u00b7 CE +31.6 L",
+      "reading": "call writing stronger \u2192 resistance building",
+      "detail": "PE 413 L \u00b7 CE 271 L \u2192 PE 426 L \u00b7 CE 302 L (PE +12.9 L \u00b7 CE +31.6 L) \u2014 call writing stronger \u2192 resistance building"
+     },
+     {
+      "name": "PCR",
+      "score": 0,
+      "before": "0.95",
+      "now": "0.91",
+      "change": "-0.04",
+      "reading": "little change",
+      "detail": "0.95 \u2192 0.91 (-0.04) \u2014 little change"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23200",
+      "now": "23200 \u00b7 90 L \u00b7 9 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23200 \u2192 23200 \u00b7 90 L \u00b7 9 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": -1,
+      "before": "23500",
+      "now": "23300 \u00b7 59 L \u00b7 91 pts away",
+      "change": "-200",
+      "reading": "resistance moved down",
+      "detail": "23500 \u2192 23300 \u00b7 59 L \u00b7 91 pts away (-200) \u2014 resistance moved down"
+     },
+     {
+      "name": "ATM 23200 CE vs PE",
+      "score": 0,
+      "before": "CE 196.3 \u00b7 PE 134.4",
+      "now": "CE 191.4 \u00b7 PE 143.4",
+      "change": "CE -2% \u00b7 PE +7%",
+      "reading": "balanced",
+      "detail": "CE 196.3 \u00b7 PE 134.4 \u2192 CE 191.4 \u00b7 PE 143.4 (CE -2% \u00b7 PE +7%) \u2014 balanced"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "13.48%",
+      "now": "13.73%",
+      "change": "+0.25",
+      "reading": "no signal",
+      "detail": "13.48% \u2192 13.73% (+0.25) \u2014 no signal"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "DOWN",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "-27 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "-18.7 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "-0.040",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-16T15:40",
+   "day": "2026-09-16",
+   "kind": "DAY_END",
+   "leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "prev_leaders": null,
+   "leader_changed": false,
+   "top": {
+    "CE": [
+     {
+      "strike": 23200,
+      "volume": 140775310
+     },
+     {
+      "strike": 23300,
+      "volume": 138193380
+     },
+     {
+      "strike": 23500,
+      "volume": 104112580
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23200,
+      "volume": 216460985
+     },
+     {
+      "strike": 23000,
+      "volume": 118129960
+     },
+     {
+      "strike": 23100,
+      "volume": 115858080
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 1.9,
+    "PE": 83.2
+   },
+   "range": {
+    "lower": 22979.3,
+    "upper": 23351.95,
+    "width": 372.7,
+    "ce_first_high": 220.7,
+    "pe_first_high": 151.95,
+    "since": "2026-09-16T09:35"
+   },
+   "best": {
+    "CE": {
+     "rule": null,
+     "safer": {
+      "strike": 23500,
+      "premium": 50.35,
+      "distance": 282.4,
+      "iv": 11.75,
+      "delta": 0.2443,
+      "pop": 75.6
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23000,
+      "premium": 70.1,
+      "distance": 217.6,
+      "iv": 14.14,
+      "delta": -0.2694,
+      "pop": 73.1
+     },
+     "safer": {
+      "strike": 22900,
+      "premium": 51.4,
+      "distance": 317.6,
+      "iv": 14.74,
+      "delta": -0.2059,
+      "pop": 79.4
+     }
+    }
+   },
+   "market": {
+    "spot": 23217.6,
+    "spot_is_forward": false,
+    "forward": 23253.55,
+    "pcr_oi": 1.01,
+    "pcr_chg_oi": 1.83,
+    "support": 23200,
+    "resistance": 23500,
+    "atm_iv": 12.93,
+    "walls": {
+     "resistance": 23500,
+     "support": 23200,
+     "window": 620,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 7593105,
+       "distance": 282,
+       "weight": 6209020
+      },
+      {
+       "strike": 23300,
+       "oi": 4495855,
+       "distance": 82,
+       "weight": 4256733
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 7550790,
+       "distance": 18,
+       "weight": 7465010
+      },
+      {
+       "strike": 23000,
+       "oi": 8146905,
+       "distance": 218,
+       "weight": 7002630
+      }
+     ]
+    },
+    "atm_strike": 23200,
+    "atm_straddle": 309.85,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "previous snapshot",
+    "since": "2026-09-16T09:35",
+    "score": 4,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,209.4",
+      "now": "23,217.6",
+      "change": "+8 pts (+0.04%)",
+      "reading": "up",
+      "detail": "23,209.4 \u2192 23,217.6 (+8 pts (+0.04%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22700\u201323700)",
+      "score": 1,
+      "before": "PE 426 L \u00b7 CE 302 L",
+      "now": "PE 435 L \u00b7 CE 288 L",
+      "change": "PE +8.6 L \u00b7 CE -14.4 L",
+      "reading": "put writing + call unwinding",
+      "detail": "PE 426 L \u00b7 CE 302 L \u2192 PE 435 L \u00b7 CE 288 L (PE +8.6 L \u00b7 CE -14.4 L) \u2014 put writing + call unwinding"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "0.91",
+      "now": "1.01",
+      "change": "+0.11",
+      "reading": "puts gaining vs calls",
+      "detail": "0.91 \u2192 1.01 (+0.11) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23200",
+      "now": "23200 \u00b7 76 L \u00b7 18 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23200 \u2192 23200 \u00b7 76 L \u00b7 18 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 1,
+      "before": "23300",
+      "now": "23500 \u00b7 76 L \u00b7 282 pts away",
+      "change": "+200",
+      "reading": "resistance moved up",
+      "detail": "23300 \u2192 23500 \u00b7 76 L \u00b7 282 pts away (+200) \u2014 resistance moved up"
+     },
+     {
+      "name": "ATM 23200 CE vs PE",
+      "score": 0,
+      "before": "CE 191.4 \u00b7 PE 143.4",
+      "now": "CE 182.0 \u00b7 PE 127.8",
+      "change": "CE -5% \u00b7 PE -11%",
+      "reading": "balanced",
+      "detail": "CE 191.4 \u00b7 PE 143.4 \u2192 CE 182.0 \u00b7 PE 127.8 (CE -5% \u00b7 PE -11%) \u2014 balanced"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "13.73%",
+      "now": "12.93%",
+      "change": "-0.80",
+      "reading": "calm rally",
+      "detail": "13.73% \u2192 12.93% (-0.80) \u2014 calm rally"
+     }
+    ]
+   },
+   "oi_view_day": {
+    "vs": "previous day close",
+    "since": "2026-09-15T15:40",
+    "score": 6,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 1,
+      "before": "23,118.6",
+      "now": "23,217.6",
+      "change": "+99 pts (+0.43%)",
+      "reading": "up",
+      "detail": "23,118.6 \u2192 23,217.6 (+99 pts (+0.43%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22600\u201323600)",
+      "score": 1,
+      "before": "PE 311 L \u00b7 CE 186 L",
+      "now": "PE 464 L \u00b7 CE 234 L",
+      "change": "PE +153.3 L \u00b7 CE +48.7 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 311 L \u00b7 CE 186 L \u2192 PE 464 L \u00b7 CE 234 L (PE +153.3 L \u00b7 CE +48.7 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "0.83",
+      "now": "1.01",
+      "change": "+0.19",
+      "reading": "puts gaining vs calls",
+      "detail": "0.83 \u2192 1.01 (+0.19) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23000",
+      "now": "23200 \u00b7 76 L \u00b7 18 pts away",
+      "change": "+200",
+      "reading": "support moved up",
+      "detail": "23000 \u2192 23200 \u00b7 76 L \u00b7 18 pts away (+200) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 76 L \u00b7 282 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 76 L \u00b7 282 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23100 CE vs PE",
+      "score": 1,
+      "before": "CE 224.1 \u00b7 PE 132.8",
+      "now": "CE 247.2 \u00b7 PE 95.0",
+      "change": "CE +10% \u00b7 PE -28%",
+      "reading": "calls stronger",
+      "detail": "CE 224.1 \u00b7 PE 132.8 \u2192 CE 247.2 \u00b7 PE 95.0 (CE +10% \u00b7 PE -28%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "13.67%",
+      "now": "12.93%",
+      "change": "-0.74",
+      "reading": "calm rally",
+      "detail": "13.67% \u2192 12.93% (-0.74) \u2014 calm rally"
+     }
+    ]
+   },
+   "nifty_ohlc": [
+    23201.6,
+    23284.75,
+    23116.1,
+    23217.6
+   ],
+   "leader_changes": 2,
+   "day_shift": {
+    "direction": "FLAT",
+    "points": 0.0
+   }
+  },
+  {
+   "time": "2026-09-17T09:20",
+   "day": "2026-09-17",
+   "kind": "DAY_START",
+   "leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "prev_leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23200,
+      "volume": 7152795
+     },
+     {
+      "strike": 23300,
+      "volume": 5878275
+     },
+     {
+      "strike": 23500,
+      "volume": 5421650
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23200,
+      "volume": 8667490
+     },
+     {
+      "strike": 23000,
+      "volume": 5669040
+     },
+     {
+      "strike": 22500,
+      "volume": 4480840
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 21.7,
+    "PE": 52.9
+   },
+   "range": {
+    "lower": 23015.1,
+    "upper": 23332.8,
+    "width": 317.7,
+    "ce_first_high": 184.9,
+    "pe_first_high": 132.8,
+    "since": "2026-09-17T09:20"
+   },
+   "shift": {
+    "direction": "UP",
+    "points": 8.3,
+    "upper_move": -19.2,
+    "lower_move": 35.8,
+    "from": [
+     22979,
+     23352
+    ],
+    "to": [
+     23015,
+     23333
+    ]
+   },
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23300,
+      "premium": 124.1,
+      "distance": 44.0,
+      "iv": 12.09,
+      "delta": 0.4766,
+      "pop": 52.3
+     },
+     "safer": null
+    },
+    "PE": {
+     "rule": {
+      "strike": 23000,
+      "premium": 50.2,
+      "distance": 256.0,
+      "iv": 13.53,
+      "delta": -0.2272,
+      "pop": 77.3
+     },
+     "safer": {
+      "strike": 22900,
+      "premium": 34.45,
+      "distance": 356.0,
+      "iv": 14.07,
+      "delta": -0.1641,
+      "pop": 83.6
+     }
+    }
+   },
+   "market": {
+    "spot": 23255.95,
+    "spot_is_forward": false,
+    "forward": 23278.05,
+    "pcr_oi": 1.04,
+    "pcr_chg_oi": 1.6,
+    "support": 23200,
+    "resistance": 23500,
+    "atm_iv": 12.08,
+    "walls": {
+     "resistance": 23500,
+     "support": 23200,
+     "window": 540,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 7804420,
+       "distance": 244,
+       "weight": 6393815
+      },
+      {
+       "strike": 23300,
+       "oi": 5245500,
+       "distance": 44,
+       "weight": 5074372
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 9215505,
+       "distance": 56,
+       "weight": 8833644
+      },
+      {
+       "strike": 23000,
+       "oi": 8996975,
+       "distance": 256,
+       "weight": 7291531
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 270.05,
+    "max_pain": 23300
+   },
+   "day_range": {
+    "lower": 23015.1,
+    "upper": 23332.8,
+    "width": 317.7,
+    "ce_leader": 23200,
+    "pe_leader": 23200,
+    "ce_first_high": 184.9,
+    "pe_first_high": 132.8
+   },
+   "oi_view": {
+    "vs": "previous day close",
+    "since": "2026-09-16T15:40",
+    "score": 3,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,217.6",
+      "now": "23,256.0",
+      "change": "+38 pts (+0.17%)",
+      "reading": "up",
+      "detail": "23,217.6 \u2192 23,256.0 (+38 pts (+0.17%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22700\u201323700)",
+      "score": 1,
+      "before": "PE 435 L \u00b7 CE 288 L",
+      "now": "PE 480 L \u00b7 CE 313 L",
+      "change": "PE +45.0 L \u00b7 CE +24.6 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 435 L \u00b7 CE 288 L \u2192 PE 480 L \u00b7 CE 313 L (PE +45.0 L \u00b7 CE +24.6 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 0,
+      "before": "1.01",
+      "now": "1.04",
+      "change": "+0.02",
+      "reading": "little change",
+      "detail": "1.01 \u2192 1.04 (+0.02) \u2014 little change"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23200",
+      "now": "23200 \u00b7 92 L \u00b7 56 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23200 \u2192 23200 \u00b7 92 L \u00b7 56 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 78 L \u00b7 244 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 78 L \u00b7 244 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23200 CE vs PE",
+      "score": 1,
+      "before": "CE 182.0 \u00b7 PE 127.8",
+      "now": "CE 180.8 \u00b7 PE 103.6",
+      "change": "CE -1% \u00b7 PE -19%",
+      "reading": "calls stronger",
+      "detail": "CE 182.0 \u00b7 PE 127.8 \u2192 CE 180.8 \u00b7 PE 103.6 (CE -1% \u00b7 PE -19%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "12.93%",
+      "now": "12.08%",
+      "change": "-0.85",
+      "reading": "calm rally",
+      "detail": "12.93% \u2192 12.08% (-0.85) \u2014 calm rally"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "UP",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+47 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+43.4 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "+0.130",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-17T09:35",
+   "day": "2026-09-17",
+   "kind": "LEADER_CHANGE",
+   "leaders": {
+    "CE": 23300,
+    "PE": 23200
+   },
+   "prev_leaders": {
+    "CE": 23200,
+    "PE": 23200
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23300,
+      "volume": 19324175
+     },
+     {
+      "strike": 23200,
+      "volume": 17802850
+     },
+     {
+      "strike": 23500,
+      "volume": 13275730
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23200,
+      "volume": 22451455
+     },
+     {
+      "strike": 23000,
+      "volume": 13132730
+     },
+     {
+      "strike": 23300,
+      "volume": 12190750
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 8.5,
+    "PE": 71.0
+   },
+   "range": {
+    "lower": 23073.45,
+    "upper": 23432.8,
+    "width": 359.3,
+    "ce_first_high": 126.55,
+    "pe_first_high": 132.8,
+    "since": "2026-09-17T09:35"
+   },
+   "shift": {
+    "direction": "UP",
+    "points": 79.2,
+    "upper_move": 100.0,
+    "lower_move": 58.4,
+    "from": [
+     23015,
+     23333
+    ],
+    "to": [
+     23073,
+     23433
+    ]
+   },
+   "intraday_view": "BULLISH",
+   "best": {
+    "CE": {
+     "rule": null,
+     "safer": {
+      "strike": 23500,
+      "premium": 48.15,
+      "distance": 215.5,
+      "iv": 11.05,
+      "delta": 0.2596,
+      "pop": 74.0
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23100,
+      "premium": 62.85,
+      "distance": 184.5,
+      "iv": 12.63,
+      "delta": -0.2837,
+      "pop": 71.6
+     },
+     "safer": {
+      "strike": 23000,
+      "premium": 42.65,
+      "distance": 284.5,
+      "iv": 13.15,
+      "delta": -0.2048,
+      "pop": 79.5
+     }
+    }
+   },
+   "market": {
+    "spot": 23284.45,
+    "spot_is_forward": false,
+    "forward": 23298.12,
+    "pcr_oi": 1.05,
+    "pcr_chg_oi": 1.29,
+    "support": 23200,
+    "resistance": 23500,
+    "atm_iv": 11.69,
+    "walls": {
+     "resistance": 23500,
+     "support": 23200,
+     "window": 521,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 8392540,
+       "distance": 216,
+       "weight": 7004462
+      },
+      {
+       "strike": 23300,
+       "oi": 6735625,
+       "distance": 16,
+       "weight": 6655257
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 10474750,
+       "distance": 84,
+       "weight": 9795991
+      },
+      {
+       "strike": 23000,
+       "oi": 9560980,
+       "distance": 284,
+       "weight": 7474181
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 260.65,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "09:20 snapshot",
+    "since": "2026-09-17T09:20",
+    "score": 3,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,256.0",
+      "now": "23,284.5",
+      "change": "+28 pts (+0.12%)",
+      "reading": "up",
+      "detail": "23,256.0 \u2192 23,284.5 (+28 pts (+0.12%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 440 L \u00b7 CE 380 L",
+      "now": "PE 495 L \u00b7 CE 425 L",
+      "change": "PE +55.4 L \u00b7 CE +44.2 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 440 L \u00b7 CE 380 L \u2192 PE 495 L \u00b7 CE 425 L (PE +55.4 L \u00b7 CE +44.2 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 0,
+      "before": "1.04",
+      "now": "1.05",
+      "change": "+0.01",
+      "reading": "little change",
+      "detail": "1.04 \u2192 1.05 (+0.01) \u2014 little change"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23200",
+      "now": "23200 \u00b7 105 L \u00b7 84 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23200 \u2192 23200 \u00b7 105 L \u00b7 84 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 84 L \u00b7 216 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 84 L \u00b7 216 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 124.1 \u00b7 PE 145.9",
+      "now": "CE 129.6 \u00b7 PE 131.1",
+      "change": "CE +4% \u00b7 PE -10%",
+      "reading": "calls stronger",
+      "detail": "CE 124.1 \u00b7 PE 145.9 \u2192 CE 129.6 \u00b7 PE 131.1 (CE +4% \u00b7 PE -10%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "12.08%",
+      "now": "11.69%",
+      "change": "-0.39",
+      "reading": "calm rally",
+      "detail": "12.08% \u2192 11.69% (-0.39) \u2014 calm rally"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "UP",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+28 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+11.1 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "+0.010",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-17T13:20",
+   "day": "2026-09-17",
+   "kind": "LEADER_CHANGE",
+   "leaders": {
+    "CE": 23300,
+    "PE": 23300
+   },
+   "prev_leaders": {
+    "CE": 23300,
+    "PE": 23200
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23300,
+      "volume": 143420355
+     },
+     {
+      "strike": 23500,
+      "volume": 88078510
+     },
+     {
+      "strike": 23200,
+      "volume": 76455145
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 124499245
+     },
+     {
+      "strike": 23200,
+      "volume": 124057050
+     },
+     {
+      "strike": 23000,
+      "volume": 71061900
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 62.8,
+    "PE": 0.4
+   },
+   "range": {
+    "lower": 23173.45,
+    "upper": 23482.75,
+    "width": 309.3,
+    "ce_first_high": 126.55,
+    "pe_first_high": 182.75,
+    "since": "2026-09-17T13:20"
+   },
+   "shift": {
+    "direction": "UP",
+    "points": 75.0,
+    "upper_move": 50.0,
+    "lower_move": 100.0,
+    "from": [
+     23073,
+     23433
+    ],
+    "to": [
+     23173,
+     23483
+    ]
+   },
+   "intraday_view": "BULLISH",
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23500,
+      "premium": 51.15,
+      "distance": 180.7,
+      "iv": 10.3,
+      "delta": 0.2892,
+      "pop": 71.1
+     },
+     "safer": {
+      "strike": 23600,
+      "premium": 26.65,
+      "distance": 280.7,
+      "iv": 10.09,
+      "delta": 0.1779,
+      "pop": 82.2
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23200,
+      "premium": 68.3,
+      "distance": 119.3,
+      "iv": 11.5,
+      "delta": -0.3263,
+      "pop": 67.4
+     },
+     "safer": {
+      "strike": 23100,
+      "premium": 45.45,
+      "distance": 219.3,
+      "iv": 12.08,
+      "delta": -0.2322,
+      "pop": 76.8
+     }
+    }
+   },
+   "market": {
+    "spot": 23319.3,
+    "spot_is_forward": false,
+    "forward": 23340.03,
+    "pcr_oi": 1.25,
+    "pcr_chg_oi": 2.81,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": 11.02,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 488,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 7827170,
+       "distance": 181,
+       "weight": 6668800
+      },
+      {
+       "strike": 23600,
+       "oi": 6473480,
+       "distance": 281,
+       "weight": 4985268
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 12076675,
+       "distance": 19,
+       "weight": 11885782
+      },
+      {
+       "strike": 23200,
+       "oi": 12987845,
+       "distance": 119,
+       "weight": 11718844
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 244.2,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "previous snapshot",
+    "since": "2026-09-17T09:35",
+    "score": 5,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,284.5",
+      "now": "23,319.3",
+      "change": "+35 pts (+0.15%)",
+      "reading": "up",
+      "detail": "23,284.5 \u2192 23,319.3 (+35 pts (+0.15%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 495 L \u00b7 CE 425 L",
+      "now": "PE 626 L \u00b7 CE 419 L",
+      "change": "PE +130.4 L \u00b7 CE -5.4 L",
+      "reading": "put writing + call unwinding",
+      "detail": "PE 495 L \u00b7 CE 425 L \u2192 PE 626 L \u00b7 CE 419 L (PE +130.4 L \u00b7 CE -5.4 L) \u2014 put writing + call unwinding"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "1.05",
+      "now": "1.25",
+      "change": "+0.20",
+      "reading": "puts gaining vs calls",
+      "detail": "1.05 \u2192 1.25 (+0.20) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23200",
+      "now": "23300 \u00b7 121 L \u00b7 19 pts away",
+      "change": "+100",
+      "reading": "support moved up",
+      "detail": "23200 \u2192 23300 \u00b7 121 L \u00b7 19 pts away (+100) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 78 L \u00b7 181 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 78 L \u00b7 181 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 129.6 \u00b7 PE 131.1",
+      "now": "CE 142.2 \u00b7 PE 102.0",
+      "change": "CE +10% \u00b7 PE -22%",
+      "reading": "calls stronger",
+      "detail": "CE 129.6 \u00b7 PE 131.1 \u2192 CE 142.2 \u00b7 PE 102.0 (CE +10% \u00b7 PE -22%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "11.69%",
+      "now": "11.02%",
+      "change": "-0.67",
+      "reading": "calm rally",
+      "detail": "11.69% \u2192 11.02% (-0.67) \u2014 calm rally"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "UP",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+35 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+135.9 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "+0.199",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-17T15:40",
+   "day": "2026-09-17",
+   "kind": "DAY_END",
+   "leaders": {
+    "CE": 23300,
+    "PE": 23300
+   },
+   "prev_leaders": null,
+   "leader_changed": false,
+   "top": {
+    "CE": [
+     {
+      "strike": 23300,
+      "volume": 209630395
+     },
+     {
+      "strike": 23500,
+      "volume": 128601915
+     },
+     {
+      "strike": 23200,
+      "volume": 98774780
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 188094205
+     },
+     {
+      "strike": 23200,
+      "volume": 179755875
+     },
+     {
+      "strike": 23000,
+      "volume": 107664765
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 63.0,
+    "PE": 4.6
+   },
+   "range": {
+    "lower": 23173.45,
+    "upper": 23482.75,
+    "width": 309.3,
+    "ce_first_high": 126.55,
+    "pe_first_high": 182.75,
+    "since": "2026-09-17T13:20"
+   },
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23500,
+      "premium": 40.95,
+      "distance": 229.4,
+      "iv": 9.76,
+      "delta": 0.2567,
+      "pop": 74.3
+     },
+     "safer": {
+      "strike": 23600,
+      "premium": 19.75,
+      "distance": 329.4,
+      "iv": 9.55,
+      "delta": 0.1475,
+      "pop": 85.2
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23200,
+      "premium": 66.7,
+      "distance": 70.6,
+      "iv": 10.91,
+      "delta": -0.3358,
+      "pop": 66.4
+     },
+     "safer": {
+      "strike": 23100,
+      "premium": 42.6,
+      "distance": 170.6,
+      "iv": 11.4,
+      "delta": -0.2328,
+      "pop": 76.7
+     }
+    }
+   },
+   "market": {
+    "spot": 23270.6,
+    "spot_is_forward": false,
+    "forward": 23323.85,
+    "pcr_oi": 0.94,
+    "pcr_chg_oi": 0.68,
+    "support": 23200,
+    "resistance": 23500,
+    "atm_iv": 10.48,
+    "walls": {
+     "resistance": 23500,
+     "support": 23200,
+     "window": 458,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 9060935,
+       "distance": 229,
+       "weight": 7244789
+      },
+      {
+       "strike": 23300,
+       "oi": 6761625,
+       "distance": 29,
+       "weight": 6587931
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23200,
+       "oi": 8838700,
+       "distance": 71,
+       "weight": 8293473
+      },
+      {
+       "strike": 23000,
+       "oi": 9589190,
+       "distance": 271,
+       "weight": 7321968
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 228.9,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "previous snapshot",
+    "since": "2026-09-17T13:20",
+    "score": -5,
+    "verdict": "STRONG BEARISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": -1,
+      "before": "23,319.3",
+      "now": "23,270.6",
+      "change": "-49 pts (-0.21%)",
+      "reading": "down",
+      "detail": "23,319.3 \u2192 23,270.6 (-49 pts (-0.21%)) \u2014 down"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": -1,
+      "before": "PE 626 L \u00b7 CE 419 L",
+      "now": "PE 468 L \u00b7 CE 433 L",
+      "change": "PE -158.2 L \u00b7 CE +13.5 L",
+      "reading": "call writing + put unwinding",
+      "detail": "PE 626 L \u00b7 CE 419 L \u2192 PE 468 L \u00b7 CE 433 L (PE -158.2 L \u00b7 CE +13.5 L) \u2014 call writing + put unwinding"
+     },
+     {
+      "name": "PCR",
+      "score": -1,
+      "before": "1.25",
+      "now": "0.94",
+      "change": "-0.30",
+      "reading": "calls gaining vs puts",
+      "detail": "1.25 \u2192 0.94 (-0.30) \u2014 calls gaining vs puts"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": -1,
+      "before": "23300",
+      "now": "23200 \u00b7 88 L \u00b7 71 pts away",
+      "change": "-100",
+      "reading": "support moved down",
+      "detail": "23300 \u2192 23200 \u00b7 88 L \u00b7 71 pts away (-100) \u2014 support moved down"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 91 L \u00b7 229 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 91 L \u00b7 229 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": -1,
+      "before": "CE 142.2 \u00b7 PE 102.0",
+      "now": "CE 126.9 \u00b7 PE 102.0",
+      "change": "CE -11% \u00b7 PE -0%",
+      "reading": "puts stronger",
+      "detail": "CE 142.2 \u00b7 PE 102.0 \u2192 CE 126.9 \u00b7 PE 102.0 (CE -11% \u00b7 PE -0%) \u2014 puts stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "11.02%",
+      "now": "10.48%",
+      "change": "-0.54",
+      "reading": "no signal",
+      "detail": "11.02% \u2192 10.48% (-0.54) \u2014 no signal"
+     }
+    ]
+   },
+   "oi_view_day": {
+    "vs": "previous day close",
+    "since": "2026-09-16T15:40",
+    "score": 3,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 1,
+      "before": "23,217.6",
+      "now": "23,270.6",
+      "change": "+53 pts (+0.23%)",
+      "reading": "up",
+      "detail": "23,217.6 \u2192 23,270.6 (+53 pts (+0.23%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22700\u201323700)",
+      "score": 1,
+      "before": "PE 435 L \u00b7 CE 288 L",
+      "now": "PE 522 L \u00b7 CE 350 L",
+      "change": "PE +87.6 L \u00b7 CE +62.3 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 435 L \u00b7 CE 288 L \u2192 PE 522 L \u00b7 CE 350 L (PE +87.6 L \u00b7 CE +62.3 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": -1,
+      "before": "1.01",
+      "now": "0.94",
+      "change": "-0.07",
+      "reading": "calls gaining vs puts",
+      "detail": "1.01 \u2192 0.94 (-0.07) \u2014 calls gaining vs puts"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23200",
+      "now": "23200 \u00b7 88 L \u00b7 71 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23200 \u2192 23200 \u00b7 88 L \u00b7 71 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 91 L \u00b7 229 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 91 L \u00b7 229 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23200 CE vs PE",
+      "score": 1,
+      "before": "CE 182.0 \u00b7 PE 127.8",
+      "now": "CE 190.5 \u00b7 PE 66.7",
+      "change": "CE +5% \u00b7 PE -48%",
+      "reading": "calls stronger",
+      "detail": "CE 182.0 \u00b7 PE 127.8 \u2192 CE 190.5 \u00b7 PE 66.7 (CE +5% \u00b7 PE -48%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "12.93%",
+      "now": "10.48%",
+      "change": "-2.45",
+      "reading": "calm rally",
+      "detail": "12.93% \u2192 10.48% (-2.45) \u2014 calm rally"
+     }
+    ]
+   },
+   "nifty_ohlc": [
+    23195.25,
+    23363.55,
+    23193.65,
+    23270.6
+   ],
+   "leader_changes": 2,
+   "day_shift": {
+    "direction": "UP",
+    "points": 154.2
+   }
+  },
+  {
+   "time": "2026-09-18T09:20",
+   "day": "2026-09-18",
+   "kind": "DAY_START",
+   "leaders": {
+    "CE": 23300,
+    "PE": 23300
+   },
+   "prev_leaders": {
+    "CE": 23300,
+    "PE": 23300
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23300,
+      "volume": 10702250
+     },
+     {
+      "strike": 23500,
+      "volume": 8196825
+     },
+     {
+      "strike": 23600,
+      "volume": 5602220
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 14124825
+     },
+     {
+      "strike": 23200,
+      "volume": 7812675
+     },
+     {
+      "strike": 23000,
+      "volume": 6570590
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 30.6,
+    "PE": 80.8
+   },
+   "range": {
+    "lower": 23163.7,
+    "upper": 23397.75,
+    "width": 234.0,
+    "ce_first_high": 136.3,
+    "pe_first_high": 97.75,
+    "since": "2026-09-18T09:20"
+   },
+   "shift": {
+    "direction": "DOWN",
+    "points": -47.4,
+    "upper_move": -85.0,
+    "lower_move": -9.8,
+    "from": [
+     23173,
+     23483
+    ],
+    "to": [
+     23164,
+     23398
+    ]
+   },
+   "best": {
+    "CE": {
+     "rule": null,
+     "safer": {
+      "strike": 23500,
+      "premium": 40.6,
+      "distance": 176.5,
+      "iv": 10.29,
+      "delta": 0.2602,
+      "pop": 74.0
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23200,
+      "premium": 60.5,
+      "distance": 123.5,
+      "iv": 11.4,
+      "delta": -0.3212,
+      "pop": 67.9
+     },
+     "safer": {
+      "strike": 23100,
+      "premium": 37.6,
+      "distance": 223.5,
+      "iv": 11.91,
+      "delta": -0.2175,
+      "pop": 78.2
+     }
+    }
+   },
+   "market": {
+    "spot": 23323.45,
+    "spot_is_forward": false,
+    "forward": 23331.2,
+    "pcr_oi": 0.99,
+    "pcr_chg_oi": 1.7,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": 10.96,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 444,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 10133435,
+       "distance": 177,
+       "weight": 8519853
+      },
+      {
+       "strike": 23600,
+       "oi": 7585045,
+       "distance": 277,
+       "weight": 5693144
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 10953020,
+       "distance": 23,
+       "weight": 10721364
+      },
+      {
+       "strike": 23200,
+       "oi": 10491650,
+       "distance": 123,
+       "weight": 9323492
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 221.75,
+    "max_pain": 23300
+   },
+   "day_range": {
+    "lower": 23163.7,
+    "upper": 23397.75,
+    "width": 234.0,
+    "ce_leader": 23300,
+    "pe_leader": 23300,
+    "ce_first_high": 136.3,
+    "pe_first_high": 97.75
+   },
+   "oi_view": {
+    "vs": "previous day close",
+    "since": "2026-09-17T15:40",
+    "score": 4,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 1,
+      "before": "23,270.6",
+      "now": "23,323.5",
+      "change": "+53 pts (+0.23%)",
+      "reading": "up",
+      "detail": "23,270.6 \u2192 23,323.5 (+53 pts (+0.23%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 468 L \u00b7 CE 433 L",
+      "now": "PE 564 L \u00b7 CE 485 L",
+      "change": "PE +96.0 L \u00b7 CE +52.4 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 468 L \u00b7 CE 433 L \u2192 PE 564 L \u00b7 CE 485 L (PE +96.0 L \u00b7 CE +52.4 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "0.94",
+      "now": "0.99",
+      "change": "+0.05",
+      "reading": "puts gaining vs calls",
+      "detail": "0.94 \u2192 0.99 (+0.05) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23200",
+      "now": "23300 \u00b7 110 L \u00b7 23 pts away",
+      "change": "+100",
+      "reading": "support moved up",
+      "detail": "23200 \u2192 23300 \u00b7 110 L \u00b7 23 pts away (+100) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 101 L \u00b7 177 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 101 L \u00b7 177 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 0,
+      "before": "CE 126.9 \u00b7 PE 102.0",
+      "now": "CE 126.4 \u00b7 PE 95.3",
+      "change": "CE -0% \u00b7 PE -7%",
+      "reading": "balanced",
+      "detail": "CE 126.9 \u00b7 PE 102.0 \u2192 CE 126.4 \u00b7 PE 95.3 (CE -0% \u00b7 PE -7%) \u2014 balanced"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "10.48%",
+      "now": "10.96%",
+      "change": "+0.48",
+      "reading": "no signal",
+      "detail": "10.48% \u2192 10.96% (+0.48) \u2014 no signal"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "DOWN",
+    "aligned": 2,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+4 pts",
+      "ok": false
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "-128.1 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "-0.254",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-18T15:40",
+   "day": "2026-09-18",
+   "kind": "DAY_END",
+   "leaders": {
+    "CE": 23300,
+    "PE": 23300
+   },
+   "prev_leaders": null,
+   "leader_changed": false,
+   "top": {
+    "CE": [
+     {
+      "strike": 23300,
+      "volume": 343695950
+     },
+     {
+      "strike": 23500,
+      "volume": 215535060
+     },
+     {
+      "strike": 23600,
+      "volume": 127355865
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 434554185
+     },
+     {
+      "strike": 23200,
+      "volume": 208575640
+     },
+     {
+      "strike": 23400,
+      "volume": 160958005
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 59.5,
+    "PE": 108.3
+   },
+   "range": {
+    "lower": 23163.7,
+    "upper": 23397.75,
+    "width": 234.0,
+    "ce_first_high": 136.3,
+    "pe_first_high": 97.75,
+    "since": "2026-09-18T09:20"
+   },
+   "best": {
+    "CE": {
+     "rule": null,
+     "safer": {
+      "strike": 23500,
+      "premium": 29.9,
+      "distance": 153.6,
+      "iv": 8.57,
+      "delta": 0.2424,
+      "pop": 75.8
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23200,
+      "premium": 37.45,
+      "distance": 146.4,
+      "iv": 9.75,
+      "delta": -0.259,
+      "pop": 74.1
+     },
+     "safer": {
+      "strike": 23100,
+      "premium": 21.7,
+      "distance": 246.4,
+      "iv": 10.49,
+      "delta": -0.1599,
+      "pop": 84.0
+     }
+    }
+   },
+   "market": {
+    "spot": 23346.4,
+    "spot_is_forward": false,
+    "forward": 23352.25,
+    "pcr_oi": 1.09,
+    "pcr_chg_oi": 2.72,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": 9.1,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 364,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 9688965,
+       "distance": 154,
+       "weight": 8055348
+      },
+      {
+       "strike": 23700,
+       "oi": 9617400,
+       "distance": 354,
+       "weight": 5884455
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 13489450,
+       "distance": 46,
+       "weight": 12802391
+      },
+      {
+       "strike": 23200,
+       "oi": 10145720,
+       "distance": 146,
+       "weight": 8515277
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 182.2,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "09:20 snapshot",
+    "since": "2026-09-18T09:20",
+    "score": 4,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,323.5",
+      "now": "23,346.4",
+      "change": "+23 pts (+0.10%)",
+      "reading": "up",
+      "detail": "23,323.5 \u2192 23,346.4 (+23 pts (+0.10%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 564 L \u00b7 CE 485 L",
+      "now": "PE 626 L \u00b7 CE 477 L",
+      "change": "PE +62.3 L \u00b7 CE -8.5 L",
+      "reading": "put writing + call unwinding",
+      "detail": "PE 564 L \u00b7 CE 485 L \u2192 PE 626 L \u00b7 CE 477 L (PE +62.3 L \u00b7 CE -8.5 L) \u2014 put writing + call unwinding"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "0.99",
+      "now": "1.09",
+      "change": "+0.10",
+      "reading": "puts gaining vs calls",
+      "detail": "0.99 \u2192 1.09 (+0.10) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23300",
+      "now": "23300 \u00b7 135 L \u00b7 46 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23300 \u2192 23300 \u00b7 135 L \u00b7 46 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 97 L \u00b7 154 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 97 L \u00b7 154 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 126.4 \u00b7 PE 95.3",
+      "now": "CE 117.2 \u00b7 PE 65.0",
+      "change": "CE -7% \u00b7 PE -32%",
+      "reading": "calls stronger",
+      "detail": "CE 126.4 \u00b7 PE 95.3 \u2192 CE 117.2 \u00b7 PE 65.0 (CE -7% \u00b7 PE -32%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "10.96%",
+      "now": "9.10%",
+      "change": "-1.86",
+      "reading": "calm rally",
+      "detail": "10.96% \u2192 9.10% (-1.86) \u2014 calm rally"
+     }
+    ]
+   },
+   "oi_view_day": {
+    "vs": "previous day close",
+    "since": "2026-09-17T15:40",
+    "score": 6,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 1,
+      "before": "23,270.6",
+      "now": "23,346.4",
+      "change": "+76 pts (+0.33%)",
+      "reading": "up",
+      "detail": "23,270.6 \u2192 23,346.4 (+76 pts (+0.33%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 468 L \u00b7 CE 433 L",
+      "now": "PE 626 L \u00b7 CE 477 L",
+      "change": "PE +158.3 L \u00b7 CE +43.9 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 468 L \u00b7 CE 433 L \u2192 PE 626 L \u00b7 CE 477 L (PE +158.3 L \u00b7 CE +43.9 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "0.94",
+      "now": "1.09",
+      "change": "+0.15",
+      "reading": "puts gaining vs calls",
+      "detail": "0.94 \u2192 1.09 (+0.15) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23200",
+      "now": "23300 \u00b7 135 L \u00b7 46 pts away",
+      "change": "+100",
+      "reading": "support moved up",
+      "detail": "23200 \u2192 23300 \u00b7 135 L \u00b7 46 pts away (+100) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 97 L \u00b7 154 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 97 L \u00b7 154 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 126.9 \u00b7 PE 102.0",
+      "now": "CE 117.2 \u00b7 PE 65.0",
+      "change": "CE -8% \u00b7 PE -36%",
+      "reading": "calls stronger",
+      "detail": "CE 126.9 \u00b7 PE 102.0 \u2192 CE 117.2 \u00b7 PE 65.0 (CE -8% \u00b7 PE -36%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 1,
+      "before": "10.48%",
+      "now": "9.10%",
+      "change": "-1.38",
+      "reading": "calm rally",
+      "detail": "10.48% \u2192 9.10% (-1.38) \u2014 calm rally"
+     }
+    ]
+   },
+   "nifty_ohlc": [
+    23334.7,
+    23389.15,
+    23286.6,
+    23346.4
+   ],
+   "leader_changes": 0,
+   "day_shift": {
+    "direction": "FLAT",
+    "points": 0.0
+   }
+  },
+  {
+   "time": "2026-09-21T09:20",
+   "day": "2026-09-21",
+   "kind": "DAY_START",
+   "leaders": {
+    "CE": 23500,
+    "PE": 23300
+   },
+   "prev_leaders": {
+    "CE": 23300,
+    "PE": 23300
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23500,
+      "volume": 9718410
+     },
+     {
+      "strike": 23300,
+      "volume": 7660055
+     },
+     {
+      "strike": 24000,
+      "volume": 7375550
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 13124670
+     },
+     {
+      "strike": 23000,
+      "volume": 7642895
+     },
+     {
+      "strike": 23200,
+      "volume": 7324135
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 26.9,
+    "PE": 71.7
+   },
+   "range": {
+    "lower": 23267.3,
+    "upper": 23562.4,
+    "width": 295.1,
+    "ce_first_high": 32.7,
+    "pe_first_high": 62.4,
+    "since": "2026-09-21T09:20"
+   },
+   "shift": {
+    "direction": "UP",
+    "points": 134.1,
+    "upper_move": 164.7,
+    "lower_move": 103.6,
+    "from": [
+     23164,
+     23398
+    ],
+    "to": [
+     23267,
+     23562
+    ]
+   },
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23600,
+      "premium": 10.1,
+      "distance": 215.3,
+      "iv": 13.37,
+      "delta": 0.1132,
+      "pop": 88.7
+     },
+     "safer": {
+      "strike": 23700,
+      "premium": 4.1,
+      "distance": 315.3,
+      "iv": 14.21,
+      "delta": 0.0502,
+      "pop": 95.0
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23300,
+      "premium": 45.75,
+      "distance": 84.7,
+      "iv": 14.17,
+      "delta": -0.3476,
+      "pop": 65.2
+     },
+     "safer": {
+      "strike": 23200,
+      "premium": 23.15,
+      "distance": 184.7,
+      "iv": 15.16,
+      "delta": -0.1982,
+      "pop": 80.2
+     }
+    }
+   },
+   "market": {
+    "spot": 23384.65,
+    "spot_is_forward": false,
+    "forward": 23375.5,
+    "pcr_oi": 1.1,
+    "pcr_chg_oi": 1.43,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": 13.47,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 500,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 11329695,
+       "distance": 115,
+       "weight": 10284190
+      },
+      {
+       "strike": 23700,
+       "oi": 9801610,
+       "distance": 315,
+       "weight": 7328859
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 16161405,
+       "distance": 85,
+       "weight": 15066954
+      },
+      {
+       "strike": 23200,
+       "oi": 11214060,
+       "distance": 185,
+       "weight": 9557519
+      }
+     ]
+    },
+    "atm_strike": 23400,
+    "max_pain": 23300
+   },
+   "day_range": {
+    "lower": 23267.3,
+    "upper": 23562.4,
+    "width": 295.1,
+    "ce_leader": 23500,
+    "pe_leader": 23300,
+    "ce_first_high": 32.7,
+    "pe_first_high": 62.4
+   },
+   "oi_view": {
+    "vs": "previous day close",
+    "since": "2026-09-18T15:40",
+    "score": 2,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,346.4",
+      "now": "23,384.7",
+      "change": "+38 pts (+0.16%)",
+      "reading": "up",
+      "detail": "23,346.4 \u2192 23,384.7 (+38 pts (+0.16%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 626 L \u00b7 CE 477 L",
+      "now": "PE 680 L \u00b7 CE 515 L",
+      "change": "PE +54.4 L \u00b7 CE +38.7 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 626 L \u00b7 CE 477 L \u2192 PE 680 L \u00b7 CE 515 L (PE +54.4 L \u00b7 CE +38.7 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 0,
+      "before": "1.09",
+      "now": "1.10",
+      "change": "+0.01",
+      "reading": "little change",
+      "detail": "1.09 \u2192 1.10 (+0.01) \u2014 little change"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23300",
+      "now": "23300 \u00b7 162 L \u00b7 85 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23300 \u2192 23300 \u00b7 162 L \u00b7 85 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 113 L \u00b7 115 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 113 L \u00b7 115 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 117.2 \u00b7 PE 65.0",
+      "now": "CE 122.2 \u00b7 PE 45.8",
+      "change": "CE +4% \u00b7 PE -30%",
+      "reading": "calls stronger",
+      "detail": "CE 117.2 \u00b7 PE 65.0 \u2192 CE 122.2 \u00b7 PE 45.8 (CE +4% \u00b7 PE -30%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "9.10%",
+      "now": "13.47%",
+      "change": "+4.37",
+      "reading": "no signal",
+      "detail": "9.10% \u2192 13.47% (+4.37) \u2014 no signal"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "UP",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+61 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+86.4 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "+0.108",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-21T09:45",
+   "day": "2026-09-21",
+   "kind": "LEADER_CHANGE",
+   "leaders": {
+    "CE": 23500,
+    "PE": 23400
+   },
+   "prev_leaders": {
+    "CE": 23500,
+    "PE": 23300
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23500,
+      "volume": 46256210
+     },
+     {
+      "strike": 23300,
+      "volume": 31594745
+     },
+     {
+      "strike": 23600,
+      "volume": 24730160
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23400,
+      "volume": 48971845
+     },
+     {
+      "strike": 23300,
+      "volume": 46669740
+     },
+     {
+      "strike": 23200,
+      "volume": 25079340
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 46.4,
+    "PE": 4.9
+   },
+   "range": {
+    "lower": 23367.3,
+    "upper": 23615.0,
+    "width": 247.7,
+    "ce_first_high": 32.7,
+    "pe_first_high": 115.0,
+    "since": "2026-09-21T09:45"
+   },
+   "shift": {
+    "direction": "UP",
+    "points": 76.3,
+    "upper_move": 52.6,
+    "lower_move": 100.0,
+    "from": [
+     23267,
+     23562
+    ],
+    "to": [
+     23367,
+     23615
+    ]
+   },
+   "intraday_view": "BULLISH",
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23600,
+      "premium": 11.1,
+      "distance": 206.8,
+      "iv": 13.13,
+      "delta": 0.1248,
+      "pop": 87.5
+     },
+     "safer": {
+      "strike": 23700,
+      "premium": 4.4,
+      "distance": 306.8,
+      "iv": 13.94,
+      "delta": 0.0546,
+      "pop": 94.5
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23400,
+      "premium": 77.3,
+      "distance": -6.8,
+      "iv": 13.37,
+      "delta": -0.5167,
+      "pop": 48.3
+     },
+     "safer": {
+      "strike": 23300,
+      "premium": 39.35,
+      "distance": 93.2,
+      "iv": 14.05,
+      "delta": -0.3152,
+      "pop": 68.5
+     }
+    }
+   },
+   "market": {
+    "spot": 23393.2,
+    "spot_is_forward": false,
+    "forward": 23391.55,
+    "pcr_oi": 1.3,
+    "pcr_chg_oi": 2.54,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": 13.37,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 500,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 16515395,
+       "distance": 107,
+       "weight": 15104319
+      },
+      {
+       "strike": 23600,
+       "oi": 10674690,
+       "distance": 207,
+       "weight": 8908669
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 22968595,
+       "distance": 93,
+       "weight": 21256056
+      },
+      {
+       "strike": 23200,
+       "oi": 15297555,
+       "distance": 193,
+       "weight": 12933164
+      }
+     ]
+    },
+    "atm_strike": 23400,
+    "max_pain": 23400
+   },
+   "oi_view": {
+    "vs": "09:20 snapshot",
+    "since": "2026-09-21T09:20",
+    "score": 2,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,384.7",
+      "now": "23,393.2",
+      "change": "+9 pts (+0.04%)",
+      "reading": "up",
+      "detail": "23,384.7 \u2192 23,393.2 (+9 pts (+0.04%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22900\u201323900)",
+      "score": 1,
+      "before": "PE 616 L \u00b7 CE 574 L",
+      "now": "PE 919 L \u00b7 CE 682 L",
+      "change": "PE +302.7 L \u00b7 CE +108.5 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 616 L \u00b7 CE 574 L \u2192 PE 919 L \u00b7 CE 682 L (PE +302.7 L \u00b7 CE +108.5 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "1.10",
+      "now": "1.30",
+      "change": "+0.20",
+      "reading": "puts gaining vs calls",
+      "detail": "1.10 \u2192 1.30 (+0.20) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23300",
+      "now": "23300 \u00b7 230 L \u00b7 93 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23300 \u2192 23300 \u00b7 230 L \u00b7 93 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 165 L \u00b7 107 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 165 L \u00b7 107 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "13.47%",
+      "now": "13.37%",
+      "change": "-0.10",
+      "reading": "no signal",
+      "detail": "13.47% \u2192 13.37% (-0.10) \u2014 no signal"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "UP",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+9 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+194.2 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "+0.202",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-21T15:40",
+   "day": "2026-09-21",
+   "kind": "DAY_END",
+   "leaders": {
+    "CE": 23500,
+    "PE": 23400
+   },
+   "prev_leaders": null,
+   "leader_changed": false,
+   "top": {
+    "CE": [
+     {
+      "strike": 23500,
+      "volume": 431384915
+     },
+     {
+      "strike": 23600,
+      "volume": 232658010
+     },
+     {
+      "strike": 23300,
+      "volume": 170088555
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23400,
+      "volume": 490459515
+     },
+     {
+      "strike": 23300,
+      "volume": 313514305
+     },
+     {
+      "strike": 23200,
+      "volume": 177231275
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 85.4,
+    "PE": 56.4
+   },
+   "range": {
+    "lower": 23367.3,
+    "upper": 23615.0,
+    "width": 247.7,
+    "ce_first_high": 32.7,
+    "pe_first_high": 115.0,
+    "since": "2026-09-21T09:45"
+   },
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23600,
+      "premium": 9.95,
+      "distance": 185.7,
+      "iv": 11.37,
+      "delta": 0.1401,
+      "pop": 86.0
+     },
+     "safer": {
+      "strike": 23700,
+      "premium": 2.65,
+      "distance": 285.7,
+      "iv": 11.94,
+      "delta": 0.0442,
+      "pop": 95.6
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23400,
+      "premium": 43.05,
+      "distance": 14.3,
+      "iv": 13.12,
+      "delta": -0.3812,
+      "pop": 61.9
+     },
+     "safer": {
+      "strike": 23300,
+      "premium": 22.4,
+      "distance": 114.3,
+      "iv": 15.15,
+      "delta": -0.2113,
+      "pop": 78.9
+     }
+    }
+   },
+   "market": {
+    "spot": 23414.3,
+    "spot_is_forward": false,
+    "forward": 23448.12,
+    "pcr_oi": 1.54,
+    "pcr_chg_oi": null,
+    "support": 23400,
+    "resistance": 23500,
+    "atm_iv": 13.12,
+    "walls": {
+     "resistance": 23500,
+     "support": 23400,
+     "window": 500,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 12356695,
+       "distance": 86,
+       "weight": 11509519
+      },
+      {
+       "strike": 23600,
+       "oi": 10793965,
+       "distance": 186,
+       "weight": 9190413
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23400,
+       "oi": 16997695,
+       "distance": 14,
+       "weight": 16803241
+      },
+      {
+       "strike": 23300,
+       "oi": 16568695,
+       "distance": 114,
+       "weight": 15053653
+      }
+     ]
+    },
+    "atm_strike": 23400,
+    "max_pain": 23500
+   },
+   "oi_view": {
+    "vs": "previous snapshot",
+    "since": "2026-09-21T09:45",
+    "score": 3,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,393.2",
+      "now": "23,414.3",
+      "change": "+21 pts (+0.09%)",
+      "reading": "up",
+      "detail": "23,393.2 \u2192 23,414.3 (+21 pts (+0.09%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22900\u201323900)",
+      "score": 1,
+      "before": "PE 919 L \u00b7 CE 682 L",
+      "now": "PE 842 L \u00b7 CE 546 L",
+      "change": "PE -76.9 L \u00b7 CE -136.0 L",
+      "reading": "call unwinding stronger",
+      "detail": "PE 919 L \u00b7 CE 682 L \u2192 PE 842 L \u00b7 CE 546 L (PE -76.9 L \u00b7 CE -136.0 L) \u2014 call unwinding stronger"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "1.30",
+      "now": "1.54",
+      "change": "+0.24",
+      "reading": "puts gaining vs calls",
+      "detail": "1.30 \u2192 1.54 (+0.24) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23300",
+      "now": "23400 \u00b7 170 L \u00b7 14 pts away",
+      "change": "+100",
+      "reading": "support moved up",
+      "detail": "23300 \u2192 23400 \u00b7 170 L \u00b7 14 pts away (+100) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 124 L \u00b7 86 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 124 L \u00b7 86 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "13.37%",
+      "now": "13.12%",
+      "change": "-0.25",
+      "reading": "no signal",
+      "detail": "13.37% \u2192 13.12% (-0.25) \u2014 no signal"
+     }
+    ]
+   },
+   "oi_view_day": {
+    "vs": "previous day close",
+    "since": "2026-09-18T15:40",
+    "score": 5,
+    "verdict": "STRONG BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 1,
+      "before": "23,346.4",
+      "now": "23,414.3",
+      "change": "+68 pts (+0.29%)",
+      "reading": "up",
+      "detail": "23,346.4 \u2192 23,414.3 (+68 pts (+0.29%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 1,
+      "before": "PE 626 L \u00b7 CE 477 L",
+      "now": "PE 930 L \u00b7 CE 482 L",
+      "change": "PE +303.5 L \u00b7 CE +5.8 L",
+      "reading": "put writing stronger \u2192 support building",
+      "detail": "PE 626 L \u00b7 CE 477 L \u2192 PE 930 L \u00b7 CE 482 L (PE +303.5 L \u00b7 CE +5.8 L) \u2014 put writing stronger \u2192 support building"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "1.09",
+      "now": "1.54",
+      "change": "+0.45",
+      "reading": "puts gaining vs calls",
+      "detail": "1.09 \u2192 1.54 (+0.45) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 1,
+      "before": "23300",
+      "now": "23400 \u00b7 170 L \u00b7 14 pts away",
+      "change": "+100",
+      "reading": "support moved up",
+      "detail": "23300 \u2192 23400 \u00b7 170 L \u00b7 14 pts away (+100) \u2014 support moved up"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 124 L \u00b7 86 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 124 L \u00b7 86 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 117.2 \u00b7 PE 65.0",
+      "now": "CE 170.0 \u00b7 PE 22.4",
+      "change": "CE +45% \u00b7 PE -66%",
+      "reading": "calls stronger",
+      "detail": "CE 117.2 \u00b7 PE 65.0 \u2192 CE 170.0 \u00b7 PE 22.4 (CE +45% \u00b7 PE -66%) \u2014 calls stronger"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "9.10%",
+      "now": "13.12%",
+      "change": "+4.02",
+      "reading": "no signal",
+      "detail": "9.10% \u2192 13.12% (+4.02) \u2014 no signal"
+     }
+    ]
+   },
+   "nifty_ohlc": [
+    23330.2,
+    23466.8,
+    23314.8,
+    23414.3
+   ],
+   "leader_changes": 1,
+   "day_shift": {
+    "direction": "UP",
+    "points": 76.3
+   }
+  },
+  {
+   "time": "2026-09-22T09:20",
+   "day": "2026-09-22",
+   "kind": "DAY_START",
+   "leaders": {
+    "CE": 23500,
+    "PE": 23400
+   },
+   "prev_leaders": {
+    "CE": 23500,
+    "PE": 23400
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23500,
+      "volume": 39719355
+     },
+     {
+      "strike": 23600,
+      "volume": 20584070
+     },
+     {
+      "strike": 23700,
+      "volume": 15679170
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23400,
+      "volume": 41893930
+     },
+     {
+      "strike": 23300,
+      "volume": 24430705
+     },
+     {
+      "strike": 23100,
+      "volume": 24425375
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 93.0,
+    "PE": 71.5
+   },
+   "range": {
+    "lower": 23365.15,
+    "upper": 23539.3,
+    "width": 174.1,
+    "ce_first_high": 34.85,
+    "pe_first_high": 39.3,
+    "since": "2026-09-22T09:20"
+   },
+   "shift": {
+    "direction": "DOWN",
+    "points": -38.9,
+    "upper_move": -75.7,
+    "lower_move": -2.1,
+    "from": [
+     23367,
+     23615
+    ],
+    "to": [
+     23365,
+     23539
+    ]
+   },
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23500,
+      "premium": 27.35,
+      "distance": 53.5,
+      "iv": 19.98,
+      "delta": 0.3293,
+      "pop": 67.1
+     },
+     "safer": {
+      "strike": 23600,
+      "premium": 7.15,
+      "distance": 153.5,
+      "iv": 20.34,
+      "delta": 0.1141,
+      "pop": 88.6
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23400,
+      "premium": 33.2,
+      "distance": 46.5,
+      "iv": 20.61,
+      "delta": -0.3682,
+      "pop": 63.2
+     },
+     "safer": {
+      "strike": 23300,
+      "premium": 11.4,
+      "distance": 146.5,
+      "iv": 22.33,
+      "delta": -0.1539,
+      "pop": 84.6
+     }
+    }
+   },
+   "market": {
+    "spot": 23446.5,
+    "spot_is_forward": false,
+    "forward": 23443.6,
+    "pcr_oi": 1.33,
+    "pcr_chg_oi": 0.48,
+    "support": 23400,
+    "resistance": 23500,
+    "atm_iv": 20.61,
+    "walls": {
+     "resistance": 23500,
+     "support": 23400,
+     "window": 500,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 22728810,
+       "distance": 54,
+       "weight": 21756016
+      },
+      {
+       "strike": 23600,
+       "oi": 14944865,
+       "distance": 154,
+       "weight": 13109635
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23400,
+       "oi": 21694205,
+       "distance": 46,
+       "weight": 20887180
+      },
+      {
+       "strike": 23300,
+       "oi": 17844190,
+       "distance": 146,
+       "weight": 15752850
+      }
+     ]
+    },
+    "atm_strike": 23400,
+    "max_pain": 23500
+   },
+   "day_range": {
+    "lower": 23365.15,
+    "upper": 23539.3,
+    "width": 174.1,
+    "ce_leader": 23500,
+    "pe_leader": 23400,
+    "ce_first_high": 34.85,
+    "pe_first_high": 39.3
+   },
+   "oi_view": {
+    "vs": "previous day close",
+    "since": "2026-09-21T15:40",
+    "score": -2,
+    "verdict": "BEARISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,414.3",
+      "now": "23,446.5",
+      "change": "+32 pts (+0.14%)",
+      "reading": "up",
+      "detail": "23,414.3 \u2192 23,446.5 (+32 pts (+0.14%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22900\u201323900)",
+      "score": -1,
+      "before": "PE 842 L \u00b7 CE 546 L",
+      "now": "PE 969 L \u00b7 CE 728 L",
+      "change": "PE +127.7 L \u00b7 CE +182.0 L",
+      "reading": "call writing stronger \u2192 resistance building",
+      "detail": "PE 842 L \u00b7 CE 546 L \u2192 PE 969 L \u00b7 CE 728 L (PE +127.7 L \u00b7 CE +182.0 L) \u2014 call writing stronger \u2192 resistance building"
+     },
+     {
+      "name": "PCR",
+      "score": -1,
+      "before": "1.54",
+      "now": "1.33",
+      "change": "-0.21",
+      "reading": "calls gaining vs puts",
+      "detail": "1.54 \u2192 1.33 (-0.21) \u2014 calls gaining vs puts"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23400",
+      "now": "23400 \u00b7 217 L \u00b7 46 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23400 \u2192 23400 \u00b7 217 L \u00b7 46 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 227 L \u00b7 54 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 227 L \u00b7 54 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": 0,
+      "before": "13.12%",
+      "now": "20.61%",
+      "change": "+7.49",
+      "reading": "no signal",
+      "detail": "13.12% \u2192 20.61% (+7.49) \u2014 no signal"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "DOWN",
+    "aligned": 0,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "+53 pts",
+      "ok": false
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "+4.8 L",
+      "ok": false
+     },
+     {
+      "name": "PCR",
+      "value": "+0.030",
+      "ok": false
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-22T13:50",
+   "day": "2026-09-22",
+   "kind": "LEADER_CHANGE",
+   "leaders": {
+    "CE": 23500,
+    "PE": 23300
+   },
+   "prev_leaders": {
+    "CE": 23500,
+    "PE": 23400
+   },
+   "leader_changed": true,
+   "top": {
+    "CE": [
+     {
+      "strike": 23500,
+      "volume": 653726515
+     },
+     {
+      "strike": 23300,
+      "volume": 279172530
+     },
+     {
+      "strike": 23600,
+      "volume": 277198480
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 840683155
+     },
+     {
+      "strike": 23400,
+      "volume": 835185975
+     },
+     {
+      "strike": 23200,
+      "volume": 402388285
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 134.2,
+    "PE": 0.7
+   },
+   "range": {
+    "lower": 23265.15,
+    "upper": 23514.45,
+    "width": 249.3,
+    "ce_first_high": 34.85,
+    "pe_first_high": 14.45,
+    "since": "2026-09-22T13:50"
+   },
+   "shift": {
+    "direction": "DOWN",
+    "points": -62.4,
+    "upper_move": -24.8,
+    "lower_move": -100.0,
+    "from": [
+     23365,
+     23539
+    ],
+    "to": [
+     23265,
+     23514
+    ]
+   },
+   "intraday_view": "BEARISH",
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23500,
+      "premium": 3.1,
+      "distance": 171.2,
+      "iv": 33.88,
+      "delta": 0.0615,
+      "pop": 93.8
+     },
+     "safer": {
+      "strike": 23600,
+      "premium": 0.95,
+      "distance": 271.2,
+      "iv": 39.13,
+      "delta": 0.0193,
+      "pop": 98.1
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23300,
+      "premium": 31.9,
+      "distance": 28.8,
+      "iv": 29.52,
+      "delta": -0.426,
+      "pop": 57.4
+     },
+     "safer": {
+      "strike": 23200,
+      "premium": 7.55,
+      "distance": 128.8,
+      "iv": 31.57,
+      "delta": -0.1366,
+      "pop": 86.3
+     }
+    }
+   },
+   "market": {
+    "spot": 23328.8,
+    "spot_is_forward": false,
+    "forward": 23318.78,
+    "pcr_oi": 1.05,
+    "pcr_chg_oi": 0.36,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": 29.25,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 300,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 32751030,
+       "distance": 171,
+       "weight": 25275061
+      },
+      {
+       "strike": 23600,
+       "oi": 14956955,
+       "distance": 271,
+       "weight": 9548520
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 32499285,
+       "distance": 29,
+       "weight": 31251312
+      },
+      {
+       "strike": 23200,
+       "oi": 20438405,
+       "distance": 129,
+       "weight": 16928449
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 81.85,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "09:20 snapshot",
+    "since": "2026-09-22T09:20",
+    "score": -5,
+    "verdict": "STRONG BEARISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": -1,
+      "before": "23,446.5",
+      "now": "23,328.8",
+      "change": "-118 pts (-0.50%)",
+      "reading": "down",
+      "detail": "23,446.5 \u2192 23,328.8 (-118 pts (-0.50%)) \u2014 down"
+     },
+     {
+      "name": "OI writing (22900\u201323900)",
+      "score": -1,
+      "before": "PE 969 L \u00b7 CE 728 L",
+      "now": "PE 1,097 L \u00b7 CE 1,079 L",
+      "change": "PE +127.5 L \u00b7 CE +351.2 L",
+      "reading": "call writing stronger \u2192 resistance building",
+      "detail": "PE 969 L \u00b7 CE 728 L \u2192 PE 1,097 L \u00b7 CE 1,079 L (PE +127.5 L \u00b7 CE +351.2 L) \u2014 call writing stronger \u2192 resistance building"
+     },
+     {
+      "name": "PCR",
+      "score": -1,
+      "before": "1.33",
+      "now": "1.05",
+      "change": "-0.28",
+      "reading": "calls gaining vs puts",
+      "detail": "1.33 \u2192 1.05 (-0.28) \u2014 calls gaining vs puts"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": -1,
+      "before": "23400",
+      "now": "23300 \u00b7 325 L \u00b7 29 pts away",
+      "change": "-100",
+      "reading": "support moved down",
+      "detail": "23400 \u2192 23300 \u00b7 325 L \u00b7 29 pts away (-100) \u2014 support moved down"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 328 L \u00b7 171 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 328 L \u00b7 171 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM IV with price",
+      "score": -1,
+      "before": "20.61%",
+      "now": "29.25%",
+      "change": "+8.64",
+      "reading": "fear on the fall",
+      "detail": "20.61% \u2192 29.25% (+8.64) \u2014 fear on the fall"
+     }
+    ]
+   },
+   "confirm": {
+    "direction": "DOWN",
+    "aligned": 3,
+    "of": 3,
+    "items": [
+     {
+      "name": "NIFTY",
+      "value": "-118 pts",
+      "ok": true
+     },
+     {
+      "name": "Net writing (put \u2212 call OI)",
+      "value": "-223.7 L",
+      "ok": true
+     },
+     {
+      "name": "PCR",
+      "value": "-0.281",
+      "ok": true
+     }
+    ]
+   }
+  },
+  {
+   "time": "2026-09-22T15:40",
+   "day": "2026-09-22",
+   "kind": "DAY_END",
+   "leaders": {
+    "CE": 23500,
+    "PE": 23300
+   },
+   "prev_leaders": null,
+   "leader_changed": false,
+   "top": {
+    "CE": [
+     {
+      "strike": 23500,
+      "volume": 1164187895
+     },
+     {
+      "strike": 23300,
+      "volume": 621190310
+     },
+     {
+      "strike": 23600,
+      "volume": 564872035
+     }
+    ],
+    "PE": [
+     {
+      "strike": 23300,
+      "volume": 1666805855
+     },
+     {
+      "strike": 23400,
+      "volume": 1180129925
+     },
+     {
+      "strike": 23200,
+      "volume": 768509430
+     }
+    ]
+   },
+   "lead_pct": {
+    "CE": 87.4,
+    "PE": 41.2
+   },
+   "range": {
+    "lower": 23265.15,
+    "upper": 23514.45,
+    "width": 249.3,
+    "ce_first_high": 34.85,
+    "pe_first_high": 14.45,
+    "since": "2026-09-22T13:50"
+   },
+   "best": {
+    "CE": {
+     "rule": {
+      "strike": 23500,
+      "premium": 0.05,
+      "distance": 171.0
+     },
+     "safer": {
+      "strike": 23600,
+      "premium": 0.05,
+      "distance": 271.0
+     }
+    },
+    "PE": {
+     "rule": {
+      "strike": 23300,
+      "premium": 0.05,
+      "distance": 29.0
+     },
+     "safer": {
+      "strike": 23200,
+      "premium": 0.05,
+      "distance": 129.0
+     }
+    }
+   },
+   "market": {
+    "spot": 23329.0,
+    "spot_is_forward": false,
+    "forward": 23328.8,
+    "pcr_oi": 1.18,
+    "pcr_chg_oi": null,
+    "support": 23300,
+    "resistance": 23500,
+    "atm_iv": null,
+    "walls": {
+     "resistance": 23500,
+     "support": 23300,
+     "window": 300,
+     "method": "OI walls within the expected move (distance-weighted)",
+     "resistance_detail": [
+      {
+       "strike": 23500,
+       "oi": 13117000,
+       "distance": 171,
+       "weight": 10126324
+      },
+      {
+       "strike": 23600,
+       "oi": 8712015,
+       "distance": 271,
+       "weight": 5564073
+      }
+     ],
+     "support_detail": [
+      {
+       "strike": 23300,
+       "oi": 22109685,
+       "distance": 29,
+       "weight": 21254777
+      },
+      {
+       "strike": 23200,
+       "oi": 9115275,
+       "distance": 129,
+       "weight": 7547447
+      }
+     ]
+    },
+    "atm_strike": 23300,
+    "atm_straddle": 29.0,
+    "max_pain": 23300
+   },
+   "oi_view": {
+    "vs": "previous snapshot",
+    "since": "2026-09-22T13:50",
+    "score": 2,
+    "verdict": "BULLISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": 0,
+      "before": "23,328.8",
+      "now": "23,329.0",
+      "change": "+0 pts (+0.00%)",
+      "reading": "up",
+      "detail": "23,328.8 \u2192 23,329.0 (+0 pts (+0.00%)) \u2014 up"
+     },
+     {
+      "name": "OI writing (22800\u201323800)",
+      "score": 0,
+      "before": "PE 1,207 L \u00b7 CE 995 L",
+      "now": "PE 738 L \u00b7 CE 499 L",
+      "change": "PE -468.3 L \u00b7 CE -496.5 L",
+      "reading": "both sides unwinding",
+      "detail": "PE 1,207 L \u00b7 CE 995 L \u2192 PE 738 L \u00b7 CE 499 L (PE -468.3 L \u00b7 CE -496.5 L) \u2014 both sides unwinding"
+     },
+     {
+      "name": "PCR",
+      "score": 1,
+      "before": "1.05",
+      "now": "1.18",
+      "change": "+0.13",
+      "reading": "puts gaining vs calls",
+      "detail": "1.05 \u2192 1.18 (+0.13) \u2014 puts gaining vs calls"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": 0,
+      "before": "23300",
+      "now": "23300 \u00b7 221 L \u00b7 29 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23300 \u2192 23300 \u00b7 221 L \u00b7 29 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 131 L \u00b7 171 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 131 L \u00b7 171 pts away (+0) \u2014 unchanged"
+     },
+     {
+      "name": "ATM 23300 CE vs PE",
+      "score": 1,
+      "before": "CE 50.0 \u00b7 PE 31.9",
+      "now": "CE 28.9 \u00b7 PE 0.1",
+      "change": "CE -42% \u00b7 PE -100%",
+      "reading": "calls stronger",
+      "detail": "CE 50.0 \u00b7 PE 31.9 \u2192 CE 28.9 \u00b7 PE 0.1 (CE -42% \u00b7 PE -100%) \u2014 calls stronger"
+     }
+    ]
+   },
+   "oi_view_day": {
+    "vs": "previous day close",
+    "since": "2026-09-21T15:40",
+    "score": -4,
+    "verdict": "STRONG BEARISH",
+    "factors": [
+     {
+      "name": "NIFTY",
+      "score": -1,
+      "before": "23,414.3",
+      "now": "23,329.0",
+      "change": "-85 pts (-0.36%)",
+      "reading": "down",
+      "detail": "23,414.3 \u2192 23,329.0 (-85 pts (-0.36%)) \u2014 down"
+     },
+     {
+      "name": "OI writing (22900\u201323900)",
+      "score": -1,
+      "before": "PE 842 L \u00b7 CE 546 L",
+      "now": "PE 676 L \u00b7 CE 556 L",
+      "change": "PE -165.2 L \u00b7 CE +10.4 L",
+      "reading": "call writing + put unwinding",
+      "detail": "PE 842 L \u00b7 CE 546 L \u2192 PE 676 L \u00b7 CE 556 L (PE -165.2 L \u00b7 CE +10.4 L) \u2014 call writing + put unwinding"
+     },
+     {
+      "name": "PCR",
+      "score": -1,
+      "before": "1.54",
+      "now": "1.18",
+      "change": "-0.36",
+      "reading": "calls gaining vs puts",
+      "detail": "1.54 \u2192 1.18 (-0.36) \u2014 calls gaining vs puts"
+     },
+     {
+      "name": "Support (put OI wall)",
+      "score": -1,
+      "before": "23400",
+      "now": "23300 \u00b7 221 L \u00b7 29 pts away",
+      "change": "-100",
+      "reading": "support moved down",
+      "detail": "23400 \u2192 23300 \u00b7 221 L \u00b7 29 pts away (-100) \u2014 support moved down"
+     },
+     {
+      "name": "Resistance (call OI wall)",
+      "score": 0,
+      "before": "23500",
+      "now": "23500 \u00b7 131 L \u00b7 171 pts away",
+      "change": "+0",
+      "reading": "unchanged",
+      "detail": "23500 \u2192 23500 \u00b7 131 L \u00b7 171 pts away (+0) \u2014 unchanged"
+     }
+    ]
+   },
+   "nifty_ohlc": [
+    23454.05,
+    23489.0,
+    23285.75,
+    23329.0
+   ],
+   "leader_changes": 1,
+   "day_shift": {
+    "direction": "DOWN",
+    "points": -62.4
+   }
+  }
+ ],
+ "events": [
+  {
+   "time": "2026-09-16T09:25",
+   "type": "ENTRY",
+   "range": {
+    "upper": 23451.95,
+    "lower": 23038.3,
+    "ce_leader": 23300,
+    "pe_leader": 23200,
+    "ce_first_high": 161.7,
+    "pe_first_high": 151.95,
+    "time": "2026-09-16T09:25"
+   },
+   "legs": [
+    {
+     "side": "CE",
+     "strike": 23500,
+     "price": 61.65
+    },
+    {
+     "side": "PE",
+     "strike": 23000,
+     "price": 71.2
+    }
+   ],
+   "premium": 8635.25,
+   "stop": -4317.62,
+   "target": 6044.67
+  },
+  {
+   "time": "2026-09-16T09:35",
+   "type": "RANGE",
+   "range": {
+    "upper": 23351.95,
+    "lower": 22979.3,
+    "ce_leader": 23200,
+    "pe_leader": 23200,
+    "ce_first_high": 220.7,
+    "pe_first_high": 151.95,
+    "time": "2026-09-16T09:35"
+   },
+   "wanted": {
+    "CE": 23400,
+    "PE": 23000
+   },
+   "rolls": [],
+   "legs": {
+    "CE": {
+     "strike": 23500,
+     "entry": 61.65
+    },
+    "PE": {
+     "strike": 23000,
+     "entry": 71.2
+    }
+   },
+   "total": -432.25
+  },
+  {
+   "time": "2026-09-17T09:20",
+   "type": "RANGE",
+   "range": {
+    "upper": 23332.8,
+    "lower": 23015.1,
+    "ce_leader": 23200,
+    "pe_leader": 23200,
+    "ce_first_high": 184.9,
+    "pe_first_high": 132.8,
+    "time": "2026-09-17T09:20"
+   },
+   "wanted": {
+    "CE": 23300,
+    "PE": 23000
+   },
+   "rolls": [
+    {
+     "side": "CE",
+     "from": 23500,
+     "buy_back": 48.25,
+     "booked": 871.0,
+     "to": 23300,
+     "sell": 123.6,
+     "why": "toward range"
+    }
+   ],
+   "legs": {
+    "PE": {
+     "strike": 23000,
+     "entry": 71.2
+    },
+    "CE": {
+     "strike": 23300,
+     "entry": 123.6
+    }
+   },
+   "total": 2268.5
+  },
+  {
+   "time": "2026-09-17T09:35",
+   "type": "RANGE",
+   "range": {
+    "upper": 23432.8,
+    "lower": 23073.45,
+    "ce_leader": 23300,
+    "pe_leader": 23200,
+    "ce_first_high": 126.55,
+    "pe_first_high": 132.8,
+    "time": "2026-09-17T09:35"
+   },
+   "wanted": {
+    "CE": 23400,
+    "PE": 23100
+   },
+   "rolls": [
+    {
+     "side": "PE",
+     "from": 23000,
+     "buy_back": 43.15,
+     "booked": 1823.25,
+     "to": 23100,
+     "sell": 62.35,
+     "why": "toward range"
+    }
+   ],
+   "legs": {
+    "CE": {
+     "strike": 23300,
+     "entry": 123.6
+    },
+    "PE": {
+     "strike": 23100,
+     "entry": 62.35
+    }
+   },
+   "total": 2336.75
+  },
+  {
+   "time": "2026-09-17T13:20",
+   "type": "RANGE",
+   "range": {
+    "upper": 23482.75,
+    "lower": 23173.45,
+    "ce_leader": 23300,
+    "pe_leader": 23300,
+    "ce_first_high": 126.55,
+    "pe_first_high": 182.75,
+    "time": "2026-09-17T13:20"
+   },
+   "wanted": {
+    "CE": 23500,
+    "PE": 23200
+   },
+   "rolls": [
+    {
+     "side": "CE",
+     "from": 23300,
+     "buy_back": 142.65,
+     "booked": -1238.25,
+     "to": 23500,
+     "sell": 50.65,
+     "why": "leg in the money"
+    },
+    {
+     "side": "PE",
+     "from": 23100,
+     "buy_back": 45.95,
+     "booked": 1066.0,
+     "to": 23200,
+     "sell": 67.8,
+     "why": "toward range"
+    }
+   ],
+   "legs": {
+    "CE": {
+     "strike": 23500,
+     "entry": 50.65
+    },
+    "PE": {
+     "strike": 23200,
+     "entry": 67.8
+    }
+   },
+   "total": 2587.0
+  },
+  {
+   "time": "2026-09-18T09:20",
+   "type": "RANGE",
+   "range": {
+    "upper": 23397.75,
+    "lower": 23163.7,
+    "ce_leader": 23300,
+    "pe_leader": 23300,
+    "ce_first_high": 136.3,
+    "pe_first_high": 97.75,
+    "time": "2026-09-18T09:20"
+   },
+   "wanted": {
+    "CE": 23400,
+    "PE": 23200
+   },
+   "rolls": [],
+   "legs": {
+    "CE": {
+     "strike": 23500,
+     "entry": 50.65
+    },
+    "PE": {
+     "strike": 23200,
+     "entry": 67.8
+    }
+   },
+   "total": 3649.75
+  },
+  {
+   "time": "2026-09-21T09:20",
+   "type": "EXIT",
+   "reason": "TARGET",
+   "legs": [
+    {
+     "side": "CE",
+     "strike": 23500,
+     "entry": 50.65,
+     "exit": 28.1,
+     "pnl": 1465.75
+    },
+    {
+     "side": "PE",
+     "strike": 23200,
+     "entry": 67.8,
+     "exit": 23.65,
+     "pnl": 2869.75
+    }
+   ],
+   "realized": 6857.5,
+   "charges": 332.99,
+   "net": 6524.51
+  }
+ ],
+ "nifty": {
+  "2026-09-16": [
+   [
+    "09:15",
+    23247.25
+   ],
+   [
+    "09:20",
+    23236.25
+   ],
+   [
+    "09:25",
+    23204.2
+   ],
+   [
+    "09:30",
+    23209.4
+   ],
+   [
+    "09:35",
+    23151.3
+   ],
+   [
+    "09:40",
+    23120.95
+   ],
+   [
+    "09:45",
+    23152.2
+   ],
+   [
+    "09:50",
+    23212.8
+   ],
+   [
+    "09:55",
+    23224.6
+   ],
+   [
+    "10:00",
+    23183.9
+   ],
+   [
+    "10:05",
+    23178.15
+   ],
+   [
+    "10:10",
+    23177.75
+   ],
+   [
+    "10:15",
+    23193.1
+   ],
+   [
+    "10:20",
+    23223.8
+   ],
+   [
+    "10:25",
+    23229.8
+   ],
+   [
+    "10:30",
+    23245.2
+   ],
+   [
+    "10:35",
+    23240.05
+   ],
+   [
+    "10:40",
+    23248.5
+   ],
+   [
+    "10:45",
+    23260.1
+   ],
+   [
+    "10:50",
+    23254.3
+   ],
+   [
+    "10:55",
+    23252.0
+   ],
+   [
+    "11:00",
+    23272.55
+   ],
+   [
+    "11:05",
+    23257.85
+   ],
+   [
+    "11:10",
+    23250.7
+   ],
+   [
+    "11:15",
+    23248.5
+   ],
+   [
+    "11:20",
+    23243.4
+   ],
+   [
+    "11:25",
+    23220.25
+   ],
+   [
+    "11:30",
+    23226.3
+   ],
+   [
+    "11:35",
+    23234.5
+   ],
+   [
+    "11:40",
+    23233.65
+   ],
+   [
+    "11:45",
+    23226.3
+   ],
+   [
+    "11:50",
+    23226.7
+   ],
+   [
+    "11:55",
+    23214.85
+   ],
+   [
+    "12:00",
+    23213.05
+   ],
+   [
+    "12:05",
+    23223.25
+   ],
+   [
+    "12:10",
+    23233.05
+   ],
+   [
+    "12:15",
+    23240.4
+   ],
+   [
+    "12:20",
+    23237.1
+   ],
+   [
+    "12:25",
+    23234.15
+   ],
+   [
+    "12:30",
+    23250.25
+   ],
+   [
+    "12:35",
+    23246.35
+   ],
+   [
+    "12:40",
+    23258.6
+   ],
+   [
+    "12:45",
+    23253.75
+   ],
+   [
+    "12:50",
+    23253.5
+   ],
+   [
+    "12:55",
+    23242.1
+   ],
+   [
+    "13:00",
+    23255.95
+   ],
+   [
+    "13:05",
+    23274.05
+   ],
+   [
+    "13:10",
+    23258.7
+   ],
+   [
+    "13:15",
+    23269.55
+   ],
+   [
+    "13:20",
+    23245.0
+   ],
+   [
+    "13:25",
+    23220.85
+   ],
+   [
+    "13:30",
+    23227.05
+   ],
+   [
+    "13:35",
+    23222.25
+   ],
+   [
+    "13:40",
+    23212.1
+   ],
+   [
+    "13:45",
+    23217.45
+   ],
+   [
+    "13:50",
+    23224.65
+   ],
+   [
+    "13:55",
+    23221.5
+   ],
+   [
+    "14:00",
+    23233.6
+   ],
+   [
+    "14:05",
+    23222.7
+   ],
+   [
+    "14:10",
+    23238.55
+   ],
+   [
+    "14:15",
+    23231.3
+   ],
+   [
+    "14:20",
+    23233.75
+   ],
+   [
+    "14:25",
+    23232.4
+   ],
+   [
+    "14:30",
+    23229.6
+   ],
+   [
+    "14:35",
+    23228.45
+   ],
+   [
+    "14:40",
+    23234.35
+   ],
+   [
+    "14:45",
+    23236.65
+   ],
+   [
+    "14:50",
+    23239.45
+   ],
+   [
+    "14:55",
+    23235.8
+   ],
+   [
+    "15:00",
+    23231.5
+   ],
+   [
+    "15:05",
+    23229.9
+   ],
+   [
+    "15:10",
+    23224.3
+   ],
+   [
+    "15:15",
+    23224.15
+   ],
+   [
+    "15:20",
+    23224.15
+   ],
+   [
+    "15:25",
+    23217.6
+   ]
+  ],
+  "2026-09-17": [
+   [
+    "09:15",
+    23255.95
+   ],
+   [
+    "09:20",
+    23228.7
+   ],
+   [
+    "09:25",
+    23252.05
+   ],
+   [
+    "09:30",
+    23284.45
+   ],
+   [
+    "09:35",
+    23274.1
+   ],
+   [
+    "09:40",
+    23252.3
+   ],
+   [
+    "09:45",
+    23267.65
+   ],
+   [
+    "09:50",
+    23282.9
+   ],
+   [
+    "09:55",
+    23284.5
+   ],
+   [
+    "10:00",
+    23293.9
+   ],
+   [
+    "10:05",
+    23307.5
+   ],
+   [
+    "10:10",
+    23311.1
+   ],
+   [
+    "10:15",
+    23296.3
+   ],
+   [
+    "10:20",
+    23293.35
+   ],
+   [
+    "10:25",
+    23294.95
+   ],
+   [
+    "10:30",
+    23273.6
+   ],
+   [
+    "10:35",
+    23280.5
+   ],
+   [
+    "10:40",
+    23266.8
+   ],
+   [
+    "10:45",
+    23265.5
+   ],
+   [
+    "10:50",
+    23270.5
+   ],
+   [
+    "10:55",
+    23267.85
+   ],
+   [
+    "11:00",
+    23238.4
+   ],
+   [
+    "11:05",
+    23219.1
+   ],
+   [
+    "11:10",
+    23224.05
+   ],
+   [
+    "11:15",
+    23246.7
+   ],
+   [
+    "11:20",
+    23248.8
+   ],
+   [
+    "11:25",
+    23246.05
+   ],
+   [
+    "11:30",
+    23253.0
+   ],
+   [
+    "11:35",
+    23252.3
+   ],
+   [
+    "11:40",
+    23276.15
+   ],
+   [
+    "11:45",
+    23275.15
+   ],
+   [
+    "11:50",
+    23288.05
+   ],
+   [
+    "11:55",
+    23315.3
+   ],
+   [
+    "12:00",
+    23300.15
+   ],
+   [
+    "12:05",
+    23333.7
+   ],
+   [
+    "12:10",
+    23337.9
+   ],
+   [
+    "12:15",
+    23346.2
+   ],
+   [
+    "12:20",
+    23354.25
+   ],
+   [
+    "12:25",
+    23346.75
+   ],
+   [
+    "12:30",
+    23345.2
+   ],
+   [
+    "12:35",
+    23357.1
+   ],
+   [
+    "12:40",
+    23346.85
+   ],
+   [
+    "12:45",
+    23336.3
+   ],
+   [
+    "12:50",
+    23342.45
+   ],
+   [
+    "12:55",
+    23340.65
+   ],
+   [
+    "13:00",
+    23326.9
+   ],
+   [
+    "13:05",
+    23326.65
+   ],
+   [
+    "13:10",
+    23321.65
+   ],
+   [
+    "13:15",
+    23319.3
+   ],
+   [
+    "13:20",
+    23309.4
+   ],
+   [
+    "13:25",
+    23263.3
+   ],
+   [
+    "13:30",
+    23257.8
+   ],
+   [
+    "13:35",
+    23258.55
+   ],
+   [
+    "13:40",
+    23263.85
+   ],
+   [
+    "13:45",
+    23268.15
+   ],
+   [
+    "13:50",
+    23267.0
+   ],
+   [
+    "13:55",
+    23263.7
+   ],
+   [
+    "14:00",
+    23269.85
+   ],
+   [
+    "14:05",
+    23280.85
+   ],
+   [
+    "14:10",
+    23277.7
+   ],
+   [
+    "14:15",
+    23280.35
+   ],
+   [
+    "14:20",
+    23285.5
+   ],
+   [
+    "14:25",
+    23282.55
+   ],
+   [
+    "14:30",
+    23276.15
+   ],
+   [
+    "14:35",
+    23305.05
+   ],
+   [
+    "14:40",
+    23286.8
+   ],
+   [
+    "14:45",
+    23302.15
+   ],
+   [
+    "14:50",
+    23297.45
+   ],
+   [
+    "14:55",
+    23285.0
+   ],
+   [
+    "15:00",
+    23284.4
+   ],
+   [
+    "15:05",
+    23283.0
+   ],
+   [
+    "15:10",
+    23294.5
+   ],
+   [
+    "15:15",
+    23294.35
+   ],
+   [
+    "15:20",
+    23294.35
+   ],
+   [
+    "15:25",
+    23270.6
+   ]
+  ],
+  "2026-09-18": [
+   [
+    "09:15",
+    23323.45
+   ],
+   [
+    "09:20",
+    23328.25
+   ],
+   [
+    "09:25",
+    23300.95
+   ],
+   [
+    "09:30",
+    23289.55
+   ],
+   [
+    "09:35",
+    23317.9
+   ],
+   [
+    "09:40",
+    23312.85
+   ],
+   [
+    "09:45",
+    23312.3
+   ],
+   [
+    "09:50",
+    23325.9
+   ],
+   [
+    "09:55",
+    23328.75
+   ],
+   [
+    "10:00",
+    23320.6
+   ],
+   [
+    "10:05",
+    23325.05
+   ],
+   [
+    "10:10",
+    23327.6
+   ],
+   [
+    "10:15",
+    23319.55
+   ],
+   [
+    "10:20",
+    23306.7
+   ],
+   [
+    "10:25",
+    23312.55
+   ],
+   [
+    "10:30",
+    23304.2
+   ],
+   [
+    "10:35",
+    23302.9
+   ],
+   [
+    "10:40",
+    23305.0
+   ],
+   [
+    "10:45",
+    23302.25
+   ],
+   [
+    "10:50",
+    23309.2
+   ],
+   [
+    "10:55",
+    23309.15
+   ],
+   [
+    "11:00",
+    23299.75
+   ],
+   [
+    "11:05",
+    23302.6
+   ],
+   [
+    "11:10",
+    23304.35
+   ],
+   [
+    "11:15",
+    23295.6
+   ],
+   [
+    "11:20",
+    23301.7
+   ],
+   [
+    "11:25",
+    23294.75
+   ],
+   [
+    "11:30",
+    23299.45
+   ],
+   [
+    "11:35",
+    23301.6
+   ],
+   [
+    "11:40",
+    23298.55
+   ],
+   [
+    "11:45",
+    23310.6
+   ],
+   [
+    "11:50",
+    23321.3
+   ],
+   [
+    "11:55",
+    23317.5
+   ],
+   [
+    "12:00",
+    23313.85
+   ],
+   [
+    "12:05",
+    23311.45
+   ],
+   [
+    "12:10",
+    23320.9
+   ],
+   [
+    "12:15",
+    23311.35
+   ],
+   [
+    "12:20",
+    23316.05
+   ],
+   [
+    "12:25",
+    23322.2
+   ],
+   [
+    "12:30",
+    23323.55
+   ],
+   [
+    "12:35",
+    23325.95
+   ],
+   [
+    "12:40",
+    23331.05
+   ],
+   [
+    "12:45",
+    23325.6
+   ],
+   [
+    "12:50",
+    23330.0
+   ],
+   [
+    "12:55",
+    23329.6
+   ],
+   [
+    "13:00",
+    23337.4
+   ],
+   [
+    "13:05",
+    23333.55
+   ],
+   [
+    "13:10",
+    23330.05
+   ],
+   [
+    "13:15",
+    23323.6
+   ],
+   [
+    "13:20",
+    23322.9
+   ],
+   [
+    "13:25",
+    23323.7
+   ],
+   [
+    "13:30",
+    23326.4
+   ],
+   [
+    "13:35",
+    23322.8
+   ],
+   [
+    "13:40",
+    23310.05
+   ],
+   [
+    "13:45",
+    23313.75
+   ],
+   [
+    "13:50",
+    23331.15
+   ],
+   [
+    "13:55",
+    23329.5
+   ],
+   [
+    "14:00",
+    23336.55
+   ],
+   [
+    "14:05",
+    23355.8
+   ],
+   [
+    "14:10",
+    23348.45
+   ],
+   [
+    "14:15",
+    23352.9
+   ],
+   [
+    "14:20",
+    23353.7
+   ],
+   [
+    "14:25",
+    23365.95
+   ],
+   [
+    "14:30",
+    23371.6
+   ],
+   [
+    "14:35",
+    23366.5
+   ],
+   [
+    "14:40",
+    23354.1
+   ],
+   [
+    "14:45",
+    23367.5
+   ],
+   [
+    "14:50",
+    23383.55
+   ],
+   [
+    "14:55",
+    23384.15
+   ],
+   [
+    "15:00",
+    23352.05
+   ],
+   [
+    "15:05",
+    23343.75
+   ],
+   [
+    "15:10",
+    23341.85
+   ],
+   [
+    "15:15",
+    23341.85
+   ],
+   [
+    "15:20",
+    23341.85
+   ],
+   [
+    "15:25",
+    23346.4
+   ]
+  ],
+  "2026-09-21": [
+   [
+    "09:15",
+    23384.65
+   ],
+   [
+    "09:20",
+    23376.8
+   ],
+   [
+    "09:25",
+    23400.25
+   ],
+   [
+    "09:30",
+    23395.85
+   ],
+   [
+    "09:35",
+    23392.45
+   ],
+   [
+    "09:40",
+    23393.2
+   ],
+   [
+    "09:45",
+    23401.5
+   ],
+   [
+    "09:50",
+    23394.55
+   ],
+   [
+    "09:55",
+    23394.85
+   ],
+   [
+    "10:00",
+    23382.9
+   ],
+   [
+    "10:05",
+    23385.75
+   ],
+   [
+    "10:10",
+    23373.65
+   ],
+   [
+    "10:15",
+    23374.65
+   ],
+   [
+    "10:20",
+    23373.0
+   ],
+   [
+    "10:25",
+    23372.75
+   ],
+   [
+    "10:30",
+    23362.2
+   ],
+   [
+    "10:35",
+    23365.05
+   ],
+   [
+    "10:40",
+    23376.6
+   ],
+   [
+    "10:45",
+    23376.65
+   ],
+   [
+    "10:50",
+    23386.75
+   ],
+   [
+    "10:55",
+    23386.8
+   ],
+   [
+    "11:00",
+    23389.35
+   ],
+   [
+    "11:05",
+    23394.0
+   ],
+   [
+    "11:10",
+    23397.45
+   ],
+   [
+    "11:15",
+    23390.3
+   ],
+   [
+    "11:20",
+    23393.55
+   ],
+   [
+    "11:25",
+    23398.0
+   ],
+   [
+    "11:30",
+    23405.05
+   ],
+   [
+    "11:35",
+    23398.5
+   ],
+   [
+    "11:40",
+    23403.65
+   ],
+   [
+    "11:45",
+    23398.5
+   ],
+   [
+    "11:50",
+    23416.25
+   ],
+   [
+    "11:55",
+    23425.45
+   ],
+   [
+    "12:00",
+    23425.05
+   ],
+   [
+    "12:05",
+    23415.55
+   ],
+   [
+    "12:10",
+    23417.55
+   ],
+   [
+    "12:15",
+    23418.45
+   ],
+   [
+    "12:20",
+    23413.95
+   ],
+   [
+    "12:25",
+    23419.45
+   ],
+   [
+    "12:30",
+    23414.9
+   ],
+   [
+    "12:35",
+    23412.5
+   ],
+   [
+    "12:40",
+    23414.45
+   ],
+   [
+    "12:45",
+    23413.6
+   ],
+   [
+    "12:50",
+    23415.1
+   ],
+   [
+    "12:55",
+    23412.65
+   ],
+   [
+    "13:00",
+    23405.75
+   ],
+   [
+    "13:05",
+    23401.3
+   ],
+   [
+    "13:10",
+    23409.2
+   ],
+   [
+    "13:15",
+    23423.65
+   ],
+   [
+    "13:20",
+    23425.0
+   ],
+   [
+    "13:25",
+    23430.75
+   ],
+   [
+    "13:30",
+    23436.95
+   ],
+   [
+    "13:35",
+    23433.4
+   ],
+   [
+    "13:40",
+    23427.9
+   ],
+   [
+    "13:45",
+    23433.65
+   ],
+   [
+    "13:50",
+    23436.9
+   ],
+   [
+    "13:55",
+    23463.0
+   ],
+   [
+    "14:00",
+    23460.0
+   ],
+   [
+    "14:05",
+    23453.85
+   ],
+   [
+    "14:10",
+    23452.7
+   ],
+   [
+    "14:15",
+    23459.0
+   ],
+   [
+    "14:20",
+    23455.2
+   ],
+   [
+    "14:25",
+    23448.9
+   ],
+   [
+    "14:30",
+    23446.35
+   ],
+   [
+    "14:35",
+    23447.7
+   ],
+   [
+    "14:40",
+    23450.3
+   ],
+   [
+    "14:45",
+    23450.65
+   ],
+   [
+    "14:50",
+    23453.2
+   ],
+   [
+    "14:55",
+    23447.25
+   ],
+   [
+    "15:00",
+    23441.15
+   ],
+   [
+    "15:05",
+    23437.65
+   ],
+   [
+    "15:10",
+    23429.0
+   ],
+   [
+    "15:15",
+    23429.0
+   ],
+   [
+    "15:20",
+    23429.0
+   ],
+   [
+    "15:25",
+    23414.3
+   ]
+  ],
+  "2026-09-22": [
+   [
+    "09:15",
+    23446.5
+   ],
+   [
+    "09:20",
+    23447.75
+   ],
+   [
+    "09:25",
+    23445.95
+   ],
+   [
+    "09:30",
+    23436.35
+   ],
+   [
+    "09:35",
+    23451.7
+   ],
+   [
+    "09:40",
+    23456.0
+   ],
+   [
+    "09:45",
+    23455.45
+   ],
+   [
+    "09:50",
+    23457.1
+   ],
+   [
+    "09:55",
+    23457.2
+   ],
+   [
+    "10:00",
+    23461.1
+   ],
+   [
+    "10:05",
+    23467.05
+   ],
+   [
+    "10:10",
+    23465.2
+   ],
+   [
+    "10:15",
+    23458.5
+   ],
+   [
+    "10:20",
+    23444.1
+   ],
+   [
+    "10:25",
+    23437.35
+   ],
+   [
+    "10:30",
+    23422.25
+   ],
+   [
+    "10:35",
+    23400.15
+   ],
+   [
+    "10:40",
+    23382.7
+   ],
+   [
+    "10:45",
+    23376.75
+   ],
+   [
+    "10:50",
+    23375.6
+   ],
+   [
+    "10:55",
+    23388.55
+   ],
+   [
+    "11:00",
+    23374.85
+   ],
+   [
+    "11:05",
+    23377.75
+   ],
+   [
+    "11:10",
+    23393.3
+   ],
+   [
+    "11:15",
+    23385.2
+   ],
+   [
+    "11:20",
+    23399.65
+   ],
+   [
+    "11:25",
+    23392.15
+   ],
+   [
+    "11:30",
+    23380.65
+   ],
+   [
+    "11:35",
+    23370.7
+   ],
+   [
+    "11:40",
+    23371.4
+   ],
+   [
+    "11:45",
+    23363.8
+   ],
+   [
+    "11:50",
+    23351.95
+   ],
+   [
+    "11:55",
+    23361.05
+   ],
+   [
+    "12:00",
+    23359.4
+   ],
+   [
+    "12:05",
+    23365.15
+   ],
+   [
+    "12:10",
+    23356.9
+   ],
+   [
+    "12:15",
+    23366.65
+   ],
+   [
+    "12:20",
+    23360.85
+   ],
+   [
+    "12:25",
+    23358.2
+   ],
+   [
+    "12:30",
+    23363.55
+   ],
+   [
+    "12:35",
+    23358.0
+   ],
+   [
+    "12:40",
+    23345.95
+   ],
+   [
+    "12:45",
+    23342.75
+   ],
+   [
+    "12:50",
+    23334.2
+   ],
+   [
+    "12:55",
+    23332.1
+   ],
+   [
+    "13:00",
+    23325.1
+   ],
+   [
+    "13:05",
+    23340.9
+   ],
+   [
+    "13:10",
+    23339.15
+   ],
+   [
+    "13:15",
+    23334.65
+   ],
+   [
+    "13:20",
+    23331.8
+   ],
+   [
+    "13:25",
+    23339.85
+   ],
+   [
+    "13:30",
+    23343.55
+   ],
+   [
+    "13:35",
+    23344.85
+   ],
+   [
+    "13:40",
+    23339.35
+   ],
+   [
+    "13:45",
+    23328.8
+   ],
+   [
+    "13:50",
+    23307.5
+   ],
+   [
+    "13:55",
+    23305.2
+   ],
+   [
+    "14:00",
+    23308.45
+   ],
+   [
+    "14:05",
+    23312.85
+   ],
+   [
+    "14:10",
+    23382.6
+   ],
+   [
+    "14:15",
+    23384.45
+   ],
+   [
+    "14:20",
+    23379.05
+   ],
+   [
+    "14:25",
+    23389.8
+   ],
+   [
+    "14:30",
+    23381.3
+   ],
+   [
+    "14:35",
+    23384.4
+   ],
+   [
+    "14:40",
+    23369.0
+   ],
+   [
+    "14:45",
+    23372.25
+   ],
+   [
+    "14:50",
+    23378.3
+   ],
+   [
+    "14:55",
+    23357.7
+   ],
+   [
+    "15:00",
+    23358.25
+   ],
+   [
+    "15:05",
+    23356.85
+   ],
+   [
+    "15:10",
+    23349.55
+   ],
+   [
+    "15:15",
+    23349.5
+   ],
+   [
+    "15:20",
+    23349.5
+   ],
+   [
+    "15:25",
+    23329.0
+   ]
+  ]
+ },
+ "premium0": 8635.25,
+ "realized": 6857.5,
+ "charges": 332.99
+}

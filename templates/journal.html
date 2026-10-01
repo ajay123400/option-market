@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Journal</title>
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    --ink: #1a1c1e; --muted: #8a8f98; --faint: #b8bcc4;
+    --line: #eceef0; --line-strong: #dfe2e6;
+    --up: #0a8f5b; --up-soft: #e4f5ec; --down: #d13b3b; --down-soft: #fbe9e9;
+    --amber: #b8790a; --amber-soft: #fdf2df;
+    --surface: #fff; --surface-alt: #fafafb;
+  }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: var(--surface); color: var(--ink); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+
+  .topbar { display: flex; align-items: center; gap: 14px; padding: 11px 18px; background: var(--surface); border-bottom: 1px solid var(--line-strong); flex-wrap: wrap; }
+  .topbar h1 { font-size: 14.5px; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  .navlink { font-size: 12px; color: var(--muted); text-decoration: none; border: 1px solid var(--line-strong); border-radius: 6px; padding: 4px 10px; transition: color 0.15s, border-color 0.15s, background 0.15s; }
+  .navlink:hover { color: var(--ink); border-color: var(--faint); background: var(--surface-alt); }
+  .navlink.active { color: #fff; background: var(--ink); border-color: var(--ink); pointer-events: none; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-bottom: 1px solid var(--line-strong); }
+  .stat { background: var(--surface); padding: 14px 20px; }
+  .stat .label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .stat .value { font-size: 22px; font-weight: 700; margin-top: 3px; letter-spacing: -0.01em; }
+  .up { color: var(--up); } .down { color: var(--down); }
+
+  .list-head { display: grid; grid-template-columns: 24px 150px 1fr 90px 90px 130px; gap: 10px; padding: 10px 20px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); border-bottom: 1px solid var(--line-strong); }
+  .list-head span:last-child, .entry-row .pnl-col { text-align: right; }
+
+  .entry { border-bottom: 1px solid var(--line); }
+  .entry-row { display: grid; grid-template-columns: 24px 150px 1fr 90px 90px 130px; gap: 10px; align-items: center; padding: 13px 20px; cursor: pointer; transition: background 0.12s; }
+  .entry-row:hover { background: var(--surface-alt); }
+  .chevron { color: var(--faint); font-size: 11px; transition: transform 0.15s; }
+  .entry.expanded .chevron { transform: rotate(90deg); color: var(--muted); }
+  .entry-date { font-size: 12.5px; color: var(--muted); }
+  .entry-desc { font-weight: 600; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .leg-count { font-size: 11.5px; color: var(--muted); }
+  .status-pill { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 10px; letter-spacing: 0.03em; justify-self: start; }
+  .status-pill.OPEN { background: var(--amber-soft); color: var(--amber); }
+  .status-pill.CLOSED { background: var(--up-soft); color: var(--up); }
+  .pnl-col { font-weight: 700; font-size: 14.5px; }
+
+  .entry-body { display: none; padding: 4px 20px 20px 54px; background: var(--surface-alt); }
+  .entry.expanded .entry-body { display: block; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 14px; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+  thead th { text-align: right; padding: 8px 12px; color: var(--muted); font-weight: 600; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.03em; border-bottom: 1px solid var(--line); background: var(--surface); }
+  thead th:first-child, thead th:nth-child(2) { text-align: left; }
+  tbody td { text-align: right; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td:first-child, tbody td:nth-child(2) { text-align: left; }
+  .leg-side { font-weight: 600; }
+  .leg-status { font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 8px; letter-spacing: 0.02em; }
+  .leg-status.OPEN { background: var(--amber-soft); color: var(--amber); }
+  .leg-status.CLOSED { background: var(--line); color: var(--muted); }
+
+  .notes-block label { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .notes-block textarea { width: 100%; min-height: 64px; border: 1px solid var(--line-strong); border-radius: 8px; padding: 10px 12px; font-size: 13px; font-family: inherit; resize: vertical; background: var(--surface); color: var(--ink); }
+  .notes-block textarea:focus { outline: none; border-color: var(--faint); }
+  .notes-saved { font-size: 10.5px; color: var(--up); font-weight: 600; opacity: 0; transition: opacity 0.3s; }
+  .notes-saved.show { opacity: 1; }
+
+  .placeholder { text-align: center; color: var(--faint); padding: 80px 20px; font-size: 13px; line-height: 1.7; }
+  @media (max-width: 760px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .list-head { display: none; }
+    .entry-row { grid-template-columns: 18px 1fr auto; padding: 12px; }
+    .entry-row .entry-date, .entry-row .leg-count, .entry-row .status-pill { display: none; }
+    .entry-body { overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>Trading Journal</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink active" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="stats-row">
+  <div class="stat"><div class="label">Realized P&amp;L (net of charges)</div><div class="value" id="totalPnl">-</div></div>
+  <div class="stat"><div class="label">Strategies</div><div class="value" id="totalCount">-</div></div>
+  <div class="stat"><div class="label">Closed / Open</div><div class="value" id="closedOpen">-</div></div>
+  <div class="stat"><div class="label">Win Rate</div><div class="value" id="winRate">-</div></div>
+</div>
+
+<div class="list-head">
+  <span></span><span>Date</span><span>Strategy</span><span>Legs</span><span>Status</span><span>P&amp;L</span>
+</div>
+<div id="content">
+  <div class="placeholder">Loading…</div>
+</div>
+
+<script>
+function money(n) {
+  if (n === null || n === undefined) return "—";
+  const sign = n < 0 ? "-" : ""; return sign + "₹" + Math.abs(n).toLocaleString("en-IN", {maximumFractionDigits: 2});
+}
+function pcls(n) { return n > 0 ? "up" : (n < 0 ? "down" : ""); }
+// Notes are free text: escape before putting them into HTML, or a note
+// containing "</textarea>" / "<" breaks the page (and could inject markup).
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function fmtDate(iso) { return iso ? new Date(iso).toLocaleDateString("en-IN", {day:"2-digit", month:"short"}) : "—"; }
+function fmtTimeShort(iso) { return iso ? new Date(iso).toLocaleTimeString("en-IN", {hour:"2-digit", minute:"2-digit"}) : "—"; }
+
+let journalData = [];
+let expandedBatches = new Set();
+
+async function load() {
+  if (document.activeElement && document.activeElement.tagName === "TEXTAREA") return;
+  const res = await fetch("/api/manual/journal");
+  const j = await res.json();
+  if (!j.ok) { document.getElementById("content").innerHTML = `<div class="placeholder">Error: ${esc(j.error)}</div>`; return; }
+  journalData = j.journal;
+  render();
+}
+
+function render() {
+  if (!journalData.length) {
+    document.getElementById("content").innerHTML = `<div class="placeholder">No strategies yet.<br>Build one in the Strategy Builder — once it's open (or closed), it shows up here as one journal entry, with all its legs combined.</div>`;
+    document.getElementById("totalPnl").textContent = money(0);
+    document.getElementById("totalCount").textContent = "0";
+    document.getElementById("closedOpen").textContent = "0 / 0";
+    document.getElementById("winRate").textContent = "—";
+    return;
+  }
+
+  const closed = journalData.filter(e => e.status === "CLOSED" && e.total_pnl !== null);
+  // Net of estimated charges -- a strategy that made Rs 40 gross but paid
+  // Rs 110 in costs is a LOSS, and the win rate should say so.
+  const totalPnl = closed.reduce((s, e) => s + (e.net_pnl ?? e.total_pnl), 0);
+  const wins = closed.filter(e => (e.net_pnl ?? e.total_pnl) > 0).length;
+  document.getElementById("totalPnl").textContent = money(totalPnl);
+  document.getElementById("totalPnl").className = "value " + pcls(totalPnl);
+  document.getElementById("totalCount").textContent = journalData.length;
+  document.getElementById("closedOpen").textContent = `${journalData.filter(e=>e.status==='CLOSED').length} / ${journalData.filter(e=>e.status==='OPEN').length}`;
+  document.getElementById("winRate").textContent = closed.length ? `${Math.round(wins/closed.length*100)}%` : "—";
+
+  document.getElementById("content").innerHTML = journalData.map((e, idx) => `
+    <div class="entry ${expandedBatches.has(e.batch_id) ? 'expanded' : ''}" id="entry-${idx}" data-batch="${e.batch_id}">
+      <div class="entry-row" onclick="toggleEntry(${idx})">
+        <span class="chevron">▶</span>
+        <span class="entry-date">${fmtDate(e.entry_time)}, ${fmtTimeShort(e.entry_time)}</span>
+        <span class="entry-desc" title="${esc(e.description)}">${esc(e.description)}</span>
+        <span class="leg-count">${e.legs.length} leg${e.legs.length>1?'s':''}</span>
+        <span class="status-pill ${e.status}">${e.status}</span>
+        <span class="pnl-col ${pcls(e.net_pnl)}" title="Gross ${money(e.total_pnl)} − est. charges ${money(e.total_charges)}">${e.net_pnl !== null && e.net_pnl !== undefined ? money(e.net_pnl) : "live"}<span style="display:block;font-size:10px;color:var(--muted);font-weight:500">gross ${money(e.total_pnl)}</span></span>
+      </div>
+      <div class="entry-body">
+        <table>
+          <thead><tr><th>Leg</th><th>Status</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Reason</th><th>P&amp;L (gross)</th><th>Charges</th></tr></thead>
+          <tbody>
+            ${e.legs.map(l => `<tr>
+              <td class="leg-side">${l.side} ${l.strike}${l.type}</td>
+              <td><span class="leg-status ${l.status}">${l.status}</span></td>
+              <td>${l.qty}</td>
+              <td>${money(l.entry_price)}</td>
+              <td>${l.exit_price != null ? money(l.exit_price) : (l.ltp != null ? money(l.ltp)+' (live)' : '—')}</td>
+              <td>${l.exit_reason || (l.status === "OPEN" ? "open" : "—")}</td>
+              <td class="${pcls(l.pnl)}"><strong>${l.pnl != null ? money(l.pnl) : '—'}</strong></td>
+              <td>${l.charges != null ? money(l.charges) : '—'}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+        <div style="display:flex;justify-content:flex-end;margin:8px 0 4px;">
+          <button onclick="deleteEntry('${e.batch_id}', ${e.status === "OPEN"})" title="Remove this strategy from the Journal (entered by mistake) -- no P&L is booked; a backup copy is kept in results/deleted_trades.jsonl"
+            style="border:1px solid #f6ced0;color:#e0434a;background:#fff;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;">🗑 Delete this entry</button>
+        </div>
+        <div class="notes-block">
+          <label>Notes — why this trade, what happened, what you'd do differently <span class="notes-saved" id="saved-${idx}">Saved ✓</span></label>
+          <textarea id="note-${idx}" data-batch="${e.batch_id}" onblur="saveNote(${idx})" placeholder="e.g. Sold the strangle after an IV spike, closed early on unexpected news...">${esc(e.note)}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function toggleEntry(idx) {
+  const el = document.getElementById(`entry-${idx}`);
+  el.classList.toggle("expanded");
+  const batchId = el.dataset.batch;
+  if (el.classList.contains("expanded")) expandedBatches.add(batchId);
+  else expandedBatches.delete(batchId);
+}
+
+let noteSaveTimer = null;
+async function saveNote(idx) {
+  const el = document.getElementById(`note-${idx}`);
+  const batch_id = el.dataset.batch;
+  const note = el.value;
+  await fetch("/api/manual/journal_note", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({batch_id, note}),
+  });
+  const saved = document.getElementById(`saved-${idx}`);
+  saved.classList.add("show");
+  clearTimeout(noteSaveTimer);
+  noteSaveTimer = setTimeout(() => saved.classList.remove("show"), 1500);
+}
+
+async function deleteEntry(batchId, isOpen) {
+  const msg = isOpen
+    ? "This strategy is still OPEN. Delete it completely (its open legs are removed without booking any P&L) and remove it from the Journal?"
+    : "Remove this strategy from the Journal? Its P&L will no longer count in the totals.";
+  if (!confirm(msg + "\n\n(A backup copy is kept in results/deleted_trades.jsonl.)")) return;
+  const j = await (await fetch("/api/manual/delete_strategy", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({batch_id: batchId})})).json();
+  if (!j.ok) { alert("Error: " + j.error); return; }
+  expandedBatches.delete(batchId);
+  load();
+}
+
+load();
+setInterval(load, 8000);
+</script>
+</body>
+</html>
