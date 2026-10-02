@@ -1,0 +1,5 @@
+Rerun of build_gate3c into a scratch directory vs committed-candidate outputs (byte comparison):
+claim_ledger.csv IDENTICAL
+claim_ledger.md IDENTICAL
+FINAL_REPORT.md IDENTICAL
+lint_report.csv IDENTICAL

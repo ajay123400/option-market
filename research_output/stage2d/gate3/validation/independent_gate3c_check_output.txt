@@ -1,0 +1,91 @@
+T11 coverage from raw per-history intervals (headline estimands S1_calendar and R1 are stored per history)
+  ok  raw vs aggregated coverage B0_calibrated/date_block10/R1_geometric_mean_all_obs 0.8933
+  ok  raw vs aggregated coverage B0_calibrated/date_block10/S1_calendar_all_obs_median 0.9367
+  ok  raw vs aggregated coverage B0_calibrated/expiry_block2/R1_geometric_mean_all_obs 0.8933
+  ok  raw vs aggregated coverage B0_calibrated/expiry_block2/S1_calendar_all_obs_median 0.9200
+  ok  raw vs aggregated coverage B0_calibrated/expiry_block5/R1_geometric_mean_all_obs 0.9167
+  ok  raw vs aggregated coverage B0_calibrated/expiry_block5/S1_calendar_all_obs_median 0.9367
+  ok  raw vs aggregated coverage B0_calibrated/expiry_block8/R1_geometric_mean_all_obs 0.8967
+  ok  raw vs aggregated coverage B0_calibrated/expiry_block8/S1_calendar_all_obs_median 0.9333
+  ok  raw vs aggregated coverage B0_calibrated/expiry_iid/R1_geometric_mean_all_obs 0.8200
+  ok  raw vs aggregated coverage B0_calibrated/expiry_iid/S1_calendar_all_obs_median 0.8567
+  ok  raw vs aggregated coverage B0_calibrated/row_iid/R1_geometric_mean_all_obs 0.2433
+  ok  raw vs aggregated coverage B0_calibrated/row_iid/S1_calendar_all_obs_median 0.3600
+  ok  raw vs aggregated coverage B1_strong_dependence/date_block10/R1_geometric_mean_all_obs 0.7200
+  ok  raw vs aggregated coverage B1_strong_dependence/date_block10/S1_calendar_all_obs_median 0.7300
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_block2/R1_geometric_mean_all_obs 0.7133
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_block2/S1_calendar_all_obs_median 0.7300
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_block5/R1_geometric_mean_all_obs 0.8500
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_block5/S1_calendar_all_obs_median 0.8267
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_block8/R1_geometric_mean_all_obs 0.8633
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_block8/S1_calendar_all_obs_median 0.8367
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_iid/R1_geometric_mean_all_obs 0.5933
+  ok  raw vs aggregated coverage B1_strong_dependence/expiry_iid/S1_calendar_all_obs_median 0.6100
+  ok  raw vs aggregated coverage B1_strong_dependence/row_iid/R1_geometric_mean_all_obs 0.1500
+  ok  raw vs aggregated coverage B1_strong_dependence/row_iid/S1_calendar_all_obs_median 0.1333
+  ok  raw vs aggregated coverage B2_no_overlap_iid/date_block10/R1_geometric_mean_all_obs 0.9333
+  ok  raw vs aggregated coverage B2_no_overlap_iid/date_block10/S1_calendar_all_obs_median 0.9133
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_block2/R1_geometric_mean_all_obs 0.9400
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_block2/S1_calendar_all_obs_median 0.9100
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_block5/R1_geometric_mean_all_obs 0.9333
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_block5/S1_calendar_all_obs_median 0.9133
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_block8/R1_geometric_mean_all_obs 0.9367
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_block8/S1_calendar_all_obs_median 0.9000
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_iid/R1_geometric_mean_all_obs 0.9300
+  ok  raw vs aggregated coverage B2_no_overlap_iid/expiry_iid/S1_calendar_all_obs_median 0.9300
+  ok  raw vs aggregated coverage B2_no_overlap_iid/row_iid/R1_geometric_mean_all_obs 0.4833
+  ok  raw vs aggregated coverage B2_no_overlap_iid/row_iid/S1_calendar_all_obs_median 0.5467
+  ok  raw vs aggregated coverage B3_extreme_tails/date_block10/R1_geometric_mean_all_obs 0.8800
+  ok  raw vs aggregated coverage B3_extreme_tails/date_block10/S1_calendar_all_obs_median 0.9100
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_block2/R1_geometric_mean_all_obs 0.8833
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_block2/S1_calendar_all_obs_median 0.9133
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_block5/R1_geometric_mean_all_obs 0.9100
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_block5/S1_calendar_all_obs_median 0.9267
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_block8/R1_geometric_mean_all_obs 0.9200
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_block8/S1_calendar_all_obs_median 0.9367
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_iid/R1_geometric_mean_all_obs 0.8367
+  ok  raw vs aggregated coverage B3_extreme_tails/expiry_iid/S1_calendar_all_obs_median 0.8700
+  ok  raw vs aggregated coverage B3_extreme_tails/row_iid/R1_geometric_mean_all_obs 0.2333
+  ok  raw vs aggregated coverage B3_extreme_tails/row_iid/S1_calendar_all_obs_median 0.3400
+  ok  raw vs aggregated coverage B4_overlap_only/date_block10/R1_geometric_mean_all_obs 0.9100
+  ok  raw vs aggregated coverage B4_overlap_only/date_block10/S1_calendar_all_obs_median 0.8867
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_block2/R1_geometric_mean_all_obs 0.9267
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_block2/S1_calendar_all_obs_median 0.9167
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_block5/R1_geometric_mean_all_obs 0.9333
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_block5/S1_calendar_all_obs_median 0.9167
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_block8/R1_geometric_mean_all_obs 0.9367
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_block8/S1_calendar_all_obs_median 0.9067
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_iid/R1_geometric_mean_all_obs 0.8800
+  ok  raw vs aggregated coverage B4_overlap_only/expiry_iid/S1_calendar_all_obs_median 0.8633
+  ok  raw vs aggregated coverage B4_overlap_only/row_iid/R1_geometric_mean_all_obs 0.2967
+  ok  raw vs aggregated coverage B4_overlap_only/row_iid/S1_calendar_all_obs_median 0.3367
+  ok  ratio range 88.7%-91.7% in FINAL_REPORT 
+  ok  spread range 93.7%-94.7% in FINAL_REPORT 
+  ok  ratio under-coverage range is 88.7%-91.7% 
+  ok  spread range is 93.7%-94.7% 
+Claim numbers re-read from the source CSVs
+  ok  C01 estimate and interval S1 calendar 1.805 vol pts, 95% expiry-block interval 1.54-2.16; dev 1.
+  ok  C03 R1 estimate and interval 
+  ok  C04 R3 interval contains 1 
+  ok  C04 interval contains 1 in N specs 29/31
+  ok  C07 family A Holm p all >= 1.00 
+  ok  C10 Manski bounds 
+  ok  C12 tipping bias and relative IV reduction 
+  ok  C13 call-minus-put median 
+  ok  C05 expiry-block / row-iid width ratio 
+Structural checks
+  ok  C03 ratio interval claim has the T11 warning 
+  ok  C04 ratio interval claim has the T11 warning 
+  ok  C07 ratio interval claim has the T11 warning 
+  ok  C08 ratio interval claim has the T11 warning 
+  ok  C09 ratio interval claim has the T11 warning 
+  ok  C10 ratio interval claim has the T11 warning 
+  ok  C12 is not tier 1 
+  ok  C18 is not tier 1 
+  ok  C19 is not tier 1 
+  ok  C20 is not tier 1 
+  ok  C19 never upgraded 
+  ok  FINAL_REPORT carries the under-coverage column for ratio claims 
+  ok  independent lint: no un-negated forbidden term in ledger prose or final report 
+
+RESULT: ALL CHECKS PASSED
