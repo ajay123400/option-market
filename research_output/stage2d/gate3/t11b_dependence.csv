@@ -1,0 +1,6 @@
+scenario,description,n_histories,mean_n_rows,mean_icc_by_expiry,mean_acf_lag1_expiry_median_spread,sd_acf_lag1
+B0_calibrated,"calibrated process: regime shifts, jumps, heavy tails, persistent mispricing, overlapping weekly windows",300,7676.15,0.49452731899397456,0.281638925559497,0.07466198168384826
+B1_strong_dependence,much more persistent vol regimes and mispricing (stress test of the dependence handling),300,7676.15,0.6674478172874082,0.46519966652808403,0.09780929623428643
+B2_no_overlap_iid,"i.i.d. vol states, no mispricing persistence, windows <= 5.5 days: weekly expiries do not overlap",300,2293.89,0.7113501688136197,-0.001615292949556543,0.061751973365982676
+B4_overlap_only,i.i.d. vol states and no mispricing persistence with <= 14-day windows: cross-expiry dependence arises ONLY from the overlapping windows,300,7676.15,0.5254835711050858,0.24098567157661732,0.07417815096153026
+B3_extreme_tails,frequent large jumps and fatter-tailed variance noise,300,7676.15,0.5886793496640348,0.24628070762259252,0.08713879093350961

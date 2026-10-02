@@ -1,0 +1,7 @@
+baseline b2a7584c12bde358ba943c8d495e8773684a6002
+HEAD     b2a7584c12bde358ba943c8d495e8773684a6002  (same)
+tracked files changed vs baseline: 0
+untracked new files: 27  (outside the Stage 2D paths: 0)
+protected / Stage 2A-2B-2C paths diff vs baseline: none
+
+RESULT: IMMUTABLE (only new Stage 2D files exist)

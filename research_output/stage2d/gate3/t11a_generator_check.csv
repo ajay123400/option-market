@@ -1,0 +1,3 @@
+check,simulated,closed_form,relative_difference,mc_se
+"Monte-Carlo mean of the generator's snapshot-session remainder variance vs the closed-form expectation (20,000 sessions)",4.5784488913979174e-05,4.598860633895668e-05,-0.004438434673863956,
+generator-level unbiasedness: mean over 200 worlds (c = 1) of the oracle ratio of sums sum(W)/sum(V) vs c,1.0194731260364387,1.0,0.019473126036438693,0.007508906747809076

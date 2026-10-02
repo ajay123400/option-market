@@ -1,0 +1,7 @@
+scenario,test,statistic,rejection_rate_alpha_005,wilson_lo,wilson_hi,n_histories,truth,near_5pct
+B0_calibrated,placebo_by_row,S1_calendar,0.03666666666666667,0.020595305071122217,0.06445384844611282,300,null (placebo),True
+B0_calibrated,placebo_by_row,R1_geometric_mean,0.07,0.04623694467656326,0.10463601074590669,300,null (placebo),True
+B0_calibrated,placebo_by_date,S1_calendar,0.1,0.07094791440230001,0.13916646273488134,300,null (placebo),False
+B0_calibrated,placebo_by_date,R1_geometric_mean,0.08333333333333333,0.057080873886106734,0.12012160229845716,300,null (placebo),False
+B0_calibrated,planted_dte_effect,S1_calendar,1.0,0.9873570285785233,1.0,300,planted c x 1.25 in the 1-3 d stratum,
+B0_calibrated,planted_dte_effect,R1_geometric_mean,1.0,0.9873570285785233,1.0,300,planted c x 1.25 in the 1-3 d stratum,

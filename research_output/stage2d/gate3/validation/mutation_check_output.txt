@@ -1,0 +1,15 @@
+KILLED     transition kernel half-weight
+KILLED     kernel eps mixing
+KILLED     mean_after slot0
+KILLED     to_aligned iv
+KILLED     to_aligned rv_session
+KILLED     to_aligned bucket
+KILLED     wilson centre
+KILLED     coverage inclusive
+KILLED     coverage band flag
+KILLED     undercovers flag
+KILLED     truth_difference sign
+KILLED     pipeline gcum offset
+KILLED     recovery ratio truth
+KILLED     truth_aligned rv
+KILLED     stage2d refusal
