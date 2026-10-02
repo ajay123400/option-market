@@ -1,0 +1,3 @@
+estimand,n_specs,baseline,min_estimate,max_estimate,share_intervals_excluding_null,sign_same_as_baseline_in_every_spec,widest_departure_spec,widest_departure,reading
+S1_calendar_all_obs_median,30,1.8049028316989457,1.6710970504734375,2.013022632615481,1.0,True,dte_le7,0.20811980091653548,not sensitive to the tested conventions (sign unchanged in every specification)
+R1_geometric_mean_all_obs,31,1.2910872241164104,1.2723310900855445,1.9201468408144957,1.0,True,rv_intraday_only,0.6290596166980853,not sensitive to the tested conventions (sign unchanged in every specification)

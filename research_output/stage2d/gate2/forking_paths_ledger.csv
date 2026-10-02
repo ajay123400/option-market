@@ -1,0 +1,18 @@
+analysis_choice,stage,when_decided,results_seen_when_decided,alternative_evaluated_in
+Dev/holdout split date 2025-01-01,Stage 2A,fixed before results were seen (Stage 2A report),no,T5 (holdout is 'previously viewed')
+Risk-free rate 6.5% (assumption),Phase 1 / 2A,repo constant,no,T7 rate 5.5% / 7.5%
+Forward-parity dispersion gate 5 bps,Stage 2A,approved default before results,no,T8 forward gate 3/8/12 bps
+Stale-quote age <= 5 minutes,Stage 2A,approved before results,no,T8 stale age 2/15 min
+Snapshot times 10:00 / 13:00 / 15:00,Stage 2A,specified before results,no,T8 drop one time at a time
+Strict ATM IV (interpolated between reliable bracketing strikes),Stage 2A,specified before results; loose population identical (0 loose-only rows),no,n/a (no difference)
+Primary universe <= 14 calendar DTE,Stage 2C,specified before results (strike-coverage bias),no,T8 DTE <= 7 and <= 21
+"RV measures: hybrid / intraday-only / close-to-close, hybrid as the interval-complete one",Stage 2B/2C,all three specified before results; hybrid singled out for the aligned comparison AFTER the session-basis results,yes,T7 intraday-only
+Session-basis annualization (252) in the original comparison,Stage 2B/2C,specified before results,no,T7 250/256
+Calendar-basis RV and the total-variance ratio,Stage 2C audit,introduced AFTER the session-basis results showed the time-basis mismatch,yes,T7 365.25; Gate 1 intervals
+Uniform weighting of the partial snapshot session,Stage 2C,convention; sensitivity shown in Stage 2C,partly,T7 profile weighting
+1-minute return sampling,Stage 2B,specified before results,no,T7 5/15 minutes
+Regime cut-offs from the development sample only,Stage 2C,specified before results,no,used unchanged in T5/T6
+Population for Stage 2D: EXP / hybrid,Stage 2D proposal,chosen AFTER seeing Stage 2C,yes,stated
+Block-bootstrap length 5 (largest rounded Politis-White),Gate 1,rule fixed before intervals were computed,no,"Gate 1 grid; T5/T6 use 5, sensitivity 2 and 8"
+Minimum 30 clusters per interval,Gate 1,guard fixed in advance,no,applies to every stratum
+"Pre-registered Gate 2 design (families, contrasts, specifications)",Gate 2,written before any Gate 2 code or number,no,PREREGISTRATION.md (SHA-256 in run metadata)

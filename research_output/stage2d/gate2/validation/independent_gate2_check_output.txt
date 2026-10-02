@@ -1,0 +1,42 @@
+EXP/hybrid rows 6490
+
+[T5] dev vs holdout
+  ok  S1 calendar dev                                                        mine=1.889125884 output=1.889125884
+  ok  S1 calendar holdout                                                    mine=1.686124015 output=1.686124015
+  ok  S1 calendar difference                                                 mine=-0.2030018689 output=-0.2030018689
+  ok  R1 dev                                                                 mine=1.297099994 output=1.297099994
+  ok  R1 holdout                                                             mine=1.280256003 output=1.280256003
+  ok  R1 difference                                                          mine=-0.01684399152 output=-0.01684399152
+  ok  R2 dev                                                                 mine=1.367178329 output=1.367178329
+  ok  R2 holdout                                                             mine=1.37772844 output=1.37772844
+  ok  R2 difference                                                          mine=0.01055011063 output=0.01055011063
+  ok  Holm adjusted p S1_calendar_all_obs_median                             mine=1 output=1
+  ok  Holm adjusted p S2_calendar_median_of_expiry_medians                   mine=1 output=1
+  ok  Holm adjusted p R1_geometric_mean_all_obs                              mine=1 output=1
+  ok  Holm adjusted p R2_median_ratio_all_obs                                mine=1 output=1
+  ok  post-stratified holdout S1 calendar (dev IV-quartile composition)      mine=1.987051961 output=1.987051961
+  ok  post-stratified holdout R1                                             mine=1.315880392 output=1.315880392
+  ok  straddling expiries (rows in both splits)                              mine=2 output=2
+
+[T6] strata
+  ok  Holm adjustment of the 12 family-B p-values: max |difference|          mine=0 output=0
+  ok  all 44 stratum estimates (S1 calendar, R1) and row counts: max |difference| mine=2.700062396e-13 output=0
+  ok  Mincer-Zarnowitz slope (all rows, level scale)                         mine=0.8029913028 output=0.8029913028
+  ok  Mincer-Zarnowitz intercept                                             mine=1.447664299 output=1.447664299
+  ok  F5 expiry-day S1 calendar                                              mine=9.022334754 output=9.022334754
+  ok  F5 non-expiry-day S1 calendar                                          mine=2.285134356 output=2.285134356
+
+[T7] 5- and 15-minute realized variance from the raw 1-minute bars (pure Python)
+  ok  1-minute sampling: S1 calendar (all 6490 rows)                         mine=1.804902832 output=1.804902832
+  ok  1-minute sampling: R1 geometric mean                                   mine=1.291087224 output=1.291087224
+  ok  5-minute sampling: S1 calendar (all 6490 rows)                         mine=1.672386683 output=1.672386683
+  ok  5-minute sampling: R1 geometric mean                                   mine=1.274303083 output=1.274303083
+  ok  15-minute sampling: S1 calendar (all 6490 rows)                        mine=1.713768415 output=1.713768415
+  ok  15-minute sampling: R1 geometric mean                                  mine=1.272778035 output=1.272778035
+
+[T7] Black-76 implied volatility re-solved from stored price / forward / T
+  ok  baseline r=6.5%: max |IV(independent) - IV(stored)| over 300 reliable OTM points (decimal vol) mine=8.255951478e-12 output=0
+  ok  r=5.5% run: max |IV(independent) - IV(stored)| over 300 reliable OTM points (decimal vol) mine=7.747746888e-12 output=0
+  ok  r=7.5% run: max |IV(independent) - IV(stored)| over 300 reliable OTM points (decimal vol) mine=1.217798085e-11 output=0
+
+RESULT: ALL AGREE
