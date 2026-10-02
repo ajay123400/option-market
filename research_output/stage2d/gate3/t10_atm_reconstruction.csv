@@ -1,0 +1,2 @@
+rows,rows_with_both_bracketing_points_used,max_abs_interpolation_diff_stored_points_vs_stored_atm_iv,max_abs_resolved_bracket_iv_diff_vs_stored,max_abs_resolved_atm_iv_diff_vs_stored,n_unsolved,note
+6490,6490,3.0531133177191805e-16,1.9389934102775896e-11,1.8582302363512326e-11,0,independent Black-76 solver (r=6.5%) reproduces the stored Stage 2A IVs

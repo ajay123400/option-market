@@ -1,0 +1,42 @@
+# Stage 2D — Gate 3a (T9 selection audit, T10 quote-noise sensitivity): implementation plan and frozen design
+
+Written before any Gate 3a code or number. Baseline HEAD `b29dc2c` (parent `f2a9a2f`, Gate 1; both unpushed). Gate 3 decisions approved by the user: T11 = Tier A (small full-pipeline recovery) **and** Tier B (main CI-coverage evidence);
+the 14–30 DTE comparison is a **diagnostic only** (no modelling, no extrapolation to the ≤ 14 DTE population); a prospective-test protocol (frozen at 2026-09-30) is part of Gate 3 (documented in 3c; no fabricated or simulated prospective results).
+This plan covers **3a only** (T9, T10). Stop after 3a for review. Measurement/statistics only: no strategy, P&L, signal or Fyers link; Stage 2A/2B/2C and Gates 1–2 are read, never edited; every new file is under Stage 2D paths.
+A confidence interval, bound or p-value is never read as trading profitability.
+
+## T9 — selection-on-outcome / rejected-observation audit
+
+**Universes.** `U_all` = Stage 2A attempted snapshot × expiry groups with T ≤ 14 calendar days (7,458); `U_exp` = `U_all` minus expiry-day groups (the expiry-aligned target is undefined for them by construction; 6,678); `O` = the 6,490 observed EXP/hybrid rows. Missing from `U_exp`: 188 groups in two layers:
+* **L1 snapshot-quality rejections** (forward not OK / no spot bar at the snapshot / no option bars / no strict ATM IV);
+* **L2 target-availability losses** (kept groups without an EXP target for data reasons: incomplete or missing session, beyond data end, non-regular snapshot session, missing bars).
+Structural restrictions (the ≤ 14 DTE cut and the path-dependent strike universe) are **not** selection of observations and are handled as limitations / layer 3 diagnostics.
+
+**Information rule.** The inclusion model uses only quantities known at time t: calendar (year, snapshot time, weekday), contract metadata (DTE), and spot-derived features from sessions completed **before** the snapshot date plus the session's own open (overnight gap, 09:15 ≤ t): ln RV20 (strict hybrid, previous completed sessions), previous-session range, |overnight gap|. Features that depend on the option quotes (e.g. quote counts) or on the snapshot bar are excluded because they encode the rejection mechanism. Groups whose covariates cannot be computed are dropped from the model (counted, not imputed).
+
+**Outcome series.** Y1 = F5 hybrid session-basis realized volatility over the five complete sessions after the snapshot session (spot only: computable for rejected groups too, independent of the snapshot bar). The test variable is ln Y1 with ln RV20 in the covariate set (so its coefficient measures dependence of rejection on the unforeseen part of subsequent volatility).
+
+**Analyses (all pre-specified).**
+1. Universe counts: layers and reasons, by year, snapshot time and DTE bucket.
+2. Balance: rejected vs kept standardized differences for every covariate and ln Y1, with expiry-block bootstrap intervals (b = 5).
+3. Inclusion model: ridge logistic (standardized covariates, penalty λ = 1 on the coefficient sum of squares, intercept unpenalized, Newton–Raphson). Coefficient β_Y on standardized ln Y1 added to the covariate model; **null distribution by circular-shift permutation of the date-level ln Y1 series** (offsets ≥ 20 sessions, 2,000 draws; preserves its autocorrelation, breaks alignment with rejections); interval by expiry-block bootstrap with refitting (1,000 replications).
+4. Inverse-probability weighting: weights 1/p̂ from the covariate-only model (capped at 10, cap use counted); weighted vs unweighted S1 calendar / S1 session / R1 / R2 with expiry-block intervals that refit the model (1,000 replications).
+5. Manski bounds and break-down shares: worst-case bounds on the median spread (calendar and session) and the median ratio if all 188 missing groups could take any value (L1 only as well), and the minimum missing share that would be needed to move each median to its null (0 / 1). R1 is unbounded under worst-case missing values, so for it only the tipping-point shift is reported.
+6. Layer 2 audit: the L2 rows vs observed rows on known-at-t covariates and on IV level; F5 calendar-basis spread where the F5 target exists.
+7. Layer 3 (a): for every point used in an ATM interpolation, the quote age is within [0, 5] minutes (no quote from after t enters the strike universe at t). Layer 3 (b), **diagnostic / population-composition context only**: forward-OK share and known-at-t composition (year, time, ln RV20, DTE) of ≤ 14 DTE vs 14–30 DTE attempted groups. No outcomes, spreads or ratios for 14–30 DTE and no extrapolation.
+
+**Failure modes.** 74 L1 rejections ⇒ low power: results are bounds and equivalence-style statements, never "no selection". Rejections concentrate in 2022 (a high-volatility year): handled by year in the covariate set, reported separately. Selection on unobservables (liquidity) cannot be tested. Date-level Y1 shares values across groups of the same date: inference uses expiry clusters for intervals and the date-shift permutation for the null.
+
+## T10 — bid/ask and quote-noise sensitivity (all scenarios are ASSUMPTIONS or BOUNDS; no bid/ask data exists in this dataset)
+
+**ATM reconstruction.** For every observed row the two bracketing used points (largest strike with ln(K/F) < 0, smallest with ≥ 0) are taken from `points.csv`; the IV is re-solved from price, forward and T with an independent Black-76 solver (r = 6.5%) and interpolated linearly in ln(K/F) to 0 (the Stage 2A rule); the reconstruction must match the stored ATM IV (max difference reported). Every scenario then perturbs only the two bracketing prices and recomputes spread (calendar and session basis) and ratio from the stored realized variance; nothing else changes.
+
+**Scenarios.** (A) systematic bias of both bracketing prices: absolute ±₹0.25/0.5/1/2/5/10 and relative ±0.5/1/2/5/10%; (B) opposite-side bias (calls +ε, puts −ε; ε = ₹0.5/1/2/5); (C) zero-mean independent noise on each bracketing price, σ = ₹0.5/1/2/5 or 0.5/1/2% (200 seeded draws per scenario; mean, sd and 2.5/97.5% of the estimands; prices floored at the 0.05 tick; scenario rows lost to the intrinsic bound are counted). Deterministic scenarios carry expiry-block intervals (b = 5, 1,000 replications).
+**Tipping bias.** The uniform IV shift δ* that moves the median calendar spread to 0 (= the baseline spread), expressed per row as ε_i = δ*·vega_i (₹ and % of the bracketing price; median, quartiles), and the multiplicative IV factor that makes the geometric-mean ratio 1.
+**Observed noise proxy.** A seeded stratified sample of 300 kept snapshots is re-read from the raw option bars (read-only loaders); near-ATM strikes (|ln K/F| ≤ 1%) with both call and put quotes aged ≤ 5 min give IV_C − IV_P (Black-76, the snapshot's forward). It is an **upper bound** for quote noise (it also contains forward-estimation error and ITM-side time-value effects).
+**Quote-age gradient.** S1 and R1 restricted to rows whose bracketing quotes are all ≤ 1 / ≤ 2 / ≤ 5 minutes old (n reported; expiry-block intervals).
+**Errors-in-variables.** Mincer–Zarnowitz slope corrected for assumed IV noise sd (the proxy's median and 90th percentile, and scenario σ's): b / (1 − σ²_noise / Var(IV)); stated as a scenario.
+
+## Code, outputs, tests
+New code: `optionsengine/research/stage2d/{selection,quote_noise,build_gate3a}.py`; tests `tests/test_stage2d_gate3a.py`; outputs `research_output/stage2d/gate3/` (`t9_*.csv`, `t10_*.csv`, `run_metadata.json`, `REPORT_3A.md`, `validation/`). Builders refuse non-`stage2d` output paths; fixed seeds.
+Tests: hand-computed universe counts and covariates; **no-look-ahead (covariates unchanged when later spot data is changed; model matrix contains no outcome or quote-derived column)**; ridge logistic against a closed form / scipy-style reference; permutation null calibration (no dependence ⇒ p roughly uniform) and power (planted dependence detected); IPW equals 1 when inclusion is independent of covariates; Manski bounds and break-down shares by hand; Black-76 solver round-trip and monotonicity; zero-shift scenario reproduces the baseline exactly; opposite-side symmetry; tipping bias identity; small-cluster and deterministic-seed checks; mutation checks; independent pure-Python recomputation of the universe counts, the Manski bounds, the ATM reconstruction and a sample of scenarios; immutability of all earlier artifacts; full pytest.

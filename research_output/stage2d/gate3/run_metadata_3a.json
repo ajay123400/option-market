@@ -1,0 +1,17 @@
+{
+ "git_commit": "b29dc2cff767ba804fcc26451aa863a3ce73eae0",
+ "n_groups": 7458,
+ "n_observed": 6490,
+ "n_l1": 73,
+ "n_l2": 115,
+ "perm_draws": 2000,
+ "boot_reps": 1000,
+ "mc_draws": 200,
+ "base_seed": 20260101,
+ "block": 5,
+ "seconds": 140.4,
+ "started": "2026-10-02T04:43:33",
+ "numpy": "2.4.6",
+ "pandas": "3.0.6",
+ "plan": "GATE3A_IMPLEMENTATION_PLAN.md"
+}

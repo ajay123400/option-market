@@ -1,0 +1,2 @@
+check,n_used_points,min_age_min,max_age_min,n_negative_age,n_older_than_5,passes
+"all USED points: quote age in [0, 5] minutes (no quote from after t, none older than the 5-minute freshness gate)",611194,1.0,5.0,0,0,True
