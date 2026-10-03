@@ -1,0 +1,17 @@
+KILLED                       lint: negation word 'not' removed
+KILLED                       lint: out-of-sample always allowed
+KILLED                       lint: forbidden-wording lines linted
+KILLED                       lint: significance always allowed
+KILLED                       rule: under-coverage check inverted
+KILLED                       rule: transferability check dropped
+KILLED                       rule: tier 1 without conditions allowed
+KILLED                       tier1: interval condition or->and
+KILLED                       tier1: dev/holdout sign test inverted
+KILLED                       tier1: p threshold flipped
+KILLED                       t11: ratio rows pick spreads
+KILLED                       C05 width ratio inverted
+KILLED                       C10 Manski bounds swapped
+KILLED                       C04 status upgraded
+KILLED                       C07 status upgraded
+KILLED                       builder: stage2d guard removed
+KILLED                       builder: ratio warning column dropped

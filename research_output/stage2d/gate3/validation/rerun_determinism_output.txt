@@ -1,0 +1,10 @@
+Rerun of scenarios B0_calibrated and B2_no_overlap_iid (300 histories, 500 draws, 4 workers) vs the production CSVs; exact equality required.
+t11b_coverage.csv IDENTICAL rows= 92
+t11b_history_intervals.csv IDENTICAL rows= 7200
+t11b_history_contrasts.csv IDENTICAL rows= 3600
+t11b_history_wald.csv IDENTICAL rows= 1800
+t11b_truth.csv IDENTICAL rows= 18
+t11b_wald.csv IDENTICAL rows= 6
+t11b_split_contrast.csv IDENTICAL rows= 54
+t11b_dependence.csv IDENTICAL rows= 2
+RESULT: REPRODUCIBLE (bit-identical)

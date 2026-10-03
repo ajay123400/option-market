@@ -1,0 +1,35 @@
+model,term,standardized_coefficient
+primary: missing (L1+L2) vs observed in U_exp,intercept,-6.578620658150474
+primary: missing (L1+L2) vs observed in U_exp,year_2022,-0.6927855299963085
+primary: missing (L1+L2) vs observed in U_exp,year_2023,-1.0338669417114008
+primary: missing (L1+L2) vs observed in U_exp,year_2024,-1.5359814224941326
+primary: missing (L1+L2) vs observed in U_exp,year_2025,-1.795052631573623
+primary: missing (L1+L2) vs observed in U_exp,year_2026,-1.2479748099141668
+primary: missing (L1+L2) vs observed in U_exp,time_1300,-0.17821355721551815
+primary: missing (L1+L2) vs observed in U_exp,time_1500,0.17018012701698945
+primary: missing (L1+L2) vs observed in U_exp,wd_tue,-0.17044902786017205
+primary: missing (L1+L2) vs observed in U_exp,wd_wed,-0.32471632614225776
+primary: missing (L1+L2) vs observed in U_exp,wd_thu,-0.1335943911908081
+primary: missing (L1+L2) vs observed in U_exp,wd_fri,-0.356797561151798
+primary: missing (L1+L2) vs observed in U_exp,dte_days,1.6623627917632111
+primary: missing (L1+L2) vs observed in U_exp,ln_rv20,-0.02943099703774307
+primary: missing (L1+L2) vs observed in U_exp,prev_range,0.3036162845055524
+primary: missing (L1+L2) vs observed in U_exp,gap_abs,0.1214885846068598
+primary: missing (L1+L2) vs observed in U_exp,ln_y1,0.3036844462702261
+secondary: L1 rejected vs observed (L2 groups excluded),intercept,-7.721247009880035
+secondary: L1 rejected vs observed (L2 groups excluded),year_2022,0.8873100337915194
+secondary: L1 rejected vs observed (L2 groups excluded),year_2023,-0.5438217711441152
+secondary: L1 rejected vs observed (L2 groups excluded),year_2024,0.1813896610484608
+secondary: L1 rejected vs observed (L2 groups excluded),year_2025,-0.17216161646314246
+secondary: L1 rejected vs observed (L2 groups excluded),year_2026,-0.10906210755090127
+secondary: L1 rejected vs observed (L2 groups excluded),time_1300,-0.1296690655805721
+secondary: L1 rejected vs observed (L2 groups excluded),time_1500,0.3985007869260819
+secondary: L1 rejected vs observed (L2 groups excluded),wd_tue,0.07066750605938946
+secondary: L1 rejected vs observed (L2 groups excluded),wd_wed,-0.4022098273628531
+secondary: L1 rejected vs observed (L2 groups excluded),wd_thu,-0.011360954016501971
+secondary: L1 rejected vs observed (L2 groups excluded),wd_fri,-0.31177583414545346
+secondary: L1 rejected vs observed (L2 groups excluded),dte_days,1.593355260505767
+secondary: L1 rejected vs observed (L2 groups excluded),ln_rv20,0.4166851700175567
+secondary: L1 rejected vs observed (L2 groups excluded),prev_range,0.2861919871390698
+secondary: L1 rejected vs observed (L2 groups excluded),gap_abs,0.08714928564400126
+secondary: L1 rejected vs observed (L2 groups excluded),ln_y1,0.23967252074439363

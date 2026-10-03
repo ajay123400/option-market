@@ -1,0 +1,2 @@
+n_snapshots,n_strikes,median_diff_vol_points,mean_diff_vol_points,robust_sd_diff,p05,p95,median_abs_diff,p90_abs_diff,median_of_per_snapshot_median,reading
+298,2495,-0.00116429187353162,-0.0027591537503640897,0.056873216648087796,-0.15401870042131435,0.14196362557545106,0.038195327749798724,0.14719858953706974,-0.0009376419999422569,UPPER BOUND on quote noise: also contains forward-estimation error and ITM-side time-value effects; the median shows the sign of any call-vs-put (bid/ask-type) asymmetry

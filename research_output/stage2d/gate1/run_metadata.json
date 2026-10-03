@@ -1,0 +1,59 @@
+{
+ "git_commit": "3b2a8218e5aeb8b394705e3f1c3b7b9290211403",
+ "aligned": "research_output/stage2c/annualization_audit/aligned_observations.csv",
+ "n_rows": 6490,
+ "n_expiries": 260,
+ "n_dates": 1224,
+ "base_seed": 20260101,
+ "headline_reps": 5000,
+ "grid_reps": 2000,
+ "block_length_rule": "largest rounded Politis-White circular length over the three per-expiry series",
+ "block_length_selected": 5,
+ "politis_white": {
+  "median_spread_session": {
+   "n": 260,
+   "m_hat": 2,
+   "M": 4,
+   "G": 13.320757570880996,
+   "g0": 22.917373246558874,
+   "b_stationary": 4.44529418061755,
+   "b_circular": 5.088591560892352,
+   "b_max": 49.0
+  },
+  "median_spread_calendar": {
+   "n": 260,
+   "m_hat": 1,
+   "M": 2,
+   "G": 3.31883963445323,
+   "g0": 16.24936333285794,
+   "b_stationary": 2.2135587933660608,
+   "b_circular": 2.5338922774952977,
+   "b_max": 49.0
+  },
+  "mean_log_ratio": {
+   "n": 260,
+   "m_hat": 2,
+   "M": 4,
+   "G": 0.12354069498774495,
+   "g0": 0.241422322088402,
+   "b_stationary": 4.0833147819726925,
+   "b_circular": 4.674228587752695,
+   "b_max": 49.0
+  }
+ },
+ "window_overlap_summary": {
+  "n_expiries": 260,
+  "mean_window_days": 12.88151709401967,
+  "mean_overlap_with_next_days": 5.8848985042760225,
+  "mean_overlap_with_next_share": 0.4637207298320189,
+  "median_n_overlapping_expiries": 2.0,
+  "max_n_overlapping_expiries": 3
+ },
+ "n_subsample_kept": 259,
+ "n_subsample_dropped": 1,
+ "seconds": 44.1,
+ "started": "2026-10-01T14:40:38",
+ "numpy": "2.4.6",
+ "pandas": "3.0.6",
+ "min_clusters": 30
+}

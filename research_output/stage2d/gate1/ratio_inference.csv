@@ -1,0 +1,8 @@
+test,assumption,n,statistic,block,p_two_sided
+sign_test_expiry_median_ratio_gt_1,independent expiries,260,0.7923076923076923,,4.31523940746189e-22
+sign_flip_permutation_mean_log_ratio,independent expiries,260,0.2545964192909234,1.0,4.999750012499375e-05
+sign_flip_permutation_mean_log_ratio,dependence shorter than 5 expiries; symmetry under H0,260,0.2545964192909234,5.0,4.999750012499375e-05
+sign_flip_permutation_mean_log_ratio,dependence shorter than 8 expiries; symmetry under H0,260,0.2545964192909234,8.0,4.999750012499375e-05
+hac_t_mean_log_ratio,"Bartlett kernel, stationary series",260,8.605509194926308,4.0,
+hac_t_mean_log_ratio,"Bartlett kernel, stationary series",260,8.285273590962554,8.0,
+rows_with_zero_realized_variance_excluded,,0,,,

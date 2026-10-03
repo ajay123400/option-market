@@ -1,0 +1,22 @@
+{
+ "git_commit": "b2a7584c12bde358ba943c8d495e8773684a6002",
+ "tier_a": {
+  "worlds": 3,
+  "rows": 2862
+ },
+ "tier_b": {
+  "scenarios": 5,
+  "n_hist": 300
+ },
+ "n_hist": 300,
+ "bootstrap_reps": 500,
+ "wald_reps": 300,
+ "truth_expiries": 40000,
+ "calibration_histories": 100,
+ "base_seed": 20260101,
+ "seconds": 1094.0,
+ "started": "2026-10-02T05:32:59",
+ "numpy": "2.4.6",
+ "pandas": "3.0.6",
+ "plan": "GATE3B_IMPLEMENTATION_PLAN.md"
+}

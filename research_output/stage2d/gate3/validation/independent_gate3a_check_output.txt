@@ -1,0 +1,62 @@
+[T9] universe
+  ok  attempted groups <= 14 DTE                                                     mine=7458 output=7458
+  ok  layer count: observed                                                          mine=6490 output=6490
+  ok  layer count: expiry-day by construction                                        mine=780 output=780
+  ok  layer count: L1 rejected (non-expiry-day)                                      mine=73 output=73
+  ok  layer count: L2 target-unavailable                                             mine=115 output=115
+  ok  L2 reason incomplete_or_missing_session_in_window                              mine=81 output=81
+  ok  L2 reason beyond_data_end                                                      mine=18 output=18
+  ok  L2 reason snapshot_session_not_regular                                         mine=12 output=12
+  ok  L2 reason snapshot_session_bars_missing_after_snapshot                         mine=4 output=4
+
+[T9] known-at-t covariates and the outcome from the raw 1-minute bars (random sample of 50 dates)
+  ok  gap_abs: max |difference| over 48 sampled dates                                mine=9.974659987e-17 output=0
+  ok  prev_range: max |difference| over 49 sampled dates                             mine=9.714451465e-17 output=0
+  ok  ln_rv20: max |difference| over 42 sampled dates                                mine=4.440892099e-16 output=0
+  ok  ln_y1: max |difference| over 48 sampled dates                                  mine=4.440892099e-16 output=0
+
+[T9] ridge-logit outcome coefficient and IPW refit with scipy
+  ok  primary outcome coefficient (standardized, ridge lambda=1)                     mine=0.3036844324 output=0.3036844463
+  ok  primary model: complete-case groups                                            mine=5976 output=5976
+  ok  primary model: flagged (missing) groups                                        mine=53 output=53
+  ok  IPW S1 calendar                                                                mine=1.760569476 output=1.760569476
+  ok  IPW S1 session                                                                 mine=2.54613804 output=2.54613804
+  ok  IPW R1 geometric mean                                                          mine=1.281325953 output=1.281325953
+  ok  unweighted complete-case S1 calendar                                           mine=1.765988856 output=1.765988856
+
+[T9] Manski bounds and break-down shares
+  ok  S1_calendar spread (null 0) | all missing (L1+L2): lower bound                 mine=1.73288164 output=1.73288164
+  ok  S1_calendar spread (null 0) | all missing (L1+L2): upper bound                 mine=1.881084368 output=1.881084368
+  ok  S1_calendar spread (null 0) | L1 rejections only: lower bound                  mine=1.776797339 output=1.776797339
+  ok  S1_calendar spread (null 0) | L1 rejections only: upper bound                  mine=1.835738983 output=1.835738983
+  ok  S1_calendar spread (null 0) | L2 target losses only: lower bound               mine=1.757119602 output=1.757119602
+  ok  S1_calendar spread (null 0) | L2 target losses only: upper bound               mine=1.850955762 output=1.850955762
+  ok  S1_calendar spread (null 0): break-down k, |closed form (n - 2 n0) - output| (tolerance 1) mine=-1 output=0
+  ok  S1_session spread (null 0) | all missing (L1+L2): lower bound                  mine=2.546524394 output=2.546524394
+  ok  S1_session spread (null 0) | all missing (L1+L2): upper bound                  mine=2.758180422 output=2.758180422
+  ok  S1_session spread (null 0) | L1 rejections only: lower bound                   mine=2.61277562 output=2.61277562
+  ok  S1_session spread (null 0) | L1 rejections only: upper bound                   mine=2.689105268 output=2.689105268
+  ok  S1_session spread (null 0) | L2 target losses only: lower bound                mine=2.589389224 output=2.589389224
+  ok  S1_session spread (null 0) | L2 target losses only: upper bound                mine=2.721253852 output=2.721253852
+  ok  S1_session spread (null 0): break-down k, |closed form (n - 2 n0) - output| (tolerance 1) mine=-1 output=0
+  ok  R2 median ratio (null 1) | all missing (L1+L2): lower bound                    mine=1.35266022 output=1.35266022
+  ok  R2 median ratio (null 1) | all missing (L1+L2): upper bound                    mine=1.388318617 output=1.388318617
+  ok  R2 median ratio (null 1) | L1 rejections only: lower bound                     mine=1.364276924 output=1.364276924
+  ok  R2 median ratio (null 1) | L1 rejections only: upper bound                     mine=1.377527402 output=1.377527402
+  ok  R2 median ratio (null 1) | L2 target losses only: lower bound                  mine=1.360640529 output=1.360640529
+  ok  R2 median ratio (null 1) | L2 target losses only: upper bound                  mine=1.380778083 output=1.380778083
+  ok  R2 median ratio (null 1): break-down k, |closed form (n - 2 n0) - output| (tolerance 1) mine=-1 output=0
+
+[T10] Black-76 scenarios re-solved with scipy brentq (all rows)
+  ok  used points: minimum quote age (minutes)                                       mine=1 output=1
+  ok  used points: maximum quote age (minutes)                                       mine=5 output=5
+  ok  abs +5: S1 calendar (independent brentq, 6490 rows)                            mine=2.298590824 output=2.298590824
+  ok  abs +5: R1 geometric mean                                                      mine=1.392444667 output=1.392444667
+  ok  rel -0.02: S1 calendar (independent brentq, 6490 rows)                         mine=1.576760323 output=1.576760323
+  ok  rel -0.02: R1 geometric mean                                                   mine=1.243013379 output=1.243013379
+  ok  zero-shift ATM IV vs stored Stage 2A ATM IV: max |difference|                  mine=1.857436427e-11 output=0
+  ok  tipping bias: median price bias (Rs) = median(S1 * vega)                       mine=20.48134911 output=20.48134911
+  ok  tipping bias: median % of bracketing price                                     mine=14.1975055 output=14.1975055
+  ok  IV factor for a unit geometric-mean ratio = 1/sqrt(R1)                         mine=0.8800801145 output=0.8800801145
+
+RESULT: ALL AGREE

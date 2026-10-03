@@ -1,0 +1,288 @@
+Tier A: realised variance from raw bars and IV from written option prices
+  ok  max relative error of V_true vs raw-bar recomputation (150 rows)                 mine=3.19056309e-14 output=0
+  max |IV(brentq on written price) - generator IV at that strike| = 0.00300 vol pts (tick rounding only)
+Tier B: coverage / contrast / Wald aggregation from the per-history CSVs
+  ok  coverage B0_calibrated/date_block10/R1_geometric_mean_all_obs                    mine=0.8933333333 output=0.8933333333
+  ok    wilson_lo B0_calibrated/date_block10/R1_geometric_mean_all_obs                 mine=0.8532967113 output=0.8532967113
+  ok    band flag B0_calibrated/date_block10/R1_geometric_mean_all_obs                 mine=0 output=0
+  ok    undercovers flag B0_calibrated/date_block10/R1_geometric_mean_all_obs          mine=1 output=1
+  ok  coverage B0_calibrated/date_block10/S1_calendar_all_obs_median                   mine=0.9366666667 output=0.9366666667
+  ok    wilson_lo B0_calibrated/date_block10/S1_calendar_all_obs_median                mine=0.9032086872 output=0.9032086872
+  ok    band flag B0_calibrated/date_block10/S1_calendar_all_obs_median                mine=1 output=1
+  ok    undercovers flag B0_calibrated/date_block10/S1_calendar_all_obs_median         mine=0 output=0
+  ok  coverage B0_calibrated/expiry_block2/R1_geometric_mean_all_obs                   mine=0.8933333333 output=0.8933333333
+  ok    wilson_lo B0_calibrated/expiry_block2/R1_geometric_mean_all_obs                mine=0.8532967113 output=0.8532967113
+  ok    band flag B0_calibrated/expiry_block2/R1_geometric_mean_all_obs                mine=0 output=0
+  ok    undercovers flag B0_calibrated/expiry_block2/R1_geometric_mean_all_obs         mine=1 output=1
+  ok  coverage B0_calibrated/expiry_block2/S1_calendar_all_obs_median                  mine=0.92 output=0.92
+  ok    wilson_lo B0_calibrated/expiry_block2/S1_calendar_all_obs_median               mine=0.8837267592 output=0.8837267592
+  ok    band flag B0_calibrated/expiry_block2/S1_calendar_all_obs_median               mine=0 output=0
+  ok    undercovers flag B0_calibrated/expiry_block2/S1_calendar_all_obs_median        mine=0 output=0
+  ok  coverage B0_calibrated/expiry_block5/R1_geometric_mean_all_obs                   mine=0.9166666667 output=0.9166666667
+  ok    wilson_lo B0_calibrated/expiry_block5/R1_geometric_mean_all_obs                mine=0.8798783977 output=0.8798783977
+  ok    band flag B0_calibrated/expiry_block5/R1_geometric_mean_all_obs                mine=0 output=0
+  ok    undercovers flag B0_calibrated/expiry_block5/R1_geometric_mean_all_obs         mine=0 output=0
+  ok  coverage B0_calibrated/expiry_block5/S1_calendar_all_obs_median                  mine=0.9366666667 output=0.9366666667
+  ok    wilson_lo B0_calibrated/expiry_block5/S1_calendar_all_obs_median               mine=0.9032086872 output=0.9032086872
+  ok    band flag B0_calibrated/expiry_block5/S1_calendar_all_obs_median               mine=1 output=1
+  ok    undercovers flag B0_calibrated/expiry_block5/S1_calendar_all_obs_median        mine=0 output=0
+  ok  coverage B0_calibrated/expiry_block8/R1_geometric_mean_all_obs                   mine=0.8966666667 output=0.8966666667
+  ok    wilson_lo B0_calibrated/expiry_block8/R1_geometric_mean_all_obs                mine=0.8570598272 output=0.8570598272
+  ok    band flag B0_calibrated/expiry_block8/R1_geometric_mean_all_obs                mine=0 output=0
+  ok    undercovers flag B0_calibrated/expiry_block8/R1_geometric_mean_all_obs         mine=1 output=1
+  ok  coverage B0_calibrated/expiry_block8/S1_calendar_all_obs_median                  mine=0.9333333333 output=0.9333333333
+  ok    wilson_lo B0_calibrated/expiry_block8/S1_calendar_all_obs_median               mine=0.8992769402 output=0.8992769402
+  ok    band flag B0_calibrated/expiry_block8/S1_calendar_all_obs_median               mine=1 output=1
+  ok    undercovers flag B0_calibrated/expiry_block8/S1_calendar_all_obs_median        mine=0 output=0
+  ok  coverage B0_calibrated/expiry_iid/R1_geometric_mean_all_obs                      mine=0.82 output=0.82
+  ok    wilson_lo B0_calibrated/expiry_iid/R1_geometric_mean_all_obs                   mine=0.7725668007 output=0.7725668007
+  ok    band flag B0_calibrated/expiry_iid/R1_geometric_mean_all_obs                   mine=0 output=0
+  ok    undercovers flag B0_calibrated/expiry_iid/R1_geometric_mean_all_obs            mine=1 output=1
+  ok  coverage B0_calibrated/expiry_iid/S1_calendar_all_obs_median                     mine=0.8566666667 output=0.8566666667
+  ok    wilson_lo B0_calibrated/expiry_iid/S1_calendar_all_obs_median                  mine=0.8124994225 output=0.8124994225
+  ok    band flag B0_calibrated/expiry_iid/S1_calendar_all_obs_median                  mine=0 output=0
+  ok    undercovers flag B0_calibrated/expiry_iid/S1_calendar_all_obs_median           mine=1 output=1
+  ok  coverage B0_calibrated/row_iid/R1_geometric_mean_all_obs                         mine=0.2433333333 output=0.2433333333
+  ok    wilson_lo B0_calibrated/row_iid/R1_geometric_mean_all_obs                      mine=0.1982215409 output=0.1982215409
+  ok    band flag B0_calibrated/row_iid/R1_geometric_mean_all_obs                      mine=0 output=0
+  ok    undercovers flag B0_calibrated/row_iid/R1_geometric_mean_all_obs               mine=1 output=1
+  ok  coverage B0_calibrated/row_iid/S1_calendar_all_obs_median                        mine=0.36 output=0.36
+  ok    wilson_lo B0_calibrated/row_iid/S1_calendar_all_obs_median                     mine=0.3077693348 output=0.3077693348
+  ok    band flag B0_calibrated/row_iid/S1_calendar_all_obs_median                     mine=0 output=0
+  ok    undercovers flag B0_calibrated/row_iid/S1_calendar_all_obs_median              mine=1 output=1
+  ok  coverage B1_strong_dependence/date_block10/R1_geometric_mean_all_obs             mine=0.72 output=0.72
+  ok    wilson_lo B1_strong_dependence/date_block10/R1_geometric_mean_all_obs          mine=0.6666561144 output=0.6666561144
+  ok    band flag B1_strong_dependence/date_block10/R1_geometric_mean_all_obs          mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/date_block10/R1_geometric_mean_all_obs   mine=1 output=1
+  ok  coverage B1_strong_dependence/date_block10/S1_calendar_all_obs_median            mine=0.73 output=0.73
+  ok    wilson_lo B1_strong_dependence/date_block10/S1_calendar_all_obs_median         mine=0.6770882622 output=0.6770882622
+  ok    band flag B1_strong_dependence/date_block10/S1_calendar_all_obs_median         mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/date_block10/S1_calendar_all_obs_median  mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_block2/R1_geometric_mean_all_obs            mine=0.7133333333 output=0.7133333333
+  ok    wilson_lo B1_strong_dependence/expiry_block2/R1_geometric_mean_all_obs         mine=0.6597183707 output=0.6597183707
+  ok    band flag B1_strong_dependence/expiry_block2/R1_geometric_mean_all_obs         mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_block2/R1_geometric_mean_all_obs  mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_block2/S1_calendar_all_obs_median           mine=0.73 output=0.73
+  ok    wilson_lo B1_strong_dependence/expiry_block2/S1_calendar_all_obs_median        mine=0.6770882622 output=0.6770882622
+  ok    band flag B1_strong_dependence/expiry_block2/S1_calendar_all_obs_median        mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_block2/S1_calendar_all_obs_median mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_block5/R1_geometric_mean_all_obs            mine=0.85 output=0.85
+  ok    wilson_lo B1_strong_dependence/expiry_block5/R1_geometric_mean_all_obs         mine=0.8051823885 output=0.8051823885
+  ok    band flag B1_strong_dependence/expiry_block5/R1_geometric_mean_all_obs         mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_block5/R1_geometric_mean_all_obs  mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_block5/S1_calendar_all_obs_median           mine=0.8266666667 output=0.8266666667
+  ok    wilson_lo B1_strong_dependence/expiry_block5/S1_calendar_all_obs_median        mine=0.7797738589 output=0.7797738589
+  ok    band flag B1_strong_dependence/expiry_block5/S1_calendar_all_obs_median        mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_block5/S1_calendar_all_obs_median mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_block8/R1_geometric_mean_all_obs            mine=0.8633333333 output=0.8633333333
+  ok    wilson_lo B1_strong_dependence/expiry_block8/R1_geometric_mean_all_obs         mine=0.8198445866 output=0.8198445866
+  ok    band flag B1_strong_dependence/expiry_block8/R1_geometric_mean_all_obs         mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_block8/R1_geometric_mean_all_obs  mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_block8/S1_calendar_all_obs_median           mine=0.8366666667 output=0.8366666667
+  ok    wilson_lo B1_strong_dependence/expiry_block8/S1_calendar_all_obs_median        mine=0.7906268322 output=0.7906268322
+  ok    band flag B1_strong_dependence/expiry_block8/S1_calendar_all_obs_median        mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_block8/S1_calendar_all_obs_median mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_iid/R1_geometric_mean_all_obs               mine=0.5933333333 output=0.5933333333
+  ok    wilson_lo B1_strong_dependence/expiry_iid/R1_geometric_mean_all_obs            mine=0.5369084048 output=0.5369084048
+  ok    band flag B1_strong_dependence/expiry_iid/R1_geometric_mean_all_obs            mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_iid/R1_geometric_mean_all_obs     mine=1 output=1
+  ok  coverage B1_strong_dependence/expiry_iid/S1_calendar_all_obs_median              mine=0.61 output=0.61
+  ok    wilson_lo B1_strong_dependence/expiry_iid/S1_calendar_all_obs_median           mine=0.5537485675 output=0.5537485675
+  ok    band flag B1_strong_dependence/expiry_iid/S1_calendar_all_obs_median           mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/expiry_iid/S1_calendar_all_obs_median    mine=1 output=1
+  ok  coverage B1_strong_dependence/row_iid/R1_geometric_mean_all_obs                  mine=0.15 output=0.15
+  ok    wilson_lo B1_strong_dependence/row_iid/R1_geometric_mean_all_obs               mine=0.1140324685 output=0.1140324685
+  ok    band flag B1_strong_dependence/row_iid/R1_geometric_mean_all_obs               mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/row_iid/R1_geometric_mean_all_obs        mine=1 output=1
+  ok  coverage B1_strong_dependence/row_iid/S1_calendar_all_obs_median                 mine=0.1333333333 output=0.1333333333
+  ok    wilson_lo B1_strong_dependence/row_iid/S1_calendar_all_obs_median              mine=0.0994664166 output=0.0994664166
+  ok    band flag B1_strong_dependence/row_iid/S1_calendar_all_obs_median              mine=0 output=0
+  ok    undercovers flag B1_strong_dependence/row_iid/S1_calendar_all_obs_median       mine=1 output=1
+  ok  coverage B2_no_overlap_iid/date_block10/R1_geometric_mean_all_obs                mine=0.9333333333 output=0.9333333333
+  ok    wilson_lo B2_no_overlap_iid/date_block10/R1_geometric_mean_all_obs             mine=0.8992769402 output=0.8992769402
+  ok    band flag B2_no_overlap_iid/date_block10/R1_geometric_mean_all_obs             mine=1 output=1
+  ok    undercovers flag B2_no_overlap_iid/date_block10/R1_geometric_mean_all_obs      mine=0 output=0
+  ok  coverage B2_no_overlap_iid/date_block10/S1_calendar_all_obs_median               mine=0.9133333333 output=0.9133333333
+  ok    wilson_lo B2_no_overlap_iid/date_block10/S1_calendar_all_obs_median            mine=0.876044041 output=0.876044041
+  ok    band flag B2_no_overlap_iid/date_block10/S1_calendar_all_obs_median            mine=0 output=0
+  ok    undercovers flag B2_no_overlap_iid/date_block10/S1_calendar_all_obs_median     mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_block2/R1_geometric_mean_all_obs               mine=0.94 output=0.94
+  ok    wilson_lo B2_no_overlap_iid/expiry_block2/R1_geometric_mean_all_obs            mine=0.9071605545 output=0.9071605545
+  ok    band flag B2_no_overlap_iid/expiry_block2/R1_geometric_mean_all_obs            mine=1 output=1
+  ok    undercovers flag B2_no_overlap_iid/expiry_block2/R1_geometric_mean_all_obs     mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_block2/S1_calendar_all_obs_median              mine=0.91 output=0.91
+  ok    wilson_lo B2_no_overlap_iid/expiry_block2/S1_calendar_all_obs_median           mine=0.8722229889 output=0.8722229889
+  ok    band flag B2_no_overlap_iid/expiry_block2/S1_calendar_all_obs_median           mine=0 output=0
+  ok    undercovers flag B2_no_overlap_iid/expiry_block2/S1_calendar_all_obs_median    mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_block5/R1_geometric_mean_all_obs               mine=0.9333333333 output=0.9333333333
+  ok    wilson_lo B2_no_overlap_iid/expiry_block5/R1_geometric_mean_all_obs            mine=0.8992769402 output=0.8992769402
+  ok    band flag B2_no_overlap_iid/expiry_block5/R1_geometric_mean_all_obs            mine=1 output=1
+  ok    undercovers flag B2_no_overlap_iid/expiry_block5/R1_geometric_mean_all_obs     mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_block5/S1_calendar_all_obs_median              mine=0.9133333333 output=0.9133333333
+  ok    wilson_lo B2_no_overlap_iid/expiry_block5/S1_calendar_all_obs_median           mine=0.876044041 output=0.876044041
+  ok    band flag B2_no_overlap_iid/expiry_block5/S1_calendar_all_obs_median           mine=0 output=0
+  ok    undercovers flag B2_no_overlap_iid/expiry_block5/S1_calendar_all_obs_median    mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_block8/R1_geometric_mean_all_obs               mine=0.9366666667 output=0.9366666667
+  ok    wilson_lo B2_no_overlap_iid/expiry_block8/R1_geometric_mean_all_obs            mine=0.9032086872 output=0.9032086872
+  ok    band flag B2_no_overlap_iid/expiry_block8/R1_geometric_mean_all_obs            mine=1 output=1
+  ok    undercovers flag B2_no_overlap_iid/expiry_block8/R1_geometric_mean_all_obs     mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_block8/S1_calendar_all_obs_median              mine=0.9 output=0.9
+  ok    wilson_lo B2_no_overlap_iid/expiry_block8/S1_calendar_all_obs_median           mine=0.8608335373 output=0.8608335373
+  ok    band flag B2_no_overlap_iid/expiry_block8/S1_calendar_all_obs_median           mine=0 output=0
+  ok    undercovers flag B2_no_overlap_iid/expiry_block8/S1_calendar_all_obs_median    mine=1 output=1
+  ok  coverage B2_no_overlap_iid/expiry_iid/R1_geometric_mean_all_obs                  mine=0.93 output=0.93
+  ok    wilson_lo B2_no_overlap_iid/expiry_iid/R1_geometric_mean_all_obs               mine=0.8953639893 output=0.8953639893
+  ok    band flag B2_no_overlap_iid/expiry_iid/R1_geometric_mean_all_obs               mine=1 output=1
+  ok    undercovers flag B2_no_overlap_iid/expiry_iid/R1_geometric_mean_all_obs        mine=0 output=0
+  ok  coverage B2_no_overlap_iid/expiry_iid/S1_calendar_all_obs_median                 mine=0.93 output=0.93
+  ok    wilson_lo B2_no_overlap_iid/expiry_iid/S1_calendar_all_obs_median              mine=0.8953639893 output=0.8953639893
+  ok    band flag B2_no_overlap_iid/expiry_iid/S1_calendar_all_obs_median              mine=1 output=1
+  ok    undercovers flag B2_no_overlap_iid/expiry_iid/S1_calendar_all_obs_median       mine=0 output=0
+  ok  coverage B2_no_overlap_iid/row_iid/R1_geometric_mean_all_obs                     mine=0.4833333333 output=0.4833333333
+  ok    wilson_lo B2_no_overlap_iid/row_iid/R1_geometric_mean_all_obs                  mine=0.4273544124 output=0.4273544124
+  ok    band flag B2_no_overlap_iid/row_iid/R1_geometric_mean_all_obs                  mine=0 output=0
+  ok    undercovers flag B2_no_overlap_iid/row_iid/R1_geometric_mean_all_obs           mine=1 output=1
+  ok  coverage B2_no_overlap_iid/row_iid/S1_calendar_all_obs_median                    mine=0.5466666667 output=0.5466666667
+  ok    wilson_lo B2_no_overlap_iid/row_iid/S1_calendar_all_obs_median                 mine=0.4900984747 output=0.4900984747
+  ok    band flag B2_no_overlap_iid/row_iid/S1_calendar_all_obs_median                 mine=0 output=0
+  ok    undercovers flag B2_no_overlap_iid/row_iid/S1_calendar_all_obs_median          mine=1 output=1
+  ok  coverage B3_extreme_tails/date_block10/R1_geometric_mean_all_obs                 mine=0.88 output=0.88
+  ok    wilson_lo B3_extreme_tails/date_block10/R1_geometric_mean_all_obs              mine=0.8383421858 output=0.8383421858
+  ok    band flag B3_extreme_tails/date_block10/R1_geometric_mean_all_obs              mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/date_block10/R1_geometric_mean_all_obs       mine=1 output=1
+  ok  coverage B3_extreme_tails/date_block10/S1_calendar_all_obs_median                mine=0.91 output=0.91
+  ok    wilson_lo B3_extreme_tails/date_block10/S1_calendar_all_obs_median             mine=0.8722229889 output=0.8722229889
+  ok    band flag B3_extreme_tails/date_block10/S1_calendar_all_obs_median             mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/date_block10/S1_calendar_all_obs_median      mine=0 output=0
+  ok  coverage B3_extreme_tails/expiry_block2/R1_geometric_mean_all_obs                mine=0.8833333333 output=0.8833333333
+  ok    wilson_lo B3_extreme_tails/expiry_block2/R1_geometric_mean_all_obs             mine=0.8420668563 output=0.8420668563
+  ok    band flag B3_extreme_tails/expiry_block2/R1_geometric_mean_all_obs             mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_block2/R1_geometric_mean_all_obs      mine=1 output=1
+  ok  coverage B3_extreme_tails/expiry_block2/S1_calendar_all_obs_median               mine=0.9133333333 output=0.9133333333
+  ok    wilson_lo B3_extreme_tails/expiry_block2/S1_calendar_all_obs_median            mine=0.876044041 output=0.876044041
+  ok    band flag B3_extreme_tails/expiry_block2/S1_calendar_all_obs_median            mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_block2/S1_calendar_all_obs_median     mine=0 output=0
+  ok  coverage B3_extreme_tails/expiry_block5/R1_geometric_mean_all_obs                mine=0.91 output=0.91
+  ok    wilson_lo B3_extreme_tails/expiry_block5/R1_geometric_mean_all_obs             mine=0.8722229889 output=0.8722229889
+  ok    band flag B3_extreme_tails/expiry_block5/R1_geometric_mean_all_obs             mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_block5/R1_geometric_mean_all_obs      mine=0 output=0
+  ok  coverage B3_extreme_tails/expiry_block5/S1_calendar_all_obs_median               mine=0.9266666667 output=0.9266666667
+  ok    wilson_lo B3_extreme_tails/expiry_block5/S1_calendar_all_obs_median            mine=0.8914686581 output=0.8914686581
+  ok    band flag B3_extreme_tails/expiry_block5/S1_calendar_all_obs_median            mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_block5/S1_calendar_all_obs_median     mine=0 output=0
+  ok  coverage B3_extreme_tails/expiry_block8/R1_geometric_mean_all_obs                mine=0.92 output=0.92
+  ok    wilson_lo B3_extreme_tails/expiry_block8/R1_geometric_mean_all_obs             mine=0.8837267592 output=0.8837267592
+  ok    band flag B3_extreme_tails/expiry_block8/R1_geometric_mean_all_obs             mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_block8/R1_geometric_mean_all_obs      mine=0 output=0
+  ok  coverage B3_extreme_tails/expiry_block8/S1_calendar_all_obs_median               mine=0.9366666667 output=0.9366666667
+  ok    wilson_lo B3_extreme_tails/expiry_block8/S1_calendar_all_obs_median            mine=0.9032086872 output=0.9032086872
+  ok    band flag B3_extreme_tails/expiry_block8/S1_calendar_all_obs_median            mine=1 output=1
+  ok    undercovers flag B3_extreme_tails/expiry_block8/S1_calendar_all_obs_median     mine=0 output=0
+  ok  coverage B3_extreme_tails/expiry_iid/R1_geometric_mean_all_obs                   mine=0.8366666667 output=0.8366666667
+  ok    wilson_lo B3_extreme_tails/expiry_iid/R1_geometric_mean_all_obs                mine=0.7906268322 output=0.7906268322
+  ok    band flag B3_extreme_tails/expiry_iid/R1_geometric_mean_all_obs                mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_iid/R1_geometric_mean_all_obs         mine=1 output=1
+  ok  coverage B3_extreme_tails/expiry_iid/S1_calendar_all_obs_median                  mine=0.87 output=0.87
+  ok    wilson_lo B3_extreme_tails/expiry_iid/S1_calendar_all_obs_median               mine=0.8272195703 output=0.8272195703
+  ok    band flag B3_extreme_tails/expiry_iid/S1_calendar_all_obs_median               mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/expiry_iid/S1_calendar_all_obs_median        mine=1 output=1
+  ok  coverage B3_extreme_tails/row_iid/R1_geometric_mean_all_obs                      mine=0.2333333333 output=0.2333333333
+  ok    wilson_lo B3_extreme_tails/row_iid/R1_geometric_mean_all_obs                   mine=0.1890282379 output=0.1890282379
+  ok    band flag B3_extreme_tails/row_iid/R1_geometric_mean_all_obs                   mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/row_iid/R1_geometric_mean_all_obs            mine=1 output=1
+  ok  coverage B3_extreme_tails/row_iid/S1_calendar_all_obs_median                     mine=0.34 output=0.34
+  ok    wilson_lo B3_extreme_tails/row_iid/S1_calendar_all_obs_median                  mine=0.2887202037 output=0.2887202037
+  ok    band flag B3_extreme_tails/row_iid/S1_calendar_all_obs_median                  mine=0 output=0
+  ok    undercovers flag B3_extreme_tails/row_iid/S1_calendar_all_obs_median           mine=1 output=1
+  ok  coverage B4_overlap_only/date_block10/R1_geometric_mean_all_obs                  mine=0.91 output=0.91
+  ok    wilson_lo B4_overlap_only/date_block10/R1_geometric_mean_all_obs               mine=0.8722229889 output=0.8722229889
+  ok    band flag B4_overlap_only/date_block10/R1_geometric_mean_all_obs               mine=0 output=0
+  ok    undercovers flag B4_overlap_only/date_block10/R1_geometric_mean_all_obs        mine=0 output=0
+  ok  coverage B4_overlap_only/date_block10/S1_calendar_all_obs_median                 mine=0.8866666667 output=0.8866666667
+  ok    wilson_lo B4_overlap_only/date_block10/S1_calendar_all_obs_median              mine=0.8458006038 output=0.8458006038
+  ok    band flag B4_overlap_only/date_block10/S1_calendar_all_obs_median              mine=0 output=0
+  ok    undercovers flag B4_overlap_only/date_block10/S1_calendar_all_obs_median       mine=1 output=1
+  ok  coverage B4_overlap_only/expiry_block2/R1_geometric_mean_all_obs                 mine=0.9266666667 output=0.9266666667
+  ok    wilson_lo B4_overlap_only/expiry_block2/R1_geometric_mean_all_obs              mine=0.8914686581 output=0.8914686581
+  ok    band flag B4_overlap_only/expiry_block2/R1_geometric_mean_all_obs              mine=0 output=0
+  ok    undercovers flag B4_overlap_only/expiry_block2/R1_geometric_mean_all_obs       mine=0 output=0
+  ok  coverage B4_overlap_only/expiry_block2/S1_calendar_all_obs_median                mine=0.9166666667 output=0.9166666667
+  ok    wilson_lo B4_overlap_only/expiry_block2/S1_calendar_all_obs_median             mine=0.8798783977 output=0.8798783977
+  ok    band flag B4_overlap_only/expiry_block2/S1_calendar_all_obs_median             mine=0 output=0
+  ok    undercovers flag B4_overlap_only/expiry_block2/S1_calendar_all_obs_median      mine=0 output=0
+  ok  coverage B4_overlap_only/expiry_block5/R1_geometric_mean_all_obs                 mine=0.9333333333 output=0.9333333333
+  ok    wilson_lo B4_overlap_only/expiry_block5/R1_geometric_mean_all_obs              mine=0.8992769402 output=0.8992769402
+  ok    band flag B4_overlap_only/expiry_block5/R1_geometric_mean_all_obs              mine=1 output=1
+  ok    undercovers flag B4_overlap_only/expiry_block5/R1_geometric_mean_all_obs       mine=0 output=0
+  ok  coverage B4_overlap_only/expiry_block5/S1_calendar_all_obs_median                mine=0.9166666667 output=0.9166666667
+  ok    wilson_lo B4_overlap_only/expiry_block5/S1_calendar_all_obs_median             mine=0.8798783977 output=0.8798783977
+  ok    band flag B4_overlap_only/expiry_block5/S1_calendar_all_obs_median             mine=0 output=0
+  ok    undercovers flag B4_overlap_only/expiry_block5/S1_calendar_all_obs_median      mine=0 output=0
+  ok  coverage B4_overlap_only/expiry_block8/R1_geometric_mean_all_obs                 mine=0.9366666667 output=0.9366666667
+  ok    wilson_lo B4_overlap_only/expiry_block8/R1_geometric_mean_all_obs              mine=0.9032086872 output=0.9032086872
+  ok    band flag B4_overlap_only/expiry_block8/R1_geometric_mean_all_obs              mine=1 output=1
+  ok    undercovers flag B4_overlap_only/expiry_block8/R1_geometric_mean_all_obs       mine=0 output=0
+  ok  coverage B4_overlap_only/expiry_block8/S1_calendar_all_obs_median                mine=0.9066666667 output=0.9066666667
+  ok    wilson_lo B4_overlap_only/expiry_block8/S1_calendar_all_obs_median             mine=0.8684146026 output=0.8684146026
+  ok    band flag B4_overlap_only/expiry_block8/S1_calendar_all_obs_median             mine=0 output=0
+  ok    undercovers flag B4_overlap_only/expiry_block8/S1_calendar_all_obs_median      mine=0 output=0
+  ok  coverage B4_overlap_only/expiry_iid/R1_geometric_mean_all_obs                    mine=0.88 output=0.88
+  ok    wilson_lo B4_overlap_only/expiry_iid/R1_geometric_mean_all_obs                 mine=0.8383421858 output=0.8383421858
+  ok    band flag B4_overlap_only/expiry_iid/R1_geometric_mean_all_obs                 mine=0 output=0
+  ok    undercovers flag B4_overlap_only/expiry_iid/R1_geometric_mean_all_obs          mine=1 output=1
+  ok  coverage B4_overlap_only/expiry_iid/S1_calendar_all_obs_median                   mine=0.8633333333 output=0.8633333333
+  ok    wilson_lo B4_overlap_only/expiry_iid/S1_calendar_all_obs_median                mine=0.8198445866 output=0.8198445866
+  ok    band flag B4_overlap_only/expiry_iid/S1_calendar_all_obs_median                mine=0 output=0
+  ok    undercovers flag B4_overlap_only/expiry_iid/S1_calendar_all_obs_median         mine=1 output=1
+  ok  coverage B4_overlap_only/row_iid/R1_geometric_mean_all_obs                       mine=0.2966666667 output=0.2966666667
+  ok    wilson_lo B4_overlap_only/row_iid/R1_geometric_mean_all_obs                    mine=0.2478113902 output=0.2478113902
+  ok    band flag B4_overlap_only/row_iid/R1_geometric_mean_all_obs                    mine=0 output=0
+  ok    undercovers flag B4_overlap_only/row_iid/R1_geometric_mean_all_obs             mine=1 output=1
+  ok  coverage B4_overlap_only/row_iid/S1_calendar_all_obs_median                      mine=0.3366666667 output=0.3366666667
+  ok    wilson_lo B4_overlap_only/row_iid/S1_calendar_all_obs_median                   mine=0.2855553675 output=0.2855553675
+  ok    band flag B4_overlap_only/row_iid/S1_calendar_all_obs_median                   mine=0 output=0
+  ok    undercovers flag B4_overlap_only/row_iid/S1_calendar_all_obs_median            mine=1 output=1
+  ok  contrast coverage B0_calibrated/true_null/b2/R1_geometric_mean_all_obs           mine=0.9133333333 output=0.9133333333
+  ok    rejection B0_calibrated/true_null/b2/R1_geometric_mean_all_obs                 mine=0.07333333333 output=0.07333333333
+  ok  contrast coverage B0_calibrated/true_null/b2/S1_calendar_all_obs_median          mine=0.9433333333 output=0.9433333333
+  ok    rejection B0_calibrated/true_null/b2/S1_calendar_all_obs_median                mine=0.05333333333 output=0.05333333333
+  ok  contrast coverage B0_calibrated/true_null/b5/R1_geometric_mean_all_obs           mine=0.9266666667 output=0.9266666667
+  ok    rejection B0_calibrated/true_null/b5/R1_geometric_mean_all_obs                 mine=0.06666666667 output=0.06666666667
+  ok  contrast coverage B0_calibrated/true_null/b5/S1_calendar_all_obs_median          mine=0.9566666667 output=0.9566666667
+  ok    rejection B0_calibrated/true_null/b5/S1_calendar_all_obs_median                mine=0.03666666667 output=0.03666666667
+  ok  contrast coverage B0_calibrated/true_null/b8/R1_geometric_mean_all_obs           mine=0.92 output=0.92
+  ok    rejection B0_calibrated/true_null/b8/R1_geometric_mean_all_obs                 mine=0.07666666667 output=0.07666666667
+  ok  contrast coverage B0_calibrated/true_null/b8/S1_calendar_all_obs_median          mine=0.94 output=0.94
+  ok    rejection B0_calibrated/true_null/b8/S1_calendar_all_obs_median                mine=0.05333333333 output=0.05333333333
+  ok  contrast coverage B0_calibrated/true_shift/b2/R1_geometric_mean_all_obs          mine=0.9166666667 output=0.9166666667
+  ok    rejection B0_calibrated/true_shift/b2/R1_geometric_mean_all_obs                mine=0.7233333333 output=0.7233333333
+  ok  contrast coverage B0_calibrated/true_shift/b2/S1_calendar_all_obs_median         mine=0.95 output=0.95
+  ok    rejection B0_calibrated/true_shift/b2/S1_calendar_all_obs_median               mine=0.9166666667 output=0.9166666667
+  ok  contrast coverage B0_calibrated/true_shift/b5/R1_geometric_mean_all_obs          mine=0.9266666667 output=0.9266666667
+  ok    rejection B0_calibrated/true_shift/b5/R1_geometric_mean_all_obs                mine=0.6666666667 output=0.6666666667
+  ok  contrast coverage B0_calibrated/true_shift/b5/S1_calendar_all_obs_median         mine=0.9566666667 output=0.9566666667
+  ok    rejection B0_calibrated/true_shift/b5/S1_calendar_all_obs_median               mine=0.8866666667 output=0.8866666667
+  ok  contrast coverage B0_calibrated/true_shift/b8/R1_geometric_mean_all_obs          mine=0.9166666667 output=0.9166666667
+  ok    rejection B0_calibrated/true_shift/b8/R1_geometric_mean_all_obs                mine=0.6866666667 output=0.6866666667
+  ok  contrast coverage B0_calibrated/true_shift/b8/S1_calendar_all_obs_median         mine=0.9566666667 output=0.9566666667
+  ok    rejection B0_calibrated/true_shift/b8/S1_calendar_all_obs_median               mine=0.8866666667 output=0.8866666667
+  ok  contrast coverage B1_strong_dependence/true_null/b2/R1_geometric_mean_all_obs    mine=0.82 output=0.82
+  ok    rejection B1_strong_dependence/true_null/b2/R1_geometric_mean_all_obs          mine=0.1566666667 output=0.1566666667
+  ok  contrast coverage B1_strong_dependence/true_null/b2/S1_calendar_all_obs_median   mine=0.72 output=0.72
+  ok    rejection B1_strong_dependence/true_null/b2/S1_calendar_all_obs_median         mine=0.2733333333 output=0.2733333333
+  ok  contrast coverage B1_strong_dependence/true_null/b5/R1_geometric_mean_all_obs    mine=0.87 output=0.87
+  ok    rejection B1_strong_dependence/true_null/b5/R1_geometric_mean_all_obs          mine=0.1133333333 output=0.1133333333
+  ok  contrast coverage B1_strong_dependence/true_null/b5/S1_calendar_all_obs_median   mine=0.8166666667 output=0.8166666667
+  ok    rejection B1_strong_dependence/true_null/b5/S1_calendar_all_obs_median         mine=0.1766666667 output=0.1766666667
+  ok  contrast coverage B1_strong_dependence/true_null/b8/R1_geometric_mean_all_obs    mine=0.88 output=0.88
+  ok    rejection B1_strong_dependence/true_null/b8/R1_geometric_mean_all_obs          mine=0.11 output=0.11
+  ok  contrast coverage B1_strong_dependence/true_null/b8/S1_calendar_all_obs_median   mine=0.8433333333 output=0.8433333333
+  ok    rejection B1_strong_dependence/true_null/b8/S1_calendar_all_obs_median         mine=0.14 output=0.14
+  ok  wald rejection B0_calibrated/placebo_by_date/R1_geometric_mean                   mine=0.08333333333 output=0.08333333333
+  ok  wald rejection B0_calibrated/placebo_by_date/S1_calendar                         mine=0.1 output=0.1
+  ok  wald rejection B0_calibrated/placebo_by_row/R1_geometric_mean                    mine=0.07 output=0.07
+  ok  wald rejection B0_calibrated/placebo_by_row/S1_calendar                          mine=0.03666666667 output=0.03666666667
+  ok  wald rejection B0_calibrated/planted_dte_effect/R1_geometric_mean                mine=1 output=1
+  ok  wald rejection B0_calibrated/planted_dte_effect/S1_calendar                      mine=1 output=1
+
+RESULT: ALL CHECKS PASSED

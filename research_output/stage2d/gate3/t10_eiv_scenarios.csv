@@ -1,0 +1,8 @@
+noise_source,noise_sd_vol_points,share_of_iv_variance,observed_slope,corrected_slope,label
+call-put proxy: robust sd / sqrt(2),0.04021543715975453,6.0398114797427335e-05,0.8029913028034938,0.8030398048938168,SCENARIO (classical measurement-error correction; not an estimate)
+call-put proxy: median |diff| / sqrt(2),0.02700817526152539,2.7241328384475718e-05,0.8029913028034938,0.8030131779491715,SCENARIO (classical measurement-error correction; not an estimate)
+call-put proxy: p90 |diff| / sqrt(2),0.10408512084275719,0.0004045899555546689,0.8029913028034938,0.8033163165162895,SCENARIO (classical measurement-error correction; not an estimate)
+scenario: Rs 0.5 price noise / median vega,0.044062107964291594,7.250506324648963e-05,0.8029913028034938,0.8030495279603087,SCENARIO (classical measurement-error correction; not an estimate)
+scenario: Rs 1 price noise / median vega,0.08812421592858319,0.0002900202529859585,0.8029913028034938,0.8032242541048739,SCENARIO (classical measurement-error correction; not an estimate)
+scenario: Rs 2 price noise / median vega,0.17624843185716638,0.001160081011943834,0.8029913028034938,0.8039239196777596,SCENARIO (classical measurement-error correction; not an estimate)
+scenario: Rs 5 price noise / median vega,0.44062107964291597,0.007250506324648964,0.8029913028034938,0.8088559177508763,SCENARIO (classical measurement-error correction; not an estimate)
