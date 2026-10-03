@@ -1,0 +1,3 @@
+# frozen research outputs are hashed byte-for-byte (e.g. the Stage 2D prospective protocol):
+# keep them LF on every machine so the recorded SHA-256 values still match
+research_output/** text eol=lf
