@@ -5,6 +5,7 @@ __pycache__/
 *.pyc
 *.exe
 *.spec
+!OptionMarket.spec
 build/
 dist/
 node_modules/
