@@ -74,11 +74,12 @@ def finalize_expired(today, spot):
     return done
 
 
-def update_current(today, spot):
-    """Step 3: the weekly expiry that is still trading."""
+def update_current(today, spot, cur=None):
+    """Step 3: the weekly expiry that is still trading (or the one given)."""
     import fyers_option_symbols as fos
-    listed = [date.fromisoformat(e) for e in fos.list_expiries("NIFTY")]
-    cur = min((e for e in listed if e >= today), default=None)
+    if cur is None:
+        listed = [date.fromisoformat(e) for e in fos.list_expiries("NIFTY")]
+        cur = min((e for e in listed if e >= today), default=None)
     if cur is None:
         hd.log("daily: no current NIFTY expiry listed")
         return None
@@ -150,6 +151,17 @@ def update():
     hd.log(f"daily: NIFTY spot on disk to {datetime.fromtimestamp(int(spot['ts'].max()), mc.IST):%Y-%m-%d %H:%M}")
     n = finalize_expired(today, spot)
     cur = update_current(today, spot)
+    # on an expiry day the IV rule already uses NEXT week's expiry (1-4 days
+    # left), so fetch it today too -- otherwise the day's IV readings only
+    # reach the history a day late
+    if cur == today:
+        try:
+            import fyers_option_symbols as fos
+            nxt = min((date.fromisoformat(e) for e in fos.list_expiries("NIFTY") if e > today.isoformat()), default=None)
+            if nxt:
+                update_current(today, spot, cur=nxt)
+        except Exception as e:
+            hd.log(f"daily: next-expiry fetch failed -- {e}")
     # the Strategy Ideas "5-yr record": re-run weekly so finished weeks join it (~3 min)
     track = os.path.join(paths.BASE_DIR, "results", "template_bt", "summary.parquet")
     try:

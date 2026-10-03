@@ -700,9 +700,11 @@ function renderSell(S) {
     const L = S.last_day, r = L.slots["09:30"] || Object.values(L.slots)[0];
     const anySell = Object.values(L.slots).some(x => x.sell);
     chip.className = "ins " + (anySell ? "SELL" : "muted");
-    chip.innerHTML = `${S.market === "OPEN" ? "Before 09:30" : "Market closed"} · ${L.day.slice(5)}: ${anySell ? "✓ sell day" : "normal day"} · IV ${r.iv.toFixed(1)}%`;
+    const todayIso = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+    const dayTxt = L.day === todayIso ? "today" : new Date(L.day + "T12:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short"});
+    chip.innerHTML = `${S.market === "OPEN" ? "Before 09:30" : "Market closed"} · ${dayTxt}: ${anySell ? "✓ was a sell day" : "was a normal day"} (IV ${r.iv.toFixed(1)}%) · next decision 09:30`;
     sec.innerHTML = `<h4>Selling checklist <a href="/iv" style="font-size:11px;font-weight:600;margin-left:6px">history →</a></h4>
-      <div class="muted" style="font-size:12px;margin-bottom:6px">Live check starts at 09:30. Last stored day (${L.day}, ${L.dte} day${L.dte === 1 ? "" : "s"} to its expiry):</div>
+      <div class="muted" style="font-size:12px;margin-bottom:6px">This is a <b>past</b> reading, not today's decision (that is made from 09:30 while the market is open). ${L.source ? "Source: " + L.source + ". " : ""}Day ${L.day}${L.dte != null ? `, ${L.dte} day${L.dte === 1 ? "" : "s"} to its expiry` : ""}:</div>
       <div class="ruleck">${Object.entries(L.slots).map(([k, x]) => `<span class="ic ${x.sell ? "ok" : "no"}">${x.sell ? "✓" : "✗"}</span><span><b>${k}</b> ATM IV ${x.iv.toFixed(1)}% vs ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"}</span>`).join("")}
       <span class="ic ${L.skew_steep ? "hint" : "no"}">${L.skew_steep ? "↓" : "·"}</span><span><b>Put skew</b> ${L.skew25 == null ? "—" : L.skew25.toFixed(2)} vs ${L.skew_thr == null ? "—" : L.skew_thr.toFixed(2)}</span></div>`;
     return;

@@ -69,10 +69,12 @@
    "entry_charges": 75.4,
    "credit": 19938.75,
    "iv_at_entry": 14.56,
-   "status": "open",
-   "pnl": 1377.21,
+   "status": "void",
+   "pnl": 1994.98,
    "history": [],
-   "marked": "2026-10-01 13:34"
+   "marked": "2026-10-01 22:14",
+   "close_reason": "void: entered at 12:59 on a brief IV spike between checks (12:00 read 11.6%, 14:30 read 13.5% \u2014 both normal); the tested rule only reads 09:30 / 12:00 / 14:30",
+   "closed": "2026-10-03"
   },
   "2026-10-01|A|strangle": {
    "id": "2026-10-01|A|strangle",
@@ -104,10 +106,12 @@
    "entry_charges": 52.82,
    "credit": 3971.5,
    "iv_at_entry": 14.56,
-   "status": "open",
-   "pnl": 802.12,
+   "status": "void",
+   "pnl": 1455.66,
    "history": [],
-   "marked": "2026-10-01 13:34"
+   "marked": "2026-10-01 22:14",
+   "close_reason": "void: entered at 12:59 on a brief IV spike between checks (12:00 read 11.6%, 14:30 read 13.5% \u2014 both normal); the tested rule only reads 09:30 / 12:00 / 14:30",
+   "closed": "2026-10-03"
   }
  }
 }

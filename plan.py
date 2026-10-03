@@ -182,6 +182,19 @@ def compute(now=None):
                            if mkt != "OPEN" else "Before 09:30 — the plan is decided at 09:30.", "last_day": ld}
         return out
     green = st["sell_day"]
+    today = now.date().isoformat()
+    done = [t for t in _load_book()["trades"].values() if t["day"] == today and t.get("status") != "void"]
+    if done:
+        first = min(done, key=lambda t: t["time"])
+        out["decision"] = {"kind": "sell", "text": f"Today's trade was entered at {first['time']} (setup {first['setup']}) — see the open trades below",
+                           "strong": st["strong"], "skew_steep": st.get("skew_steep")}
+        return out
+    if green and not st.get("at_check"):
+        # the tested rule reads IV only at 09:30 / 12:00 / 14:30 -- a crossing in between is not a signal yet
+        out["decision"] = {"kind": "none", "text": f"WATCH — IV {st['atm_iv']:.1f}% is above the threshold now, but not at a check time",
+                           "why": f"The rule was tested on the 09:30 / 12:00 / 14:30 readings only. Next check: {st.get('next_check') or 'none left today'}.",
+                           "note": "If IV is still above that check's threshold then, the plan will show the trade."}
+        return out
     b_ok = green and e1 and e1["dte"] == 1 and st["bucket"] == "09:30"
     if green:
         if b_ok:
@@ -281,7 +294,7 @@ def payload():
                            else "HOLD — exit when the IV rule reads normal at a check")
         else:
             t["action"] = "HOLD to expiry"
-    closed = [t for t in trades if t["status"] != "open"]
+    closed = [t for t in trades if t["status"] not in ("open", "void")]
     score = {}
     for key in ("A", "B"):
         c = [t for t in closed if t["setup"] == key]

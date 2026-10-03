@@ -282,6 +282,28 @@ def status(chain):
             os.makedirs(DIR, exist_ok=True)
             paths.atomic_write_json(TODAY, tj)
     out["readings"] = tj["readings"] if tj.get("expiry") == out["expiry"] else {}
+    # the tested rule reads IV at 09:30 / 12:00 / 14:30 only: is it one of those moments?
+    if bucket:
+        slot_t = datetime.combine(now.date(), datetime.strptime(bucket, "%H:%M").time(), tzinfo=now.tzinfo)
+        out["at_check"] = (now - slot_t).total_seconds() <= 15 * 60
+        nxt = next((x for x in SLOTS if x > now.strftime("%H:%M")), None)
+        out["next_check"] = nxt
+    # after the close (or before 09:30) show today's own readings, if the app
+    # took them, instead of the history's last day (it only updates at 19:00)
+    if not live:
+        mine = _load_today()
+        ld = out.get("last_day")
+        if mine.get("readings") and (not ld or mine.get("day", "") > ld["day"]):
+            slots = {}
+            for k, r in sorted(mine["readings"].items()):
+                th = thr.get(k)
+                slots[k] = {"iv": r["atm_iv"], "thr": th, "sell": bool(th is not None and r["atm_iv"] >= th)}
+            sk = (mine["readings"].get("09:30") or {}).get("skew25")
+            out["last_day"] = {"day": mine["day"], "expiry": mine.get("expiry"), "dte": _dte(datetime.fromisoformat(mine["day"]).date(),
+                               datetime.fromisoformat(mine["expiry"]).date()) if mine.get("expiry") else None,
+                               "slots": slots, "skew25": sk, "skew_thr": thr.get("skew"),
+                               "skew_steep": bool(sk is not None and thr.get("skew") is not None and sk >= thr["skew"]),
+                               "source": "app readings (history updates at 19:00)"}
     return out
 
 

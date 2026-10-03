@@ -476,6 +476,70 @@
      "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
     }
    ]
+  },
+  "2026-10-01T15:40|DAY_END": {
+   "time": "2026-10-01T15:40",
+   "kind": "DAY_END",
+   "env": null,
+   "range": null,
+   "shift": null,
+   "ideas": [],
+   "reviews": [
+    {
+     "id": "09-30 09:20#1",
+     "name": "Short strangle \u00b7 \u03940.30",
+     "pnl": -5341.42,
+     "pct": -58.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "09-30 09:20#2",
+     "name": "Iron condor \u00b7 \u03940.25, wings 200",
+     "pnl": -1925.75,
+     "pct": -50.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "09-30 09:20#3",
+     "name": "Bull put spread \u00b7 range, width 100",
+     "pnl": -2040.36,
+     "pct": -178.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "10-01 09:20#1",
+     "name": "Short call \u00b7 range",
+     "pnl": 2285.98,
+     "pct": 46.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "10-01 09:20#2",
+     "name": "Bear call spread \u00b7 range, width 300",
+     "pnl": 1803.17,
+     "pct": 47.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    },
+    {
+     "id": "10-01 09:20#3",
+     "name": "Reverse jade lizard \u00b7 \u03940.30",
+     "pnl": 802.98,
+     "pct": 15.0,
+     "action": "DAY END",
+     "reason": "marked at the close",
+     "options": []
+    }
+   ]
   }
  },
  "book": {
@@ -524,7 +588,7 @@
    "dte0": 3,
    "status": "open",
    "booked": 0.0,
-   "last_pnl": -1117.79,
+   "last_pnl": -5341.42,
    "history": [
     {
      "time": "2026-09-30T15:40",
@@ -537,6 +601,12 @@
      "action": "HOLD",
      "pnl": -1117.79,
      "reason": "tested: PE 22600 (-52 pts, \u03940.52) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    },
+    {
+     "time": "2026-10-01T15:40",
+     "action": "DAY END",
+     "pnl": -5341.42,
+     "reason": "marked at the close"
     }
    ]
   },
@@ -599,7 +669,7 @@
    "dte0": 3,
    "status": "open",
    "booked": 0.0,
-   "last_pnl": -274.29,
+   "last_pnl": -1925.75,
    "history": [
     {
      "time": "2026-09-30T15:40",
@@ -612,6 +682,12 @@
      "action": "HOLD",
      "pnl": -274.29,
      "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    },
+    {
+     "time": "2026-10-01T15:40",
+     "action": "DAY END",
+     "pnl": -1925.75,
+     "reason": "marked at the close"
     }
    ]
   },
@@ -659,7 +735,7 @@
    "dte0": 3,
    "status": "open",
    "booked": 0.0,
-   "last_pnl": -1037.4,
+   "last_pnl": -2040.36,
    "history": [
     {
      "time": "2026-09-30T15:40",
@@ -672,6 +748,12 @@
      "action": "HOLD",
      "pnl": -1037.4,
      "reason": "tested: PE 22500 (48 pts, \u03940.4) -- hold to expiry (in the 5-yr tests holding beat targets, stops and rolls on trades of up to 4 days); adjustment options below are for reference"
+    },
+    {
+     "time": "2026-10-01T15:40",
+     "action": "DAY END",
+     "pnl": -2040.36,
+     "reason": "marked at the close"
     }
    ]
   },
@@ -712,8 +794,15 @@
    "dte0": 2,
    "status": "open",
    "booked": 0.0,
-   "last_pnl": 0.0,
-   "history": []
+   "last_pnl": 2285.98,
+   "history": [
+    {
+     "time": "2026-10-01T15:40",
+     "action": "DAY END",
+     "pnl": 2285.98,
+     "reason": "marked at the close"
+    }
+   ]
   },
   "10-01 09:20#2": {
    "id": "10-01 09:20#2",
@@ -759,8 +848,15 @@
    "dte0": 2,
    "status": "open",
    "booked": 0.0,
-   "last_pnl": 0.0,
-   "history": []
+   "last_pnl": 1803.17,
+   "history": [
+    {
+     "time": "2026-10-01T15:40",
+     "action": "DAY END",
+     "pnl": 1803.17,
+     "reason": "marked at the close"
+    }
+   ]
   },
   "10-01 09:20#3": {
    "id": "10-01 09:20#3",
@@ -814,8 +910,15 @@
    "dte0": 2,
    "status": "open",
    "booked": 0.0,
-   "last_pnl": 0.0,
-   "history": []
+   "last_pnl": 802.98,
+   "history": [
+    {
+     "time": "2026-10-01T15:40",
+     "action": "DAY END",
+     "pnl": 802.98,
+     "reason": "marked at the close"
+    }
+   ]
   }
  }
 }

@@ -849,3 +849,15 @@
 2026-09-30 19:06:00  daily: 2026-10-06 (live) -- 91 contracts updated, 21550-23800, data to 2026-09-30
 2026-09-30 19:06:01  daily: IV rule history +6 rows
 2026-09-30 19:06:01  ==== daily history update done in 333s ====
+2026-10-01 19:00:27  ==== daily history update 2026-10-01 ====
+2026-10-01 19:00:28  spot 2026-09-30 -> 2026-10-01: 750 candles (ok)
+2026-10-01 19:00:28  daily: NIFTY spot on disk to 2026-10-01 15:29
+2026-10-01 19:01:07  daily: 2026-10-06 (live) -- 102 contracts updated, 21200-23800, data to 2026-10-01
+2026-10-01 19:01:07  daily: IV rule history +3 rows
+2026-10-01 19:01:07  ==== daily history update done in 40s ====
+2026-10-02 19:00:27  ==== daily history update 2026-10-02 ====
+2026-10-02 19:00:28  spot 2026-10-01 -> 2026-10-02: 375 candles (ok)
+2026-10-02 19:00:28  daily: NIFTY spot on disk to 2026-10-01 15:29
+2026-10-02 19:00:55  daily: 2026-10-06 (live) -- 102 contracts updated, 21200-23800, data to 2026-10-02
+2026-10-02 19:00:56  daily: IV rule history +0 rows
+2026-10-02 19:00:56  ==== daily history update done in 30s ====

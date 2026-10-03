@@ -348,7 +348,7 @@ def on_snapshot(expiry, expiry_ts, row, now=None):
         elif sell.get("window") == "expiry_day":
             env["iv_level"] = "Expiry day (IV rule n/a)"
         elif sell.get("window") == "ok":
-            env["iv_level"] = "IV rule: no live reading (market closed / before 09:30)"
+            env["iv_level"] = "IV rule decides at 09:30 (no reading yet)"
         else:
             env["iv_level"] = f"{sell.get('dte')} days left (IV rule is for 1-4)"
     except Exception:
