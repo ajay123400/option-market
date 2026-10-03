@@ -1,0 +1,20 @@
+{
+ "git_commit": "156b4da165ce4e0993cb2d0e439e0ffba23b0af1+dirty",
+ "stage2a_dir": "research_output/stage2a/full",
+ "spot": "data/hist1m/NIFTY50_1m.parquet",
+ "n_smile_rows": 21723,
+ "n_observations": 7384,
+ "n_primary": 7384,
+ "n_loose": 0,
+ "n_long_rows": 103376,
+ "spot_mismatch_rows": 0,
+ "dte_max": 14.0,
+ "split_date": "2025-01-01",
+ "annualization_days": 252,
+ "resolution_sensitive_volpts": 0.5,
+ "bootstrap_reps": 1000,
+ "bootstrap_reps_secondary": 300,
+ "seconds": 87.0,
+ "started": "2026-10-01T12:51:40.946748",
+ "pandas": "3.0.6"
+}

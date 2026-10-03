@@ -1,0 +1,23 @@
+=== per-session reconciliation (regular sessions) ===
+sessions: module 1241  A 1241  B 1241
+common to all three: 1241
+return-count mismatches  module vs A: 0  module vs B: 1
+max |sum r^2| diff       module-A: 9.980080997729068e-17  module-B: 4.853964204754961e-07
+max |cc return| diff     module-A: 9.974659986866641e-17  module-B: 9.974659986866641e-17  | max |overnight| diff module-A: 9.974659986866641e-17
+sessions where cc validity differs (module vs A): 0
+
+=== rolling windows (strict): module vs A-derived vs B-derived, annualised vol % ===
+intraday        N= 5: windows compared  1217  max |module-A| 1.42e-14  max |module-B| 7.11e-15  availability disagreements 5
+intraday        N=10: windows compared  1192  max |module-A| 1.42e-14  max |module-B| 5.33e-15  availability disagreements 10
+intraday        N=20: windows compared  1142  max |module-A| 1.07e-14  max |module-B| 1.07e-14  availability disagreements 20
+close_to_close  N= 5: windows compared  1236  max |module-A| 7.11e-15  max |module-B| 7.11e-15  availability disagreements 0
+close_to_close  N=10: windows compared  1231  max |module-A| 1.42e-14  max |module-B| 1.42e-14  availability disagreements 0
+close_to_close  N=20: windows compared  1221  max |module-A| 7.11e-15  max |module-B| 7.11e-15  availability disagreements 0
+hybrid          N= 5: windows compared  1216  max |module-A| 2.13e-14  max |module-B| 7.11e-15  availability disagreements 5
+hybrid          N=10: windows compared  1191  max |module-A| 1.42e-14  max |module-B| 1.42e-14  availability disagreements 10
+hybrid          N=20: windows compared  1141  max |module-A| 7.11e-15  max |module-B| 7.11e-15  availability disagreements 20
+
+=== representative hand-check: last regular session ===
+date 2026-09-30  first 5 minute returns: ['1.213251e-04', '3.727068e-04', '3.020332e-04', '2.380349e-04', '6.278757e-04']
+A: n=375  sum r^2=3.4581414935e-05  intraday ann vol = 100*sqrt(252*sum r^2) = 9.335158 %   cc=-0.00422396  overnight=-0.00225644
+module: n=375  sum r^2=3.4581414935e-05  intraday ann vol = 9.335158 %  cc=-0.00422396  overnight=-0.00225644

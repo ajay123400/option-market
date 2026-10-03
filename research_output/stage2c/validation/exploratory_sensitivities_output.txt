@@ -1,0 +1,18 @@
+intraday variance profile from 806 development sessions: share of daily variance in first 30 min 0.243, last 30 min 0.081
+                   n  share_uniform  share_profile  median_change_volpts      p5     p95
+measure  time
+hybrid   10:00  2164         0.8773         0.7014                0.1846  0.0835  0.5781
+         13:00  2169         0.3973         0.3459                0.0595  0.0259  0.2239
+         15:00  2157         0.0773         0.0655                0.0148  0.0062  0.0670
+intraday 10:00  2164         0.8773         0.7014                0.1527  0.0712  0.4760
+         13:00  2169         0.3973         0.3459                0.0489  0.0219  0.1820
+         15:00  2157         0.0773         0.0655                0.0120  0.0052  0.0533
+all expiry-aligned rows: median change +0.059 vol pts, p95 |change| 0.365; median IV-minus-RV changes from +3.594 to +3.516 vol pts
+
+=== time-basis: calendar year fraction of T vs session-equivalent year fraction ===
+        count    mean     50%     min     max
+time
+10:00  4328.0  0.8023  0.8491  0.4518  1.5576
+13:00  4338.0  0.8713  0.9087  0.5452  2.0309
+15:00  4314.0  0.9316  0.9546  0.6538  2.5808
+ratio >1 means the calendar-time year fraction exceeds the session-based one (weekends/holidays inside the window); sqrt of it is the approximate vol-point scaling between the two annualizations

@@ -1,0 +1,7 @@
+expiry_day,time,converged,resolution_limited,reliable,resolution_limited_share,reliable_share
+False,10:00,195822,0,195822,0.0,1.0
+False,13:00,193098,0,193098,0.0,1.0
+False,15:00,194527,0,194527,0.0,1.0
+True,10:00,13924,267,13657,0.0192,0.9808
+True,13:00,13848,3035,10813,0.2192,0.7808
+True,15:00,13772,10495,3277,0.7621,0.2379

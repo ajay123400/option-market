@@ -1,0 +1,5 @@
+max_dispersion_bps,groups,ok_share,low_confidence_share,unavailable_share,atm_available_share_of_ok,common_ok_atm,atm_iv_abs_change_median_volpts,atm_iv_abs_change_p99_volpts
+5.0,21079,0.6595,0.093,0.2475,0.9074,12614,0.0,0.0
+3.0,21079,0.5689,0.1836,0.2475,0.9331,11190,0.0,0.0
+8.0,21079,0.715,0.0375,0.2475,0.8893,12614,0.0,0.0
+12.0,21079,0.7395,0.013,0.2475,0.88,12614,0.0,0.0

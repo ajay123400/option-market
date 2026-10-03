@@ -1,0 +1,21 @@
+=== A. point-level IV / delta / interval vs scipy brentq (separately coded Black-76) ===
+points checked: 900 (600 used, 300 resolution-limited)
+       T_days_diff  iv_diff_volpts  delta_diff  iv_low_diff_volpts  iv_high_diff_volpts
+count        900.0    9.000000e+02       900.0        9.000000e+02         9.000000e+02
+50%            0.0    0.000000e+00         0.0        0.000000e+00         0.000000e+00
+max            0.0    1.300000e-09         0.0        1.700000e-09         1.700000e-09
+
+=== B. smile-level ATM / RR25 / BF25 re-derived from points.csv (numpy) ===
+smiles checked: 400; with independently reproducible RR/BF: 313
+       atm_diff  rr_diff  bf_diff
+count     400.0    313.0    313.0
+50%         0.0      0.0      0.0
+max         0.0      0.0      0.0
+library RR/BF present but independent bracketing found none: 0
+
+=== C. forward re-derived from RAW parquet (no outlier removal) for 40 OK smiles ===
+       median6_minus_library_forward  raw_range_pts
+count                        40.0000        40.0000
+50%                           0.0000         3.6216
+max                           0.4622        17.4503
+min                          -0.3361         0.3482

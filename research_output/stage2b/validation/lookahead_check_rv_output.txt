@@ -1,0 +1,1 @@
+sessions tested: 25 (daily rows + all 13-column rolling rows per session); mismatches: 0

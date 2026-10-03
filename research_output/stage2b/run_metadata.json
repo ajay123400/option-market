@@ -1,0 +1,24 @@
+{
+ "git_commit": "156b4da165ce4e0993cb2d0e439e0ffba23b0af1+dirty",
+ "spot": "data/hist1m/NIFTY50_1m.parquet",
+ "spot_bytes": 5905173,
+ "n_records": 467063,
+ "n_sessions": 1251,
+ "annualization_days": 252,
+ "special_max_bars": 150,
+ "config": {
+  "annualization_days": 252,
+  "cq_min_session_coverage": 0.98,
+  "cq_min_window_fraction": 0.8,
+  "windows": [
+   5,
+   10,
+   20
+  ],
+  "cq_edge_minutes": 15
+ },
+ "regular_bars": 375,
+ "seconds": 81.5,
+ "started": "2026-10-01T12:20:11.421698",
+ "pandas": "3.0.6"
+}

@@ -1,0 +1,13 @@
+legacy rows 2460; mine attempted 1933; matched on (expiry, day) 1898
+my forward status on matched rows: {'ok': 1896, 'low_confidence': 2}
+
+FORWARD  (mine fresh-quote parity gate vs legacy synthetic_forward, n=1896): median diff 0.00 pts, median |diff| 0.02, p95 |diff| 0.15, max 0.9
+
+ATM IV   (mine interpolated at F vs legacy mean(CE,PE) at round(F/50)*50, n=1896): median diff 0.004 vol pts, median |diff| 0.044, p95 |diff| 0.209, p99 0.47
+   T<=2d: n=483 median |diff| 0.076 p95 0.436
+   2-5d: n=433 median |diff| 0.046 p95 0.163
+   5-9d: n=980 median |diff| 0.036 p95 0.112
+
+SKEW25   (mine -RR25 vs legacy put25-call25, n=1650): median diff 0.000 vol pts, median |diff| 0.058, p95 |diff| 0.223; correlation 0.998
+coverage on matched OK rows: mine ATM 1.000; legacy has ATM on all 2460 rows by construction
+matched legacy rows where mine is NOT primary/available: 2 (forward gate/unavailable)

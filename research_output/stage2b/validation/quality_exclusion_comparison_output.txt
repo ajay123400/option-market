@@ -1,0 +1,29 @@
+=== daily intraday vol %: naive vs module (complete regular sessions only for the module) ===
+sessions compared 1237: median diff +0.733 vol pts, p95 |diff| 8.508, max 37.966
+  (the naive series wrongly adds the previous close -> 09:15 open overnight gap as a one-minute return on EVERY session)
+  five largest daily differences: {'2026-04-08': 37.97, '2025-04-07': 34.81, '2022-06-13': 25.18, '2022-08-29': 25.0, '2026-03-09': 23.75}
+
+=== sessions the naive calculation would have used but the module excludes ===
+{'special_weekend': 6, 'regular': 4, 'special_short': 2, 'special_offhours': 2} | flags: {'special_weekend': 5, 'missing_minutes': 3, 'special_offhours|bars_outside_regular_window': 2, 'special_short|bars_outside_regular_window': 1, 'invalid_ohlc|missing_minutes': 1, 'special_weekend|bars_outside_regular_window': 1, 'special_short': 1}
+  2021-11-01 regular          bars= 374 regular-window=374 flags=missing_minutes | naive daily 'vol' =   16.00 %
+  2021-11-04 special_short    bars= 103 regular-window= 43 flags=special_short|bars_outside_regular_window | naive daily 'vol' =    9.72 %
+  2021-12-20 regular          bars= 371 regular-window=371 flags=missing_minutes | naive daily 'vol' =   29.40 %
+  2022-03-07 regular          bars= 372 regular-window=372 flags=missing_minutes | naive daily 'vol' =   38.97 %
+  2022-10-24 special_offhours bars=  60 regular-window=  0 flags=special_offhours|bars_outside_regular_window | naive daily 'vol' =   17.23 %
+  2023-09-21 regular          bars= 375 regular-window=375 flags=invalid_ohlc|missing_minutes | naive daily 'vol' =    8.04 %
+  2023-11-12 special_weekend  bars=  60 regular-window=  0 flags=special_weekend|bars_outside_regular_window | naive daily 'vol' =    6.61 %
+  2024-01-20 special_weekend  bars= 375 regular-window=375 flags=special_weekend | naive daily 'vol' =   10.01 %
+  2024-03-02 special_weekend  bars= 105 regular-window=105 flags=special_weekend | naive daily 'vol' =    5.49 %
+  2024-05-18 special_weekend  bars= 105 regular-window=105 flags=special_weekend | naive daily 'vol' =    3.50 %
+  2024-11-01 special_offhours bars=  60 regular-window=  0 flags=special_offhours|bars_outside_regular_window | naive daily 'vol' =    6.11 %
+  2025-02-01 special_weekend  bars= 375 regular-window=375 flags=special_weekend | naive daily 'vol' =   19.36 %
+  2025-10-21 special_short    bars=  61 regular-window= 61 flags=special_short | naive daily 'vol' =    5.33 %
+  2026-02-01 special_weekend  bars= 375 regular-window=375 flags=special_weekend | naive daily 'vol' =   27.31 %
+
+=== rolling 20-session RV: before (naive, all dates) vs after (strict) ===
+rows with a strict value: 1142 of 1241  |  rows where naive gives a number but strict does not: 80
+where both exist: median naive-strict +1.838 vol pts, p95 |diff| 6.035, max |diff| 11.665
+
+=== effect of excluding ONLY the 4 incomplete regular sessions (data-quality), using coverage-qualified windows ===
+windows with strict value 1142; with coverage-qualified value 1222; windows gained by cq 80
+where both exist: max |cq - strict| = 0.000000 vol pts (they coincide when the window has no incomplete session)
