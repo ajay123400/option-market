@@ -40,7 +40,7 @@ From the repo root, with the app's Python environment (the one that can `import 
 python -m collector.recorder                      # normal day (Task Scheduler: start 09:10, stop-after 15:45; the recorder also exits by itself after the last cycle)
 python -m collector.recorder --max-cycles 3       # supervised run: stops after 3 recorded cycles
 ```
-Exit codes: 0 normal, 3 cannot import fyers_auth, 4 no cached token by 09:30, 5 data directory unusable, 6 no universe / fatal, 7 another recorder already running (recorder.lock with a fresh heartbeat).
+Exit codes: 0 normal, 3 cannot import fyers_auth, 4 no cached token by 09:30, 5 data directory unusable, 6 no universe / fatal, 7 another recorder already running (`recorder.lock` is created atomically, holds the PID, and its own mtime is the heartbeat; a lock older than 120 s is stale and is taken over).
 SIGINT/SIGTERM/Ctrl+C finish the current cycle, close the websocket and write the manifest.
 
 Windows Task Scheduler: trigger Mon–Fri 09:10; action `python -m collector.recorder` with "Start in" = the repo root; "Stop the task if it runs longer than 1 hour 35 minutes" (≈ 15:45); do NOT configure any time resync (needs admin).

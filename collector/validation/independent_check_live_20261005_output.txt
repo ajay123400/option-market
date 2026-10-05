@@ -1,4 +1,4 @@
-database /tmp/fakeday4/micro_20261005.sqlite: day 2026-10-05, 77 cycles, 11704 quote rows
+database /tmp/claude-0/-home-user-option-market/19101c8f-96d7-5368-b37b-27bdb0cd81ee/scratchpad/live/micro_20261005.sqlite: day 2026-10-05, 3 cycles, 456 quote rows
   ok  schema version recorded 
   ok  no duplicate (cycle_id, symbol) 
   ok  every quote row belongs to a recorded cycle 
@@ -9,6 +9,6 @@ database /tmp/fakeday4/micro_20261005.sqlite: day 2026-10-05, 77 cycles, 11704 q
   ok  capture_minus_feed / last_trade columns equal capture_ts minus the exchange timestamps (0, 0)
   ok  websocket receive time never after the capture instant (0)
   ok  every stored quality flag string equals the independent recomputation (0 mismatches)
-  cycle status counts: {'ok': 76, 'partial_429': 1}
+  cycle status counts: {'ok': 3}
 
 RESULT: ALL CHECKS PASSED

@@ -510,14 +510,65 @@ def test_nothing_in_the_app_imports_the_collector():
 # ================================================================================================ single instance, hard exit
 def test_lock_refuses_second_recorder_and_takes_over_stale_lock(tmp_path, caplog):
     caplog.set_level(logging.INFO, logger="collector")
-    (tmp_path / "recorder.lock").write_text("4242")
-    (tmp_path / "health.json").write_text("{}")                                  # fresh heartbeat (mtime = now)
+    (tmp_path / "recorder.lock").write_text("4242")                              # fresh lock (mtime = now), NO health.json yet: still a live recorder
     rec, clk, w = make(tmp_path, max_cycles=1)
-    assert rec.run() == 7 and "another recorder (pid 4242) is running" in caplog.text and w.rest_calls == 0 and (tmp_path / "recorder.lock").exists()
-    old = os.path.getmtime(tmp_path / "health.json") - 600
-    os.utime(tmp_path / "health.json", (old, old))                               # heartbeat 10 minutes old -> stale
+    assert rec.run() == 7 and "another recorder (pid 4242) is running" in caplog.text and w.rest_calls == 0 and (tmp_path / "recorder.lock").read_text() == "4242"
+    old = os.path.getmtime(tmp_path / "recorder.lock") - 600
+    os.utime(tmp_path / "recorder.lock", (old, old))                             # heartbeat 10 minutes old -> stale
     rec, clk, w = make(tmp_path, max_cycles=1)
-    assert rec.run() == 0 and "stale recorder.lock found" in caplog.text and not (tmp_path / "recorder.lock").exists()
+    assert rec.run() == 0 and "stale recorder.lock" in caplog.text and not (tmp_path / "recorder.lock").exists()
+
+
+def test_second_start_within_the_first_120_seconds_is_refused(tmp_path, caplog):
+    """Regression (found live 2026-10-05): a copy started seconds after the first, before any cycle, used to see no health.json, call the lock stale and overwrite it."""
+    caplog.set_level(logging.INFO, logger="collector")
+    a, clka, wa = make(tmp_path / "x")
+    os.makedirs(tmp_path / "x", exist_ok=True)
+    assert a._acquire_lock() is True
+    assert (tmp_path / "x" / "recorder.lock").read_text() == str(os.getpid()) and (tmp_path / "x" / "health.json").exists()      # heartbeat written immediately on acquire
+    b, clkb, wb = make(tmp_path / "x", max_cycles=1)
+    assert b.run() == 7 and f"another recorder (pid {os.getpid()}) is running" in caplog.text and wb.rest_calls == 0
+    assert (tmp_path / "x" / "recorder.lock").read_text() == str(os.getpid())                                                   # not overwritten
+    assert "taking over" not in caplog.text
+
+
+def test_lock_is_created_atomically_and_stale_takeover_is_rechecked(tmp_path, monkeypatch):
+    rec, clk, w = make(tmp_path)
+    os.makedirs(tmp_path, exist_ok=True)
+    opened = []
+    real_open = os.open
+
+    def spy(path, flags, *a, **k):
+        if str(path).endswith("recorder.lock"):
+            opened.append(flags)
+        return real_open(path, flags, *a, **k)
+    monkeypatch.setattr(os, "open", spy)
+    assert rec._acquire_lock() and opened and all(f & os.O_EXCL and f & os.O_CREAT for f in opened)
+    monkeypatch.undo()
+    (tmp_path / "recorder.lock").write_text("777")
+    old = os.path.getmtime(tmp_path / "recorder.lock") - 600
+    os.utime(tmp_path / "recorder.lock", (old, old))
+    rec2, clk2, w2 = make(tmp_path)
+    ages = iter([1000.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0])                           # looked stale, but was refreshed by someone else before we removed it
+    monkeypatch.setattr(R.Recorder, "_lock_age", lambda self: next(ages))
+    assert rec2._acquire_lock() is False and (tmp_path / "recorder.lock").read_text() == "777"
+
+
+def test_heartbeat_refreshes_the_lock_and_release_only_removes_own_lock(tmp_path):
+    rec, clk, w = make(tmp_path)
+    os.makedirs(tmp_path, exist_ok=True)
+    assert rec._acquire_lock()
+    old = os.path.getmtime(tmp_path / "recorder.lock") - 600
+    os.utime(tmp_path / "recorder.lock", (old, old))
+    assert rec._lock_age() > 500
+    rec._health()
+    assert rec._lock_age() < 5
+    (tmp_path / "recorder.lock").write_text("999")
+    rec._release_lock()
+    assert (tmp_path / "recorder.lock").read_text() == "999"                     # another recorder's lock is left alone
+    (tmp_path / "recorder.lock").write_text(str(os.getpid()))
+    rec._release_lock()
+    assert not (tmp_path / "recorder.lock").exists()
 
 
 def test_lock_released_after_normal_run_and_after_token_exit(tmp_path):

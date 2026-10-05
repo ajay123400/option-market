@@ -73,6 +73,7 @@ class Recorder:
             with open(tmp, "w", encoding="utf-8") as f:
                 json.dump(h, f)
             os.replace(tmp, os.path.join(self.dir, "health.json"))
+            os.utime(self._lock_path(), None)                               # the lock's own mtime is the heartbeat
         except OSError as e:
             log.warning("health file not written: %s", e)
 
@@ -266,29 +267,55 @@ class Recorder:
                  capture_minus_feed_s=None if feed is None else round(t0 - feed, 3), capture_minus_last_trade_s=None if not ltt else round(t0 - ltt, 3))
 
     # -------------------------------------------------------------------------------------------- single-instance lock
+    LOCK_STALE_S = 120.0
+
+    def _lock_path(self):
+        return os.path.join(self.dir, "recorder.lock")
+
+    def _lock_age(self):
+        """Real seconds since the lock file's last heartbeat (its own mtime); None if it is gone."""
+        try:
+            return time.time() - os.path.getmtime(self._lock_path())
+        except OSError:
+            return None
+
     def _acquire_lock(self) -> bool:
-        """recorder.lock holds the PID; a lock whose health.json heartbeat is older than 120 s (real time) is stale and is taken over."""
-        lock, health = os.path.join(self.dir, "recorder.lock"), os.path.join(self.dir, "health.json")
-        if os.path.exists(lock):
+        """Single-instance lock: the file is created ATOMICALLY (O_CREAT|O_EXCL) and holds our PID. Its own mtime is the heartbeat (touched by every _health()), so a copy started seconds after
+        another one sees a fresh lock even before the first cycle. A lock whose heartbeat is older than LOCK_STALE_S is stale and is taken over (re-checked just before removal)."""
+        lock = self._lock_path()
+        for _ in range(3):
             try:
-                fresh = os.path.exists(health) and time.time() - os.path.getmtime(health) < 120
-            except OSError:
-                fresh = False
-            if fresh:
-                try:
-                    other = open(lock).read().strip()
-                except OSError:
-                    other = "?"
-                log.error("another recorder (pid %s) is running in %s (heartbeat fresh); exiting (exit code 7)", other, self.dir)
-                return False
-            log.warning("stale recorder.lock found; taking over")
-        with open(lock, "w") as f:
-            f.write(str(os.getpid()))
-        return True
+                fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            except FileExistsError:
+                age = self._lock_age()
+                if age is not None and age < self.LOCK_STALE_S:
+                    try:
+                        other = open(lock).read().strip()
+                    except OSError:
+                        other = "?"
+                    log.error("another recorder (pid %s) is running in %s (lock heartbeat %.0f s old); exiting (exit code 7)", other, self.dir, age)
+                    return False
+                if age is not None:
+                    log.warning("stale recorder.lock (heartbeat %.0f s old); taking over", age)
+                    again = self._lock_age()
+                    if again is not None and again >= self.LOCK_STALE_S:        # not refreshed by someone else in the meantime
+                        try:
+                            os.remove(lock)
+                        except FileNotFoundError:
+                            pass
+                continue
+            with os.fdopen(fd, "w") as f:
+                f.write(str(os.getpid()))
+            self._health()                                                   # heartbeat immediately (also makes health.json exist from the start)
+            return True
+        log.error("could not acquire %s; exiting (exit code 7)", lock)
+        return False
 
     def _release_lock(self):
+        lock = self._lock_path()
         try:
-            os.remove(os.path.join(self.dir, "recorder.lock"))
+            if open(lock).read().strip() == str(os.getpid()):                # never remove a lock that another recorder now owns
+                os.remove(lock)
         except OSError:
             pass
 
