@@ -239,3 +239,19 @@ def test_main_refuses_outside_market_hours(monkeypatch, tmp_path):
 def test_probe_source_has_no_write_verbs_or_order_endpoints():
     src = open(_p, encoding="utf-8").read()
     assert not any(w in src for w in ("requests.post", ".post(", ".put(", ".delete(", "place_order", "/orders", "multiorder", "login(", "get_access_token", "get_auth_header"))
+
+
+def test_rest_tt_string_regression():
+    """Live finding 2026-10-05: REST `tt` is a STRING holding a whole-UTC-day date stamp; comparing it with websocket ints used to raise TypeError."""
+    assert P.as_epoch("1791158400") == 1791158400 and P.as_epoch(1791158400) == 1791158400 and P.as_epoch("1791158400.0") == 1791158400
+    assert P.as_epoch(None) is None and P.as_epoch("") is None and P.as_epoch("abc") is None and P.as_epoch(True) is None
+    t = 1791172410.0
+    ws = {"NSE:X": [(t, tick(feed=1791172410, ltt=1791172409))]}
+    rows = P.compare_rest_with_ws([(t, "NSE:X", dict(tt="1791158400", bid=9.9, ask=10.1, lp=10.0))], ws)
+    r = rows[0]
+    assert r["rest_tt"] == 1791158400 and r["rest_tt_raw_type"] == "str" and r["rest_tt_is_whole_utc_day"] is True
+    assert r["tt_minus_exch_feed_time_s"] == 1791158400 - 1791172410 and r["tt_equals_exch_feed_time"] is False and r["rest_tt_ist"] == "2026-10-05 05:30:00"
+    ok = P.compare_rest_with_ws([(t, "NSE:X", dict(tt="1791172410"))], ws)[0]
+    assert ok["tt_equals_exch_feed_time"] is True and ok["rest_tt_is_whole_utc_day"] is False
+    q = P.analyze_quotes(dict(s="ok", d=[dict(n="NSE:A", s="ok", v=dict(lp=1, tt="1791158400"))]))
+    assert q["per_symbol"]["NSE:A"]["tt_type"] == "str"

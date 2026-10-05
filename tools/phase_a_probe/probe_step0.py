@@ -144,7 +144,7 @@ def analyze_quotes(body):
     per = {}
     for d in ds:
         v = d.get("v") or {}
-        per[d.get("n")] = dict(entry_keys=sorted(d.keys()), status=d.get("s"), v_keys=sorted(v.keys()), v_classes=classify_keys(v.keys(), v), values={k: v.get(k) for k in QUOTE_FIELDS_WANTED if k in v},
+        per[d.get("n")] = dict(entry_keys=sorted(d.keys()), status=d.get("s"), v_keys=sorted(v.keys()), v_classes=classify_keys(v.keys(), v), values={k: v.get(k) for k in QUOTE_FIELDS_WANTED if k in v}, tt_type=type_name(v.get("tt")),
                                wanted_missing=[k for k in QUOTE_FIELDS_WANTED if k not in v])
     return dict(top_level_keys=sorted((body or {}).keys()), n_entries=len(ds), per_symbol=per,
                 union_v_keys=sorted({k for p in per.values() for k in p["v_keys"]}))
@@ -215,6 +215,19 @@ def _stats(xs):
     return dict(n=len(xs), min=round(min(xs), 3), median=round(statistics.median(xs), 3), max=round(max(xs), 3))
 
 
+def as_epoch(x):
+    """REST `tt` arrives as a STRING ('1791158400'); websocket times are ints. Returns an int epoch or None (never raises)."""
+    if x is None or isinstance(x, bool):
+        return None
+    try:
+        return int(x)
+    except (TypeError, ValueError):
+        try:
+            return int(float(x))
+        except (TypeError, ValueError):
+            return None
+
+
 def compare_rest_with_ws(rest_samples, ticks_by_symbol, window=5.0):
     """rest_samples: [(capture_wall, symbol, {'tt','bid','ask','lp',...})]. For each, the nearest-in-time ws tick of the same symbol (within `window` s) is compared field by field."""
     rows = []
@@ -225,8 +238,9 @@ def compare_rest_with_ws(rest_samples, ticks_by_symbol, window=5.0):
         c, m = min(ts, key=lambda t: abs(t[0] - cap))
         if abs(c - cap) > window:
             rows.append(dict(symbol=sym, note=f"nearest websocket tick is {abs(c - cap):.1f}s away (> {window}s)")); continue
-        tt = q.get("tt")
-        rows.append(dict(symbol=sym, rest_capture_ist=ist(cap), ws_capture_gap_s=round(c - cap, 3), rest_tt=tt, rest_tt_ist=ist(tt) if tt else None,
+        tt = as_epoch(q.get("tt"))
+        rows.append(dict(symbol=sym, rest_capture_ist=ist(cap), ws_capture_gap_s=round(c - cap, 3), rest_tt=tt, rest_tt_raw_type=type_name(q.get("tt")), rest_tt_is_whole_utc_day=(tt % 86400 == 0) if tt is not None else None,
+                         rest_tt_ist=ist(tt) if tt else None,
                          ws_exch_feed_time=m.get("exch_feed_time"), ws_last_traded_time=m.get("last_traded_time"),
                          tt_equals_exch_feed_time=(tt == m.get("exch_feed_time")) if tt is not None else None, tt_equals_last_traded_time=(tt == m.get("last_traded_time")) if tt is not None else None,
                          tt_minus_exch_feed_time_s=(tt - m["exch_feed_time"]) if tt is not None and m.get("exch_feed_time") is not None else None,
