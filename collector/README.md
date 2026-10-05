@@ -43,7 +43,7 @@ python -m collector.recorder --max-cycles 3       # supervised run: stops after 
 Exit codes: 0 normal, 3 cannot import fyers_auth, 4 no cached token by 09:30, 5 data directory unusable, 6 no universe / fatal, 7 another recorder already running (`recorder.lock` is created atomically, holds the PID, and its own mtime is the heartbeat; a lock older than 120 s is stale and is taken over).
 SIGINT/SIGTERM/Ctrl+C finish the current cycle, close the websocket and write the manifest.
 
-Windows Task Scheduler: trigger Mon–Fri 09:10; action `python -m collector.recorder` with "Start in" = the repo root; "Stop the task if it runs longer than 1 hour 35 minutes" (≈ 15:45); do NOT configure any time resync (needs admin).
+Windows Task Scheduler: trigger Mon–Fri 09:10; action `python -m collector.recorder` with "Start in" = the repo root; "Stop the task if it runs longer than" 7 hours (a 09:10 start would otherwise be killed at 10:45 by a short limit; 6 h 35 min is the exact 15:45 mark; the recorder exits by itself after its last cycle and at 15:45 at the latest, so 7 h is only a safety net); do NOT configure any time resync (needs admin).
 The recorder logs the clock skew every cycle.
 
 ## Supervised 3-cycle run (suggested acceptance)
