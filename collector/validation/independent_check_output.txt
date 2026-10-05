@@ -1,0 +1,14 @@
+database /tmp/fakeday3/micro_20261005.sqlite: day 2026-10-05, 77 cycles, 11704 quote rows
+  ok  schema version recorded 
+  ok  no duplicate (cycle_id, symbol) 
+  ok  every quote row belongs to a recorded cycle 
+  ok  missed cycles carry no quote rows 
+  ok  every cycle sits on the 5-minute grid 09:16..15:36 with a matching id 
+  ok  cycle counters (n_rows, n_ws_rows, n_chain_rows) equal the stored rows []
+  ok  universe rules: atm/offset columns, |offset| <= 12, 25 strikes x CE/PE per expiry, DTE 0..15, rows == expected on ok cycles []
+  ok  capture_minus_feed / last_trade columns equal capture_ts minus the exchange timestamps (0, 0)
+  ok  websocket receive time never after the capture instant (0)
+  ok  every stored quality flag string equals the independent recomputation (0 mismatches)
+  cycle status counts: {'ok': 76, 'partial_429': 1}
+
+RESULT: ALL CHECKS PASSED

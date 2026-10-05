@@ -1,0 +1,30 @@
+KILLED               universe: last grid instant dropped
+KILLED               universe: expiry window off by one
+KILLED               universe: expiry day excluded
+KILLED               universe: future month index
+KILLED               universe: ATM banker's rounding
+KILLED               universe: window exclusive
+KILLED               quality: stale threshold inclusive
+KILLED               quality: skew sign
+KILLED               quality: wide spread uses min
+KILLED               quality: crossed/locked swapped
+KILLED               store: UPDATE trigger missing
+KILLED               store: no rollback
+KILLED               store: duplicate not detected
+KILLED               sources: REST spacing removed
+KILLED               sources: 429 status ignored
+KILLED               sources: token wait ignores deadline remainder
+KILLED               sources: resubscribe everything
+KILLED               sources: symbol limit off by one
+KILLED               recorder: backoff does not double
+KILLED               recorder: 429 does not stop the cycle's REST calls
+KILLED               recorder: late cycles are recorded anyway
+KILLED               recorder: record window uses the subscribe width
+KILLED               recorder: backoff never applied
+KILLED               recorder: stale index threshold inverted
+KILLED               recorder: feed age sign
+KILLED               recorder: previous OI column
+KILLED               recorder: lock freshness inverted
+KILLED               recorder: token exit code
+KILLED               recorder: hard exit ignored
+KILLED               recorder: missed cycles never marked
