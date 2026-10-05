@@ -1,0 +1,35 @@
+KILLED               ivcalc: skew sign
+KILLED               ivcalc: vega per point -> per 10
+KILLED               ivcalc: vega sqrt(T) dropped
+KILLED               ivcalc: ATM weight uses the upper point
+KILLED               ivcalc: bracket limit exclusive
+KILLED               ivcalc: forward strike counted below
+KILLED               ivcalc: unreliable IVs accepted
+KILLED               ivcalc: ATM usable flags ignored
+KILLED               analyze: crossed boundary
+KILLED               analyze: stale boundary
+KILLED               analyze: skew not removed from the feed age
+KILLED               analyze: websocket check dropped
+KILLED               analyze: never-traded rows kept
+KILLED               analyze: mid = bid
+KILLED               analyze: spread pct base
+KILLED               analyze: ltp - mid sign
+KILLED               analyze: ltp_at swapped
+KILLED               analyze: ltp age skew
+KILLED               analyze: OTM side flipped
+KILLED               analyze: forward status ignored
+KILLED               analyze: sell scenario sign
+KILLED               analyze: vol point scale
+KILLED               analyze: ltp iv freshness ignored
+KILLED               analyze: half-spread in vol points
+KILLED               analyze: primary instants
+KILLED               config: DTE edge exclusive
+KILLED               config: moneyness ATM
+KILLED               config: time bucket edge
+KILLED               summaries: share at ask uses bid
+KILLED               summaries: stale last trades kept
+KILLED               summaries: cost scenarios without bid IV
+KILLED               summaries: primary filter
+KILLED               summaries: bias day window
+KILLED               run: input hash
+KILLED               loader: day from filename

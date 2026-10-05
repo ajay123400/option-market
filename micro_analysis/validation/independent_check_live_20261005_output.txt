@@ -1,0 +1,16 @@
+/tmp/claude-0/-home-user-option-market/19101c8f-96d7-5368-b37b-27bdb0cd81ee/scratchpad/live/micro_20261005.sqlite: 3 cycles; analysis: 9 ATM records, 438 row records
+  ok  time to expiry equals (expiry - (capture - skew)) / 365d for every ATM record (max diff 1.78e-15 days)
+  ok  bid / mid / ask / last-trade ATM IVs equal an independent Black-76 re-solve (9 records) (max diff 1.39e-12)
+  ok  sell-side scenario IVs equal mid - f*(mid - bid) (max diff 1.38e-12)
+  ok  parity forward within 1 index point of a plain median parity estimate (max diff 0.000 pts)
+  ok  every analysed row exists in the database 
+  ok  mid / spread / half-spread / spread% recomputed 
+  ok  last-trade minus mid (rupees and half-spreads) recomputed 
+  ok  ltp_at (ask / bid / inside) recomputed 
+  ok  Black-76 vega (rupees per vol point) and the vega-based half-spread recomputed (0 mismatches)
+  ok  IV spread (vol points) re-solved for 225 rows (0 mismatches)
+  ok  liquidity_summary n_rows / median half-spread / median spread% recomputed 
+  ok  last_trade_bias counts and mean (half-spreads) recomputed 
+  ok  cost_scenarios counts, median half-spread (vol pts) and the cross-1 sell-minus-mid medians recomputed 
+
+RESULT: ALL CHECKS PASSED
