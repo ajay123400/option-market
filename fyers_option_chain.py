@@ -215,38 +215,67 @@ def get_chain(symbol=INDEX_SYMBOL, strikecount=10, expiry_timestamp="", include_
         float(expiry_data[0]["expiry"]) if expiry_data else None
     )
 
-    if include_greeks and spot:
-        T = (resolved_expiry_ts - time.time()) / (365 * 86400) if resolved_expiry_ts else None
-
-        # Use the put-call-parity-implied forward, not the raw index spot,
-        # as S for every Greeks calc -- see synthetic_forward()'s docstring
-        # for why (NIFTY options price off the futures, which sit ~40-80pt
-        # above the cash index; feeding raw spot in skews CE vs PE IV badly
-        # at the very same strike).
-        near_atm = sorted(strikes, key=lambda r: abs(r["strike"] - spot))[:6]
-        quotes = [(r["strike"], r["ce"]["ltp"] if r["ce"] else None, r["pe"]["ltp"] if r["pe"] else None)
-                  for r in near_atm]
-        forward = greeks_mod.synthetic_forward(quotes) or spot
-
-        for row in strikes:
-            for side, is_call in (("ce", True), ("pe", False)):
-                leg = row[side]
-                if not leg:
-                    continue
-                g = greeks_mod.option_greeks_fwd(leg.get("ltp"), forward, row["strike"], T,
-                                              greeks_mod.RISK_FREE_RATE, is_call) if T and T > 0 else None
-                leg["iv"] = g["iv"] if g else None
-                leg["delta"] = g["delta"] if g else None
-                leg["gamma"] = g["gamma"] if g else None
-                leg["theta"] = g["theta"] if g else None
-                leg["vega"] = g["vega"] if g else None
-
-    return {
+    out = {
         "spot": spot,
         "expiries": expiry_data,
         "strikes": strikes,
         "resolved_expiry_ts": resolved_expiry_ts,
     }
+    if include_greeks and spot:
+        add_greeks(out)
+    return out
+
+
+def add_greeks(chain):
+    """Adds iv/delta/gamma/theta/vega to every leg of a get_chain() result
+    in place (shared by the Fyers and Arrow chains)."""
+    spot, strikes, resolved_expiry_ts = chain["spot"], chain["strikes"], chain.get("resolved_expiry_ts")
+    T = (resolved_expiry_ts - time.time()) / (365 * 86400) if resolved_expiry_ts else None
+
+    # Use the put-call-parity-implied forward, not the raw index spot,
+    # as S for every Greeks calc -- see synthetic_forward()'s docstring
+    # for why (NIFTY options price off the futures, which sit ~40-80pt
+    # above the cash index; feeding raw spot in skews CE vs PE IV badly
+    # at the very same strike).
+    near_atm = sorted(strikes, key=lambda r: abs(r["strike"] - spot))[:6]
+    quotes = [(r["strike"], r["ce"]["ltp"] if r["ce"] else None, r["pe"]["ltp"] if r["pe"] else None)
+              for r in near_atm]
+    forward = greeks_mod.synthetic_forward(quotes) or spot
+
+    for row in strikes:
+        for side, is_call in (("ce", True), ("pe", False)):
+            leg = row[side]
+            if not leg:
+                continue
+            g = greeks_mod.option_greeks_fwd(leg.get("ltp"), forward, row["strike"], T,
+                                          greeks_mod.RISK_FREE_RATE, is_call) if T and T > 0 else None
+            leg["iv"] = g["iv"] if g else None
+            leg["delta"] = g["delta"] if g else None
+            leg["gamma"] = g["gamma"] if g else None
+            leg["theta"] = g["theta"] if g else None
+            leg["vega"] = g["vega"] if g else None
+    return chain
+
+
+# ---------------------------------------------------------------------------
+# Data source switch: .env DATA_SOURCE=arrow serves the chain, quotes and
+# expiries from Arrow (arrow_chain.py) in the same shapes and with the same
+# Fyers-style symbols, plus margin (Arrow /margin/basket). The app is moving
+# off Fyers entirely.
+def data_source():
+    from dotenv import dotenv_values
+    import paths
+    from pathlib import Path
+    return (dotenv_values(Path(paths.BASE_DIR) / ".env").get("DATA_SOURCE") or "fyers").strip().lower()
+
+
+DATA_SOURCE = data_source()
+if DATA_SOURCE == "arrow":
+    import arrow_chain as _arrow
+    get_chain = _arrow.get_chain          # noqa: F811
+    list_expiries = _arrow.list_expiries  # noqa: F811
+    get_quotes = _arrow.get_quotes        # noqa: F811
+    get_margin = _arrow.get_margin        # noqa: F811
 
 
 if __name__ == "__main__":

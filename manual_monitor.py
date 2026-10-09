@@ -29,7 +29,6 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8")
 
 import alerts
-import fyers_auth
 import fyers_option_chain as chain_mod
 import manual_trades
 import market_calendar as mc
@@ -210,9 +209,10 @@ def status():
 
 
 def main():
-    print("Logging in to Fyers (automated TOTP flow)...")
-    fyers_auth.login()
-    print("Fyers login OK. Risk monitor running -- SL/Target/15:25 square-off/expiry settlement. Ctrl+C to stop.")
+    import broker
+    print(f"Logging in to {broker.name()} (automated TOTP flow)...")
+    broker.login()
+    print(f"{broker.name()} login OK. Risk monitor running -- SL/Target/15:25 square-off/expiry settlement. Ctrl+C to stop.")
     tg.send("👁 Risk monitor started (standalone).")
     stop = threading.Event()
     try:

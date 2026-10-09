@@ -38,7 +38,7 @@ def summarize(db_path: str) -> dict:
         S["rest"] = dict(calls=[r[0] for r in _q(con, "SELECT rest_calls FROM cycles ORDER BY cycle_id")], latency_ms_max=[r[0] for r in _q(con, "SELECT rest_latency_ms_max FROM cycles ORDER BY cycle_id")],
                          rate_limited_cycles=_q(con, "SELECT COUNT(*) FROM cycles WHERE rate_limited=1")[0][0])
         S["oi_missing_option_rows"] = _q(con, "SELECT COUNT(*) FROM quotes WHERE kind='option' AND oi IS NULL")[0][0]
-        S["option_rows_without_ws"] = _q(con, "SELECT COUNT(*) FROM quotes WHERE kind='option' AND data_source<>'fyers:ws-full'")[0][0]
+        S["option_rows_without_ws"] = _q(con, "SELECT COUNT(*) FROM quotes WHERE kind='option' AND data_source NOT IN ('fyers:ws-full', 'arrow:ws-full')")[0][0]
         ages = [r[0] for r in _q(con, "SELECT capture_minus_feed_s FROM quotes WHERE kind='option' AND capture_minus_feed_s IS NOT NULL")]
         if ages:
             ages.sort()

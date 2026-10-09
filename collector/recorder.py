@@ -46,8 +46,15 @@ class Clock:
 
 
 class Recorder:
-    def __init__(self, cfg: C.Config, directory: str, tokens: TokenProvider, clock, stop: threading.Event, rest_session=None, ws_factory=None, max_cycles=None, ws_spawn=None):
+    def __init__(self, cfg: C.Config, directory: str, tokens: TokenProvider, clock, stop: threading.Event, rest_session=None, ws_factory=None, max_cycles=None, ws_spawn=None,
+                 provider: str = "fyers"):
         self.cfg, self.dir, self.tokens, self.clock, self.stop, self.max_cycles = cfg, directory, tokens, clock, stop, max_cycles
+        self.provider = provider
+        if provider == "arrow":
+            from .arrow_sources import CHAIN_LABEL, WS_LABEL, ArrowRestClient, ArrowWsFeed
+            self._rest_cls, self._ws_cls, self.ws_label, self.chain_label = ArrowRestClient, ArrowWsFeed, WS_LABEL, CHAIN_LABEL
+        else:
+            self._rest_cls, self._ws_cls, self.ws_label, self.chain_label = RestClient, WsFeed, "fyers:ws-full", "fyers:options-chain-v3"
         self._rest_session, self._ws_factory, self._ws_spawn = rest_session, ws_factory, ws_spawn
         self.store = self.rest = self.ws = None
         self.expiries, self.expiry_data, self.fut_symbol = [], [], None
@@ -115,8 +122,13 @@ class Recorder:
         atm = atm_strike(parsed["spot"], self.cfg.strike_step)
         syms = subscription_symbols(self.cache_by_index(), atm, self.cfg) + [C.INDEX_SYMBOL] + ([self.fut_symbol] if self.fut_symbol else [])
         log.info("universe: expiries=%s atm=%s subscribe=%d symbols fut=%s", [e["date"] for e in self.expiries], atm, len(syms), self.fut_symbol)
-        self.ws = WsFeed(self._auth, self._ws_factory, self.clock.wall, self._ws_spawn)
+        if self.provider == "arrow":
+            syms.append("NSE:INDIAVIX-INDEX")                               # Arrow has no REST VIX: it comes from the websocket
+        self.ws = self._ws_cls(self._auth, self._ws_factory, self.clock.wall, self._ws_spawn)
         self.ws.start(syms)
+        if self.provider == "arrow":
+            self.rest.spot_fn = lambda: self.ws.ltp(C.INDEX_SYMBOL)
+            self.rest.vix_fn = lambda: self.ws.ltp("NSE:INDIAVIX-INDEX")
         for _ in range(20):                      # up to ~10 s for the first ticks
             if self.ws.ticks_total > 0 or self.stop.is_set():
                 break
@@ -203,7 +215,7 @@ class Recorder:
             r["flags"] = row_flags(r, self.skew, cfg, self._prev_feed(r["symbol"]), kind=r["kind"])
             if r.get("quote_feed_ts") is not None:
                 self.prev_feed[r["symbol"]] = r["quote_feed_ts"]
-        n_ws = sum(1 for r in rows if r["data_source"] == "fyers:ws-full")
+        n_ws = sum(1 for r in rows if r["data_source"] == self.ws_label)
         if status == "ok" and rows and n_ws < len(rows) * 0.9:
             status = "partial_ws"
             notes.append(f"only {n_ws}/{len(rows)} rows from the websocket")
@@ -216,7 +228,7 @@ class Recorder:
                 log.info("cycle %s: subscribed %d more symbols (ATM now %s)", cid, len(new), atm)
         n_opt = sum(1 for r in rows if r["kind"] == "option")
         cycle = dict(cycle_id=cid, scheduled_ts=T.timestamp(), capture_start_ts=t0, capture_end_ts=self.clock.wall(), status=status, reason="; ".join(notes) or None, n_expected=n_opt + 1 + (1 if self.fut_symbol else 0),
-                     n_rows=len(rows), n_ws_rows=n_ws, n_chain_rows=sum(1 for r in rows if r["data_source"] == "fyers:options-chain-v3"), spot=spot, atm_strike=atm, india_vix=vix, future_fp=fp, skew_est_s=self.skew,
+                     n_rows=len(rows), n_ws_rows=n_ws, n_chain_rows=sum(1 for r in rows if r["data_source"] == self.chain_label), spot=spot, atm_strike=atm, india_vix=vix, future_fp=fp, skew_est_s=self.skew,
                      ws_connected=int(bool(self.ws and self.ws.connected)), ws_ticks_total=self.ws.ticks_total if self.ws else 0, ws_subscribed=len(self.ws.subscribed) if self.ws else 0, index_feed_age_s=idx_age,
                      rest_calls=self.rest.calls - calls0, rest_latency_ms_max=max(rest_lat) if rest_lat else None, rate_limited=int(rate_limited), expiries_json=json.dumps([e["date"] for e in self.expiries]), notes=None)
         try:
@@ -239,13 +251,14 @@ class Recorder:
     def _option_row(self, cid, exp, cr, atm, spot, tick, chain_row, oi_ts, t0):
         r = dict(cycle_id=cid, symbol=cr["symbol"], kind="option", expiry_date=exp["date"], expiry_ts=exp["epoch"], dte_days=exp["dte_days"], strike=cr["strike"], option_type=cr["type"], atm_strike=atm,
                  offset_strikes=int(round((cr["strike"] - atm) / self.cfg.strike_step)), spot=spot, capture_ts=t0)
+        label = self.ws_label
         if chain_row:
             r.update(oi=chain_row.get("oi"), oi_prev=chain_row.get("prev_oi"), oi_change=chain_row.get("oich"), oi_capture_ts=oi_ts, chain_bid=chain_row.get("bid"), chain_ask=chain_row.get("ask"),
                      chain_ltp=chain_row.get("ltp"), chain_volume=chain_row.get("volume"))
         if tick:
-            self._from_tick(r, tick, t0)
+            self._from_tick(r, tick, t0, label)
         elif chain_row:
-            r.update(ltp=chain_row.get("ltp"), bid=chain_row.get("bid"), ask=chain_row.get("ask"), volume=chain_row.get("volume"), data_source="fyers:options-chain-v3")
+            r.update(ltp=chain_row.get("ltp"), bid=chain_row.get("bid"), ask=chain_row.get("ask"), volume=chain_row.get("volume"), data_source=self.chain_label)
         else:
             r["data_source"] = "none"
         return r
@@ -253,17 +266,17 @@ class Recorder:
     def _simple_row(self, cid, kind, symbol, tick, spot, t0):
         r = dict(cycle_id=cid, symbol=symbol, kind=kind, spot=spot, capture_ts=t0)
         if tick:
-            self._from_tick(r, tick, t0)
+            self._from_tick(r, tick, t0, self.ws_label)
         else:
             r["data_source"] = "none"
         return r
 
     @staticmethod
-    def _from_tick(r, tick, t0):
+    def _from_tick(r, tick, t0, label="fyers:ws-full"):
         rx, m = tick
         feed, ltt = m.get("exch_feed_time"), m.get("last_traded_time")
         r.update(ltp=m.get("ltp"), bid=m.get("bid_price"), ask=m.get("ask_price"), bid_size=m.get("bid_size"), ask_size=m.get("ask_size"), volume=m.get("vol_traded_today"), last_traded_qty=m.get("last_traded_qty"),
-                 avg_trade_price=m.get("avg_trade_price"), tot_buy_qty=m.get("tot_buy_qty"), tot_sell_qty=m.get("tot_sell_qty"), quote_feed_ts=feed, last_trade_ts=ltt, rx_ts=rx, data_source="fyers:ws-full",
+                 avg_trade_price=m.get("avg_trade_price"), tot_buy_qty=m.get("tot_buy_qty"), tot_sell_qty=m.get("tot_sell_qty"), quote_feed_ts=feed, last_trade_ts=ltt, rx_ts=rx, data_source=label,
                  capture_minus_feed_s=None if feed is None else round(t0 - feed, 3), capture_minus_last_trade_s=None if not ltt else round(t0 - ltt, 3))
 
     # -------------------------------------------------------------------------------------------- single-instance lock
@@ -351,7 +364,7 @@ class Recorder:
     def _run(self, today, now) -> int:
         cfg = self.cfg
         self.session_start = now
-        log.info("recorder starting: day=%s dir=%s pid=%d", today, self.dir, os.getpid())
+        log.info("recorder starting: day=%s dir=%s pid=%d provider=%s", today, self.dir, os.getpid(), self.provider)
         deadline = datetime.combine(today, cfg.token_deadline, tzinfo=C.IST)
         try:
             tok = self.tokens.wait_for_token(self.clock.now, lambda sec: (self._health({"waiting": "token"}), self.clock.sleep(sec)), deadline, cfg.token_retry_s)
@@ -359,9 +372,13 @@ class Recorder:
             log.error("%s", e)
             return 3
         if tok is None:
-            log.error("NO CACHED FYERS TOKEN by %s: the app's daily login did not happen. The recorder never logs in; exiting (exit code 4).", cfg.token_deadline.strftime("%H:%M"))
+            if self.provider == "arrow":
+                log.error("NO ARROW TOKEN by %s: login failed (see the warnings above); exiting (exit code 4).", cfg.token_deadline.strftime("%H:%M"))
+            else:
+                log.error("NO CACHED FYERS TOKEN by %s: the app's daily login did not happen. The recorder never logs in; exiting (exit code 4).", cfg.token_deadline.strftime("%H:%M"))
             return 4
-        self.rest = RestClient(self._auth, self._rest_session, self.clock.sleep, self.clock.monotonic, self.clock.wall, cfg.rest_min_gap_s)
+        gap = 0.25 if self.provider == "arrow" else cfg.rest_min_gap_s      # Arrow: 10 req/s per endpoint, no daily cap
+        self.rest = self._rest_cls(self._auth, self._rest_session, self.clock.sleep, self.clock.monotonic, self.clock.wall, gap)
         instants = grid_instants(today, cfg)
         # missed cycles between the last recorded cycle (or this session's start) and now
         last = self.store.last_cycle()
@@ -436,7 +453,13 @@ def main(argv=None):
     for name in ("SIGINT", "SIGTERM", "SIGBREAK"):
         if hasattr(signal, name):
             signal.signal(getattr(signal, name), lambda *_: stop.set())
-    rec = Recorder(C.Config(), directory, TokenProvider(), Clock(stop), stop, max_cycles=a.max_cycles)
+    prov = C.provider()
+    if prov == "arrow":
+        from .arrow_sources import ArrowTokenProvider
+        tokens = ArrowTokenProvider()
+    else:
+        tokens = TokenProvider()
+    rec = Recorder(C.Config(), directory, tokens, Clock(stop), stop, max_cycles=a.max_cycles, provider=prov)
     try:
         return rec.run()
     except Exception as e:

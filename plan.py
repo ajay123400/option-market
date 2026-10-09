@@ -121,10 +121,8 @@ def _nifty_close(day, today):
     except Exception:
         pass
     try:
-        import history_downloader as hd
-        b = hd._get(hd.HIST_API, {"symbol": chain_mod.INDEX_SYMBOL, "resolution": "D", "date_format": "1",
-                                  "range_from": day, "range_to": day}, tries=2)
-        c = b.get("candles") or []
+        import historical_recorder
+        c = historical_recorder._fetch_history_candles(chain_mod.INDEX_SYMBOL, day, day, "D")
         if c:
             return float(c[-1][4])
     except Exception:

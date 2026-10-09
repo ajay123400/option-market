@@ -18,7 +18,7 @@ EXCLUSION_ORDER = ["not_websocket_row", "no_bid_or_ask", "crossed", "stale_quote
 
 def exclusion_reason(r, skew: float, cfg: AnalysisConfig):
     """First matching reason for dropping an option row from the statistics (None = eligible). Fixed order; counted in exclusions.csv."""
-    if r["data_source"] != "fyers:ws-full":
+    if r["data_source"] not in ("fyers:ws-full", "arrow:ws-full"):
         return "not_websocket_row"
     bid, ask = r["bid"], r["ask"]
     if pd.isna(bid) or pd.isna(ask) or bid <= 0 or ask <= 0:

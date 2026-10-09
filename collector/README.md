@@ -3,6 +3,17 @@
 **Purpose.** Record future NIFTY option market quality (bid, ask, sizes, last trade, volume, OI, exchange and recorder timestamps) so that we can later test whether the historical IV-vs-RV gap survives
 realistic bid/ask and execution costs. **Data collection only**: no orders, no trading actions, no strategy maths, no authentication of its own. Nothing in the existing app imports this package.
 
+## Broker: Arrow from 2026-10-09
+From 9 Oct 2026 Fyers' Standard plan allows 5,000 data calls a day and 50 websocket symbols, so the app (and this recorder) moved to
+Arrow (iRage). With the app's `.env` `DATA_SOURCE=arrow`, `collector/arrow_sources.py` provides the same three adapters:
+* login via the app's `arrow_auth` (shared `.arrow_session.json`; it logs in once a day if nobody has yet);
+* the websocket is `wss://ds.arrow.trade` "full" mode (bid/ask/sizes/volume/OI/exchange times; 1,024 symbols per account; a second
+  connection beside the app's was verified to work), rows labelled `data_source=arrow:ws-full`;
+* the per-expiry "chain call" is `/info/option-chain` (strikes + `openingOI` = previous-day OI) + `/info/quotes/full` (<= 100 contracts a
+  call), returned in options-chain-v3 shape; fallback rows are labelled `arrow:rest-chain`. Arrow has no REST quote for the index, so
+  spot and India VIX come from this recorder's websocket (1-min candle close as fallback). REST spacing 0.25 s (10 req/s limit).
+Symbols in the database stay Fyers-style (`NSE:NIFTY26O1322650CE`), so older and newer days line up. Days before 2026-10-09 are Fyers data.
+
 ## What it records
 * Every 5 minutes at minute ≡ 1 (mod 5), 09:16 … 15:36 IST (77 cycles/day; includes 10:01, 13:01, 15:01 = the historical observation instants).
 * Per cycle: the nearest up-to-3 listed expiries within 15 calendar days × ATM ± 12 strikes × CE/PE (150 contracts) + the NIFTY index + the nearest-month future = 152 rows.

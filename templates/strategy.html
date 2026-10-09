@@ -1319,7 +1319,7 @@ async function refreshBasketMargin() {
     const m = await (await fetch("/api/margin", {method: "POST", headers: {"Content-Type": "application/json"},
       body: JSON.stringify({legs: basketItems.map(it => ({symbol: it.symbol, side: it.side, qty: it.qty, price: it.price}))})})).json();
     if (seq !== basketMarginSeq) return;
-    el.textContent = m.ok ? `Margin required (Fyers, with hedge benefit): ${money(m.margin_total)} · Est. charges: ${money(m.est_round_trip_charges)}` : "Margin unavailable: " + m.error;
+    el.textContent = m.ok ? `Margin required (exchange SPAN + exposure, with hedge benefit): ${money(m.margin_total)} · Est. charges: ${money(m.est_round_trip_charges)}` : "Margin unavailable: " + m.error;
   } catch (e) { el.textContent = "Margin unavailable (network)"; }
 }
 

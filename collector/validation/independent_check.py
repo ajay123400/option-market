@@ -8,6 +8,8 @@ import math
 import sqlite3
 import sys
 from datetime import date, datetime, timedelta, timezone
+WS = ("fyers:ws-full", "arrow:ws-full")            # websocket-row labels (either broker; deliberately not imported from collector)
+CHAIN = ("fyers:options-chain-v3", "arrow:rest-chain")
 
 IST = timezone(timedelta(hours=5, minutes=30))
 bad = 0
@@ -49,7 +51,7 @@ def main(path):
         rows = con.execute("SELECT * FROM quotes WHERE cycle_id=?", (cid,)).fetchall()
         opts = [r for r in rows if r["kind"] == "option"]
         label = cid[-5:]
-        if c["n_rows"] != len(rows) or c["n_ws_rows"] != sum(r["data_source"] == "fyers:ws-full" for r in rows) or c["n_chain_rows"] != sum(r["data_source"] == "fyers:options-chain-v3" for r in rows):
+        if c["n_rows"] != len(rows) or c["n_ws_rows"] != sum(r["data_source"] in WS for r in rows) or c["n_chain_rows"] != sum(r["data_source"] in CHAIN for r in rows):
             counter_problems.append((label, c["n_rows"], len(rows)))
         if c["spot"] and opts:
             atm = half_up(c["spot"], step)
@@ -100,8 +102,8 @@ def main(path):
             elif ask - bid > max(cfg["wide_spread_abs"], cfg["wide_spread_pct"] * (ask + bid) / 2):
                 f.add("WIDE_SPREAD")
         feed, cap = r["quote_feed_ts"], r["capture_ts"]
-        if r["data_source"] != "fyers:ws-full" or feed is None:
-            f.add("NO_FEED" if feed is None and r["data_source"] == "fyers:ws-full" else "AGE_UNKNOWN")
+        if r["data_source"] not in WS or feed is None:
+            f.add("NO_FEED" if feed is None and r["data_source"] in WS else "AGE_UNKNOWN")
         elif cap is not None:
             if cap - feed - skew[r["cycle_id"]] > cfg["stale_quote_s"]:
                 f.add("STALE_QUOTE")

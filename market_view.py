@@ -192,15 +192,13 @@ def _first_candle_high(symbol):
     """High of the first 5-min candle (09:15) of the latest session with data
     for one option contract. Cached per symbol + day."""
     import pandas as pd
-    import history_downloader as hd
     today = mc.now_ist().date()
     key = (symbol, today.isoformat())
     if key in _first_high_cache:
         return _first_high_cache[key]
-    b = hd._get(hd.HIST_API, {"symbol": symbol, "resolution": "5", "date_format": "1",
-                              "range_from": (today - pd.Timedelta(days=6)).isoformat(),
-                              "range_to": today.isoformat(), "cont_flag": "1"}, tries=2)
-    c = b.get("candles") or []
+    import historical_recorder
+    c = historical_recorder._fetch_history_candles(symbol, (today - pd.Timedelta(days=6)).isoformat(),
+                                                   today.isoformat(), 5)
     out = None
     if c:
         t = pd.to_datetime([x[0] for x in c], unit="s", utc=True).tz_convert("Asia/Kolkata")

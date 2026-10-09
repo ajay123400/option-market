@@ -26,7 +26,7 @@ M = [
     ("analyze: crossed boundary", A, "if bid > ask:", "if bid >= ask:"),
     ("analyze: stale boundary", A, "(cmf - skew) > cfg.max_quote_age_s", "(cmf - skew) >= cfg.max_quote_age_s"),
     ("analyze: skew not removed from the feed age", A, "(cmf - skew) > cfg.max_quote_age_s", "cmf > cfg.max_quote_age_s"),
-    ("analyze: websocket check dropped", A, 'if r["data_source"] != "fyers:ws-full":', "if False:"),
+    ("analyze: websocket check dropped", A, 'if r["data_source"] not in ("fyers:ws-full", "arrow:ws-full"):', "if False:"),
     ("analyze: never-traded rows kept", A, 'if not r["volume"] or pd.isna(r["volume"]):', "if False:"),
     ("analyze: mid = bid", A, "mid = (bid + ask) / 2\n        ltp_age", "mid = bid\n        ltp_age"),
     ("analyze: spread pct base", A, "spread_pct=100.0 * (ask - bid) / mid", "spread_pct=100.0 * (ask - bid) / ask"),

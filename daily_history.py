@@ -25,7 +25,8 @@ from datetime import date, datetime, timedelta
 
 import pandas as pd
 
-import fyers_auth
+import broker
+import fyers_option_chain as chain_mod
 import history_downloader as hd
 import market_calendar as mc
 import paths
@@ -33,6 +34,25 @@ import paths
 WIDEN = 500
 STATUS = os.path.join(hd.OUT, "daily_status.json")  # last run summary (Data Health shows it)
 FINAL_LOOKBACK_DAYS = 70  # re-check this far back for expiries still missing a final download
+ARROW = chain_mod.DATA_SOURCE == "arrow"   # the app is moving off Fyers entirely (see arrow_history.py)
+
+
+def _symbols_src():
+    if ARROW:
+        import arrow_history
+        return arrow_history
+    import fyers_option_symbols
+    return fyers_option_symbols
+
+
+def _list_expiries():
+    src = _symbols_src()
+    return src.list_expiries() if ARROW else src.list_expiries("NIFTY")
+
+
+def _chain_symbols(cur_iso, strikes):
+    src = _symbols_src()
+    return src.chain_symbols(cur_iso, strikes) if ARROW else src.chain_symbols("NIFTY", cur_iso, strikes)
 
 
 def _manifest():
@@ -46,7 +66,26 @@ def _save(m):
 def finalize_expired(today, spot):
     """Step 2: any expiry in the last FINAL_LOOKBACK_DAYS that is not a
     finished ('done') download -- live ones that have now expired, or weeks
-    the job never saw -- is fetched from the expired-F&O API and widened."""
+    the job never saw -- is fetched from the expired-F&O API and widened.
+    On Arrow (no expired-contract data) the week is finalised from its own
+    live file, which by expiry evening holds the contract's whole life."""
+    if ARROW:
+        import arrow_history
+        done = 0
+        m = _manifest()
+        oldest = (today - timedelta(days=FINAL_LOOKBACK_DAYS)).isoformat()
+        for exp_iso, ent in sorted(m.items()):
+            if not (oldest <= exp_iso < today.isoformat()) or (ent or {}).get("status") == "done":
+                continue
+            new, err = arrow_history.finalize_from_live(m, exp_iso)
+            if err:
+                hd.log(f"daily: finalise {exp_iso} -- {err}")
+                continue
+            m[exp_iso] = new
+            _save(m)
+            hd.log(f"daily: finalised {exp_iso} from the live file ({new.get('contracts')} contracts)")
+            done += 1
+        return done
     exps = hd.list_expiries(today - timedelta(days=FINAL_LOOKBACK_DAYS), today - timedelta(days=1))
     exps = [date.fromisoformat(e) for e in exps if e < today.isoformat()]
     allm = sorted(set(_manifest()) | {e.isoformat() for e in exps})
@@ -76,9 +115,8 @@ def finalize_expired(today, spot):
 
 def update_current(today, spot, cur=None):
     """Step 3: the weekly expiry that is still trading (or the one given)."""
-    import fyers_option_symbols as fos
     if cur is None:
-        listed = [date.fromisoformat(e) for e in fos.list_expiries("NIFTY")]
+        listed = [date.fromisoformat(e) for e in _list_expiries()]
         cur = min((e for e in listed if e >= today), default=None)
     if cur is None:
         hd.log("daily: no current NIFTY expiry listed")
@@ -94,7 +132,7 @@ def update_current(today, spot, cur=None):
         return None
     lo = int(round(wk["low"].min() / hd.STEP) * hd.STEP) - hd.ATM_SIDE * hd.STEP - WIDEN
     hi = int(round(wk["high"].max() / hd.STEP) * hd.STEP) + hd.ATM_SIDE * hd.STEP + WIDEN
-    syms = fos.chain_symbols("NIFTY", cur.isoformat(), list(range(lo, hi + 1, hd.STEP)))
+    syms = _chain_symbols(cur.isoformat(), list(range(lo, hi + 1, hd.STEP)))
     frames, empty = [], 0
     rf = (cur - timedelta(days=99)).isoformat()
     for k, pair in syms.items():
@@ -102,9 +140,13 @@ def update_current(today, spot, cur=None):
             sym = pair.get(typ)
             if not sym:
                 continue
-            b = hd._get(hd.HIST_API, {"symbol": sym, "resolution": "1", "date_format": "1", "range_from": rf,
-                                      "range_to": today.isoformat(), "cont_flag": "1", "oi_flag": "1"})
-            c = b.get("candles") or []
+            if ARROW:
+                import arrow_history
+                c = [list(x) for x in arrow_history.candles_1m(sym, date.fromisoformat(rf), today)]
+            else:
+                b = hd._get(hd.HIST_API, {"symbol": sym, "resolution": "1", "date_format": "1", "range_from": rf,
+                                          "range_to": today.isoformat(), "cont_flag": "1", "oi_flag": "1"})
+                c = b.get("candles") or []
             if not c:
                 empty += 1
                 continue
@@ -144,10 +186,14 @@ def update_current(today, spot, cur=None):
 
 def update():
     t = time.time()
-    fyers_auth.login()
+    broker.login()
     today = mc.now_ist().date()
-    hd.log(f"==== daily history update {today} ====")
-    spot = hd.download_spot(today - timedelta(days=10), today)
+    hd.log(f"==== daily history update {today} ({broker.name()}) ====")
+    if ARROW:
+        import arrow_history
+        spot = arrow_history.download_spot(today - timedelta(days=10), today)
+    else:
+        spot = hd.download_spot(today - timedelta(days=10), today)
     hd.log(f"daily: NIFTY spot on disk to {datetime.fromtimestamp(int(spot['ts'].max()), mc.IST):%Y-%m-%d %H:%M}")
     n = finalize_expired(today, spot)
     cur = update_current(today, spot)
@@ -156,8 +202,7 @@ def update():
     # reach the history a day late
     if cur == today:
         try:
-            import fyers_option_symbols as fos
-            nxt = min((date.fromisoformat(e) for e in fos.list_expiries("NIFTY") if e > today.isoformat()), default=None)
+            nxt = min((date.fromisoformat(e) for e in _list_expiries() if e > today.isoformat()), default=None)
             if nxt:
                 update_current(today, spot, cur=nxt)
         except Exception as e:

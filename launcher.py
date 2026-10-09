@@ -11,7 +11,6 @@ import time
 import traceback
 import webbrowser
 
-import fyers_auth
 
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8")
@@ -45,6 +44,7 @@ def run_record_only():
     that day -- see historical_recorder.run_headless_session()'s
     docstring for why the GUI's own recording can't cover a day the app
     wasn't running for."""
+    import fyers_auth
     import historical_recorder
     print("Logging in to Fyers (automated TOTP flow)...")
     try:
@@ -80,14 +80,14 @@ def main():
     print("=" * 60)
     print(" Option Market -- NIFTY Options Strategy Suite")
     print("=" * 60)
-    print("\nLogging in to Fyers (automated TOTP flow)...")
+    import broker
+    print(f"\nLogging in to {broker.name()} (automated TOTP flow)...")
     try:
-        fyers_auth.login()
-        print("Fyers login OK.")
+        broker.login()
+        print(f"{broker.name()} login OK.")
     except Exception as e:
-        print(f"\nFyers login FAILED: {e}")
-        print("Check FYERS_APP_ID / FYERS_SECRET_KEY / FYERS_CLIENT_ID / "
-              "FYERS_PIN / FYERS_TOTP_KEY in .env, then restart.")
+        print(f"\n{broker.name()} login FAILED: {e}")
+        print(broker.env_hint())
         input("\nPress Enter to exit...")
         sys.exit(1)
 

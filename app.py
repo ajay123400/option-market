@@ -8,7 +8,6 @@ import os
 from flask import Flask, jsonify, render_template, request
 
 import data_health
-import fyers_auth
 import fyers_option_chain as chain_mod
 import historical_recorder
 import charges as charges_mod
@@ -955,11 +954,10 @@ def api_manual_journal_note():
 
 
 if __name__ == "__main__":
-    print("Logging in to Fyers (automated TOTP flow)...")
-    fyers_auth.login()  # daily token refresh -- login() itself skips the
-    # real login if today's cached token is still valid, so this is a no-op
-    # on Flask debug mode's second (reloader) process start.
-    print("Fyers login OK.")
+    import broker
+    print(f"Logging in to {broker.name()} (automated TOTP flow)...")
+    broker.login()  # daily token refresh -- a no-op while today's cached token is valid
+    print(f"{broker.name()} login OK.")
     # (historical data now comes from the evening job -- daily_history.py;
     # the old intraday recorder thread is no longer started)
     # Server-side SL/Target/15:25 square-off/expiry settlement -- runs

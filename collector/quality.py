@@ -1,5 +1,5 @@
 """Descriptive per-row quality flags. FLAGS ONLY: nothing is filtered, altered or deleted at capture time; thresholds are fixed in Config and recorded in the database."""
-from .config import Config
+from .config import WS_SOURCES, Config
 
 FLAG_NAMES = ["NO_BID", "NO_ASK", "BAD_PRICE", "CROSSED", "LOCKED", "WIDE_SPREAD", "STALE_QUOTE", "FEED_IN_FUTURE", "FEED_REGRESSED", "NO_FEED", "AGE_UNKNOWN", "NO_OI", "NO_VOLUME_TODAY", "ZERO_LTP"]
 
@@ -27,8 +27,8 @@ def row_flags(r: dict, skew_s: float, cfg: Config = Config(), prev_feed_ts=None,
             if ask - bid > max(cfg.wide_spread_abs, cfg.wide_spread_pct * mid):
                 f.append("WIDE_SPREAD")
     feed, cap = r.get("quote_feed_ts"), r.get("capture_ts")
-    if r.get("data_source") != "fyers:ws-full" or feed is None:
-        f.append("NO_FEED" if feed is None and r.get("data_source") == "fyers:ws-full" else "AGE_UNKNOWN")
+    if r.get("data_source") not in WS_SOURCES or feed is None:
+        f.append("NO_FEED" if feed is None and r.get("data_source") in WS_SOURCES else "AGE_UNKNOWN")
     elif cap is not None:
         age = cap - feed - (skew_s or 0.0)
         if age > cfg.stale_quote_s:

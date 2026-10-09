@@ -356,7 +356,12 @@ def _fetch_history_candles(fyers_symbol, from_date, to_date, resolution=CANDLE_M
     yet expired) contract -- once an expiry passes, this stops returning
     anything for it, same limitation every broker's historical API has
     for options. Returns [] on any failure or genuine no-data response
-    (e.g. a strike that simply never traded)."""
+    (e.g. a strike that simply never traded). With DATA_SOURCE=arrow the
+    same rows come from Arrow's candle API instead (Fyers Standard caps data
+    calls at 5,000 a day; the range engine alone makes ~60 of these a cycle)."""
+    if chain_mod.DATA_SOURCE == "arrow":
+        import arrow_chain
+        return arrow_chain.history_candles(fyers_symbol, from_date, to_date, resolution)
     try:
         headers = {"Authorization": fyers_auth.get_auth_header()}
         params = {"symbol": fyers_symbol, "resolution": str(resolution), "date_format": "1",

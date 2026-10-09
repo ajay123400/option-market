@@ -8,6 +8,17 @@ INDEX_SYMBOL = "NSE:NIFTY50-INDEX"
 WS_SYMBOL_LIMIT = 5000                      # fyers_apiv3 data_ws.symbol_limit (checked in fyers_apiv3 3.1.18: "Please provide less than 5000 symbols")
 CHAIN_URL = "https://api-t1.fyers.in/data/options-chain-v3"
 DEFAULT_WINDOWS_DIR = r"E:\nifty_microstructure"
+WS_SOURCES = ("fyers:ws-full", "arrow:ws-full")                 # data_source labels of websocket rows (either broker)
+CHAIN_SOURCES = ("fyers:options-chain-v3", "arrow:rest-chain")  # data_source labels of REST-chain fallback rows
+
+
+def provider():
+    """'arrow' when the app's .env has DATA_SOURCE=arrow (the app is moving off Fyers), else 'fyers'."""
+    try:
+        import fyers_option_chain
+        return fyers_option_chain.DATA_SOURCE
+    except Exception:
+        return "fyers"
 
 
 @dataclass(frozen=True)
