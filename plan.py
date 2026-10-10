@@ -295,12 +295,14 @@ def update(now=None):
         book = _load_book()
         today = now.date().isoformat()
         lot = manual_trades.LOT_SIZE
+        new, exits, settles = {}, [], []
         # 1) record the day's setups (once per setup x strategy)
         for s in p["setups"]:
             for key, t in s["trades"].items():
                 tid = f"{today}|{s['id']}|{key}"
                 if tid in book["trades"]:
                     continue
+                new.setdefault(s["id"], (s, []))[1].append((key, t))
                 ch = sum(charges.order_charges("SELL", l["price"], lot) for l in t["legs"])
                 book["trades"][tid] = {"id": tid, "day": today, "time": now.strftime("%H:%M"), "setup": s["id"], "strategy": key,
                                        "name": t["name"], "expiry": s["expiry"]["date"], "expiry_ts": s["expiry"]["ts"],
@@ -322,6 +324,7 @@ def update(now=None):
                 t.update(status="expired", pnl=round(val * t["lot"] - t["entry_charges"], 2), closed=f"{t['expiry']} close",
                          close_reason=f"expired, NIFTY {spot:,.0f}")
                 _update_excursion(t)
+                settles.append(t)
                 continue
             if t["expiry"] not in chains:
                 try:
@@ -333,12 +336,14 @@ def update(now=None):
                 continue
             t["pnl"], t["marked"] = pnl, now.strftime("%Y-%m-%d %H:%M")
             _update_excursion(t, pnl, now)
-            # setup B exit: IV rule back to normal at a check (not on the entry day's own reading)
-            if t["exit_rule"] == "ivnormal" and rule.get("live") and rule.get("window") == "ok" and t["day"] < today \
+            # setup B exit: IV rule back to normal AT A CHECK (as tested: the first 09:30 / 12:00 / 14:30 reading
+            # that is normal -- not any moment in between), never on the entry day's own reading
+            if t["exit_rule"] == "ivnormal" and rule.get("live") and rule.get("at_check") and rule.get("window") == "ok" and t["day"] < today \
                     and rule.get("atm_iv") is not None and not rule.get("iv_ok"):
                 exit_ch = sum(charges.order_charges("BUY", x, t["lot"]) for x in px)
                 t.update(status="closed", pnl=round(pnl, 2), closed=now.strftime("%Y-%m-%d %H:%M"),
                          close_reason=f"IV normal ({rule['atm_iv']:.1f}% < {rule['iv_thr_now']:.1f}%)", exit_charges=round(exit_ch, 2))
+                exits.append(t)
         # 3) worst / best point of finished trades, once the evening job's 1-min data covers their whole life
         for t in book["trades"].values():
             if t["status"] in ("closed", "expired") and not t.get("path_done"):
@@ -348,6 +353,10 @@ def update(now=None):
                     t["path_done"] = True
         _save_book(book)
         p["book"] = book
+        try:
+            _notify(p, new, exits, settles, now)
+        except Exception:
+            traceback.print_exc()
         return p
 
 
@@ -365,7 +374,7 @@ def payload():
         if t["expiry"] == today:
             t["action"] = "HOLD — expires today"
         elif t["exit_rule"] == "ivnormal":
-            t["action"] = ("EXIT — IV back to normal" if rule.get("live") and rule.get("window") == "ok" and not rule.get("iv_ok") and t["day"] < today
+            t["action"] = ("EXIT — IV back to normal" if rule.get("live") and rule.get("at_check") and rule.get("window") == "ok" and not rule.get("iv_ok") and t["day"] < today
                            else "HOLD — exit when the IV rule reads normal at a check")
         else:
             t["action"] = "HOLD to expiry"
@@ -429,6 +438,113 @@ def _iv_series(p):
 
 
 # ---------------------------------------------------------------------------
+# Telegram: the plan's own events, once each (results/plan/alerts_sent.json survives restarts)
+ALERTS = os.path.join(DIR, "alerts_sent.json")
+
+
+def _sent():
+    try:
+        with open(ALERTS) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+def _send_once(key, text):
+    import telegram_notify as tg
+    sent = _sent()
+    if key in sent:
+        return False
+    if tg.send(text):                     # not marked when Telegram fails -> retried at the next update
+        sent[key] = mc.now_ist().strftime("%Y-%m-%d %H:%M")
+        os.makedirs(DIR, exist_ok=True)
+        paths.atomic_write_json(ALERTS, sent)
+        return True
+    return False
+
+
+def _h(x):
+    import html
+    return html.escape(str(x), quote=False)
+
+
+def _rs(v):
+    return ("−" if v < 0 else "") + "₹" + f"{abs(v):,.0f}"
+
+
+def _notify(p, new, exits, settles, now):
+    rule = p.get("rule") or {}
+    for sid, (s, items) in new.items():
+        iv, thr = rule.get("atm_iv"), rule.get("iv_thr_now")
+        head = f"🟢 <b>PLAN: SELL — setup {sid}</b> ({now:%H:%M})\n{_h(s['title'])}"
+        if iv is not None and thr is not None:
+            head += f"\nIV {iv:.1f}% vs threshold {thr:.1f}%"
+        if (p.get("decision") or {}).get("strong"):
+            head += " · <b>STRONG</b>"
+        if rule.get("skew_steep"):
+            head += " · put skew steep → lean to puts"
+        lines = [head, ""]
+        for key, t in items:
+            te = (s.get("test") or {}).get(key) or {}
+            legs = " + ".join(f"{l['strike']} {l['type']} @{l['price']}" for l in t["legs"])
+            be = " / ".join(f"{b:,.0f}" if isinstance(b, (int, float)) else str(b) for b in (t.get("breakevens") or []))
+            lines.append(f"<b>{_h(t.get('label') or t.get('name'))}</b>: SELL {legs} → {_rs(t['net_premium'])} · BE {be}")
+            if te:
+                lines.append(f"   test: avg {_rs(te.get('avg', 0))} · win {te.get('win')}% · worst trade {_rs(te.get('worst', 0))}")
+        lines += ["", f"Exit: {_h(s['exit'])}", "Paper — recorded on the Plan page."]
+        _send_once(f"sell|{now.date().isoformat()}|{sid}", "\n".join(lines))
+    for t in exits:
+        msg = (f"🔴 <b>PLAN: EXIT — setup {t['setup']}</b> ({now:%H:%M})\n{_h(t['name'])} · exp {t['expiry']}\n"
+               f"{_h(t.get('close_reason', ''))} → buy back now\nResult {_rs(t['pnl'])} (paper)")
+        if t.get("mae") is not None:
+            msg += f" · worst point {_rs(t['mae'])}"
+        _send_once(f"exit|{t['id']}", msg)
+    for t in settles:
+        msg = f"✅ <b>PLAN: expired</b> — setup {t['setup']} {_h(t['name'])}\n{_h(t.get('close_reason', ''))} → {_rs(t['pnl'])} (paper)"
+        if t.get("mae") is not None:
+            msg += f" · worst point {_rs(t['mae'])}"
+        _send_once(f"settle|{t['id']}", msg)
+
+
+def daily_summary(now=None):
+    """One message after the close: today's checks, what the plan did, open trades, the scorecard."""
+    now = now or mc.now_ist()
+    key = f"daily|{now.date().isoformat()}"
+    if key in _sent():
+        return False
+    p = update(now)
+    rule = p.get("rule") or {}
+    lines = [f"📋 <b>Plan · {now:%a %d %b}</b>"]
+    if rule:
+        rd, th = rule.get("readings") or {}, rule.get("thresholds") or {}
+        chk = []
+        for slot in SR.SLOTS:
+            v = (rd.get(slot) or {}).get("atm_iv")
+            t_ = th.get(slot)
+            mark = "✓" if v is not None and t_ is not None and v >= t_ else ("✗" if v is not None else "")
+            chk.append(f"{slot} {'—' if v is None else format(v, '.1f') + '%'} vs {'—' if t_ is None else format(t_, '.1f') + '%'} {mark}")
+        lines.append("Checks: " + " · ".join(chk))
+        sk = (rd.get("09:30") or {}).get("skew25")
+        if sk is not None and th.get("skew") is not None:
+            lines.append(f"Put skew {sk:.2f} vs {th['skew']:.2f} ({'steep' if sk >= th['skew'] else 'not steep'})")
+    else:
+        lines.append(_h((p.get("decision") or {}).get("text", "")))
+    today = now.date().isoformat()
+    trades = list(p["book"]["trades"].values())
+    opened = [t for t in trades if t["day"] == today and t.get("status") != "void"]
+    lines.append("Today: " + (", ".join(sorted({f"SELL setup {t['setup']} at {t['time']}" for t in opened})) if opened else "no new trade"))
+    op = [t for t in trades if t["status"] == "open"]
+    if op:
+        lines.append("Open: " + "; ".join(f"{t['setup']} {t['strategy']} {_rs(t['pnl'])}" for t in op))
+    closed = [t for t in trades if t["status"] in ("closed", "expired")]
+    for k in ("A", "B"):
+        c = [t for t in closed if t["setup"] == k]
+        if c:
+            lines.append(f"Scorecard {k}: {len(c)} closed · {_rs(sum(t['pnl'] for t in c))} · win {round(sum(t['pnl'] > 0 for t in c) / len(c) * 100)}%")
+    return _send_once(key, "\n".join(lines))
+
+
+# ---------------------------------------------------------------------------
 _thread = None
 
 
@@ -438,6 +554,8 @@ def _loop():
             now = mc.now_ist()
             if mc.is_trading_day(now.date()) and "09:30" <= now.strftime("%H:%M") <= "15:50":
                 update(now)
+                if now.strftime("%H:%M") >= "15:35":
+                    daily_summary(now)
         except Exception:
             traceback.print_exc()
         time.sleep(300)

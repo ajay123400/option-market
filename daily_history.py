@@ -227,6 +227,13 @@ def update():
         hd.log(f"daily: IV rule history +{added} rows")
     except Exception as e:
         hd.log(f"daily: IV rule history update failed -- {e}")
+    # the week's Telegram review, on its last trading day (after the IV history so the checks compare)
+    try:
+        import weekly_review
+        if weekly_review.maybe_send(today):
+            hd.log("daily: weekly review sent")
+    except Exception as e:
+        hd.log(f"daily: weekly review failed -- {e}")
     status = {"last_run": datetime.now().isoformat(timespec="seconds"), "finalised": n,
               "current": cur.isoformat() if cur else None, "seconds": round(time.time() - t)}
     paths.atomic_write_json(STATUS, status)
