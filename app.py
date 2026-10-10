@@ -54,6 +54,66 @@ def iv_page():
     return render_template("iv.html")
 
 
+@app.route("/gex")
+def gex_page():
+    return render_template("gex.html")
+
+
+@app.route("/surface")
+def surface_page():
+    return render_template("surface.html")
+
+
+@app.route("/api/surface/days")
+def api_surface_days():
+    import surface
+    try:
+        return jsonify({"ok": True, "today": mc.now_ist().date().isoformat(), "live_now": surface.live_now(), "days": surface.history_days()})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/api/surface")
+def api_surface():
+    """Intraday IV surface (information only): ?day=YYYY-MM-DD; no day = today live (or the last session)."""
+    import surface
+    try:
+        return jsonify({"ok": True, **surface.payload(request.args.get("day") or None)})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/research/<name>")
+def research_report(name):
+    """Any study's saved report: results/<name>/report.html (e.g. /research/gex, /research/risk_sizing)."""
+    from flask import send_file
+    import re as _re
+    if not _re.fullmatch(r"[a-z0-9_]+", name):
+        return ("bad name", 400)
+    p = os.path.join(paths.BASE_DIR, "results", name, "report.html")
+    return send_file(p) if os.path.exists(p) else (f"report '{name}' not built yet", 404)
+
+
+@app.route("/api/gex/days")
+def api_gex_days():
+    import gex
+    try:
+        return jsonify({"ok": True, "today": mc.now_ist().date().isoformat(), "live_now": gex.live_now(), "days": gex.history_days()})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/api/gex")
+def api_gex():
+    """GEX picture (information only): ?day=YYYY-MM-DD&expiry=YYYY-MM-DD&at=HH:MM; no day = today live."""
+    import gex
+    try:
+        a = request.args
+        return jsonify({"ok": True, **gex.payload(a.get("day") or None, a.get("expiry") or None, a.get("at") or None)})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
 @app.route("/plan")
 def plan_page():
     return render_template("plan.html")
@@ -968,6 +1028,10 @@ if __name__ == "__main__":
     range_strategy.start_background()  # the user's weekly range method, paper-traded
     import plan
     plan.start_background()            # "Aaj ka Plan": records + follows the plan's trades
+    import gex
+    gex.start_background()             # GEX page samples (information only)
+    import surface
+    surface.start_background()         # Vol Surface page samples (information only)
     print("Range Strategy running in the background. Starting server...")
     # threaded=True is essential here, not optional: every page (Option
     # Chain, Strategy Builder, Journal) polls its own endpoint every few

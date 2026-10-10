@@ -182,6 +182,7 @@ class _Feed:
         self.connected = False
         self.thread = None
         self.last_rx = 0.0
+        self.last_kick = 0.0
 
     def start(self):
         if self.thread and self.thread.is_alive():
@@ -247,6 +248,20 @@ class _Feed:
                 pass
         return new
 
+    def healthy(self):
+        """Connected AND ticking. Seen live on 2026-10-09 (recorder, 15:15 closing auction): the socket stayed
+        'connected' while ticks stopped for ~1 min. A quiet socket during market hours is closed so the loop
+        reconnects (at most once a minute); callers serve REST meanwhile."""
+        now = time.time()
+        fresh = self.connected and self.last_rx and now - self.last_rx < _QUIET_SEC
+        if self.connected and not fresh and _market_hours() and now - self.last_kick > 60:
+            self.last_kick = now
+            try:
+                self.ws.close()
+            except Exception:
+                pass
+        return bool(fresh)
+
     def get(self, token):
         with self.lock:
             t = self.ticks.get(int(token))
@@ -259,7 +274,13 @@ class _Feed:
 
 
 _WS_MAX = 950        # Arrow allows 1,024 websocket symbols per account
+_QUIET_SEC = 15      # no tick on any subscribed symbol for this long = the feed is not live
 FEED = _Feed()
+
+
+def _market_hours():
+    n = datetime.now(IST)
+    return n.weekday() < 5 and (9, 15) <= (n.hour, n.minute) < (15, 31)
 
 
 def _rest_quotes(recs, force=False):
@@ -298,8 +319,8 @@ def _rows_for(recs, wait=1.5):
         time.sleep(0.1)
         missing = [r for r in missing if FEED.get(r["token"]) is None]
     unsubscribed = [r for r in recs if r["token"] not in FEED.subscribed]
-    if not FEED.connected:
-        _rest_quotes(recs, force=True)      # websocket down: every row from REST, never a frozen tick
+    if not FEED.healthy():
+        _rest_quotes(recs, force=True)      # websocket down or silent: every row from REST, never a frozen tick
     elif missing or unsubscribed:
         if missing:
             _rest_quotes(missing)

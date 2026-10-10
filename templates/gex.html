@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEX</title>
+<script src="/static/vendor/lightweight-charts.js"></script>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #ffffff; --border: #e7e8ee; --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --up-soft: #e6f7f0; --down: #e0434a; --down-soft: #fdedee; --amber: #b7791f; --amber-soft: #fdf1dc;
+    --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --radius: 14px; --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .controls label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  select, button { font: inherit; font-size: 13px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+  input[type=range] { width: 260px; }
+  .info { background: var(--amber-soft); border: 1px solid #f1d9ad; color: #7a5313; border-radius: 10px; padding: 8px 12px; font-size: 12.5px; margin: 14px 28px 0; }
+  .info a { color: inherit; font-weight: 700; }
+  .page { padding: 14px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow); text-align: center; }
+  .kpi b { display: block; font-size: 21px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .kpi span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .kpi b.up { color: var(--up); } .kpi b.down { color: var(--down); } .kpi b.amber { color: var(--amber); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 0; }
+  .card h3 { margin: 0; padding: 12px 16px 0; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .card .sub { font-size: 12px; color: var(--muted-2); padding: 2px 16px 0; }
+  #ts { height: 300px; margin: 6px; }
+  svg text { font-size: 11px; fill: var(--muted); font-family: inherit; }
+  .svgwrap { padding: 6px 10px 10px; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); padding: 0 16px 12px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; border-radius: 3px; }
+  .note { font-size: 11.5px; color: var(--muted-2); padding: 0 16px 12px; line-height: 1.5; }
+  .err { color: var(--down); padding: 20px; }
+  .tip { position: fixed; pointer-events: none; background: rgba(20,22,28,.9); color: #fff; font-size: 12px; border-radius: 7px; padding: 5px 8px; display: none; z-index: 9; }
+  @media (max-width: 900px) { .controls, .page, .topbar { padding-left: 12px; padding-right: 12px; } .info { margin: 12px 12px 0; } input[type=range] { width: 160px; } }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #111318; --card: #1a1d24; --border: #2a2e38; --text: #e8e9ee; --muted: #9097a6; --muted-2: #6d7382; --up-soft: #12352a; --down-soft: #3a1c1f; --amber-soft: #3a2e17; --accent-soft: #262b4a; }
+    :root:not([data-theme="light"]) .info { color: #f1d9ad; border-color: #5a4520; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>GEX</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink active" href="/gex">GEX</a>
+  <a class="navlink" href="/surface">Vol Surface</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="controls">
+  <label>Date</label><select id="day"></select>
+  <label>Expiry</label><select id="exp"></select>
+  <span id="atWrap" hidden><label>Time</label> <input type="range" id="at" min="0" max="0" step="1"> <b id="atLbl"></b></span>
+  <button id="refresh">Refresh</button>
+  <span id="stamp" style="font-size:12px;color:var(--muted)"></span>
+</div>
+<div class="info">Information only — not a trading signal. In the 5-year backtest GEX added nothing to the IV rule (sell-day results with positive vs negative GEX differed by chance, t = 0.56) and negative-GEX days were not wilder. <a href="/research/gex" target="_blank">Backtest report →</a></div>
+
+<div class="page">
+  <div class="kpis" id="kpis"></div>
+  <div class="card"><h3>GEX through the day</h3><div class="sub" id="tsSub"></div><div id="ts"></div>
+    <div class="legend"><span><i style="background:#0e9f6e"></i>Net GEX (₹ Cr per 1% move, left)</span><span><i style="background:#4f5fe0"></i>NIFTY (right)</span><span><i style="background:#b7791f"></i>Flip level (right)</span></div></div>
+  <div class="card"><h3>Net GEX if NIFTY were at another level</h3><div class="sub" id="profSub"></div><div class="svgwrap" id="prof"></div>
+    <div class="note">Each bar = net GEX recomputed with NIFTY at that level (today's OI, IVs held per strike). Green = dealers long gamma (they sell rallies, buy dips); red = short gamma. Flip = where it crosses zero.</div></div>
+  <div class="card"><h3>Gamma exposure by strike</h3><div class="sub" id="strSub"></div><div class="svgwrap" id="str"></div>
+    <div class="legend"><span><i style="background:#0e9f6e"></i>Call gamma (dealers long, +)</span><span><i style="background:#e0434a"></i>Put gamma (dealers short, −)</span></div></div>
+  <div class="card"><h3>How this is computed</h3><div class="note" style="padding-top:10px">
+    Nearest weekly expiry (or the one chosen), strikes within ±8% of NIFTY. Gamma = Black-76 on the put-call-parity forward with the IV of the out-of-the-money option at each strike.
+    Net GEX = Σ gamma × (call OI − put OI) × NIFTY² × 1%, in ₹ crore per 1% NIFTY move, under the usual convention that dealers are long the calls and short the puts customers trade — OI does not show who is really short.
+    Total = the same with call OI + put OI. Today: the live Arrow chain, sampled every 5 minutes while the app runs. Earlier days: the 1-min history, any time from 09:20 to 15:25. Other dashboards use other conventions, so absolute numbers differ between sites.</div></div>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const cr = v => v == null ? "—" : (v < 0 ? "−" : "+") + Math.abs(v).toLocaleString("en-IN", {maximumFractionDigits: 0}) + " Cr";
+const px = v => v == null ? "—" : "₹" + Number(v).toLocaleString("en-IN", {maximumFractionDigits: 0});
+let DAYS = [], TODAY = null, CUR = null, chart = null, sNet, sSpot, sFlip;
+
+function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+async function loadDays() {
+  const j = await (await fetch("/api/gex/days")).json();
+  if (!j.ok) throw new Error(j.error);
+  DAYS = j.days; TODAY = j.today;
+  const opts = [`<option value="">${j.live_now ? "Today (live) · " + TODAY : "Latest session"}</option>`].concat(DAYS.filter(d => d.day !== TODAY).map(d => `<option value="${d.day}">${d.day}</option>`));
+  $("day").innerHTML = opts.join("");
+  fillExp();
+}
+function fillExp() {
+  const d = $("day").value;
+  const e = d ? (DAYS.find(x => x.day === d) || {}).expiries || [] : [];
+  $("exp").innerHTML = d ? e.map(x => `<option>${x}</option>`).join("") : `<option value="">nearest</option>`;
+  $("exp").disabled = !d;
+}
+
+async function load(at) {
+  const d = $("day").value, e = $("exp").value;
+  const q = new URLSearchParams(); if (d) { q.set("day", d); q.set("expiry", e); } if (at) q.set("at", at);
+  $("stamp").textContent = "loading…";
+  const j = await (await fetch("/api/gex?" + q)).json();
+  if (!j.ok) { $("kpis").innerHTML = `<div class="err">${j.error}</div>`; $("stamp").textContent = ""; return; }
+  CUR = j; render(j);
+}
+
+function render(j) {
+  const s = j.snap;
+  $("stamp").textContent = (j.live ? `live · ${s.time} · expiry ${j.expiry}` : `${j.day} ${s.time} · expiry ${j.expiry}`) + (j.note ? ` · ${j.note}` : "");
+  const fd = s.flip_dist_pct;
+  const kp = (v, l, c) => `<div class="kpi"><b class="${c || ""}">${v}</b><span>${l}</span></div>`;
+  $("kpis").innerHTML =
+    kp(cr(s.net), "Net GEX", s.net >= 0 ? "up" : "down") +
+    kp(cr(s.tot).replace("+", ""), "Total gamma") +
+    kp(px(s.flip), "Flip point", "amber") +
+    kp(fd == null ? "—" : (fd >= 0 ? "+" : "") + fd.toFixed(2) + "%", "NIFTY vs flip", fd == null ? "" : fd >= 0 ? "up" : "down") +
+    kp(px(s.spot), "NIFTY") +
+    kp(`${s.call_wall ?? "—"} / ${s.put_wall ?? "—"}`, "Call / put gamma wall");
+  // time slider (past days)
+  if (!j.live && j.series.length) {
+    $("atWrap").hidden = false;
+    const at = $("at"); at.max = j.series.length - 1;
+    at.value = Math.max(0, j.series.findIndex(x => x.t === s.time));
+    $("atLbl").textContent = s.time;
+  } else $("atWrap").hidden = true;
+  drawSeries(j);
+  drawProfile(s);
+  drawStrikes(s);
+}
+
+function drawSeries(j) {
+  const el = $("ts");
+  if (!chart) {
+    chart = LightweightCharts.createChart(el, { layout: { background: { color: "transparent" }, textColor: css("--muted") },
+      grid: { vertLines: { color: css("--border") }, horzLines: { color: css("--border") } },
+      rightPriceScale: { visible: true }, leftPriceScale: { visible: true }, timeScale: { timeVisible: true, secondsVisible: false }, autoSize: true });
+    sNet = chart.addAreaSeries({ priceScaleId: "left", lineColor: "#0e9f6e", topColor: "rgba(14,159,110,.25)", bottomColor: "rgba(14,159,110,.02)", lineWidth: 2 });
+    sSpot = chart.addLineSeries({ priceScaleId: "right", color: "#4f5fe0", lineWidth: 2 });
+    sFlip = chart.addLineSeries({ priceScaleId: "right", color: "#b7791f", lineWidth: 1, lineStyle: 2 });
+  }
+  const t = x => Math.floor(new Date(`${j.day}T${x.t}:00Z`).getTime() / 1000);   // IST wall clock shown as-is
+  const S = j.series || [];
+  sNet.setData(S.map(x => ({ time: t(x), value: x.net })));
+  sSpot.setData(S.map(x => ({ time: t(x), value: x.spot })));
+  sFlip.setData(S.filter(x => x.flip).map(x => ({ time: t(x), value: x.flip })));
+  chart.timeScale().fitContent();
+  $("tsSub").textContent = S.length ? `${S.length} samples · ${S[0].t}–${S[S.length - 1].t}` + (j.live ? " · today's line fills in every 5 minutes while the app runs" : "")
+    : (j.live ? "No samples yet today — they start at 09:16 while the app runs." : "");
+}
+
+const tip = $("tip");
+function bars(el, items, opt) {
+  // items: [{x, y, y2?, label}] vertical bars; opt: {w, h, xfmt, marks:[{x, label, color}]}
+  const W = el.clientWidth - 20 || 800, H = opt.h || 260, L = 64, Bm = 26, T = 18;
+  if (!items.length) { el.innerHTML = `<div class="note">No data.</div>`; return; }
+  const xs = items.map(i => i.x), ys = items.flatMap(i => [i.y, i.y2 ?? 0, 0]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const X = v => L + (v - x0) / ((x1 - x0) || 1) * (W - L - 10), Y = v => T + (y1 - v) / ((y1 - y0) || 1) * (H - T - Bm);
+  const bw = Math.max(2, (W - L - 10) / items.length * 0.8);
+  let s = `<svg width="${W}" height="${H}" role="img">`;
+  for (let k = 0; k <= 4; k++) { const v = y0 + (y1 - y0) * k / 4; s += `<line x1="${L}" x2="${W - 10}" y1="${Y(v)}" y2="${Y(v)}" stroke="${css("--border")}"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${Math.round(v).toLocaleString("en-IN")}</text>`; }
+  s += `<line x1="${L}" x2="${W - 10}" y1="${Y(0)}" y2="${Y(0)}" stroke="${css("--muted-2")}"/>`;
+  items.forEach((i, n) => {
+    const draw = (v, col) => { const y = Math.min(Y(v), Y(0)), h = Math.abs(Y(v) - Y(0)); s += `<rect x="${X(i.x) - bw / 2}" y="${y}" width="${bw}" height="${Math.max(h, .5)}" fill="${col}" data-i="${n}"/>`; };
+    draw(i.y, i.c1 || (i.y >= 0 ? "#0e9f6e" : "#e0434a"));
+    if (i.y2 != null) draw(i.y2, i.c2 || "#e0434a");
+  });
+  const nt = 6, rnd = opt.round || 1; for (let k = 0; k <= nt; k++) { const v = Math.round((x0 + (x1 - x0) * k / nt) / rnd) * rnd; s += `<text x="${X(v)}" y="${H - 8}" text-anchor="middle">${opt.xfmt ? opt.xfmt(v) : Math.round(v)}</text>`; }
+  (opt.marks || []).forEach((m, n) => { if (m.x == null || m.x < x0 || m.x > x1) return;
+    const right = n % 2 === 1;   // second label sits beside its line, not on top of the first
+    s += `<line x1="${X(m.x)}" x2="${X(m.x)}" y1="${T - 6}" y2="${H - Bm}" stroke="${m.color}" stroke-dasharray="4 3" stroke-width="1.5"/><text x="${X(m.x) + (right ? 5 : 0)}" y="${right ? T + 12 : T - 8}" text-anchor="${right ? "start" : "middle"}" style="fill:${m.color};font-weight:700">${m.label}</text>`; });
+  el.innerHTML = s + "</svg>";
+  el.querySelectorAll("rect").forEach(r => {
+    r.addEventListener("mousemove", ev => { const i = items[+r.dataset.i]; tip.style.display = "block"; tip.style.left = ev.clientX + 12 + "px"; tip.style.top = ev.clientY + 12 + "px"; tip.innerHTML = opt.tip(i); });
+    r.addEventListener("mouseleave", () => tip.style.display = "none");
+  });
+}
+
+function drawProfile(s) {
+  const P = s.profile || [];
+  $("profSub").textContent = `NIFTY ${px(s.spot)} · flip ${px(s.flip)}`;
+  bars($("prof"), P.map(p => ({ x: p.level, y: p.net })), { h: 280, round: 50, xfmt: v => "₹" + Math.round(v).toLocaleString("en-IN"),
+    marks: [{ x: s.flip, label: "Flip " + px(s.flip), color: "#b7791f" }, { x: s.spot, label: "NIFTY", color: "#4f5fe0" }],
+    tip: i => `NIFTY ${px(i.x)}<br>net GEX ${cr(i.y)}` });
+}
+
+function drawStrikes(s) {
+  const K = s.strikes || [];
+  $("strSub").textContent = `${K.length} strikes · call wall ${s.call_wall} · put wall ${s.put_wall}`;
+  bars($("str"), K.map(k => ({ x: k.k, y: k.call, y2: -k.put, c1: "#0e9f6e", c2: "#e0434a", k })), { h: 280, round: 100, xfmt: v => Math.round(v),
+    marks: [{ x: s.spot, label: "NIFTY", color: "#4f5fe0" }],
+    tip: i => `${i.k.k}<br>call ${cr(i.k.call)} (OI ${i.k.oi_c.toLocaleString("en-IN")})<br>put −${Math.abs(i.k.put).toLocaleString("en-IN", {maximumFractionDigits: 0})} Cr (OI ${i.k.oi_p.toLocaleString("en-IN")})<br>IV ${i.k.iv}%` });
+}
+
+$("day").addEventListener("change", () => { fillExp(); load(); });
+$("exp").addEventListener("change", () => load());
+$("refresh").addEventListener("click", () => load(CUR && !CUR.live ? CUR.snap.time : null));
+$("at").addEventListener("input", () => { const x = CUR.series[+$("at").value]; $("atLbl").textContent = x ? x.t : ""; });
+$("at").addEventListener("change", () => { const x = CUR.series[+$("at").value]; if (x) load(x.t); });
+window.addEventListener("resize", () => { if (CUR) { drawProfile(CUR.snap); drawStrikes(CUR.snap); } });
+setInterval(() => { if (CUR && CUR.live && !document.hidden) load(); }, 60000);
+loadDays().then(() => load()).catch(e => { $("kpis").innerHTML = `<div class="err">${e.message}</div>`; });
+</script>
+</body>
+</html>

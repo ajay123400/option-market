@@ -21,6 +21,7 @@ minutes, exited by their rule, settled at expiry -- a live scorecard to hold
 next to the backtest.
 """
 import json
+import math
 import os
 import threading
 import time
@@ -38,13 +39,14 @@ DIR = os.path.join(paths.BASE_DIR, "results", "plan")
 BOOK = os.path.join(DIR, "book.json")
 SLIP = 0.5
 STRATS = {"straddle": ("Short straddle|ATM", "Short straddle ATM"), "strangle": ("Short strangle|Δ0.15", "Short strangle 0.15Δ")}
-# out-of-sample backtest numbers per 1 lot (reports: iv_surface / ashish_rules / next_expiry_exit)
+# out-of-sample backtest numbers per 1 lot (reports: iv_surface / ashish_rules / next_expiry_exit);
+# worst / open / capital from risk_sizing.py (capital = margin x most trades open at once + 1.5 x worst drawdown, margin of 10 Oct 2026)
 TEST = {
-    "A": {"straddle": {"avg": 4753, "win": 67, "p5": -20275, "dd": -109890, "strong_avg": 6025},
-          "strangle": {"avg": 2378, "win": 86, "p5": -11083, "dd": -67361, "strong_avg": 3243},
+    "A": {"straddle": {"avg": 4753, "win": 67, "p5": -20275, "dd": -109890, "strong_avg": 6025, "worst": -37488, "open": 6, "capital": 1407000, "std": 13538},
+          "strangle": {"avg": 2378, "win": 86, "p5": -11083, "dd": -67361, "strong_avg": 3243, "worst": -25174, "open": 6, "capital": 1211000, "std": 5665},
           "normal_day_straddle": -11},
-    "B": {"straddle": {"avg": 4880, "win": 74, "p5": -17660, "dd": -42308},
-          "strangle": {"avg": 2863, "win": 85, "p5": -4381, "dd": -9361},
+    "B": {"straddle": {"avg": 4880, "win": 74, "p5": -17660, "dd": -42308, "worst": -44483, "open": 2, "capital": 513000, "std": 13645},
+          "strangle": {"avg": 2863, "win": 85, "p5": -4381, "dd": -9361, "worst": -8567, "open": 2, "capital": 384000, "std": 3595},
           "normal_day_straddle": -546},
 }
 _lock = threading.Lock()
@@ -156,6 +158,71 @@ def _mark(chain, t):
     return round(tot - ch - t["entry_charges"], 2), px
 
 
+_path_cache = {}   # (expiry, parquet mtime) -> DataFrame of the legs' 1-min closes
+
+
+def _path_stats(t):
+    """Worst and best point of a trade while it was open (MAE / MFE), from the
+    evening job's 1-min option closes (data/hist1m/options/<expiry>.parquet):
+    P&L each minute if bought back at that minute's close, net of entry and
+    exit charges. {'mae', 'mae_at', 'mfe', 'mfe_at', 'to'} or None."""
+    import pandas as pd
+    path = os.path.join(paths.BASE_DIR, "data", "hist1m", "options", f"{t['expiry']}.parquet")
+    try:
+        mt = os.path.getmtime(path)
+    except OSError:
+        return None
+    syms = sorted({l["symbol"] for l in t["legs"]})
+    key = (t["expiry"], mt, tuple(syms))
+    df = _path_cache.get(key)
+    if df is None:
+        x = pd.read_parquet(path, columns=["symbol", "ts", "close"], filters=[("symbol", "in", syms)])
+        df = x.pivot_table(index="ts", columns="symbol", values="close").sort_index().ffill()
+        _path_cache.clear()
+        _path_cache[key] = df
+    start = int(datetime.strptime(f"{t['day']} {t['time']}", "%Y-%m-%d %H:%M").replace(tzinfo=mc.IST).timestamp())
+    end_s = (t.get("closed") or "")[:16]
+    if t["status"] == "closed" and len(end_s) == 16:
+        end = int(datetime.strptime(end_s, "%Y-%m-%d %H:%M").replace(tzinfo=mc.IST).timestamp())
+    else:
+        end = int(datetime.strptime(f"{t['expiry']} 15:30", "%Y-%m-%d %H:%M").replace(tzinfo=mc.IST).timestamp())
+    d = df[(df.index >= start) & (df.index <= end)].dropna()
+    if d.empty or any(l["symbol"] not in d.columns for l in t["legs"]):
+        return None
+    pnl = sum((l["price"] - d[l["symbol"]]) * t["lot"] for l in t["legs"])
+    pnl = pnl - sum(d[l["symbol"]].map(lambda p: charges.order_charges("BUY", p, t["lot"])) for l in t["legs"]) - t["entry_charges"]
+    fmt = lambda ts: datetime.fromtimestamp(int(ts), mc.IST).strftime("%Y-%m-%d %H:%M")
+    return {"mae": round(float(pnl.min()), 2), "mae_at": fmt(pnl.idxmin()), "mfe": round(float(pnl.max()), 2),
+            "mfe_at": fmt(pnl.idxmax()), "to": fmt(d.index.max())}
+
+
+def _update_excursion(t, live_pnl=None, now=None):
+    """Keep t['mae'] / t['mfe'] (+ when) = the worst / best of the 1-min path
+    and the app's own 5-minute marks."""
+    if live_pnl is not None and now is not None:
+        at = now.strftime("%Y-%m-%d %H:%M")
+        if live_pnl < t.get("mae_live", float("inf")):
+            t["mae_live"], t["mae_live_at"] = round(live_pnl, 2), at
+        if live_pnl > t.get("mfe_live", float("-inf")):
+            t["mfe_live"], t["mfe_live_at"] = round(live_pnl, 2), at
+    try:
+        ps = _path_stats(t)
+    except Exception:
+        ps = None
+    if ps:
+        t["path"] = ps
+    cands = [(t["path"]["mae"], t["path"]["mae_at"])] if t.get("path") else []
+    if "mae_live" in t:
+        cands.append((t["mae_live"], t["mae_live_at"]))
+    if cands:
+        t["mae"], t["mae_at"] = min(cands)
+    cands = [(t["path"]["mfe"], t["path"]["mfe_at"])] if t.get("path") else []
+    if "mfe_live" in t:
+        cands.append((t["mfe_live"], t["mfe_live_at"]))
+    if cands:
+        t["mfe"], t["mfe_at"] = max(cands)
+
+
 # ---------------------------------------------------------------------------
 def compute(now=None):
     """Today's decision + the rule readings behind it."""
@@ -170,6 +237,7 @@ def compute(now=None):
         out["decision"] = {"kind": "none", "text": "No weekly expiry with 1–4 trading days left — the IV rule does not apply today."}
         return out
     chain = chain_mod.get_chain(strikecount=20, expiry_timestamp=rule["ts"])
+    out["spot"] = chain.get("spot") if mc.is_trading_day(now.date()) else None   # weekends: the feed carries mock sessions
     st = SR.status(chain)
     st["p70_now"] = _p70(st.get("bucket"))
     st["strong"] = bool(st.get("iv_ok") and st.get("p70_now") and st["atm_iv"] >= st["p70_now"])
@@ -253,6 +321,7 @@ def update(now=None):
                 val = sum(l["price"] - (max(0.0, spot - l["strike"]) if l["type"] == "CE" else max(0.0, l["strike"] - spot)) for l in t["legs"])
                 t.update(status="expired", pnl=round(val * t["lot"] - t["entry_charges"], 2), closed=f"{t['expiry']} close",
                          close_reason=f"expired, NIFTY {spot:,.0f}")
+                _update_excursion(t)
                 continue
             if t["expiry"] not in chains:
                 try:
@@ -263,12 +332,20 @@ def update(now=None):
             if pnl is None:
                 continue
             t["pnl"], t["marked"] = pnl, now.strftime("%Y-%m-%d %H:%M")
+            _update_excursion(t, pnl, now)
             # setup B exit: IV rule back to normal at a check (not on the entry day's own reading)
             if t["exit_rule"] == "ivnormal" and rule.get("live") and rule.get("window") == "ok" and t["day"] < today \
                     and rule.get("atm_iv") is not None and not rule.get("iv_ok"):
                 exit_ch = sum(charges.order_charges("BUY", x, t["lot"]) for x in px)
                 t.update(status="closed", pnl=round(pnl, 2), closed=now.strftime("%Y-%m-%d %H:%M"),
                          close_reason=f"IV normal ({rule['atm_iv']:.1f}% < {rule['iv_thr_now']:.1f}%)", exit_charges=round(exit_ch, 2))
+        # 3) worst / best point of finished trades, once the evening job's 1-min data covers their whole life
+        for t in book["trades"].values():
+            if t["status"] in ("closed", "expired") and not t.get("path_done"):
+                _update_excursion(t)
+                end = (t.get("closed") or "")[:16] if t["status"] == "closed" else f"{t['expiry']} 15:29"
+                if t.get("path") and t["path"]["to"] >= end:
+                    t["path_done"] = True
         _save_book(book)
         p["book"] = book
         return p
@@ -297,11 +374,57 @@ def payload():
     for key in ("A", "B"):
         c = [t for t in closed if t["setup"] == key]
         if c:
+            dips = [t["mae"] for t in c if t.get("mae") is not None]
             score[key] = {"n": len(c), "total": round(sum(t["pnl"] for t in c)), "win": round(sum(t["pnl"] > 0 for t in c) / len(c) * 100),
-                          "avg": round(sum(t["pnl"] for t in c) / len(c))}
+                          "avg": round(sum(t["pnl"] for t in c) / len(c)), "worst_dip": round(min(dips)) if dips else None}
     out = {**{k: v for k, v in p.items() if k != "book"}, "open": [t for t in trades if t["status"] == "open"],
-           "closed": closed[:40], "score": score, "test": TEST, "lot": manual_trades.LOT_SIZE}
+           "closed": closed[:40], "score": score, "test": TEST, "lot": manual_trades.LOT_SIZE,
+           "forward": _forward_test(closed), "iv_series": _iv_series(p)}
     _cache.update(t=time.time(), v=out)
+    return out
+
+
+def _forward_test(closed):
+    """Live (paper) results per variant vs the backtest: n, win, avg, total, deepest dip, the
+    running P&L, and whether the live average sits inside the backtest's 95% band for that n."""
+    out = {}
+    for setup in ("A", "B"):
+        for strat in ("straddle", "strangle"):
+            c = sorted((t for t in closed if t["setup"] == setup and t["strategy"] == strat), key=lambda t: (t.get("closed") or "", t["day"]))
+            te = TEST[setup][strat]
+            row = {"setup": setup, "strategy": strat, "n": len(c), "test_avg": te["avg"], "test_win": te["win"], "test_worst": te.get("worst")}
+            if c:
+                pn = [t["pnl"] for t in c]
+                avg = sum(pn) / len(pn)
+                half = 1.96 * te["std"] / math.sqrt(len(pn)) if te.get("std") else None
+                cum, curve = 0.0, []
+                for t in c:
+                    cum += t["pnl"]
+                    curve.append({"d": (t.get("closed") or t["day"])[:10], "cum": round(cum)})
+                dips = [t["mae"] for t in c if t.get("mae") is not None]
+                row.update(win=round(sum(x > 0 for x in pn) / len(pn) * 100), avg=round(avg), total=round(sum(pn)),
+                           worst=round(min(pn)), worst_dip=round(min(dips)) if dips else None, curve=curve,
+                           band=[round(te["avg"] - half), round(te["avg"] + half)] if half else None,
+                           on_track=(te["avg"] - half <= avg <= te["avg"] + half) if half else None,
+                           above=(avg > te["avg"] + half) if half else None)
+            out[f"{setup} {strat}"] = row
+    return out
+
+
+def _iv_series(p):
+    """Today's ATM IV of the rule expiry every 5 min (from the Vol Surface sampler), for the IV-vs-threshold chart."""
+    rule_exp = (p.get("rule_expiry") or {}).get("date")
+    if not rule_exp:
+        return []
+    try:
+        data = json.load(open(os.path.join(paths.BASE_DIR, "results", "surface", "live", f"{mc.now_ist().date().isoformat()}.json")))
+    except (OSError, ValueError):
+        return []
+    out = []
+    for smp in data.get("samples", []):
+        sl = (smp.get("expiries") or {}).get(rule_exp)
+        if sl and sl.get("atm") is not None:
+            out.append({"t": smp["t"], "iv": sl["atm"]})
     return out
 
 

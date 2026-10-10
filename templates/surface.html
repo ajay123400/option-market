@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vol Surface</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.34.0/plotly.min.js"></script>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #ffffff; --border: #e7e8ee; --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --down: #e0434a; --amber: #b7791f; --amber-soft: #fdf1dc; --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --radius: 14px; --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .controls label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  select, button { font: inherit; font-size: 13px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+  input[type=range] { width: 260px; }
+  .info { background: var(--amber-soft); border: 1px solid #f1d9ad; color: #7a5313; border-radius: 10px; padding: 8px 12px; font-size: 12.5px; margin: 14px 28px 0; }
+  .page { padding: 14px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow); }
+  .kpi b { display: block; font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .kpi span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 0; }
+  .card h3 { margin: 0; padding: 12px 16px 0; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .card .sub { font-size: 12px; color: var(--muted-2); padding: 2px 16px 0; }
+  #surf { height: 560px; } #smile, #atm { height: 320px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .note { font-size: 11.5px; color: var(--muted-2); padding: 0 16px 12px; line-height: 1.5; }
+  .err { color: var(--down); padding: 20px; }
+  @media (max-width: 1000px) { .two { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .controls, .page, .topbar { padding-left: 12px; padding-right: 12px; } .info { margin: 12px 12px 0; } #surf { height: 420px; } input[type=range] { width: 160px; } }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #111318; --card: #1a1d24; --border: #2a2e38; --text: #e8e9ee; --muted: #9097a6; --muted-2: #6d7382; --amber-soft: #3a2e17; --accent-soft: #262b4a; }
+    :root:not([data-theme="light"]) .info { color: #f1d9ad; border-color: #5a4520; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Vol Surface</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/gex">GEX</a>
+  <a class="navlink active" href="/surface">Vol Surface</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+
+<div class="controls">
+  <label>Date</label><select id="day"></select>
+  <label>Time</label> <input type="range" id="at" min="0" max="0" step="1" value="0"> <b id="atLbl"></b>
+  <button id="refresh">Refresh</button>
+  <span id="stamp" style="font-size:12px;color:var(--muted)"></span>
+</div>
+<div class="info">Information only — not a trading signal. Picking strikes from the IV surface was backtested and added nothing over picking by delta (iv_surface_research). The IV-level rule on the Plan page is the tested part.</div>
+
+<div class="page">
+  <div class="kpis" id="kpis"></div>
+  <div class="card"><h3>3D volatility surface</h3><div class="sub" id="surfSub"></div><div id="surf"></div>
+    <div class="note">x = strike vs the forward (moneyness, %: negative = below NIFTY, the put side), y = time of day, z = implied volatility. One surface per expiry. Lines: IV at the money through the day, and where the smile is lowest. Drag to rotate, scroll to zoom.</div></div>
+  <div class="two">
+    <div class="card"><h3>Smile at the selected time</h3><div class="sub" id="smSub"></div><div id="smile"></div></div>
+    <div class="card"><h3>ATM IV through the day</h3><div class="sub" id="atmSub">Both expiries — the gap is the term structure</div><div id="atm"></div></div>
+  </div>
+  <div class="card"><h3>How this is computed</h3><div class="note" style="padding-top:10px">
+    IV per strike = Black-76 on the put-call-parity forward, from the out-of-the-money option at that strike, every 5 minutes (09:20–15:25), interpolated onto a 0.25% moneyness grid (−5% … +5%); prices older than 30 minutes are left out.
+    Today: the live Arrow chain, sampled every 5 minutes while the app runs. Earlier days: the 1-min history; the second expiry appears where its file covers that day (from 10 Oct 2026 the evening job fetches next week's expiry every day).</div></div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const COLORS = [["#2b4cb3", "#f5d90a"], ["#7a1f1f", "#f3f3f3"]];   // expiry 1: blue→yellow, expiry 2: dark red→white
+const LINE = ["#f5b400", "#b0413e"];
+let DAYS = [], CUR = null;
+
+async function loadDays() {
+  const j = await (await fetch("/api/surface/days")).json();
+  if (!j.ok) throw new Error(j.error);
+  DAYS = j.days;
+  $("day").innerHTML = [`<option value="">${j.live_now ? "Today (live) · " + j.today : "Latest session"}</option>`]
+    .concat(DAYS.filter(d => d.day !== j.today).map(d => `<option value="${d.day}">${d.day} · ${d.expiries.length} exp</option>`)).join("");
+}
+
+async function load() {
+  const q = new URLSearchParams(); if ($("day").value) q.set("day", $("day").value);
+  $("stamp").textContent = "loading…";
+  const j = await (await fetch("/api/surface?" + q)).json();
+  if (!j.ok) { $("kpis").innerHTML = `<div class="err">${j.error}</div>`; $("stamp").textContent = ""; return; }
+  CUR = j;
+  const n = j.times.length;
+  $("at").max = Math.max(0, n - 1); $("at").value = Math.max(0, n - 1);
+  $("stamp").textContent = `${j.day}${j.live ? " · live" : ""} · ${j.expiries.map(e => e.expiry).join(" & ") || "no expiry data"}${j.note ? " · " + j.note : ""}`;
+  drawSurface(); drawAtm(); drawAt();
+}
+
+const layoutBase = () => ({ paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", font: { color: css("--muted"), size: 11 }, margin: { l: 50, r: 10, t: 10, b: 40 } });
+
+function drawSurface() {
+  const j = CUR, traces = [];
+  j.expiries.forEach((e, i) => {
+    const z = e.slices.map(s => s ? s.grid : j.grid.map(() => null));
+    traces.push({ type: "surface", name: e.expiry, x: j.grid, y: j.times.map((t, k) => k), z, opacity: i ? 0.75 : 0.95,
+      colorscale: [[0, COLORS[i][0]], [1, COLORS[i][1]]], showscale: true,
+      colorbar: { title: { text: e.expiry, font: { size: 11 } }, x: 1.0 + i * 0.09, len: 0.7, thickness: 12 },
+      hovertemplate: `${e.expiry}<br>moneyness %{x}%<br>%{customdata}<br>IV %{z:.2f}%<extra></extra>`,
+      customdata: j.times.map(t => j.grid.map(() => t)) });
+    traces.push({ type: "scatter3d", mode: "lines", name: `${e.expiry} ATM IV`, x: e.slices.map(() => 0), y: j.times.map((t, k) => k),
+      z: e.slices.map(s => s ? s.atm : null), line: { color: LINE[i], width: 5 } });
+    traces.push({ type: "scatter3d", mode: "lines", name: `${e.expiry} lowest IV`, x: e.slices.map(s => s ? s.min_m : null), y: j.times.map((t, k) => k),
+      z: e.slices.map(s => s ? s.min_iv : null), line: { color: LINE[i], width: 3, dash: "dot" } });
+  });
+  const step = Math.max(1, Math.round(j.times.length / 8));
+  const idx = j.times.map((t, k) => k).filter(k => k % step === 0);
+  Plotly.react("surf", traces, { ...layoutBase(), margin: { l: 0, r: 0, t: 0, b: 0 }, showlegend: true, legend: { orientation: "h", y: 1.02 },
+    scene: { xaxis: { title: "moneyness %" }, yaxis: { title: "time", tickvals: idx, ticktext: idx.map(k => j.times[k]) }, zaxis: { title: "IV %" },
+      camera: { eye: { x: -1.6, y: -1.5, z: 0.9 } }, aspectratio: { x: 1.3, y: 1.3, z: 0.7 } } }, { responsive: true, displaylogo: false });
+  $("surfSub").textContent = `${j.times.length} snapshots · ${j.times[0] || ""}–${j.times[j.times.length - 1] || ""}`;
+}
+
+// the plan's IV rule: threshold for the check time in force (09:30 until 12:00, 12:00 until 14:30, then 14:30)
+const SLOTS = ["09:30", "12:00", "14:30"];
+const thrAt = (R, t) => { if (!R || t < "09:30") return null; const s = t >= "14:30" ? "14:30" : t >= "12:00" ? "12:00" : "09:30"; return R.thr[s] ?? null; };
+
+function drawAtm() {
+  const j = CUR, R = j.rule;
+  const tr = j.expiries.map((e, i) => ({ type: "scatter", mode: "lines", name: e.expiry + (R && R.expiry === e.expiry ? " (rule expiry)" : ""), x: j.times, y: e.slices.map(s => s ? s.atm : null), line: { color: i ? "#b0413e" : "#4f5fe0", width: 2 } }));
+  if (R && Object.values(R.thr).some(v => v != null)) {
+    tr.push({ type: "scatter", mode: "lines", name: "IV rule threshold", x: j.times, y: j.times.map(t => thrAt(R, t)), line: { color: "#0e9f6e", width: 2, dash: "dash", shape: "hv" } });
+    const pts = SLOTS.filter(s => R.readings[s] != null);
+    tr.push({ type: "scatter", mode: "markers", name: "rule reading at check", x: pts, y: pts.map(s => R.readings[s]),
+      marker: { size: 11, color: pts.map(s => R.thr[s] != null && R.readings[s] >= R.thr[s] ? "#0e9f6e" : "#9aa0ab"), line: { color: "#fff", width: 1.5 } },
+      hovertemplate: pts.map(s => `${s}: IV ${R.readings[s]}% vs threshold ${R.thr[s] ?? "—"}%<extra></extra>`) });
+  }
+  Plotly.react("atm", tr, { ...layoutBase(), yaxis: { title: "ATM IV %", gridcolor: css("--border") }, xaxis: { gridcolor: css("--border") }, legend: { orientation: "h", y: 1.15 } }, { responsive: true, displaylogo: false });
+  $("atmSub").innerHTML = !R ? "Both expiries — the gap is the term structure" :
+    `Both expiries · <b style="color:#0e9f6e">dashed green = the Plan's IV-rule threshold</b> (60th pct of the past 500 days at 09:30 / 12:00 / 14:30, for the ${R.expiry || "1–4 day"} expiry) · dots = the rule's own reading at each check — ${R.sell ? '<b style="color:#0e9f6e">a sell day</b>' : "a normal day"}`;
+}
+
+function drawAt() {
+  const j = CUR, k = +$("at").value;
+  $("atLbl").textContent = j.times[k] || "";
+  const tr = j.expiries.map((e, i) => ({ type: "scatter", mode: "lines+markers", name: e.expiry, x: j.grid, y: (e.slices[k] || {}).grid || [], line: { color: i ? "#b0413e" : "#4f5fe0", width: 2 }, marker: { size: 3 } }));
+  Plotly.react("smile", tr, { ...layoutBase(), xaxis: { title: "moneyness % (strike vs forward)", zeroline: true, gridcolor: css("--border") }, yaxis: { title: "IV %", gridcolor: css("--border") }, legend: { orientation: "h", y: 1.1 } }, { responsive: true, displaylogo: false });
+  $("smSub").textContent = `${j.day} ${j.times[k] || ""}` + (j.spot && j.spot[k] ? ` · NIFTY ₹${Number(j.spot[k]).toLocaleString("en-IN")}` : "");
+  const kp = (v, l) => `<div class="kpi"><b>${v}</b><span>${l}</span></div>`;
+  $("kpis").innerHTML = j.expiries.map(e => { const s = e.slices[k]; return s ?
+    kp(`${s.atm.toFixed(2)}%`, `ATM IV · ${e.expiry}`) + kp(`${s.min_iv.toFixed(2)}% at ${s.min_m > 0 ? "+" : ""}${s.min_m}%`, `lowest IV · ${e.expiry}`) : kp("—", e.expiry); }).join("") +
+    (j.expiries.length === 2 && j.expiries[0].slices[k] && j.expiries[1].slices[k] ? kp(`${(j.expiries[1].slices[k].atm - j.expiries[0].slices[k].atm).toFixed(2)} pts`, "next − near ATM IV") : "") +
+    (() => { const R = j.rule, t = j.times[k], th = thrAt(R, t); if (th == null) return "";
+      const e = j.expiries.find(x => x.expiry === R.expiry) || j.expiries[0], sl = e && e.slices[k];
+      const above = sl && sl.atm >= th;
+      return `<div class="kpi"><b style="color:${above ? "#0e9f6e" : "inherit"}">${sl ? sl.atm.toFixed(2) : "—"}% vs ${th}%</b><span>ATM IV vs IV-rule threshold at ${t}${above ? " · above" : " · below"}</span></div>`; })();
+}
+
+$("day").addEventListener("change", load);
+$("refresh").addEventListener("click", load);
+$("at").addEventListener("input", drawAt);
+setInterval(() => { if (CUR && CUR.live && !document.hidden) load(); }, 5 * 60000);
+loadDays().then(load).catch(e => { $("kpis").innerHTML = `<div class="err">${e.message}</div>`; });
+</script>
+</body>
+</html>

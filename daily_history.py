@@ -124,6 +124,8 @@ def update_current(today, spot, cur=None):
     known = sorted(date.fromisoformat(e) for e in _manifest() if e < cur.isoformat())
     prev = known[-1] if known else cur - timedelta(days=7)
     w0, w1 = prev, min(today, cur)          # the week window: previous expiry day -> today
+    if w0 > today:                          # next week's expiry, fetched early: size strikes on the past week's range
+        w0 = today - timedelta(days=7)
     t0 = int(datetime.combine(w0, datetime.min.time(), mc.IST).timestamp())
     t1 = int(datetime.combine(w1, datetime.max.time(), mc.IST).timestamp())
     wk = spot[(spot["ts"] >= t0) & (spot["ts"] <= t1)]
@@ -197,12 +199,13 @@ def update():
     hd.log(f"daily: NIFTY spot on disk to {datetime.fromtimestamp(int(spot['ts'].max()), mc.IST):%Y-%m-%d %H:%M}")
     n = finalize_expired(today, spot)
     cur = update_current(today, spot)
-    # on an expiry day the IV rule already uses NEXT week's expiry (1-4 days
-    # left), so fetch it today too -- otherwise the day's IV readings only
-    # reach the history a day late
-    if cur == today:
+    # the NEXT weekly expiry too: on an expiry day the IV rule already uses it
+    # (1-4 days left), setup B sells it, and the /surface page shows two
+    # expiries side by side. On Fyers this was limited to expiry days (call
+    # budget); Arrow has no daily cap.
+    if cur == today or ARROW:
         try:
-            nxt = min((date.fromisoformat(e) for e in _list_expiries() if e > today.isoformat()), default=None)
+            nxt = min((date.fromisoformat(e) for e in _list_expiries() if e > (cur or today).isoformat()), default=None)
             if nxt:
                 update_current(today, spot, cur=nxt)
         except Exception as e:

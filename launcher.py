@@ -99,6 +99,10 @@ def main():
     range_strategy.start_background()  # the user's weekly range method, paper-traded + Telegram
     import plan
     plan.start_background()            # "Aaj ka Plan": records + follows the plan's trades
+    import gex
+    gex.start_background()             # GEX page samples (information only)
+    import surface
+    surface.start_background()         # Vol Surface page samples (information only)
     threading.Thread(target=run_dashboard, daemon=True).start()
 
     time.sleep(2)
