@@ -63,17 +63,18 @@ def _iv_delta(price, fwd, k, T, call):
     return iv, math.exp(-R * T) * (_ncdf(d1) if call else _ncdf(d1) - 1)
 
 
-def measure(quotes, spot, T):
+def measure(quotes, spot, T, detail=False):
     """quotes {(strike, 'CE'|'PE'): price} -> (fwd, ATM IV %, 25-delta skew
     in vol points). The same steps as template_backtest: forward from the 6
     strikes nearest NIFTY with both sides, ATM = forward rounded to 50, IV =
-    average of the ATM call and put."""
+    average of the ATM call and put. detail=True also returns which strikes
+    were used (for the live-vs-history skew log)."""
     ks = sorted({k for k, _ in quotes})
     near = sorted([(k, quotes[(k, "CE")], quotes[(k, "PE")]) for k in ks if (k, "CE") in quotes and (k, "PE") in quotes],
                   key=lambda x: abs(x[0] - spot))[:6]
     fwd = g.synthetic_forward(near) if near else None
     if not fwd or T <= 0:
-        return None, None, None
+        return (None, None, None, None) if detail else (None, None, None)
     atm = int(round(fwd / 50) * 50)
     ivs = [_iv_delta(quotes[(atm, t)], fwd, atm, T, t == "CE")[0] for t in ("CE", "PE") if (atm, t) in quotes]
     ivs = [v for v in ivs if v]
@@ -88,8 +89,12 @@ def measure(quotes, spot, T):
             continue
         gap = abs(abs(dl) - 0.25)
         if gap < 0.07 and (t not in best or gap < best[t][0]):
-            best[t] = (gap, iv)
+            best[t] = (gap, iv, k, p, dl)
     skew = round((best["PE"][1] - best["CE"][1]) * 100, 2) if "PE" in best and "CE" in best else None
+    if detail:
+        info = {"fwd": round(fwd, 2), "atm": atm, "T_days": round(T * 365, 3),
+                **{t.lower(): {"k": b[2], "px": b[3], "iv": round(b[1] * 100, 2), "delta": round(b[4], 3)} for t, b in best.items()}}
+        return fwd, atm_iv, skew, info
     return fwd, atm_iv, skew
 
 
@@ -281,6 +286,7 @@ def status(chain):
             tj["readings"][bucket] = {"atm_iv": iv, "skew25": skew if bucket == "09:30" else None, "at": now.strftime("%H:%M")}
             os.makedirs(DIR, exist_ok=True)
             paths.atomic_write_json(TODAY, tj)
+            _log_live(now, bucket, out["expiry"], float(spot), q, T, iv, skew)
     out["readings"] = tj["readings"] if tj.get("expiry") == out["expiry"] else {}
     # the tested rule reads IV at 09:30 / 12:00 / 14:30 only: is it one of those moments?
     if bucket:
@@ -305,6 +311,23 @@ def status(chain):
                                "skew_steep": bool(sk is not None and thr.get("skew") is not None and sk >= thr["skew"]),
                                "source": "app readings (history updates at 19:00)"}
     return out
+
+
+LIVE_LOG = os.path.join(DIR, "live_log.jsonl")
+
+
+def _log_live(now, bucket, expiry, spot, q, T, iv, skew):
+    """Every live reading the plan acts on, with the strikes behind it, so it can be compared with the
+    evening history (same rule, 1-min closes) -- see skew_check.py. Never raises."""
+    try:
+        _, _, _, info = measure(q, spot, T, detail=True)
+        import fyers_option_chain as chain_mod
+        rec = {"day": now.date().isoformat(), "slot": bucket, "at": now.strftime("%H:%M:%S"), "expiry": expiry, "spot": spot,
+               "atm_iv": iv, "skew25": skew, "detail": info, "source": chain_mod.DATA_SOURCE}
+        with open(LIVE_LOG, "a", encoding="utf-8") as f:
+            f.write(json.dumps(rec) + "\n")
+    except Exception:
+        pass
 
 
 def history_payload():

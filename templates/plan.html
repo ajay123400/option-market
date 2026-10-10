@@ -45,6 +45,9 @@
   .chk.next { border: 2px dashed var(--accent); background: var(--card); }
   .chk.later { opacity: .6; }
   .checknote { font-size: 12px; color: var(--muted); margin-top: 10px; }
+  .skew { margin-top: 10px; border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--chip); }
+  .skew.steep { background: var(--amber-soft); border-color: #f1d9ad; }
+  .skew .k { font-weight: 800; }
   #ivchart svg text { font-size: 11px; fill: var(--muted); }
   .trades { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; }
   .setup { border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-top: 4px; }
@@ -113,7 +116,7 @@
 <div class="page">
   <div class="hero">
     <div id="decision" class="decision"><div class="big">Loading…</div></div>
-    <div class="card"><h2>Today's checks <small id="checkSub"></small></h2><div class="checks" id="checks"></div><div class="checknote" id="checkNote"></div></div>
+    <div class="card"><h2>Today's checks <small id="checkSub"></small></h2><div class="checks" id="checks"></div><div class="skew" id="skew"></div><div class="checknote" id="checkNote"></div></div>
   </div>
   <div class="card"><h2>ATM IV vs the threshold <small id="ivSub"></small></h2><div id="ivchart"></div></div>
   <div class="card" id="setupsCard" hidden><h2>Trade to take <small>paper — the plan records it automatically</small></h2><div id="setups"></div></div>
@@ -186,6 +189,16 @@ function renderChecks(P) {
   let note = "Green = ATM IV at or above that check's threshold — the only time the plan enters.";
   if (nxt) { const [h, m] = nxt.slot.split(":").map(Number), [nh, nm] = nowHM().split(":").map(Number); const mins = h * 60 + m - (nh * 60 + nm); if (mins >= 0) note = `Next check at ${nxt.slot} — in ${mins} min. ` + note; }
   $("checkNote").textContent = note;
+  // put skew (25-delta put IV minus call IV, read at 09:30): a lean, not a condition
+  const L = (P.decision || {}).last_day || R.last_day || {};
+  const sk = R.live ? R.skew25 : L.skew25, thr = R.live ? (R.thresholds || {}).skew : L.skew_thr, steep = R.live ? R.skew_steep : L.skew_steep;
+  const el = $("skew");
+  if (sk == null) { el.className = "skew"; el.innerHTML = `<span><span class="k">Put skew</span> (09:30)</span><span class="muted">no reading yet</span>`; }
+  else {
+    el.className = "skew" + (steep ? " steep" : "");
+    el.innerHTML = `<span><span class="k">Put skew</span> (25Δ put − call IV, 09:30): <b>${Number(sk).toFixed(2)}</b> vs ${thr == null ? "—" : Number(thr).toFixed(2)}</span>` +
+      `<span>${steep ? "<b>steep → on a sell day, lean the strangle to puts</b>" : "not steep — no lean"}</span>`;
+  }
 }
 
 function renderIv(P) {
