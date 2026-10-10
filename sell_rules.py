@@ -31,6 +31,10 @@ DIR = os.path.join(paths.BASE_DIR, "results", "iv_rule")
 HIST = os.path.join(DIR, "history.parquet")
 TODAY = os.path.join(DIR, "today.json")
 SLOTS = ("09:30", "12:00", "14:30")
+# A check reads prices only once its 1-min bar has closed (09:31:00 for 09:30): the backtest and the
+# evening history use that bar's close. Reading at 09:30:00 gave a 0.33-pt different put skew on
+# 9 Oct 2026 (skew_check.py) -- a timing gap, not a method gap.
+CHECK_DELAY_S = 60
 LOOKBACK, MIN_ROWS, PCT = 500, 120, 0.6
 F_O_CLOSE_CHANGE = date(2026, 8, 3)
 R = g.RISK_FREE_RATE
@@ -282,7 +286,7 @@ def status(chain):
         tj = {"day": today, "expiry": out["expiry"], "readings": {}}
     if bucket and iv is not None and bucket not in tj["readings"] and out["window"] == "ok":
         slot_t = datetime.combine(now.date(), datetime.strptime(bucket, "%H:%M").time(), tzinfo=now.tzinfo)
-        if (now - slot_t).total_seconds() <= 15 * 60:
+        if CHECK_DELAY_S <= (now - slot_t).total_seconds() <= 15 * 60:   # the slot's 1-min bar has closed (as in the backtest)
             tj["readings"][bucket] = {"atm_iv": iv, "skew25": skew if bucket == "09:30" else None, "at": now.strftime("%H:%M")}
             os.makedirs(DIR, exist_ok=True)
             paths.atomic_write_json(TODAY, tj)
@@ -291,8 +295,8 @@ def status(chain):
     # the tested rule reads IV at 09:30 / 12:00 / 14:30 only: is it one of those moments?
     if bucket:
         slot_t = datetime.combine(now.date(), datetime.strptime(bucket, "%H:%M").time(), tzinfo=now.tzinfo)
-        out["at_check"] = (now - slot_t).total_seconds() <= 15 * 60
-        nxt = next((x for x in SLOTS if x > now.strftime("%H:%M")), None)
+        out["at_check"] = CHECK_DELAY_S <= (now - slot_t).total_seconds() <= 15 * 60
+        nxt = bucket if (now - slot_t).total_seconds() < CHECK_DELAY_S else next((x for x in SLOTS if x > now.strftime("%H:%M")), None)
         out["next_check"] = nxt
     # after the close (or before 09:30) show today's own readings, if the app
     # took them, instead of the history's last day (it only updates at 19:00)

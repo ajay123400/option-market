@@ -126,7 +126,7 @@
     <div class="small" style="margin-top:6px">"On track" = the live average is inside the backtest's 95% range for that many trades. Under ~10 trades the range is very wide — too early to judge either way.</div></div>
   <div class="card"><h2>Closed trades</h2><div class="scroll"><table id="closed"></table></div></div>
   <details class="card"><summary>How the plan decides (the tested rules)</summary><ul>
-    <li><b>IV rule:</b> ATM IV of the weekly expiry with 1–4 trading days left, compared at 09:30 / 12:00 / 14:30 with the 60th percentile of the past 500 days at that time. At or above = <b>green</b>; above the 70th percentile = <b>strong</b>. Entries only at those check times.</li>
+    <li><b>IV rule:</b> ATM IV of the weekly expiry with 1–4 trading days left, compared at 09:30 / 12:00 / 14:30 with the 60th percentile of the past 500 days at that time. At or above = <b>green</b>; above the 70th percentile = <b>strong</b>. Entries only in the check windows 09:31–09:45, 12:01–12:15, 14:31–14:45 — each reading waits for the check minute's 1-min bar to close, exactly as in the backtest.</li>
     <li><b>Setup A</b> (green): sell that expiry — straddle at ATM or strangle at 0.15 delta — and <b>hold to expiry</b>.</li>
     <li><b>Setup B</b> (green at 09:30 and the current expiry has 1 day left): sell <b>next week's</b> expiry instead, and <b>exit when the IV rule reads normal</b> at a later check; otherwise hold to expiry.</li>
     <li><b>Normal IV / expiry day:</b> no new trade. <b>Put skew steep:</b> the put side did better — lean the strangle toward puts.</li>
