@@ -1,6 +1,6 @@
 """Independent verification of micro_analysis output (sqlite3 + pandas + scipy only; no micro_analysis / collector / optionsengine imports).
 
-    python micro_analysis/validation/independent_check.py <micro_YYYYMMDD.sqlite> <analysis_output_dir>
+    python micro_analysis/validation/independent_check.py <analysis_output_dir> <micro_YYYYMMDD.sqlite> [<micro_...sqlite> ...]
 
 * Re-derives time to expiry from the stored timestamps and the skew.
 * Re-solves every bid / mid / ask / last-trade IV of the OTM option at the two ATM-bracketing strikes with a Black-76 brentq solver and rebuilds the ATM IVs and the scenario IVs.
@@ -45,19 +45,24 @@ def vega(F, K, T, s):
     return math.exp(-R * T) * F * math.exp(-0.5 * d1 * d1) / math.sqrt(2 * math.pi) * math.sqrt(T) / 100.0
 
 
-def main(db_path, out):
-    con = sqlite3.connect("file:" + db_path + "?mode=ro", uri=True)
-    con.row_factory = sqlite3.Row
+def main(out, db_paths):
+    cons, cycles = {}, {}
+    for db_path in db_paths:
+        day = db_path.replace("\\", "/").split("/")[-1].replace("micro_", "").replace(".sqlite", "")
+        cons[day] = sqlite3.connect("file:" + db_path + "?mode=ro", uri=True)
+        cons[day].row_factory = sqlite3.Row
+        for r in cons[day].execute("SELECT * FROM cycles"):
+            cycles[(day, r["cycle_id"])] = r
     atm = pd.read_csv(f"{out}/atm_by_cycle_expiry.csv", dtype={"day": str})
     rows = pd.read_csv(f"{out}/row_metrics.csv", dtype={"day": str})
-    cycles = {r["cycle_id"]: r for r in con.execute("SELECT * FROM cycles")}
-    print(f"{db_path}: {len(cycles)} cycles; analysis: {len(atm)} ATM records, {len(rows)} row records")
+    print(f"{len(cons)} database(s), {len(cycles)} cycles; analysis: {len(atm)} ATM records, {len(rows)} row records")
+    check("the analysis covers exactly the supplied days", set(atm.day) <= set(cons) and set(rows.day) <= set(cons))
     # ---- ATM records
     tol = dict(forward=0, t=0, iv=0, scen=0, fwd_plain=0)
     worst = dict(t=0.0, iv=0.0, scen=0.0, fwd=0.0, n=0)
     for _, a in atm.iterrows():
-        c = cycles[a.cycle_id]
-        q = con.execute("SELECT * FROM quotes WHERE cycle_id=? AND expiry_date=? AND kind='option'", (a.cycle_id, a.expiry_date)).fetchall()
+        c = cycles[(a.day, a.cycle_id)]
+        q = cons[a.day].execute("SELECT * FROM quotes WHERE cycle_id=? AND expiry_date=? AND kind='option'", (a.cycle_id, a.expiry_date)).fetchall()
         T = (q[0]["expiry_ts"] - (c["capture_start_ts"] - (c["skew_est_s"] or 0.0))) / YEAR
         worst["t"] = max(worst["t"], abs(T * 365 - a.dte_days))
         if a.forward_status != "ok" or not (a.forward == a.forward):
@@ -103,8 +108,8 @@ def main(db_path, out):
     check("sell-side scenario IVs equal mid - f*(mid - bid)", worst["scen"] < 2e-6, f"(max diff {worst['scen']:.2e})")
     check("parity forward within 1 index point of a plain median parity estimate", worst["fwd"] < 1.0, f"(max diff {worst['fwd']:.3f} pts)")
     # ---- row records vs the raw database
-    raw = pd.read_sql_query("SELECT cycle_id, symbol, bid, ask, ltp, capture_minus_last_trade_s, strike, option_type, expiry_date FROM quotes WHERE kind='option'", con)
-    m = rows.merge(raw, on=["cycle_id", "expiry_date", "strike", "option_type"], suffixes=("", "_raw"))
+    raw = pd.concat([pd.read_sql_query("SELECT cycle_id, symbol, bid, ask, ltp, capture_minus_last_trade_s, strike, option_type, expiry_date FROM quotes WHERE kind='option'", c).assign(day=d) for d, c in cons.items()])
+    m = rows.merge(raw, on=["day", "cycle_id", "expiry_date", "strike", "option_type"], suffixes=("", "_raw"))
     check("every analysed row exists in the database", len(m) == len(rows))
     check("mid / spread / half-spread / spread% recomputed", np.allclose(m["mid"], (m.bid_raw + m.ask_raw) / 2) and np.allclose(m.spread_rs, m.ask_raw - m.bid_raw) and np.allclose(m.half_spread_rs, (m.ask_raw - m.bid_raw) / 2)
           and np.allclose(m.spread_pct, 100 * (m.ask_raw - m.bid_raw) / ((m.ask_raw + m.bid_raw) / 2)))
@@ -113,14 +118,14 @@ def main(db_path, out):
     at = np.where(m.ltp_raw >= m.ask_raw, "ask", np.where(m.ltp_raw <= m.bid_raw, "bid", "inside"))
     check("ltp_at (ask / bid / inside) recomputed", (m.ltp_at.values == at).all())
     # vega and the vega-based half spread
-    a_idx = atm.set_index(["cycle_id", "expiry_date"])
+    a_idx = atm.set_index(["day", "cycle_id", "expiry_date"])
     vbad = 0
     for _, r in m[m.vega_rs_per_volpt.notna()].iterrows():
-        a = a_idx.loc[(r.cycle_id, r.expiry_date)]
+        a = a_idx.loc[(r.day, r.cycle_id, r.expiry_date)]
         T = a.dte_days / 365.0
         v = vega(a.forward, r.strike, T, r.iv_mid) if r.iv_mid == r.iv_mid else None
         if v is None:                                                  # ITM sibling: vega taken from its OTM twin
-            twin = m[(m.cycle_id == r.cycle_id) & (m.expiry_date == r.expiry_date) & (m.strike == r.strike) & m.iv_mid.notna()]
+            twin = m[(m.day == r.day) & (m.cycle_id == r.cycle_id) & (m.expiry_date == r.expiry_date) & (m.strike == r.strike) & m.iv_mid.notna()]
             v = vega(a.forward, r.strike, T, twin.iv_mid.iloc[0])
         vbad += abs(v - r.vega_rs_per_volpt) > 1e-6 * max(1, v) or abs(r.half_spread_rs / v - r.half_spread_vol_pts_vega) > 1e-9
     check("Black-76 vega (rupees per vol point) and the vega-based half-spread recomputed", vbad == 0, f"({vbad} mismatches)")
@@ -128,7 +133,7 @@ def main(db_path, out):
     both = m[m.iv_spread_vol_pts.notna()]
     ibad = 0
     for _, r in both.iterrows():
-        a = a_idx.loc[(r.cycle_id, r.expiry_date)]
+        a = a_idx.loc[(r.day, r.cycle_id, r.expiry_date)]
         T = a.dte_days / 365.0
         call = r.option_type == "CE"
         ib, ia = b76(r.bid_raw, a.forward, r.strike, T, call), b76(r.ask_raw, a.forward, r.strike, T, call)
@@ -158,4 +163,4 @@ def main(db_path, out):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1], sys.argv[2]))
+    sys.exit(main(sys.argv[1], sys.argv[2:]))
