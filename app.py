@@ -59,6 +59,34 @@ def gex_page():
     return render_template("gex.html")
 
 
+@app.route("/futures")
+def futures_page():
+    return render_template("futures.html")
+
+
+@app.route("/api/futures/contracts")
+def api_futures_contracts():
+    import futures_history
+    try:
+        return jsonify({"ok": True, "contracts": futures_history.contracts()})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/api/futures/bars")
+def api_futures_bars():
+    """NIFTY futures candles + volume + OI: ?contract=<expiry ISO>|near&tf=1..5&from=YYYY-MM-DD&to=YYYY-MM-DD"""
+    import futures_history
+    from datetime import date as _date
+    try:
+        a = request.args
+        f = _date.fromisoformat(a["from"]) if a.get("from") else None
+        t = _date.fromisoformat(a["to"]) if a.get("to") else None
+        return jsonify({"ok": True, **futures_history.bars(a.get("contract", "near"), a.get("tf", 5), f, t)})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
 @app.route("/surface")
 def surface_page():
     return render_template("surface.html")

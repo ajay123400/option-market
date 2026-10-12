@@ -227,6 +227,14 @@ def update():
         hd.log(f"daily: IV rule history +{added} rows")
     except Exception as e:
         hd.log(f"daily: IV rule history update failed -- {e}")
+    # NIFTY monthly futures (1-min + volume + OI) for the listed contracts, from Arrow -- the Futures page
+    if ARROW:
+        try:
+            import futures_history
+            n = futures_history.update(log=hd.log)
+            hd.log(f"daily: futures updated ({n} contracts)")
+        except Exception as e:
+            hd.log(f"daily: futures update failed -- {e}")
     # the week's Telegram review, on its last trading day (after the IV history so the checks compare)
     try:
         import weekly_review

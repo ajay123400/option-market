@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIFTY Futures</title>
+<script src="/static/vendor/lightweight-charts.js"></script>
+<style>
+  :root {
+    --bg: #f2f3f7; --card: #ffffff; --border: #e7e8ee; --text: #14161c; --muted: #767b87; --muted-2: #a2a7b3;
+    --up: #0e9f6e; --down: #e0434a; --accent: #4f5fe0; --accent-dark: #3d4cc7; --accent-soft: #eceefc;
+    --radius: 14px; --shadow: 0 1px 2px rgba(20,22,30,.04), 0 6px 16px rgba(20,22,30,.05); --shadow-sm: 0 1px 2px rgba(20,22,30,.05);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); flex-wrap: wrap; }
+  .topbar h1 { font-size: 16px; margin: 0 6px 0 0; font-weight: 800; }
+  a.navlink { font-size: 12.5px; font-weight: 600; color: var(--muted); text-decoration: none; background: var(--bg); border-radius: 999px; padding: 6px 14px; }
+  a.navlink:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  a.navlink.active { background: var(--accent); color: #fff; font-weight: 700; pointer-events: none; }
+  .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 28px; background: var(--card); border-bottom: 1px solid var(--border); }
+  .controls label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  select, input, button { font: inherit; font-size: 13px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; padding: 5px 9px; }
+  button { cursor: pointer; }
+  .seg { display: inline-flex; background: var(--bg); border-radius: 999px; padding: 3px; }
+  .seg button { border: none; background: transparent; border-radius: 999px; padding: 4px 11px; font-weight: 700; color: var(--muted); }
+  .seg button.on { background: var(--text); color: #fff; }
+  .chk { font-size: 12.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+  .page { padding: 14px 28px 28px; display: flex; flex-direction: column; gap: 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); min-width: 0; position: relative; }
+  #chart { height: 600px; }
+  .legend { position: absolute; left: 14px; top: 10px; z-index: 3; font-size: 12.5px; background: rgba(255,255,255,.88); border-radius: 8px; padding: 6px 9px; pointer-events: none; font-variant-numeric: tabular-nums; line-height: 1.55; }
+  .legend .up { color: var(--up); } .legend .down { color: var(--down); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+  .stat b { display: block; font-size: 17px; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .note { font-size: 12px; color: var(--muted); padding: 0 2px; line-height: 1.5; }
+  .err { color: var(--down); padding: 16px; }
+  @media (max-width: 900px) { .controls, .page, .topbar { padding-left: 12px; padding-right: 12px; } #chart { height: 460px; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>NIFTY Futures</h1>
+  <a class="navlink" href="/plan">Aaj ka Plan</a>
+  <a class="navlink" href="/">Option Chain</a>
+  <a class="navlink" href="/strategy">Strategy Builder</a>
+  <a class="navlink" href="/journal">Journal</a>
+  <a class="navlink" href="/range">Range Strategy</a>
+  <a class="navlink" href="/diary">Range Diary</a>
+  <a class="navlink" href="/simulator">Simulator</a>
+  <a class="navlink" href="/charts">Charts</a>
+  <a class="navlink active" href="/futures">Futures</a>
+  <a class="navlink" href="/iv">IV &amp; Skew</a>
+  <a class="navlink" href="/gex">GEX</a>
+  <a class="navlink" href="/surface">Vol Surface</a>
+  <a class="navlink" href="/data-health">Data Health</a>
+</div>
+<div class="controls">
+  <label>Contract</label><select id="contract"></select>
+  <label>Timeframe</label><div class="seg" id="tf"><button data-v="1">1m</button><button data-v="2">2m</button><button data-v="3">3m</button><button data-v="5" class="on">5m</button></div>
+  <label>From</label><input type="date" id="from"> <label>To</label><input type="date" id="to">
+  <button id="go">Show</button>
+  <span class="chk"><input type="checkbox" id="showOi" checked> OI</span>
+  <span class="chk"><input type="checkbox" id="showVwap" checked> VWAP (daily)</span>
+  <span class="chk"><input type="checkbox" id="showVma" checked> Volume avg (20)</span>
+  <button id="csv">Download CSV</button>
+  <span id="stamp" style="font-size:12px;color:var(--muted)"></span>
+</div>
+<div class="page">
+  <div class="stats" id="stats"></div>
+  <div class="card"><div class="legend" id="legend"></div><div id="chart"></div></div>
+  <div class="note">NIFTY monthly futures, 1-min bars resampled from the 09:15 open (volume = contracts traded × lot units as reported, OI at the bar's end). "Continuous near-month" takes each session from the nearest contract not yet expired that day — the price jumps at each roll by the calendar spread. History: Fyers expired-F&amp;O data (one-time download); listed contracts are refreshed each evening from Arrow.</div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+let TF = 5, BARS = [], chart, sC, sV, sVma, sOi, sVwap;
+
+function initChart() {
+  chart = LightweightCharts.createChart($("chart"), {
+    layout: { background: { color: "transparent" }, textColor: css("--muted") },
+    grid: { vertLines: { color: css("--border") }, horzLines: { color: css("--border") } },
+    rightPriceScale: { visible: true }, leftPriceScale: { visible: true },
+    timeScale: { timeVisible: true, secondsVisible: false }, crosshair: { mode: 0 }, autoSize: true });
+  sC = chart.addCandlestickSeries({ upColor: "#0e9f6e", downColor: "#e0434a", borderVisible: false, wickUpColor: "#0e9f6e", wickDownColor: "#e0434a" });
+  sC.priceScale().applyOptions({ scaleMargins: { top: 0.06, bottom: 0.28 } });
+  sVwap = chart.addLineSeries({ color: "#b7791f", lineWidth: 1.5, priceLineVisible: false, lastValueVisible: false });
+  sV = chart.addHistogramSeries({ priceScaleId: "vol", priceFormat: { type: "volume" }, lastValueVisible: false, priceLineVisible: false });
+  sVma = chart.addLineSeries({ priceScaleId: "vol", color: "#4f5fe0", lineWidth: 1.5, priceLineVisible: false, lastValueVisible: false });
+  chart.priceScale("vol").applyOptions({ scaleMargins: { top: 0.76, bottom: 0 } });
+  sOi = chart.addLineSeries({ priceScaleId: "left", color: "#8a63d2", lineWidth: 1.5, priceLineVisible: false, lastValueVisible: true, priceFormat: { type: "volume" } });
+  chart.priceScale("left").applyOptions({ scaleMargins: { top: 0.06, bottom: 0.28 } });
+  chart.subscribeCrosshairMove(p => {
+    const t = p && p.time; const b = t ? BARS[IDX.get(t)] : BARS[BARS.length - 1];
+    legend(b);
+  });
+}
+
+const fmtT = t => new Date(t * 1000).toISOString().slice(0, 16).replace("T", " ");
+const num = v => Number(v).toLocaleString("en-IN");
+function legend(b) {
+  if (!b) { $("legend").innerHTML = ""; return; }
+  const cl = b.c >= b.o ? "up" : "down";
+  $("legend").innerHTML = `<b>${fmtT(b.t)}</b> · ${b.contract}<br>O ${b.o} H ${b.h} L ${b.l} C <b class="${cl}">${b.c}</b><br>Vol <b>${num(b.v)}</b>${b.vma ? ` (avg ${num(Math.round(b.vma))}, ${(b.v / b.vma).toFixed(1)}×)` : ""} · OI ${num(b.oi)}${b.vwap ? ` · VWAP ${b.vwap.toFixed(1)}` : ""}`;
+}
+
+let IDX = new Map();
+function render() {
+  // derived: 20-bar volume average, daily VWAP
+  let q = [], sum = 0, day = null, pv = 0, vv = 0;
+  BARS.forEach(b => {
+    q.push(b.v); sum += b.v; if (q.length > 20) sum -= q.shift();
+    b.vma = q.length === 20 ? sum / 20 : null;
+    const d = new Date(b.t * 1000).toISOString().slice(0, 10);
+    if (d !== day) { day = d; pv = 0; vv = 0; }
+    const tp = (b.h + b.l + b.c) / 3; pv += tp * b.v; vv += b.v; b.vwap = vv ? pv / vv : null;
+  });
+  IDX = new Map(BARS.map((b, i) => [b.t, i]));
+  sC.setData(BARS.map(b => ({ time: b.t, open: b.o, high: b.h, low: b.l, close: b.c })));
+  sV.setData(BARS.map(b => ({ time: b.t, value: b.v, color: b.c >= b.o ? "rgba(14,159,110,.45)" : "rgba(224,67,74,.45)" })));
+  sVma.setData($("showVma").checked ? BARS.filter(b => b.vma).map(b => ({ time: b.t, value: b.vma })) : []);
+  sOi.setData($("showOi").checked ? BARS.map(b => ({ time: b.t, value: b.oi })) : []);
+  chart.priceScale("left").applyOptions({ visible: $("showOi").checked });
+  // VWAP resets each day: break the line between sessions
+  const vw = []; let last = null;
+  BARS.forEach(b => { const d = new Date(b.t * 1000).toISOString().slice(0, 10); if (last && d !== last) vw.push({ time: b.t - 1 }); last = d; vw.push({ time: b.t, value: b.vwap }); });
+  sVwap.setData($("showVwap").checked ? vw.map(x => x.value == null ? { time: x.time } : x) : []);
+  chart.timeScale().fitContent();
+  legend(BARS[BARS.length - 1]);
+  // stats for the range
+  if (!BARS.length) { $("stats").innerHTML = `<div class="err">No bars in this range.</div>`; return; }
+  const hi = Math.max(...BARS.map(b => b.h)), lo = Math.min(...BARS.map(b => b.l)), vol = BARS.reduce((a, b) => a + b.v, 0);
+  const days = new Set(BARS.map(b => new Date(b.t * 1000).toISOString().slice(0, 10))).size;
+  const chg = BARS[BARS.length - 1].c - BARS[0].o;
+  const st = (v, l) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`;
+  $("stats").innerHTML = st(`${days}`, "sessions") + st(`${BARS.length.toLocaleString("en-IN")}`, `${TF}-min bars`) + st(`${lo.toFixed(0)} – ${hi.toFixed(0)}`, "low – high") +
+    st(`<span style="color:${chg >= 0 ? "var(--up)" : "var(--down)"}">${chg >= 0 ? "+" : ""}${chg.toFixed(1)}</span>`, "change in range") +
+    st(num(Math.round(vol / days)), "avg volume / session") + st(num(BARS[BARS.length - 1].oi), "OI at the end");
+}
+
+async function loadContracts() {
+  const j = await (await fetch("/api/futures/contracts")).json();
+  if (!j.ok) throw new Error(j.error);
+  $("contract").innerHTML = `<option value="near">Continuous near-month</option>` + j.contracts.map(c => `<option value="${c.expiry}">${c.expiry} expiry (${num(c.bars)} bars)</option>`).join("");
+  setDefaultRange();
+}
+function setDefaultRange() {
+  const c = $("contract").value, to = c === "near" ? new Date() : new Date(c + "T12:00:00");
+  const from = new Date(to.getTime() - (TF === 1 ? 6 : 14) * 86400000);
+  $("to").value = to.toISOString().slice(0, 10); $("from").value = from.toISOString().slice(0, 10);
+}
+async function load() {
+  const q = new URLSearchParams({ contract: $("contract").value, tf: TF, from: $("from").value, to: $("to").value });
+  $("stamp").textContent = "loading…";
+  const j = await (await fetch("/api/futures/bars?" + q)).json();
+  if (!j.ok) { $("stats").innerHTML = `<div class="err">${j.error}</div>`; $("stamp").textContent = ""; return; }
+  BARS = j.bars; render();
+  $("stamp").textContent = `${BARS.length.toLocaleString("en-IN")} bars`;
+}
+function downloadCsv() {
+  const rows = [["time_ist", "contract", "open", "high", "low", "close", "volume", "oi", "vwap_day", "vol_avg20"]]
+    .concat(BARS.map(b => [fmtT(b.t), b.contract, b.o, b.h, b.l, b.c, b.v, b.oi, b.vwap ? b.vwap.toFixed(2) : "", b.vma ? Math.round(b.vma) : ""]));
+  const blob = new Blob([rows.map(r => r.join(",")).join("\n")], { type: "text/csv" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = `nifty_fut_${$("contract").value}_${TF}m_${$("from").value}_${$("to").value}.csv`; a.click();
+}
+
+document.querySelectorAll("#tf button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#tf button").forEach(x => x.classList.toggle("on", x === b)); TF = +b.dataset.v; load(); }));
+$("contract").addEventListener("change", () => { setDefaultRange(); load(); });
+$("go").addEventListener("click", load);
+["showOi", "showVwap", "showVma"].forEach(id => $(id).addEventListener("change", render));
+$("csv").addEventListener("click", downloadCsv);
+initChart();
+loadContracts().then(load).catch(e => { $("stats").innerHTML = `<div class="err">${e.message}</div>`; });
+</script>
+</body>
+</html>

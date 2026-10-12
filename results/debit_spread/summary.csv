@@ -1,0 +1,17 @@
+which,exit,rule,n,avg,win,worst,total,t,avg_1st,avg_2nd
+next_week,expiry,always_call,582,-562.0,29.6,-4391.0,-327095.5,-2.5,-329.0,-692.6
+next_week,expiry,always_put,581,453.3,38.0,-4407.7,263360.9,1.9,-545.5,1014.4
+next_week,expiry,cheap_leg,582,414.3,37.8,-4407.7,241113.1,1.7,-726.8,1053.7
+next_week,expiry,cheap_spread,581,406.0,37.5,-4407.7,235885.9,1.7,-596.5,969.3
+next_week,tgt100_stop50,always_call,582,-550.6,27.1,-5489.6,-320471.2,-4.7,-389.1,-641.1
+next_week,tgt100_stop50,always_put,581,-18.2,35.1,-4369.0,-10597.1,-0.1,-685.3,356.5
+next_week,tgt100_stop50,cheap_leg,582,-85.1,34.0,-4332.0,-49518.7,-0.7,-753.9,289.7
+next_week,tgt100_stop50,cheap_spread,581,-40.2,34.8,-4369.0,-23377.7,-0.3,-683.0,320.9
+this_week,expiry,always_call,794,-635.4,29.2,-4392.1,-504533.1,-3.6,-348.6,-795.2
+this_week,expiry,always_put,794,220.8,36.1,-4385.0,175344.7,1.2,-272.2,495.4
+this_week,expiry,cheap_leg,794,35.6,34.5,-4385.0,28227.6,0.2,-510.7,339.7
+this_week,expiry,cheap_spread,794,203.1,36.1,-4385.0,161281.2,1.1,-359.8,516.6
+this_week,tgt100_stop50,always_call,794,-392.3,29.0,-4204.0,-311493.9,-3.8,-188.7,-505.7
+this_week,tgt100_stop50,always_put,794,-189.5,31.7,-4000.0,-150492.0,-1.9,-485.7,-24.6
+this_week,tgt100_stop50,cheap_leg,794,-250.4,30.9,-4204.0,-198781.3,-2.5,-504.6,-108.8
+this_week,tgt100_stop50,cheap_spread,794,-212.8,31.4,-4000.0,-168924.6,-2.1,-454.5,-78.1
