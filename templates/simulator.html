@@ -56,6 +56,9 @@
   .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; }
   .sim-date-banner { font-size: 12.5px; font-weight: 700; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 5px 14px; margin-bottom: 12px; display: inline-block; }
   .candle-time { font-weight: 800; font-size: 15px; min-width: 90px; }
+  .sim-iv { font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); white-space: nowrap; }
+  .sim-iv:empty { display: none; }
+  .sim-iv.sell { background: #16a34a22; color: #15803d; }
   .sim-spot { font-weight: 700; font-size: 14px; color: var(--accent); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
   .candle-count { font-size: 12px; color: var(--muted-2); min-width: 70px; text-align: right; }
 
@@ -196,6 +199,7 @@
   <button id="btnNextDay" class="ghost" disabled title="Jump to the next day's 09:15 -- positions carried overnight (D)">Next day ⏭⏭</button>
   <div class="dock-time"><div class="candle-time" id="candleTime">--:--</div><div class="dock-day" id="dockDay"></div></div>
   <div class="sim-spot" id="simSpot" title="NIFTY 50 spot at this candle's close (1-min history) · fwd = put-call-parity forward from the option quotes, used for Greeks">NIFTY: --</div>
+  <div class="sim-iv" id="simIv" title="IV rule reading at this moment (information only): ATM IV vs the 60th-percentile threshold of the 500 days before this day, at the same time of day; put skew vs its own 500 days"></div>
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="candle-count" id="candleCount">0 / 0</div>
   <div class="dock-pnl" id="dockPnl"></div>
@@ -517,6 +521,7 @@ async function _stepOnceInner(endpoint, minutes) {
   updateProgress(currentIndex, j.total, t);
   window._lastSpot = j.spot;
   renderChain(j.chain, j.anchor);
+  renderIv(j.iv_info);
   renderLegBundle(j);
   if (j.finished) {
     document.getElementById("btnNext").disabled = true;
@@ -526,6 +531,18 @@ async function _stepOnceInner(endpoint, minutes) {
     if ((j.closed_legs || []).some(c => (c.exit_reason || "").startsWith("EXPIRY"))) flashDay("🏁 Expiry — open legs settled at intrinsic value");
   }
   return !!j.finished;
+}
+
+function renderIv(x) {
+  const el = document.getElementById("simIv");
+  if (!x) { el.textContent = ""; el.className = "sim-iv"; return; }
+  const ord = p => { if (p == null) return "—"; const n = Math.round(p), t = n % 100; return n + (t >= 11 && t <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th"); };
+  const sell = x.iv_ok && x.window;
+  el.className = "sim-iv" + (sell ? " sell" : "");
+  el.innerHTML = `IV <b>${x.atm_iv.toFixed(1)}%</b> vs ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"} (${x.slot}) · ${ord(x.iv_pct)} %ile${x.mood && x.mood.iv ? ", " + x.mood.iv : ""}`
+    + ` · skew ${x.skew25 == null ? "—" : x.skew25.toFixed(2)}${x.mood && x.mood.skew ? " " + x.mood.skew.split(":")[0] : ""}`
+    + (sell ? " · ✓ sell zone" : x.window ? "" : ` · ${x.dte} d to expiry`);
+  el.title = `IV rule reading at this moment (information only). ATM IV ${x.atm_iv}% vs threshold ${x.thr}% for the ${x.slot} check · ${ord(x.iv_pct)} percentile of the 500 days before this day. Put skew ${x.skew25} vs ${x.skew_thr} (${ord(x.skew_pct)} percentile)${x.mood && x.mood.skew ? " — " + x.mood.skew : ""}. Sell zone = IV at/above threshold with 1–4 trading days to expiry; the tested rule reads it at 09:30 / 12:00 / 14:30.`;
 }
 
 function updateProgress(idx, total, timeLabel) {

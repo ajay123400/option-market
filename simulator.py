@@ -412,7 +412,40 @@ class SimulationSession:
             "anchor": self.synthetic_forward_now() if chain else None,
             "spot": self.spot_now() if ts is not None else None,
             "lot_size": self.lot_size,
+            "iv_info": self._iv_info(ts, ce_candles or {}, pe_candles or {}) if chain and ts is not None else None,
         }
+
+    def _iv_info(self, ts, ce, pe):
+        """The IV rule's reading at this replay moment (information only): ATM IV and put skew from
+        the chain shown, vs the thresholds / percentiles of the 500 days BEFORE this day -- so the
+        replay never sees the future. Same measure as the live Option Chain page (sell_rules)."""
+        try:
+            import sell_rules as SR
+            spot = self.spot_now()
+            T = (self.expiry_close - ts).total_seconds() / (365 * 86400)
+            if not spot or T <= 0:
+                return None
+            q = {(int(k), "CE"): c["close"] for k, c in ce.items() if c and c.get("close")}
+            q.update({(int(k), "PE"): c["close"] for k, c in pe.items() if c and c.get("close")})
+            _, iv, skew = SR.measure(q, float(spot), T)
+            if iv is None:
+                return None
+            h = SR.history()
+            if h is None:
+                return None
+            hm, day = ts.strftime("%H:%M"), ts.date().isoformat()
+            slot = "09:30" if hm < "12:00" else "12:00" if hm < "14:30" else "14:30"
+            past = h[(h.slot == slot) & (h.day < day)].atm_iv.tail(SR.LOOKBACK)
+            thr = round(float(past.quantile(SR.PCT)), 2) if len(past) >= SR.MIN_ROWS else None
+            ps = h[(h.slot == "09:30") & (h.day < day)].skew25.dropna().tail(SR.LOOKBACK)
+            skew_thr = round(float(ps.quantile(SR.PCT)), 2) if len(ps) >= SR.MIN_ROWS else None
+            iv_pct, skew_pct = SR.percentile(slot, iv, day), SR.percentile("09:30", skew, day, "skew25")
+            dte = SR._dte(ts.date(), self.expiry_close.date())
+            return {"slot": slot, "atm_iv": round(iv, 2), "thr": thr, "iv_pct": iv_pct, "iv_ok": thr is not None and iv >= thr,
+                    "skew25": None if skew is None else round(skew, 2), "skew_thr": skew_thr, "skew_pct": skew_pct,
+                    "dte": dte, "window": 1 <= dte <= 4, "mood": SR.mood(iv_pct, skew_pct)}
+        except Exception:
+            return None
 
     # ---- manual legs: add positions straight off the historical chain and
     # get back the same payoff-chart/stats/Greeks bundle the live Strategy

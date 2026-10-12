@@ -697,6 +697,9 @@ function renderInsights(data) {
 }
 
 // ---- premium-selling checklist (sell_rules.py; information only) -----------------------
+const ord = p => { if (p == null) return "—"; const n = Math.round(p), t = n % 100; return n + (t >= 11 && t <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th") + " %ile"; };
+const moodTxt = (M, ivp, skp) => !M || (!M.iv && !M.skew) ? "" :
+  `<span class="ic hint">◎</span><span><b>Mood</b>: premium <b>${M.iv || "—"}</b> (${ord(ivp)} of 500 days) · put skew <b>${M.skew || "—"}</b> (${ord(skp)})</span>`;
 function renderSell(S) {
   const chip = document.getElementById("insSell"), sec = document.getElementById("dSell");
   if (S && !S.live && S.last_day) {
@@ -705,11 +708,12 @@ function renderSell(S) {
     chip.className = "ins " + (anySell ? "SELL" : "muted");
     const todayIso = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
     const dayTxt = L.day === todayIso ? "today" : new Date(L.day + "T12:00:00").toLocaleDateString("en-IN", {weekday: "short", day: "2-digit", month: "short"});
-    chip.innerHTML = `${S.market === "OPEN" ? "Before 09:30" : "Market closed"} · ${dayTxt}: ${anySell ? "✓ was a sell day" : "was a normal day"} (IV ${r.iv.toFixed(1)}%) · next decision 09:30`;
+    chip.innerHTML = `${S.market === "OPEN" ? "Before 09:30" : "Market closed"} · ${dayTxt}: ${anySell ? "✓ was a sell day" : "was a normal day"} (IV ${r.iv.toFixed(1)}%${r.pct != null ? ", " + ord(r.pct) : ""})${L.mood && L.mood.iv ? " · premium " + L.mood.iv : ""}${L.mood && L.mood.skew ? ", skew " + L.mood.skew.split(":")[0] : ""} · next decision 09:30`;
     sec.innerHTML = `<h4>Selling checklist <a href="/iv" style="font-size:11px;font-weight:600;margin-left:6px">history →</a></h4>
       <div class="muted" style="font-size:12px;margin-bottom:6px">This is a <b>past</b> reading, not today's decision (that is made from 09:30 while the market is open). ${L.source ? "Source: " + L.source + ". " : ""}Day ${L.day}${L.dte != null ? `, ${L.dte} day${L.dte === 1 ? "" : "s"} to its expiry` : ""}:</div>
-      <div class="ruleck">${Object.entries(L.slots).map(([k, x]) => `<span class="ic ${x.sell ? "ok" : "no"}">${x.sell ? "✓" : "✗"}</span><span><b>${k}</b> ATM IV ${x.iv.toFixed(1)}% vs ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"}</span>`).join("")}
-      <span class="ic ${L.skew_steep ? "hint" : "no"}">${L.skew_steep ? "↓" : "·"}</span><span><b>Put skew</b> ${L.skew25 == null ? "—" : L.skew25.toFixed(2)} vs ${L.skew_thr == null ? "—" : L.skew_thr.toFixed(2)}</span></div>`;
+      <div class="ruleck">${Object.entries(L.slots).map(([k, x]) => `<span class="ic ${x.sell ? "ok" : "no"}">${x.sell ? "✓" : "✗"}</span><span><b>${k}</b> ATM IV ${x.iv.toFixed(1)}% vs ${x.thr == null ? "—" : x.thr.toFixed(1) + "%"}${x.pct != null ? " · " + ord(x.pct) : ""}</span>`).join("")}
+      <span class="ic ${L.skew_steep ? "hint" : "no"}">${L.skew_steep ? "↓" : "·"}</span><span><b>Put skew</b> ${L.skew25 == null ? "—" : L.skew25.toFixed(2)} vs ${L.skew_thr == null ? "—" : L.skew_thr.toFixed(2)}${L.skew_pct != null ? " · " + ord(L.skew_pct) : ""}</span>
+      ${moodTxt(L.mood, (r || {}).pct, L.skew_pct)}</div>`;
     return;
   }
   if (!S || S.atm_iv == null) { chip.innerHTML = ""; sec.innerHTML = ""; return; }
@@ -721,19 +725,21 @@ function renderSell(S) {
     ? `⏱ ${S.window === "expiry_day" ? "Expiry day" : S.dte + " days left"} · rule tested for 1–4`
     : S.sell_day ? `✓ Sell day · IV <b>${S.atm_iv.toFixed(1)}%</b> ≥ ${thr.toFixed(1)}`
     : `Normal day · IV <b>${S.atm_iv.toFixed(1)}%</b>${thr != null ? " < " + thr.toFixed(1) : ""}`;
-  if (S.skew_steep && S.window === "ok") chip.innerHTML += ` · put skew steep`;
+  if (S.iv_pct != null) chip.innerHTML += ` (${ord(S.iv_pct)}${S.mood && S.mood.iv ? ", " + S.mood.iv : ""})`;
+  if (S.mood && S.mood.skew) chip.innerHTML += ` · skew ${S.mood.skew.split(":")[0]}`;
   const reads = Object.entries(S.readings || {}).map(([k, r]) => `${k} ${r.atm_iv.toFixed(1)}%`).join(", ");
   const row = (cls, icon, head, bt) => `<span class="ic ${cls}">${icon}</span><span>${head}</span>${bt ? `<span class="bt">${bt}</span>` : ""}`;
   sec.innerHTML = `<h4>Selling checklist <a href="/iv" style="font-size:11px;font-weight:600;margin-left:6px">history →</a></h4>
     <div class="ruleck">
-      ${row(S.iv_ok ? "ok" : "no", S.iv_ok ? "✓" : "✗", `<b>IV level</b>: ATM IV ${S.atm_iv.toFixed(1)}% vs threshold ${thr == null ? "—" : thr.toFixed(1) + "%"} ${open ? "(" + S.bucket + " bucket, now " + S.time + ")" : "(09:30)"}${reads ? " · today " + reads : ""}`,
+      ${row(S.iv_ok ? "ok" : "no", S.iv_ok ? "✓" : "✗", `<b>IV level</b>: ATM IV ${S.atm_iv.toFixed(1)}% vs threshold ${thr == null ? "—" : thr.toFixed(1) + "%"} ${open ? "(" + S.bucket + " bucket, now " + S.time + ")" : "(09:30)"}${S.iv_pct != null ? " · " + ord(S.iv_pct) : ""}${reads ? " · today " + reads : ""}`,
         `test: straddle ${rsx(B.iv && B.iv.straddle_sell)} a trade on sell days vs ${rsx(B.iv && B.iv.straddle_normal)} on normal days`)}
       ${row(S.window === "ok" ? "ok" : "no", S.window === "ok" ? "✓" : "✗", `<b>Expiry window</b>: ${S.window === "expiry_day" ? "expiry day" : S.dte + " trading day" + (S.dte === 1 ? "" : "s") + " left"} (best 1–4)`,
         `test: ${rsx(B.window && B.window.this_week_per_day)} vs ${rsx(B.window && B.window.next_week_per_day)} per day held (this week vs next week)`)}
-      ${row(S.skew_steep ? "hint" : "no", S.skew_steep ? "↓" : "·", `<b>Put skew</b>: ${S.skew25 == null ? "—" : S.skew25.toFixed(2)} vs ${T.skew == null ? "—" : T.skew.toFixed(2)} — ${S.skew_steep ? "steep, put side preferred" : "not steep"}`,
+      ${row(S.skew_steep ? "hint" : "no", S.skew_steep ? "↓" : "·", `<b>Put skew</b>: ${S.skew25 == null ? "—" : S.skew25.toFixed(2)} vs ${T.skew == null ? "—" : T.skew.toFixed(2)}${S.skew_pct != null ? " (" + ord(S.skew_pct) + ")" : ""} — ${S.skew_steep ? "steep, put side preferred" : "not steep"}`,
         `test on steep days: short put ${rsx(B.skew && B.skew.put_steep)} vs short call ${rsx(B.skew && B.skew.call_steep)}`)}
+      ${moodTxt(S.mood, S.iv_pct, S.skew_pct)}
     </div>
-    <div class="muted" style="font-size:11px">Information only. Thresholds = 60th percentile of the past 500 days at the same time of day.</div>`;
+    <div class="muted" style="font-size:11px">Information only. Thresholds = 60th percentile of the past 500 days at the same time of day. Mood words: premium very cheap &lt;20th, cheap &lt;40th, normal &lt;60th, rich &lt;80th, very rich above; skew flat &lt;25th, steep ≥ 60th. Mood is a description, not a direction signal.</div>`;
 }
 
 function openDrawer(open) {

@@ -210,6 +210,27 @@ def thresholds_for_today():
     return out
 
 
+def percentile(slot, value, before_day, col="atm_iv"):
+    """Where `value` sits among the past LOOKBACK readings of that slot before `before_day` (0-100).
+    col="skew25" ranks a 09:30 put-skew reading the same way."""
+    h = history()
+    if h is None or value is None:
+        return None
+    v = h[(h.slot == slot) & (h.day < before_day)][col].dropna().tail(LOOKBACK)
+    if len(v) < MIN_ROWS:
+        return None
+    return round(float((v < value).mean() * 100), 1)
+
+
+def mood(iv_pct, skew_pct):
+    """Plain words for the IV level and the put skew (information only -- the decision is the IV rule)."""
+    iv_w = None if iv_pct is None else ("very cheap" if iv_pct < 20 else "cheap" if iv_pct < 40 else "normal" if iv_pct < 60
+                                        else "rich" if iv_pct < 80 else "very rich")
+    sk_w = None if skew_pct is None else ("flat: little fear of a fall" if skew_pct < 25 else "normal" if skew_pct < 60
+                                          else "steep: puts bid, fear of a fall")
+    return {"iv": iv_w, "skew": sk_w}
+
+
 def last_day():
     """The latest stored day: IV vs threshold at each time + skew, for when
     the market is closed (after hours the chain's prices give a misleading IV)."""
@@ -219,13 +240,18 @@ def last_day():
     d = h.day.max()
     x = h[h.day == d]
     slots = {r.slot: {"iv": r.atm_iv, "thr": None if pd.isna(r.thr) else round(float(r.thr), 2),
-                      "sell": bool(pd.notna(r.thr) and r.atm_iv >= r.thr)} for r in x.itertuples()}
+                      "sell": bool(pd.notna(r.thr) and r.atm_iv >= r.thr), "pct": percentile(r.slot, float(r.atm_iv), d)}
+             for r in x.itertuples()}
     s930 = x[x.slot == "09:30"]
     sk = s930.skew25.iloc[0] if len(s930) else None
     skt = s930.skew_thr.iloc[0] if len(s930) else None
+    sk = None if sk is None or pd.isna(sk) else float(sk)
+    sk_pct = percentile("09:30", sk, d, "skew25")
+    first = slots.get("09:30") or next(iter(slots.values()), {})
     return {"day": d, "expiry": x.expiry.iloc[0], "dte": int(x.dte.iloc[0]), "slots": slots,
-            "skew25": None if sk is None or pd.isna(sk) else float(sk), "skew_thr": None if skt is None or pd.isna(skt) else round(float(skt), 2),
-            "skew_steep": bool(sk is not None and skt is not None and pd.notna(sk) and pd.notna(skt) and sk >= skt)}
+            "skew25": sk, "skew_thr": None if skt is None or pd.isna(skt) else round(float(skt), 2),
+            "skew_steep": bool(sk is not None and skt is not None and pd.notna(skt) and sk >= skt),
+            "skew_pct": sk_pct, "mood": mood(first.get("pct"), sk_pct)}
 
 
 def _bucket(now):
@@ -278,6 +304,11 @@ def status(chain):
     out["iv_ok"] = bool(iv is not None and t_now is not None and iv >= t_now)
     out["sell_day"] = bool(out["iv_ok"] and out["window"] == "ok")
     out["skew_steep"] = bool(skew is not None and thr.get("skew") is not None and skew >= thr["skew"])
+    # where today's IV / skew sit in the past 500 days at this time of day (plain words for the chip)
+    today_iso = now.date().isoformat()
+    out["iv_pct"] = percentile(bucket, iv, today_iso) if live else None
+    out["skew_pct"] = percentile("09:30", skew, today_iso, "skew25") if live else None
+    out["mood"] = mood(out["iv_pct"], out["skew_pct"])
     # today's readings at the tested times: the first live reading in each bucket
     # (while the app runs); the 19:00 job stores the exact values from history
     today = now.date().isoformat()
@@ -307,12 +338,16 @@ def status(chain):
             slots = {}
             for k, r in sorted(mine["readings"].items()):
                 th = thr.get(k)
-                slots[k] = {"iv": r["atm_iv"], "thr": th, "sell": bool(th is not None and r["atm_iv"] >= th)}
+                slots[k] = {"iv": r["atm_iv"], "thr": th, "sell": bool(th is not None and r["atm_iv"] >= th),
+                            "pct": percentile(k, r["atm_iv"], mine["day"])}
             sk = (mine["readings"].get("09:30") or {}).get("skew25")
+            sk_pct = percentile("09:30", sk, mine["day"], "skew25")
+            first = slots.get("09:30") or next(iter(slots.values()), {})
             out["last_day"] = {"day": mine["day"], "expiry": mine.get("expiry"), "dte": _dte(datetime.fromisoformat(mine["day"]).date(),
                                datetime.fromisoformat(mine["expiry"]).date()) if mine.get("expiry") else None,
                                "slots": slots, "skew25": sk, "skew_thr": thr.get("skew"),
                                "skew_steep": bool(sk is not None and thr.get("skew") is not None and sk >= thr["skew"]),
+                               "skew_pct": sk_pct, "mood": mood(first.get("pct"), sk_pct),
                                "source": "app readings (history updates at 19:00)"}
     return out
 
