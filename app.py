@@ -531,10 +531,12 @@ def api_manual_preview():
             return jsonify({"ok": False, "error": "The basket is empty."}), 400
         raw = manual_trades.preview_positions(legs)
         lookup, spot, expiry_ts_map, forward_map = _price_lookup_for_legs(raw)
+        # an expired contract (e.g. a past plan trade) has no live chain: centre the at-expiry payoff on its strikes
+        center = spot or sum(float(l["strike"]) for l in raw) / len(raw)
         positions = manual_trades.positions_with_live(raw, lookup)
-        curve = manual_trades.payoff_curve(raw, spot) if spot else []
+        curve = manual_trades.payoff_curve(raw, center)
         todays = manual_trades.compute_todays_curve(raw, spot, lookup, expiry_ts_map, forward_map,
-                                                    [c["price"] for c in curve]) if curve else None
+                                                    [c["price"] for c in curve]) if curve and spot else None
         stats = manual_trades.summary(raw, curve, realized_pnl=0.0)
         live_total = sum(p["live_pnl"] for p in positions if p["live_pnl"] is not None)
         est = round(sum(p["est_charges"] for p in positions if p.get("est_charges") is not None), 2)

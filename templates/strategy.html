@@ -1437,7 +1437,7 @@ document.getElementById("btnHistAllDates").addEventListener("click", (e) => {
   loadHistory();
 });
 
-loadExpiriesForAdd().then(loadStrikesForAdd).then(loadPositions);
+loadExpiriesForAdd().then(loadStrikesForAdd).then(loadPositions).then(() => { if (pendingPlan) stagePlanTrade(pendingPlan); });
 loadHistory();
 loadOpenBatches();
 setInterval(loadPositions, 4000);
@@ -1711,6 +1711,23 @@ function ideaDetail(it) {
       ${kv("EV model / history", `${rsI(it.ev_model)} / ${rsI(it.ev_hist)}`)}
       ${kv("Greeks (₹)", `Δ ${it.greeks.delta} · θ ${rsI(it.greeks.theta)}/day · vega ${rsI(it.greeks.vega)}/vol-pt`)}
       ${kv("Fits market now", `${it.fit.direction ? "✓" : "✗"} view · ${it.fit.iv ? "✓" : "✗"} IV regime`)}</div></div>`;
+}
+// ---- a plan trade (Aaj ka Plan -> "Payoff"): its legs at their ENTRY prices, as a preview only ----------------
+const pendingPlan = new URLSearchParams(location.search).get("plan");
+async function stagePlanTrade(id) {
+  let P;
+  try { P = await (await fetch("/api/plan")).json(); } catch (e) { return; }
+  const t = [...(P.open || []), ...(P.closed || [])].find(x => x.id === id);
+  if (!t) { showToast2("That plan trade is no longer in the plan's list"); return; }
+  if (basketItems.length && !confirm("Replace the current basket with this plan trade's legs?")) return;
+  basketItems = t.legs.map(l => { basketSeq += 1; return {tempId: "b" + basketSeq, symbol: l.symbol, strike: l.strike, type: l.type,
+    side: l.side || "SELL", qty: 1, price: l.price, expiry: String(t.expiry_ts)}; });
+  renderBasket();
+  setView("__preview__");
+  document.getElementById("chart").scrollIntoView({behavior: "smooth", block: "center"});
+  const rsT = v => (v < 0 ? "-" : "") + "₹" + Math.abs(Math.round(v)).toLocaleString("en-IN");
+  const state = t.status === "open" ? `open, P&L now ${rsT(t.pnl)}` : `${t.status} ${t.closed || ""} at ${rsT(t.pnl)}${t.close_reason ? " (" + t.close_reason + ")" : ""}`;
+  showToast2(`Plan ${t.setup} ${t.strategy} from ${t.day} ${t.time}, expiry ${t.expiry} — legs at their entry prices; ${state}. Preview only, nothing placed.`);
 }
 function stageIdea(it) {
   if (basketItems.length && !confirm("Replace the current basket with this strategy's legs?")) return;

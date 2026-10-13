@@ -274,7 +274,10 @@ def payload(day=None, expiries=None):
 def _payload(day=None, expiries=None):
     today = mc.now_ist().date().isoformat()
     if (not day or day == today) and live_now():
-        return live()
+        out = live()
+        if mc.now_ist().strftime("%H:%M") > "15:31":      # after the close: today's samples, no longer live
+            out = dict(out, live=False, note="market closed — today's session")
+        return out
     days = history_days()
     if not day or day == today:
         last = next((d for d in days if d["day"] < today), None)

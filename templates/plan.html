@@ -60,6 +60,7 @@
   .trade .legs { font-family: "SF Mono", Consolas, monospace; font-size: 12.5px; margin: 4px 0; }
   .trade .test { color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 8px; padding-top: 6px; }
   .exit { margin-top: 10px; font-size: 13px; background: var(--amber-soft); color: #7a4f0c; border-radius: 8px; padding: 8px 10px; }
+  a.btn.payoff { margin-left: 8px; background: transparent; color: var(--accent); border: 1px solid var(--accent); }
   a.btn { display: inline-block; margin-top: 8px; font-size: 12.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 8px; padding: 5px 12px; text-decoration: none; }
   .pos { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 10px; }
   .p { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
@@ -173,7 +174,8 @@ function renderDecision(P) {
   if (P.current && P.current.dte === 1) facts.push(`<b>Setup B window</b> (current expiry has 1 day left)`);
   if (P.spot) facts.push(`NIFTY <b>₹${Number(P.spot).toLocaleString("en-IN")}</b>`);
   if (R.atm_iv != null) facts.push(`ATM IV <b>${R.atm_iv.toFixed(1)}%</b> vs <b>${R.iv_thr_now == null ? "—" : R.iv_thr_now.toFixed(1) + "%"}</b>`);
-  dec.innerHTML = `<div class="eyebrow">${esc(P.time)} · market ${esc(P.market)}</div>
+  const upd = new Date().toLocaleTimeString("en-IN", {hour: "2-digit", minute: "2-digit", second: "2-digit"});
+  dec.innerHTML = `<div class="eyebrow">${esc(P.time)} · market ${esc(P.market)} · updated ${upd}${P.market === "OPEN" ? " (every 10 s)" : ""}</div>
     <div class="big">${esc(D.text || "")}${D.strong ? '<span class="tag strong">STRONG</span>' : ""}${D.skew_steep ? '<span class="tag skew">put skew steep → lean to puts</span>' : ""}</div>
     ${sub ? `<div class="sub">${sub}</div>` : ""}<div class="facts">${facts.map(f => `<span class="fact">${f}</span>`).join("")}</div>`;
 }
@@ -253,7 +255,7 @@ function breakevens(t) {
 
 function renderOpen(P) {
   const O = P.open || [];
-  $("openSub").textContent = O.length ? `${O.length} open · marked every 5 min` : "";
+  $("openSub").textContent = O.length ? `${O.length} open · ${P.market === "OPEN" ? "live, refreshed every 10 s" : "market closed"}` : "";
   if (!O.length) { $("open").innerHTML = `<div class="empty">No open plan trades.</div>`; return; }
   $("open").innerHTML = `<div class="pos">${O.map(t => {
     const be = breakevens(t), sp = P.spot;
@@ -269,7 +271,8 @@ function renderOpen(P) {
       <div class="pnl ${cl(t.pnl)}">${rs(t.pnl)}</div>
       <div class="meta">credit ${rs(t.credit)} · worst so far <b class="${cl(t.mae)}">${rs(t.mae)}</b>${t.mae_at ? ` (${esc(t.mae_at)})` : ""}<br>
       ${t.legs.map(l => `${l.strike}${l.type}@${l.price}`).join(" · ")} · opened ${t.day} ${t.time}${t.marked ? ` · marked ${esc(t.marked)}` : ""}</div>
-      ${bar}<span class="act ${String(t.action || "").split(" ")[0]}">${esc(t.action || "")}</span></div>`; }).join("")}</div>`;
+      ${bar}<span class="act ${String(t.action || "").split(" ")[0]}">${esc(t.action || "")}</span>
+      <a class="btn payoff" href="${payoffLink(t)}" title="Opens the Strategy Builder with these legs at their entry prices as a preview (nothing is placed or saved)">Payoff in Strategy Builder →</a></div>`; }).join("")}</div>`;
 }
 
 function renderForward(P) {
@@ -308,12 +311,14 @@ function renderForward(P) {
   el.innerHTML = s.replace(`height="${H + 18}"`, `height="${H}"`) + "</svg>" + `<div class="small">${K.map(k => `<span style="color:${col[k]}">━ ${k}</span>`).join(" &nbsp; ")}</div>`;
 }
 
+// the Strategy Builder stages a plan trade's legs at their entry prices as a preview (strategy.html, ?plan=)
+const payoffLink = t => `/strategy?plan=${encodeURIComponent(t.id)}`;
 function renderClosed(P) {
   const C = P.closed || [];
   const cell = (v, at) => v == null ? `<span class="muted">—</span>` : `<span class="${cl(v)}">${rs(v)}</span>${at ? `<div class="small">${esc(at)}</div>` : ""}`;
-  $("closed").innerHTML = `<tr><th>Opened</th><th>Trade</th><th>Setup</th><th>Closed</th><th>Why</th><th>Credit</th><th title="Lowest P&L touched while open">Worst point</th><th title="Highest P&L touched while open">Best point</th><th>Result</th></tr>` +
-    (C.length ? C.map(t => `<tr><td>${t.day} ${t.time}</td><td>${esc(t.name)}</td><td>${t.setup}</td><td>${esc(t.closed || "")}</td><td style="text-align:left">${esc(t.close_reason || "")}</td><td>${rs(t.credit)}</td><td>${cell(t.mae, t.mae_at)}</td><td>${cell(t.mfe, t.mfe_at)}</td><td class="${cl(t.pnl)}"><b>${rs(t.pnl)}</b></td></tr>`).join("")
-      : `<tr><td colspan="9" class="muted" style="text-align:left">Nothing closed yet.</td></tr>`);
+  $("closed").innerHTML = `<tr><th>Opened</th><th>Trade</th><th>Setup</th><th>Closed</th><th>Why</th><th>Credit</th><th title="Lowest P&L touched while open">Worst point</th><th title="Highest P&L touched while open">Best point</th><th>Result</th><th></th></tr>` +
+    (C.length ? C.map(t => `<tr><td>${t.day} ${t.time}</td><td>${esc(t.name)}</td><td>${t.setup}</td><td>${esc(t.closed || "")}</td><td style="text-align:left">${esc(t.close_reason || "")}</td><td>${rs(t.credit)}</td><td>${cell(t.mae, t.mae_at)}</td><td>${cell(t.mfe, t.mfe_at)}</td><td class="${cl(t.pnl)}"><b>${rs(t.pnl)}</b></td><td><a href="${payoffLink(t)}" title="Payoff at entry prices in the Strategy Builder (preview only)">Payoff →</a></td></tr>`).join("")
+      : `<tr><td colspan="10" class="muted" style="text-align:left">Nothing closed yet.</td></tr>`);
 }
 
 let LAST = null;
@@ -321,16 +326,21 @@ function render(P) {
   LAST = P;
   renderDecision(P); renderChecks(P); renderIv(P); renderSetups(P); renderOpen(P); renderForward(P); renderClosed(P);
 }
+let timer = null;
 async function load() {
+  clearTimeout(timer);
+  if (document.hidden && LAST) { timer = setTimeout(load, 60000); return; }   // background tab: slow down until it is shown again
   try {
     const j = await (await fetch("/api/plan")).json();
-    if (!j.ok) { $("decision").innerHTML = `<div class="big">Plan unavailable</div><div class="sub">${esc(j.error)}</div>`; return; }
-    render(j);
+    if (!j.ok) { $("decision").innerHTML = `<div class="big">Plan unavailable</div><div class="sub">${esc(j.error)}</div>`; }
+    else render(j);
   } catch (e) { /* keep the last view */ }
+  // live market: every 10 s (the server re-marks at most every 5 s); otherwise once a minute
+  timer = setTimeout(load, LAST && LAST.market === "OPEN" ? 10000 : 60000);
 }
+document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
 window.addEventListener("resize", () => { if (LAST) { renderIv(LAST); renderForward(LAST); } });
 load();
-setInterval(load, 60000);
 </script>
 </body>
 </html>

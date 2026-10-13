@@ -94,7 +94,7 @@ async function loadDays() {
   const j = await (await fetch("/api/surface/days")).json();
   if (!j.ok) throw new Error(j.error);
   DAYS = j.days;
-  $("day").innerHTML = [`<option value="">${j.live_now ? "Today (live) · " + j.today : "Latest session"}</option>`]
+  $("day").innerHTML = [`<option value="">${j.live_now ? "Today · " + j.today : "Latest session"}</option>`]
     .concat(DAYS.filter(d => d.day !== j.today).map(d => `<option value="${d.day}">${d.day} · ${d.expiries.length} exp</option>`)).join("");
 }
 
@@ -105,11 +105,16 @@ async function load() {
   if (!j.ok) { $("kpis").innerHTML = `<div class="err">${j.error}</div>`; $("stamp").textContent = ""; return; }
   CUR = j;
   const n = j.times.length;
-  $("at").max = Math.max(0, n - 1); $("at").value = Math.max(0, n - 1);
-  $("stamp").textContent = `${j.day}${j.live ? " · live" : ""} · ${j.expiries.map(e => e.expiry).join(" & ") || "no expiry data"}${j.note ? " · " + j.note : ""}`;
+  // start at the latest moment that has a reading (an expiring contract stops quoting before 15:30)
+  let k0 = n - 1;
+  while (k0 > 0 && !j.expiries.every(e => e.slices[k0])) k0--;
+  if (!j.expiries.every(e => e.slices[k0])) { k0 = n - 1; while (k0 > 0 && !j.expiries.some(e => e.slices[k0])) k0--; }
+  $("at").max = Math.max(0, n - 1); $("at").value = Math.max(0, k0);
+  $("stamp").textContent = `${j.day}${j.live ? " · live" : ""} · ${j.expiries.map(e => e.expiry).join(" & ") || "no expiry data"}${j.note ? " · " + j.note : ""}${j.expiries.some(e => e.expiry === j.day) ? ` · ${shortD(j.day)} expires this day: its IV jumps as the last hours run out (the IV rule never reads an expiry on its own expiry day)` : ""}`;
   drawSurface(); drawAtm(); drawAt();
 }
 
+const shortD = iso => new Date(iso + "T12:00:00").toLocaleDateString("en-IN", {day: "2-digit", month: "short"});
 const layoutBase = () => ({ paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", font: { color: css("--muted"), size: 11 }, margin: { l: 50, r: 10, t: 10, b: 40 } });
 
 function drawSurface() {
@@ -118,7 +123,7 @@ function drawSurface() {
     const z = e.slices.map(s => s ? s.grid : j.grid.map(() => null));
     traces.push({ type: "surface", name: e.expiry, x: j.grid, y: j.times.map((t, k) => k), z, opacity: i ? 0.75 : 0.95,
       colorscale: [[0, COLORS[i][0]], [1, COLORS[i][1]]], showscale: true,
-      colorbar: { title: { text: e.expiry, font: { size: 11 } }, x: 1.0 + i * 0.09, len: 0.7, thickness: 12 },
+      colorbar: { title: { text: shortD(e.expiry), side: "top", font: { size: 11 } }, x: 1.0 + i * 0.12, len: 0.7, thickness: 12 },
       hovertemplate: `${e.expiry}<br>moneyness %{x}%<br>%{customdata}<br>IV %{z:.2f}%<extra></extra>`,
       customdata: j.times.map(t => j.grid.map(() => t)) });
     traces.push({ type: "scatter3d", mode: "lines", name: `${e.expiry} ATM IV`, x: e.slices.map(() => 0), y: j.times.map((t, k) => k),
@@ -161,7 +166,8 @@ function drawAt() {
   $("smSub").textContent = `${j.day} ${j.times[k] || ""}` + (j.spot && j.spot[k] ? ` · NIFTY ₹${Number(j.spot[k]).toLocaleString("en-IN")}` : "");
   const kp = (v, l) => `<div class="kpi"><b>${v}</b><span>${l}</span></div>`;
   $("kpis").innerHTML = j.expiries.map(e => { const s = e.slices[k]; return s ?
-    kp(`${s.atm.toFixed(2)}%`, `ATM IV · ${e.expiry}`) + kp(`${s.min_iv.toFixed(2)}% at ${s.min_m > 0 ? "+" : ""}${s.min_m}%`, `lowest IV · ${e.expiry}`) : kp("—", e.expiry); }).join("") +
+    kp(`${s.atm.toFixed(2)}%`, `ATM IV · ${e.expiry}`) + kp(`${s.min_iv.toFixed(2)}% at ${s.min_m > 0 ? "+" : ""}${s.min_m}%`, `lowest IV · ${e.expiry}`)
+    : kp("—", `${e.expiry} · ${e.expiry === j.day ? "expired, no quotes at this time" : "no quote at this time"}`); }).join("") +
     (j.expiries.length === 2 && j.expiries[0].slices[k] && j.expiries[1].slices[k] ? kp(`${(j.expiries[1].slices[k].atm - j.expiries[0].slices[k].atm).toFixed(2)} pts`, "next − near ATM IV") : "") +
     (() => { const R = j.rule, t = j.times[k], th = thrAt(R, t); if (th == null) return "";
       const e = j.expiries.find(x => x.expiry === R.expiry) || j.expiries[0], sl = e && e.slices[k];

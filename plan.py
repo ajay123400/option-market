@@ -288,7 +288,7 @@ def compute(now=None):
 # ---------------------------------------------------------------------------
 def update(now=None):
     """Record today's plan trades once, follow the open ones. Called every
-    5 minutes by the background thread (and by /api/plan)."""
+    30 s in market hours by the background thread (and by /api/plan)."""
     now = now or mc.now_ist()
     with _lock:
         p = compute(now)
@@ -360,9 +360,13 @@ def update(now=None):
         return p
 
 
+CACHE_S = 5         # /api/plan reuses a reading this young (the page polls every 10 s in market hours)
+LOOP_LIVE_S = 30    # background marking in market hours: entries ~1 min after a check, a closer worst point
+
+
 def payload():
     """For /api/plan: the decision, the setups, open trades with today's action, the scorecard."""
-    if time.time() - _cache["t"] < 30 and _cache["v"]:
+    if time.time() - _cache["t"] < CACHE_S and _cache["v"]:
         return _cache["v"]
     p = update()
     trades = sorted(p["book"]["trades"].values(), key=lambda t: (t["day"], t["setup"], t["strategy"]), reverse=True)
@@ -558,7 +562,9 @@ def _loop():
                     daily_summary(now)
         except Exception:
             traceback.print_exc()
-        time.sleep(300)
+        now = mc.now_ist()
+        live = mc.is_trading_day(now.date()) and "09:15" <= now.strftime("%H:%M") <= "15:50"
+        time.sleep(LOOP_LIVE_S if live else 300)
 
 
 def start_background():
